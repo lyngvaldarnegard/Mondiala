@@ -141,8 +141,7 @@ const RAW = [
 [3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
 [4,1,"Vienna",null],[4,2,"Lisbon",null],[4,3,"Amsterdam",null],[4,4,"Florence",null],[4,5,"Venice",null],[4,6,"Madrid",null],[4,7,"Porto",null],[4,8,"Hamburg",null],[4,9,"Sydney",null],[4,10,"Seoul",null],[4,11,"Bordeaux",null],[4,12,"Istanbul",null],[4,13,"Melbourne",null],[4,14,"Prague",null],[4,15,"Budapest",null],[4,16,"Dublin",null],[4,17,"London",5782],[4,18,"Buenos Aires",null],[4,19,"Mexico City",null],[4,20,"San Francisco",null],[4,21,"Tokyo",null],[4,22,"Tel Aviv",null],[4,23,"Hong Kong",6801],[4,24,"Saint Petersburg",null],
 [5,1,"Milan",null],[5,2,"Berlin",null],[5,3,"Osaka",null],[5,4,"Edinburgh",null],[5,5,"Toronto",null],[5,6,"Montreal",null],[5,7,"Rio de Janeiro",null],[5,8,"Taipai",null],[5,9,"Shanghai",null],[5,10,"Brussels",null],[5,11,"Cape Town",null],[5,12,"Utrecht",null],[5,13,"Buenos Aires",null],[5,14,"Bangkok",null],[5,15,"Cairo",null],[5,16,"Munich",null],[5,17,"Delhi",null],[5,18,"Lima",null],[5,19,"Dubai",null],[5,20,"Bogotá",null],[5,21,"Beijing",null],[5,22,"Washington D.C.",null],[5,23,"Chicago",null],[5,24,"Boston",null],[5,25,"Philadelphia",null],[5,26,"Liverpool",null],[5,27,"Bristol",null],[5,28,"Houston",null],[5,29,"Las Vegas",null],[5,30,"Miami",null],
-[6,null,"Alexandria",null],[6,null,"Johannesburg",null],[6,null,"Wuhan",null],[6,null,"Fukuoka",null],[6,null,"Kinshasa",null],[6,null,"Mumbai",null],[6,null,"Dallas",null],[6,null,"Baghdad",null],[6,null,"São Paulo",null],[6,null,"Kuala Lumpur",null],[6,null,"Hyderabad",null],[6,null,"Lagos",null],[6,null,"Ho Chi Minh City",null],[6,null,"Santiago",null],[6,null,"Chengdu",null],[6,null,"Los Angeles",null],[6,null,"Kolkata",null],[6,null,"Tianjin",null],[6,null,"Riyadh",null],[6,null,"Luanda",null],[6,null,"Jakarta",null],[6,null,"Tehran",null],[6,null,"Ahmedabad",null],[6,null,"Bandung",null],[6,null,"Yangon",null],[6,null,"Karachi",null],[6,null,"Suzhou",null],[6,null,"Khartoum",null],[6,null,"Lahore",null],[6,null,"Nagoya",null],[6,null,"Nanjing",null],[6,null,"Chennai",null],[6,null,"Shenzhen",null],[6,null,"Manila",null],[6,null,"Xi'an",null],[6,null,"Hangzhou",null],[6,null,"Bengaluru",null],[6,null,"Dar es Salaam",null],[6,null,"Guadalajara",null],[6,null,"Dhaka",null],[6,null,"Guangzhou",null],[6,1,"Atlanta",null],[6,2,"San Diego",null],[6,3,"Portland",null],
-[7,1,"Romance",null],[7,2,"Intimacy",null],[7,3,"Epimeleia",null],[7,4,"Massage",null],[7,5,"Tantra",null],[7,6,"Consent",null],[7,7,"Submission",null],[7,8,"Dominance",null],[7,9,"Bondage",null],[7,10,"Chastity",null],[7,11,"Freeuse",null],[7,12,"Promiscuity",null],[7,13,"Monogamy",null],[7,14,"Polyamory",null],[7,15,"Encounters",null],[7,16,"Orgy",null],[7,17,"Prostitution",null],[7,18,"Brothel",null],[7,20,"Erotica",null],[7,20,"Exhibitionism",null],[7,21,"Nude",null],[7,22,"Lingerie",null],[7,23,"Oral",null],[7,24,"Anal",null],[7,25,"Masturbation",null],[7,26,"Orgasm",null]
+[6,null,"Alexandria",null],[6,null,"Johannesburg",null],[6,null,"Wuhan",null],[6,null,"Fukuoka",null],[6,null,"Kinshasa",null],[6,null,"Mumbai",null],[6,null,"Dallas",null],[6,null,"Baghdad",null],[6,null,"São Paulo",null],[6,null,"Kuala Lumpur",null],[6,null,"Hyderabad",null],[6,null,"Lagos",null],[6,null,"Ho Chi Minh City",null],[6,null,"Santiago",null],[6,null,"Chengdu",null],[6,null,"Los Angeles",null],[6,null,"Kolkata",null],[6,null,"Tianjin",null],[6,null,"Riyadh",null],[6,null,"Luanda",null],[6,null,"Jakarta",null],[6,null,"Tehran",null],[6,null,"Ahmedabad",null],[6,null,"Bandung",null],[6,null,"Yangon",null],[6,null,"Karachi",null],[6,null,"Suzhou",null],[6,null,"Khartoum",null],[6,null,"Lahore",null],[6,null,"Nagoya",null],[6,null,"Nanjing",null],[6,null,"Chennai",null],[6,null,"Shenzhen",null],[6,null,"Manila",null],[6,null,"Xi'an",null],[6,null,"Hangzhou",null],[6,null,"Bengaluru",null],[6,null,"Dar es Salaam",null],[6,null,"Guadalajara",null],[6,null,"Dhaka",null],[6,null,"Guangzhou",null],[6,1,"Atlanta",null],[6,2,"San Diego",null],[6,3,"Portland",null]
 ];
 
 // ---------- What each hex copies: [flag, style description] ----------
@@ -280,32 +279,7 @@ const CITY_INFO = {
 "atlanta":["🇺🇸","Peachtree ridge city — civil-rights memory, a forest metro."],
 "san diego":["🇺🇸","Balboa Park Spanish revival — border-city light."],
 "portland":["🇺🇸","Bridge-city urbanism — craft cores, eco density."],
-"romance":["❤️","Romance-themed hex — soft lighting, rose ornament, courtship cafés."],
-"intimacy":["🤍","Intimacy-themed hex — warm minimal interiors, private salons."],
-"epimeleia":["🕊️","Care-themed hex (Greek ἐπιμέλεια) — bathhouses and aftercare clinics."],
-"massage":["👐","Touch-themed hex — spa streets, skilled-hands markets."],
-"tantra":["🕉️","Tantra-themed hex — temple geometry, slow ritual."],
-"consent":["🤝","Consent-themed hex — consent education, clear signage codes."],
-"submission":["⛓️","Submission-themed hex — disciplined aesthetics, quiet interiors."],
-"dominance":["👑","Dominance-themed hex — imposing ornament, throne motifs."],
-"bondage":["🪢","Bondage-themed hex — rope-craft ateliers, knot iconography."],
-"chastity":["🔒","Chastity-themed hex — lock-and-key motifs, monastic restraint."],
-"freeuse":["🌿","Free-use park — consent-permissioned public space with threshold architecture at its six edges."],
-"promiscuity":["💫","Promiscuity-themed hex — playful night streets, open venues."],
-"monogamy":["💞","Monogamy-themed hex — pair-symbol ornament, intimate dining."],
-"polyamory":["🧿","Polyamory-themed hex — communal tables, constellation motifs."],
-"encounters":["✨","Encounters-themed hex — chance-meeting design, social stairways."],
-"orgy":["🔥","Orgy-themed hex — communal heat, open-plan halls."],
-"prostitution":["💸","Sex-work hex — licensed parlours, worker protections on display."],
-"brothel":["🕯️","Brothel-themed hex — velvet interiors, discreet entrances."],
-"erotica":["📖","Erotica-themed hex — literary salons, printed-press heritage."],
-"exhibitionism":["🎭","Exhibition-themed hex — stage architecture, the play of watcher and watched."],
-"nude":["🧖","Nudity-themed hex — bathhouse culture, body-positive design."],
-"lingerie":["🎀","Lingerie-themed hex — lace ateliers, fashion-house facades."],
-"oral":["🍒","Pleasure-themed hex — sensuous café culture."],
-"anal":["🍑","Pleasure-themed hex — bold backstreet design."],
-"masturbation":["🫧","Self-pleasure hex — private booths, solo sanctuaries."],
-"orgasm":["🎆","Climax-themed hex — festival lighting, celebratory public art."]
+"freeuse":["🌿","Free-use park — consent-permissioned public space with threshold architecture at its six edges."]
 };
 
 // ---------- Hex math (axial coords, pointy-top) ----------
@@ -339,7 +313,7 @@ function neighborKeys(q, r) {
 }
 
 // ---------- City model ----------
-let maxCircle = 7;
+let maxCircle = 6;
 let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
 let pool = [];         // unplaced names
 let selected = null;  // key
@@ -426,8 +400,16 @@ function render() {
     poly.appendChild(ttl);
     gHexes.appendChild(poly);
     if (h.name) {
+      const ci = CITY_INFO[h.name.trim().toLowerCase()];
+      if (ci) {
+        const f = document.createElementNS(NS, "text");
+        f.setAttribute("x", x); f.setAttribute("y", y - 3.4);
+        f.setAttribute("class", "hlabel"); f.setAttribute("font-size", 9.5);
+        f.textContent = ci[0];
+        gLabels.appendChild(f);
+      }
       const t = document.createElementNS(NS, "text");
-      t.setAttribute("x", x); t.setAttribute("y", y + 1);
+      t.setAttribute("x", x); t.setAttribute("y", y + (ci ? 6.9 : 1));
       t.setAttribute("class", "hlabel"); t.setAttribute("font-size", 8.2);
       let label = h.name;
       if (label.length > 11) label = label.slice(0, 10) + "…";
@@ -661,7 +643,7 @@ function exportJSON() {
 function importJSON(text) {
   const data = JSON.parse(text);
   if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
-  maxCircle = data.maxCircle || 7;
+  maxCircle = data.maxCircle || 6;
   buildCity();
   data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
   selected = null; refresh();
@@ -694,7 +676,7 @@ document.getElementById("btnLoadLocal").addEventListener("click", () => {
   } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
 });
 document.getElementById("btnReset").addEventListener("click", () => {
-  maxCircle = 7; selected = null; buildCity(); refresh(); renderPool();
+  maxCircle = 6; selected = null; buildCity(); refresh(); renderPool();
 });
 
 // ---------- Init ----------

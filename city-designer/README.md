@@ -6,14 +6,16 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 ## Features
 
 - Hexagonal ring grid following the `L(n) = n × 6` circle system, with **Metropol** at the centre (1 km hex sides, 100 m boulevards)
-- All 182 hexagons from the Notion database pre-placed with real names and densities
+- Rings 0–6: 156 named hexagons from the Notion database, pre-placed with real names and densities
+- **Ring view**: alternating red and blue rings, green Metropol, green radial lines from the centre — toggle with "View"
+- **Type view**: paint hexes as District, Free-use park, Water, Plaza, Civic, Industrial
 - **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style, density and estimated population
+- Every hexagon shows its flag and name on the map
 - Postal-code labels in the `Circle · Name · Hexagon number` system
 - Editable name, type, density, style and notes per hex
-- Paint types: District, Free-use park, Water, Plaza, Civic, Industrial
 - **Lattice checker** validating the free-use park rule (each park surrounded by six non-park hexes; every non-park hex touches a park)
 - Unplaced-names pool for cities awaiting a hexagon slot
-- Save to browser storage, JSON export/import, add rings beyond circle 7
+- Save to browser storage, JSON export/import, add rings beyond circle 6
 
 ## Usage
 

@@ -373,9 +373,14 @@ const NS = "http://www.w3.org/2000/svg";
 let viewBox = { x: -330, y: -330, w: 660, h: 660 };
 let gHexes, gLabels;
 
+const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // Nordic capitals + Göteborg
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
 function ringFill(h) {
-  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes
+  if (h.circle === 0) return "#2f9e63"; // Metropol
+  if (h.circle === 3) { // Nordic ring: only the five Nordic capitals + Göteborg are green (spokes do not apply here)
+    return NORDIC_GREEN.has((h.name || "").trim().toLowerCase()) ? "#2f9e63" : "#a04a4a";
+  }
+  if (onSpoke(h)) return "#2f9e63"; // the six radial spokes
   return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
 }
 function render() {

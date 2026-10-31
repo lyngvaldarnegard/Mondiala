@@ -356,6 +356,7 @@ function buildCity() {
     });
     rows.forEach(r => delete r._placed);
   }
+  reorderNordicRing();
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
     if (h.name === "Freeuse") h.type = "park";
@@ -376,12 +377,23 @@ let gHexes, gLabels;
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // Nordic capitals + Göteborg
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
 function ringFill(h) {
-  if (h.circle === 0) return "#2f9e63"; // Metropol
-  if (h.circle === 3) { // Nordic ring: only the five Nordic capitals + Göteborg are green (spokes do not apply here)
-    return NORDIC_GREEN.has((h.name || "").trim().toLowerCase()) ? "#2f9e63" : "#a04a4a";
-  }
-  if (onSpoke(h)) return "#2f9e63"; // the six radial spokes
+  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes
   return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
+}
+function reorderNordicRing() { // place the Nordic capitals + Göteborg on the spoke slots of ring 3
+  const ring = Object.values(hexes).filter(h => h.circle === 3);
+  if (ring.length !== 18) return;
+  const byNum = {}; ring.forEach(h => byNum[h.num] = h);
+  const spokeSlots = [], otherSlots = [], nordic = [], rest = [];
+  ring.forEach(h => {
+    (onSpoke(h) ? spokeSlots : otherSlots).push(h.num);
+    const e = { name: h.name, density: h.density };
+    (NORDIC_GREEN.has((h.name || "").trim().toLowerCase()) ? nordic : rest).push(e);
+  });
+  if (nordic.length !== spokeSlots.length) return; // only reorder if it fits the pattern
+  spokeSlots.sort((a, b) => a - b); otherSlots.sort((a, b) => a - b);
+  spokeSlots.forEach((slot, i) => { const h = byNum[slot]; h.name = nordic[i].name; h.density = nordic[i].density; });
+  otherSlots.forEach((slot, i) => { const h = byNum[slot]; h.name = rest[i].name; h.density = rest[i].density; });
 }
 function render() {
   svg.innerHTML = "";

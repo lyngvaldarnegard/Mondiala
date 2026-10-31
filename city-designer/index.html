@@ -323,7 +323,7 @@ function hexCorners(cx, cy, s) {
 }
 function ringPositions(n) { // returns array of {q,r,num} for ring n (n>=1), numbered 1..6n
   const out = [];
-  let x = n, y = -n, z = 0; // cube
+  let x = -n, y = 0, z = n; // cube; start at dir[4] * n so the walk stays on the ring
   for (let i = 0; i < 6; i++) {
     for (let j = 0; j < n; j++) {
       out.push({ q: x, r: z, num: out.length + 1 });
@@ -348,13 +348,13 @@ let paintMode = false;
 
 function buildCity() {
   hexes = {}; pool = [];
+  // group RAW by circle
+  const byCircle = {};
+  RAW.forEach(row => { (byCircle[row[0]] = byCircle[row[0]] || []).push(row); });
   // center
   hexes["0,0"] = { q: 0, r: 0, circle: 0, num: 0, name: "", density: null, type: "district", notes: "", style: "" };
   const c0 = (byCircle[0] || [])[0];
   if (c0) { hexes["0,0"].name = c0[2]; hexes["0,0"].density = c0[3]; }
-  // group RAW by circle
-  const byCircle = {};
-  RAW.forEach(row => { (byCircle[row[0]] = byCircle[row[0]] || []).push(row); });
   for (let c = 1; c <= maxCircle; c++) {
     const positions = ringPositions(c);
     const slots = {}; positions.forEach(p => slots[p.num] = p);

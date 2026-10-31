@@ -125,7 +125,7 @@
 // ---------- Types ----------
 const TYPES = {
   district:   { label: "District",        fill: "#31404f", stroke: "#1a2530" },
-  park:       { label: "Free-use park",  fill: "#2e7d4f", stroke: "#1c4a2f" },
+  park:       { label: "Free-use park",  fill: "#e0218a", stroke: "#92125b" },
   water:      { label: "Water",          fill: "#24546e", stroke: "#153648" },
   plaza:      { label: "Plaza",          fill: "#a8842f", stroke: "#6d551d" },
   civic:      { label: "Civic / landmark", fill: "#6d4fa0", stroke: "#47346c" },
@@ -393,7 +393,7 @@ function render() {
     const poly = document.createElementNS(NS, "polygon");
     poly.setAttribute("points", hexCorners(x, y, SIZE - 2.2));
     poly.setAttribute("class", "hex" + (selected === key ? " selected" : ""));
-    poly.setAttribute("fill", viewMode === "rings" ? ringFill(h) : TYPES[h.type].fill);
+    poly.setAttribute("fill", viewMode === "rings" ? (h.type === "park" ? TYPES.park.fill : ringFill(h)) : TYPES[h.type].fill);
     poly.dataset.key = key;
     const ttl = document.createElementNS(NS, "title");
     ttl.textContent = h.circle + " · " + (h.name || "Unnamed") + " · " + h.num + (h.style ? "\n" + h.style : "");

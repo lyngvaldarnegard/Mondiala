@@ -7,8 +7,8 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 
 - Hexagonal ring grid following the `L(n) = n × 6` circle system, with **Metropol** at the centre (1 km hex sides, 100 m boulevards)
 - Rings 0–6: 156 named hexagons from the Notion database, pre-placed with real names and densities
-- **Ring view**: alternating red and blue rings, green Metropol, green radial lines from the centre — toggle with "View"
-- **Type view**: paint hexes as District, Free-use park, Water, Plaza, Civic, Industrial
+- **Ring view**: alternating red and blue rings, with Metropol and the six radial spoke hexes green — toggle with "View"
+- **Type view**: paint hexes as District, Free-use park, Water, Plaza, Civic, Industrial (free-use hexes are pink, Kondomeriet-style)
 - **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style, density and estimated population
 - Every hexagon shows its flag and name on the map
 - Postal-code labels in the `Circle · Name · Hexagon number` system

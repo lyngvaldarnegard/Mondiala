@@ -373,9 +373,10 @@ const NS = "http://www.w3.org/2000/svg";
 let viewBox = { x: -330, y: -330, w: 660, h: 660 };
 let gHexes, gLabels;
 
+function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
 function ringFill(h) {
-  if (h.circle === 0) return "#2f9e63";            // Metropol — green, source of the radial lines
-  return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // odd rings red, even rings blue
+  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes
+  return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
 }
 function render() {
   svg.innerHTML = "";
@@ -383,9 +384,8 @@ function render() {
   defs.innerHTML = '<radialGradient id="glow"><stop offset="0%" stop-color="#1b2635"/><stop offset="100%" stop-color="#0d1117"/></radialGradient>';
   svg.appendChild(defs);
   gHexes = document.createElementNS(NS, "g"); gHexes.id = "gHexes";
-  const gSpokes = document.createElementNS(NS, "g"); gSpokes.id = "gSpokes";
   gLabels = document.createElementNS(NS, "g"); gLabels.id = "gLabels";
-  svg.appendChild(gHexes); svg.appendChild(gSpokes); svg.appendChild(gLabels);
+  svg.appendChild(gHexes); svg.appendChild(gLabels);
   const keys = Object.keys(hexes);
   for (const key of keys) {
     const h = hexes[key];
@@ -422,18 +422,6 @@ function render() {
     n.textContent = h.circle + "·" + h.num;
     gLabels.appendChild(n);
   }
-  // green radial lines from Metropol along the six axial directions
-  [[1,0],[1,-1],[0,-1],[-1,0],[-1,1],[0,1]].forEach(([q, r]) => {
-    const end = axialToPixel(q * (maxCircle + 0.85), r * (maxCircle + 0.85));
-    const line = document.createElementNS(NS, "line");
-    line.setAttribute("x1", 0); line.setAttribute("y1", 0);
-    line.setAttribute("x2", end.x.toFixed(2)); line.setAttribute("y2", end.y.toFixed(2));
-    line.setAttribute("stroke", "#3ddc84");
-    line.setAttribute("stroke-width", 2.6);
-    line.setAttribute("stroke-linecap", "round");
-    line.setAttribute("opacity", 0.9);
-    gSpokes.appendChild(line);
-  });
   applyViewBox();
 }
 function applyViewBox() {

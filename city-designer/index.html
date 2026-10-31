@@ -1,0 +1,683 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mondiala City Designer</title>
+<style>
+  :root { font-family: Inter, system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #dce3ec; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  header { display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: #121a24; border-bottom: 1px solid #24303f; flex-wrap: wrap; }
+  header h1 { font-size: 17px; letter-spacing: .5px; }
+  header h1 span { color: #e8b04b; }
+  header .motto { font-size: 11px; color: #7d8b9d; font-style: italic; }
+  header .spacer { flex: 1; }
+  button, select, input, textarea { font-family: inherit; font-size: 12px; }
+  button { background: #24303f; color: #dce3ec; border: 1px solid #35455a; border-radius: 6px; padding: 6px 11px; cursor: pointer; }
+  button:hover { background: #2e3f54; }
+  button.warn { border-color: #8a4b4b; }
+  button.primary { background: #e8b04b; color: #1a2230; border-color: #e8b04b; font-weight: 600; }
+  #main { flex: 1; display: flex; min-height: 0; }
+  #mapwrap { flex: 1; position: relative; background: radial-gradient(ellipse at center, #131c28 0%, #0d1117 75%); }
+  svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  svg.panning { cursor: grabbing; }
+  .hex { stroke: #0d1117; stroke-width: 1.6; transition: filter .1s; }
+  .hex:hover { filter: brightness(1.35); }
+  .hex.selected { stroke: #e8b04b; stroke-width: 2.6; }
+  .hlabel { fill: #f2f6fa; text-anchor: middle; pointer-events: none; font-weight: 600; }
+  .nlabel { fill: #ffffff; opacity: .42; text-anchor: middle; pointer-events: none; }
+  .flag-invalid { stroke: #ff5c5c !important; stroke-width: 2.2; stroke-dasharray: 4 3; }
+  .flag-nopark { stroke: #ffb84d !important; stroke-width: 2.2; stroke-dasharray: 2 3; }
+  #sidebar { width: 320px; background: #121a24; border-left: 1px solid #24303f; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+  .card { background: #0f1620; border: 1px solid #24303f; border-radius: 10px; padding: 12px; }
+  .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8b9aab; margin-bottom: 10px; }
+  .postalcode { font-size: 13px; color: #e8b04b; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+  label.field { display: block; font-size: 11px; color: #8b9aab; margin: 8px 0 3px; }
+  input[type=text], input[type=number], textarea, select { width: 100%; background: #0d1420; border: 1px solid #2c3a4d; color: #dce3ec; border-radius: 6px; padding: 6px 8px; }
+  textarea { resize: vertical; min-height: 46px; }
+  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .typechip { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border: 1px solid #2c3a4d; border-radius: 6px; cursor: pointer; font-size: 12px; background: #0d1420; }
+  .typechip.active { border-color: #e8b04b; background: #231d10; }
+  .typechip .sw { width: 13px; height: 13px; border-radius: 3px; flex: none; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+  .stats .b { background: #0d1420; border-radius: 6px; padding: 7px 9px; }
+  .stats .b .v { font-size: 15px; font-weight: 700; color: #e8b04b; }
+  .modebar { display: flex; gap: 6px; margin-bottom: 8px; }
+  .modebar button { flex: 1; }
+  .modebar button.on { background: #e8b04b; color: #1a2230; font-weight: 600; }
+  .hint { font-size: 11px; color: #7d8b9d; line-height: 1.45; }
+  .poolbox { max-height: 110px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 5px; }
+  .poolname { font-size: 11px; background: #1b2635; border: 1px solid #2c3a4d; padding: 2px 7px; border-radius: 10px; cursor: pointer; }
+  .poolname.armed { background: #e8b04b; color: #1a2230; font-weight: 600; }
+  #validatorOut { font-size: 11px; line-height: 1.5; margin-top: 8px; }
+  #validatorOut .ok { color: #6fd18a; }
+  #validatorOut .bad { color: #ff8a8a; }
+  #validatorOut .warn2 { color: #ffc266; }
+  #jsonio { width: 100%; height: 90px; font-family: ui-monospace, monospace; font-size: 10px; }
+  .rowbtns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .emptysel { color: #7d8b9d; font-size: 12px; padding: 10px 2px; }
+  .infocard { background: #0d1420; border: 1px solid #2c3a4d; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+  .ictitle { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 7px; }
+  .icflag { font-size: 16px; }
+  .icsub { font-size: 11px; color: #7d8b9d; margin: 3px 0 7px; }
+  .icstyle { font-size: 12px; line-height: 1.5; color: #c4cfdd; }
+  .icstyle.none { color: #7d8b9d; font-style: italic; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⬡ <span>Mondiala</span> City Designer</h1>
+  <div class="motto">Liberty · Equality · Democracy · Reason · Progress</div>
+  <div class="spacer"></div>
+  <button id="btnAddRing">+ Add ring</button>
+  <button id="btnValidate">✓ Check lattice</button>
+  <button id="btnClearFlags" class="warn">Clear flags</button>
+</header>
+<div id="main">
+  <div id="mapwrap"><svg id="map" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div id="sidebar">
+    <div class="card" id="inspectorCard">
+      <h2>Inspector</h2>
+      <div id="inspector"><div class="emptysel">Click a hexagon to edit it. Drag to pan, scroll to zoom.</div></div>
+    </div>
+    <div class="card">
+      <h2>Brush</h2>
+      <div class="modebar">
+        <button id="modeSelect" class="on">Select</button>
+        <button id="modePaint">Paint</button>
+      </div>
+      <div class="types" id="types"></div>
+      <div class="hint" style="margin-top:8px">Paint mode: click hexes to apply the armed type. In Select mode, click a type to change the selected hex.</div>
+    </div>
+    <div class="card">
+      <h2>City stats</h2>
+      <div class="stats" id="stats"></div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide.</div>
+    </div>
+    <div class="card">
+      <h2>Unplaced names <span id="poolCount"></span></h2>
+      <div class="hint" style="margin-bottom:6px">Click to arm, then click a hex (Select mode) to assign the name.</div>
+      <div class="poolbox" id="pool"></div>
+    </div>
+    <div class="card">
+      <h2>Save / Load</h2>
+      <div class="rowbtns">
+        <button id="btnSaveLocal">Save to browser</button>
+        <button id="btnLoadLocal">Load</button>
+        <button id="btnExport">Export JSON ↓</button>
+        <button id="btnImport">Import JSON ↑</button>
+        <button id="btnReset" class="warn">Reset city</button>
+      </div>
+      <textarea id="jsonio" placeholder="Exported JSON appears here. Paste JSON and press Import to load."></textarea>
+    </div>
+    <div class="card">
+      <h2>Lattice report</h2>
+      <div id="validatorOut" class="hint">Run “Check lattice” to verify the free-use park lattice: every park should be surrounded by six non-park hexes, and every non-park hex should touch at least one park.</div>
+    </div>
+  </div>
+</div>
+<script>
+"use strict";
+
+// ---------- Types ----------
+const TYPES = {
+  district:   { label: "District",        fill: "#31404f", stroke: "#1a2530" },
+  park:       { label: "Free-use park",  fill: "#2e7d4f", stroke: "#1c4a2f" },
+  water:      { label: "Water",          fill: "#24546e", stroke: "#153648" },
+  plaza:      { label: "Plaza",          fill: "#a8842f", stroke: "#6d551d" },
+  civic:      { label: "Civic / landmark", fill: "#6d4fa0", stroke: "#47346c" },
+  industrial: { label: "Industrial",     fill: "#57616c", stroke: "#39424b" }
+};
+
+// ---------- Source data from Notion “Hexagons of Mondiala” ----------
+// [circle, hexagonNumber|null, name, density|null]
+const RAW = [
+[0,0,"Metropol",4355.39],
+[1,1,"Paris",19430],[1,2,"Barcelona",16630],[1,3,"Moscow",5080],[1,4,"Singapore",8188.27],[1,5,"Vancouver",5749.9],[1,6,"New York",11313.8],
+[2,1,"Diyarbakır",null],[2,2,"Aleppo",null],[2,3,"Athens",null],[2,4,"Jerusalem",null],[2,5,"Babylon",null],[2,7,"Carthago",null],[2,8,"Rome",null],[2,9,"Aksum",null],[2,10,"Byzantium",null],[2,11,"Mecca",null],[2,12,"Tenochtitlan",null],
+[3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
+[4,1,"Vienna",null],[4,2,"Lisbon",null],[4,3,"Amsterdam",null],[4,4,"Florence",null],[4,5,"Venice",null],[4,6,"Madrid",null],[4,7,"Porto",null],[4,8,"Hamburg",null],[4,9,"Sydney",null],[4,10,"Seoul",null],[4,11,"Bordeaux",null],[4,12,"Istanbul",null],[4,13,"Melbourne",null],[4,14,"Prague",null],[4,15,"Budapest",null],[4,16,"Dublin",null],[4,17,"London",5782],[4,18,"Buenos Aires",null],[4,19,"Mexico City",null],[4,20,"San Francisco",null],[4,21,"Tokyo",null],[4,22,"Tel Aviv",null],[4,23,"Hong Kong",6801],[4,24,"Saint Petersburg",null],
+[5,1,"Milan",null],[5,2,"Berlin",null],[5,3,"Osaka",null],[5,4,"Edinburgh",null],[5,5,"Toronto",null],[5,6,"Montreal",null],[5,7,"Rio de Janeiro",null],[5,8,"Taipai",null],[5,9,"Shanghai",null],[5,10,"Brussels",null],[5,11,"Cape Town",null],[5,12,"Utrecht",null],[5,13,"Buenos Aires",null],[5,14,"Bangkok",null],[5,15,"Cairo",null],[5,16,"Munich",null],[5,17,"Delhi",null],[5,18,"Lima",null],[5,19,"Dubai",null],[5,20,"Bogotá",null],[5,21,"Beijing",null],[5,22,"Washington D.C.",null],[5,23,"Chicago",null],[5,24,"Boston",null],[5,25,"Philadelphia",null],[5,26,"Liverpool",null],[5,27,"Bristol",null],[5,28,"Houston",null],[5,29,"Las Vegas",null],[5,30,"Miami",null],
+[6,null,"Alexandria",null],[6,null,"Johannesburg",null],[6,null,"Wuhan",null],[6,null,"Fukuoka",null],[6,null,"Kinshasa",null],[6,null,"Mumbai",null],[6,null,"Dallas",null],[6,null,"Baghdad",null],[6,null,"São Paulo",null],[6,null,"Kuala Lumpur",null],[6,null,"Hyderabad",null],[6,null,"Lagos",null],[6,null,"Ho Chi Minh City",null],[6,null,"Santiago",null],[6,null,"Chengdu",null],[6,null,"Los Angeles",null],[6,null,"Kolkata",null],[6,null,"Tianjin",null],[6,null,"Riyadh",null],[6,null,"Luanda",null],[6,null,"Jakarta",null],[6,null,"Tehran",null],[6,null,"Ahmedabad",null],[6,null,"Bandung",null],[6,null,"Yangon",null],[6,null,"Karachi",null],[6,null,"Suzhou",null],[6,null,"Khartoum",null],[6,null,"Lahore",null],[6,null,"Nagoya",null],[6,null,"Nanjing",null],[6,null,"Chennai",null],[6,null,"Shenzhen",null],[6,null,"Manila",null],[6,null,"Xi'an",null],[6,null,"Hangzhou",null],[6,null,"Bengaluru",null],[6,null,"Dar es Salaam",null],[6,null,"Guadalajara",null],[6,null,"Dhaka",null],[6,null,"Guangzhou",null],[6,1,"Atlanta",null],[6,2,"San Diego",null],[6,3,"Portland",null],
+[7,1,"Romance",null],[7,2,"Intimacy",null],[7,3,"Epimeleia",null],[7,4,"Massage",null],[7,5,"Tantra",null],[7,6,"Consent",null],[7,7,"Submission",null],[7,8,"Dominance",null],[7,9,"Bondage",null],[7,10,"Chastity",null],[7,11,"Freeuse",null],[7,12,"Promiscuity",null],[7,13,"Monogamy",null],[7,14,"Polyamory",null],[7,15,"Encounters",null],[7,16,"Orgy",null],[7,17,"Prostitution",null],[7,18,"Brothel",null],[7,20,"Erotica",null],[7,20,"Exhibitionism",null],[7,21,"Nude",null],[7,22,"Lingerie",null],[7,23,"Oral",null],[7,24,"Anal",null],[7,25,"Masturbation",null],[7,26,"Orgasm",null]
+];
+
+// ---------- What each hex copies: [flag, style description] ----------
+const CITY_INFO = {
+"metropol":["⬡","The capital hexagon — the civic heart of Mondiala: monumental neoclassicism, the central assembly and national institutions."],
+"paris":["🇫🇷","Haussmann Paris — cream limestone facades, mansard roofs, wrought-iron balconies, tree-lined boulevards and corner cafés."],
+"barcelona":["🇪🇸","Eixample grid + Gaudí — chamfered street corners, Modernista ornament, mosaic and organic curves."],
+"moscow":["🇷🇺","Stalinist monumentalism — seven-skyline towers, marble metro palaces, grand axial avenues."],
+"singapore":["🇸🇬","Garden-city verticalism — sky gardens, spotless streets, futuristic hawker centres."],
+"vancouver":["🇨🇦","Glass towers against mountains and sea — 'Vancouverism' pods, green waterfront walkways."],
+"new york":["🇺🇸","Manhattan density — art-deco skyscrapers, fire escapes, the street grid, stoops and bodegas."],
+"diyarbakır":["🇹🇷","Basalt old city — black-stone walls, courtyard houses, Kurdish bazaars."],
+"aleppo":["🇸🇾","Ancient souqs and citadel — stone caravanserais, Levantine courtyards."],
+"athens":["🇬🇷","White marble and Aegean light — colonnades, an acropolis silhouette on the hill, airy stoas."],
+"jerusalem":["🇮🇱","Limestone holy city — domes, narrow ancient lanes, layers of sacred architecture."],
+"babylon":["🇮🇶","Reconstructed antiquity — ziggurats, blue-glazed Ishtar Gate brick, hanging gardens."],
+"carthago":["🇹🇳","Punic harbour city — Tophet sanctuaries, Mediterranean trade grandeur."],
+"rome":["🇮🇹","The eternal city — travertine, baroque fountains, imperial forums, ochre palazzi."],
+"aksum":["🇪🇹","Aksumite stelae — carved granite obelisks, ancient Ethiopian courts."],
+"byzantium":["🇹🇷","Byzantine splendour — gold mosaics, domed basilicas, purple and iconography."],
+"mecca":["🇸🇦","Sacred geometry — minarets, marble plazas, the black cube as centrepiece."],
+"tenochtitlan":["🇲🇽","Aztec island-capital — causeways, chinampa gardens, pyramid-temples, obsidian ornament."],
+"stockholm":["🇸🇪","Nordic capital on water — Gamla Stan pastel facades, functionalist housing, archipelago light."],
+"københavn":["🇩🇰","Copenhagen humanism — colourful Nyhavn, protected bike streets, quietly modern royal architecture."],
+"oslo":["🇳🇴","Fjord city — the white marble opera roof you can walk on, Munch-museum curves, timber modernism."],
+"helsinki":["🇫🇮","Sauna-and-design capital — granite churches, art nouveau towers, harbourside markets."],
+"reykjavík":["🇮🇸","Volcanic minimalism — bright corrugated-iron houses, mossy lava fields at the edge."],
+"tallinn":["🇪🇪","Medieval hanseatic old town — pointed gables, city walls, cobblestone courtyards."],
+"riga":["🇱🇻","Art nouveau capital — exuberant facades, a wooden-house district, Baltic gables."],
+"vilnius":["🇱🇹","Baroque church spires — terracotta roofs, bohemian courtyards."],
+"malmö":["🇸🇪","Öresund modernity — the Turning Torso twist, recycled harbour districts."],
+"aarhus":["🇩🇰","Latin-quarter charm — small scale, river-edge culture, museum roofs of turf."],
+"kaunas":["🇱🇹","Interwar modernism — rounded streamline facades, playful colours."],
+"göteborg":["🇸🇪","Docklands city — stone quays, trams, maritime grit softened by parks."],
+"billund":["🇩🇰","Playful design town — the brick-and-colour syntax of the toy capital."],
+"turku | åbo":["🇫🇮","River-city wooden quarters — the old capital's calm and student bustle."],
+"trondheim":["🇳🇴","Wharf warehouses along the river — colours of the old timber trade."],
+"bergen":["🇳🇴","Bryggen wooden hanseatic wharves — rain-washed colourful gables, a mountain cableway."],
+"tampere | tammerfors":["🇫🇮","Red-brick factory city turned culture hub — rapids and smoke-sauna tradition."],
+"vyborg":["🇷🇺","Finnish-Russian border town — a medieval castle, faded Karelian grandeur."],
+"vienna":["🇦🇹","Ringstrasse imperial — coffee houses, white historicist facades, art nouveau."],
+"lisbon":["🇵🇹","Azulejo city — tiled facades, yellow funicular trams, Pombaline downtown."],
+"amsterdam":["🇳🇱","Canal-ring golden age — narrow brick houses, neck gables, drawbridges."],
+"florence":["🇮🇹","Renaissance core — pietra forte stone, Brunelleschi's dome, loggias."],
+"venice":["🇮🇹","Palladio on water — marble palazzi reflected in green canals, campielli."],
+"madrid":["🇪🇸","Bourbon boulevards — grand plazas, the royal palace, tapas streets."],
+"porto":["🇵🇹","Granite + azulejo — port-wine warehouses, the iron bridge, riverside stairs."],
+"hamburg":["🇩🇪","Brick expressionism — Speicherstadt warehouse city, the Elbphilharmonie crown."],
+"sydney":["🇦🇺","Harbour city — white sail roofs, sandstone terraces, ferries everywhere."],
+"seoul":["🇰🇷","Hyper-vertical K-culture — glass towers, hanok villages, street markets."],
+"bordeaux":["🇫🇷","Golden limestone crescents — the classical elegance of the wine capital."],
+"istanbul":["🇹🇷","Byzantine-Ottoman layering — domes and minarets, bazaar lanes, Bosphorus ferries."],
+"melbourne":["🇦🇺","Victorian gold-rush city — laneway culture, the tram web, coffee obsession."],
+"prague":["🇨🇿","Bohemian gothic + cubist facades — a forest of spires."],
+"budapest":["🇭🇺","Dualist grandeur — gothic parliament on the Danube, bath houses."],
+"dublin":["🇮🇪","Georgian squares — brick terraces, colourful doors, literary pubs."],
+"london":["🇬🇧","Imperial metropolis — white-stucco terraces, garden squares, the Thames skyline."],
+"buenos aires":["🇦🇷","Paris of the south — tango blocks, wide avenues, grand cafés."],
+"mexico city":["🇲🇽","Valley megacity — colonial core, murals, street food on every corner."],
+"san francisco":["🇺🇸","Painted-lady Victorians on hills — fog, cable cars, bay windows."],
+"tokyo":["🇯🇵","Neon-dense sprawl — lantern alleys, rail-and-retail stacks, tiny shrines."],
+"tel aviv":["🇮🇱","White city — Bauhaus balconies on the beach, modernist Mediterranean."],
+"hong kong":["🇭🇰","Vertical harbour density — bamboo scaffolding, tower canyons, mid-level escalators."],
+"saint petersburg":["🇷🇺","Petrine baroque — canals, pastel palaces, white nights."],
+"milan":["🇮🇹","Fashion capital — the marble Galleria, brutalist offices, design aperitivo."],
+"berlin":["🇩🇪","Layered repair city — tenement blocks, brave brutalist culture, club architecture."],
+"osaka":["🇯🇵","Kitchen of Japan — canal bridges, the Glico neon sign, merchant energy."],
+"edinburgh":["🇬🇧","Auld Reekie + New Town symmetry — a volcanic castle rock, Georgian crescents."],
+"toronto":["🇨🇦","Multicultural high-rise — the ravine city, a needle on the skyline."],
+"montreal":["🇨🇦","Bilingual stone city — outdoor staircases, Plateau triplexes, the underground city."],
+"rio de janeiro":["🇧🇷","Tropical modernism — Copacabana's wave promenade, favela hillsides, samba."],
+"taipai":["🇹🇼","Night-market city — temple incense under glass towers, rivers of scooters."],
+"shanghai":["🇨🇳","Lòngtáng lanes + Bund skyline — art deco banks across a river of glass."],
+"brussels":["🇧🇪","Art nouveau city — Horta's organic iron and glass, comic-strip walls."],
+"cape town":["🇿🇦","Table-mountain city — Cape Dutch gables, the colours of the Bo-Kaap."],
+"utrecht":["🇳🇱","Medieval canals at street level — wharf cellars, the Dom tower."],
+"bangkok":["🇹🇭","Chao Phraya city — golden temples, canal sois, street kitchens."],
+"cairo":["🇪🇬","Pharaonic + Fatimid layering — minarets and the pyramid horizon."],
+"munich":["🇩🇪","Bavarian capital — plaster-and-gable altstadt, beer halls, the English Garden."],
+"delhi":["🇮🇳","Mughal + Lutyens layering — red sandstone, bougainvillea avenues."],
+"lima":["🇵🇪","Colonial balconies in fog — wooden mirador balconies, cliffs above the Pacific."],
+"dubai":["🇦🇪","Desert spectacle — the world's tallest skyline, souks inside glass."],
+"bogotá":["🇨🇴","Andean capital — La Candelaria's colonial balconies, ciclovía streets."],
+"beijing":["🇨🇳","Imperial axial city — hutong alleys, forbidden-city walls, contemporary icons."],
+"washington d.c.":["🇺🇸","Federal city — neoclassical domes, the choreography of the National Mall."],
+"chicago":["🇺🇸","Birthplace of the skyscraper — steel-and-glass grid, the Loop's el tracks."],
+"boston":["🇺🇸","Colonial + academic — red brick row houses, harbour edges."],
+"philadelphia":["🇺🇸","Quaker grid city — red brick, Independence Hall plainness."],
+"liverpool":["🇬🇧","Port-city pride — the Three Graces on the Mersey, brick terraces."],
+"bristol":["🇬🇧","Harbour + suspension bridge — painted Georgian crescents, street art."],
+"houston":["🇺🇸","Bayou-city sprawl — air-conditioned downtown tunnels, Space City optimism."],
+"las vegas":["🇺🇸","Neon spectacle — themed resort architecture, a compressed world tour on the Strip."],
+"miami":["🇺🇸","Art-deco tropics — pastel Ocean Drive, Latin rhythm."],
+"alexandria":["🇪🇬","Mediterranean corniche — faded cosmopolitan library city."],
+"johannesburg":["🇿🇦","Gold-rush skyline — mine dumps turned parks, a modernist core."],
+"wuhan":["🇨🇳","River-confluence megacity — lakes folded into the grid."],
+"fukuoka":["🇯🇵","Yatai food stalls — compact castle-town warmth."],
+"kinshasa":["🇨🇩","River megacity — coupé-décalé street energy."],
+"mumbai":["🇮🇳","Art deco + gothic on the Arabian Sea — dabbawalas, sea-face promenades."],
+"dallas":["🇺🇸","Corporate towers on the prairie — big-sky glass."],
+"baghdad":["🇮🇶","Round City of Peace — Tigris riverfront, Abbasid memory."],
+"são paulo":["🇧🇷","Concrete verticality — Paulista brutalist villas, a helicopter layer."],
+"kuala lumpur":["🇲🇾","Twin towers over a colonial core — kampung streets."],
+"hyderabad":["🇮🇳","Nizam grandeur — Charminar bazaars, high-tech campus edges."],
+"lagos":["🇳🇬","Afrobeats megacity — danfo-yellow energy, island waterfront."],
+"ho chi minh city":["🇻🇳","Motorbike rivers — the colonial Saigon core, rooftop cafés."],
+"santiago":["🇨🇱","Andes-backed grid — cerro funiculars, a neoclassical core."],
+"chengdu":["🇨🇳","Teahouse pace — bamboo parks, the panda city."],
+"los angeles":["🇺🇸","Sprawl city of film — dingbat apartments, endless boulevards, palms."],
+"kolkata":["🇮🇳","Colonial decay + festival city — trams, adda, puja pandals."],
+"tianjin":["🇨🇳","Concession-era mosaic — nine nations' architecture on the Hai."],
+"riyadh":["🇸🇦","Desert capital — mud-brick old town, mirrored mega-projects."],
+"luanda":["🇦🇴","Atlantic bay — modernist towers, musseque life."],
+"jakarta":["🇮🇩","Betawi + Batavia layering — kampung canals, mega-malls."],
+"tehran":["🇮🇷","Alborz-shadowed city — the bazaar and grand boulevards."],
+"ahmedabad":["🇮🇳","Pol-neighbourhood city — stepwells, textile modernism."],
+"bandung":["🇮🇩","Cool art-deco highland city — deco streets in volcanic air."],
+"yangon":["🇲🇲","Golden pagoda city — colonial decay and the Shwedagon."],
+"karachi":["🇵🇰","Arabian-Sea megalopolis — stone-gothic colonial core."],
+"suzhou":["🇨🇳","Canal gardens — classical scholar gardens, silk looms."],
+"khartoum":["🇸🇩","Two-river confluence — mud-pyramid memory."],
+"lahore":["🇵🇰","Mughal walled city — the Badshahi mosque, food streets."],
+"nagoya":["🇯🇵","Castle town of craft — maker workshops."],
+"nanjing":["🇨🇳","Six-dynasties capital — the city-wall loop, plane-tree avenues."],
+"chennai":["🇮🇳","Dravidian temples — Marina Beach, filter coffee."],
+"shenzhen":["🇨🇳","Instant megacity — vertical villages, maker factories."],
+"manila":["🇵🇭","Walled Intramuros + jeepney energy — bay sunsets."],
+"xi'an":["🇨🇳","Ancient capital — the city-wall loop, terracotta memory."],
+"hangzhou":["🇨🇳","West Lake city — mist, tea fields, poetic bridges."],
+"bengaluru":["🇮🇳","Garden-tech capital — Cubbon Park, craft breweries."],
+"dar es salaam":["🇹🇿","Swahili coast — dhow harbour, German colonial core."],
+"guadalajara":["🇲🇽","Mariachi plazas — Tapatío colonial core."],
+"dhaka":["🇧🇩","Rickshaw-painted city — Mughal old town, river life."],
+"guangzhou":["🇨🇳","Canton trade city — Shamian island, Pearl River towers."],
+"atlanta":["🇺🇸","Peachtree ridge city — civil-rights memory, a forest metro."],
+"san diego":["🇺🇸","Balboa Park Spanish revival — border-city light."],
+"portland":["🇺🇸","Bridge-city urbanism — craft cores, eco density."],
+"romance":["❤️","Romance-themed hex — soft lighting, rose ornament, courtship cafés."],
+"intimacy":["🤍","Intimacy-themed hex — warm minimal interiors, private salons."],
+"epimeleia":["🕊️","Care-themed hex (Greek ἐπιμέλεια) — bathhouses and aftercare clinics."],
+"massage":["👐","Touch-themed hex — spa streets, skilled-hands markets."],
+"tantra":["🕉️","Tantra-themed hex — temple geometry, slow ritual."],
+"consent":["🤝","Consent-themed hex — consent education, clear signage codes."],
+"submission":["⛓️","Submission-themed hex — disciplined aesthetics, quiet interiors."],
+"dominance":["👑","Dominance-themed hex — imposing ornament, throne motifs."],
+"bondage":["🪢","Bondage-themed hex — rope-craft ateliers, knot iconography."],
+"chastity":["🔒","Chastity-themed hex — lock-and-key motifs, monastic restraint."],
+"freeuse":["🌿","Free-use park — consent-permissioned public space with threshold architecture at its six edges."],
+"promiscuity":["💫","Promiscuity-themed hex — playful night streets, open venues."],
+"monogamy":["💞","Monogamy-themed hex — pair-symbol ornament, intimate dining."],
+"polyamory":["🧿","Polyamory-themed hex — communal tables, constellation motifs."],
+"encounters":["✨","Encounters-themed hex — chance-meeting design, social stairways."],
+"orgy":["🔥","Orgy-themed hex — communal heat, open-plan halls."],
+"prostitution":["💸","Sex-work hex — licensed parlours, worker protections on display."],
+"brothel":["🕯️","Brothel-themed hex — velvet interiors, discreet entrances."],
+"erotica":["📖","Erotica-themed hex — literary salons, printed-press heritage."],
+"exhibitionism":["🎭","Exhibition-themed hex — stage architecture, the play of watcher and watched."],
+"nude":["🧖","Nudity-themed hex — bathhouse culture, body-positive design."],
+"lingerie":["🎀","Lingerie-themed hex — lace ateliers, fashion-house facades."],
+"oral":["🍒","Pleasure-themed hex — sensuous café culture."],
+"anal":["🍑","Pleasure-themed hex — bold backstreet design."],
+"masturbation":["🫧","Self-pleasure hex — private booths, solo sanctuaries."],
+"orgasm":["🎆","Climax-themed hex — festival lighting, celebratory public art."]
+};
+
+// ---------- Hex math (axial coords, pointy-top) ----------
+const SQ3 = Math.sqrt(3);
+const SIZE = 36; // px per 1 km side
+const HEX_AREA = 3 * Math.sqrt(3) / 2; // km²
+const DIRS = [[1,-1,0],[1,0,-1],[0,1,-1],[-1,1,0],[-1,0,1],[0,-1,1]]; // cube dirs
+function axialToPixel(q, r) { return { x: SIZE * SQ3 * (q + r / 2), y: SIZE * 1.5 * r }; }
+function hexCorners(cx, cy, s) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 180 * (60 * i - 30);
+    pts.push((cx + s * Math.cos(a)).toFixed(2) + "," + (cy + s * Math.sin(a)).toFixed(2));
+  }
+  return pts.join(" ");
+}
+function ringPositions(n) { // returns array of {q,r,num} for ring n (n>=1), numbered 1..6n
+  const out = [];
+  let x = n, y = -n, z = 0; // cube
+  for (let i = 0; i < 6; i++) {
+    for (let j = 0; j < n; j++) {
+      out.push({ q: x, r: z, num: out.length + 1 });
+      const d = DIRS[i];
+      x += d[0]; y += d[1]; z += d[2];
+    }
+  }
+  return out;
+}
+function neighborKeys(q, r) {
+  return [[q+1,r],[q+1,r-1],[q,r-1],[q-1,r],[q-1,r+1],[q,r+1]];
+}
+
+// ---------- City model ----------
+let maxCircle = 7;
+let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
+let pool = [];         // unplaced names
+let selected = null;  // key
+let armedType = "district";
+let armedPoolName = null;
+let paintMode = false;
+
+function buildCity() {
+  hexes = {}; pool = [];
+  // center
+  hexes["0,0"] = { q: 0, r: 0, circle: 0, num: 0, name: "", density: null, type: "district", notes: "", style: "" };
+  const c0 = (byCircle[0] || [])[0];
+  if (c0) { hexes["0,0"].name = c0[2]; hexes["0,0"].density = c0[3]; }
+  // group RAW by circle
+  const byCircle = {};
+  RAW.forEach(row => { (byCircle[row[0]] = byCircle[row[0]] || []).push(row); });
+  for (let c = 1; c <= maxCircle; c++) {
+    const positions = ringPositions(c);
+    const slots = {}; positions.forEach(p => slots[p.num] = p);
+    const filled = new Set();
+    const rows = byCircle[c] || [];
+    // pass 1: explicit numbers (first row wins on duplicates)
+    rows.forEach(row => {
+      const n = row[1];
+      if (n != null && slots[n] && !filled.has(n)) { placeRow(slots[n], row); filled.add(n); row._placed = true; }
+    });
+    // pass 2: fill remaining slots with unnumbered rows, in order
+    let si = 1;
+    rows.forEach(row => {
+      if (row._placed) return;
+      while (si <= positions.length && filled.has(si)) si++;
+      if (si <= positions.length) { placeRow(slots[si], row); filled.add(si); si++; row._placed = true; }
+    });
+    // leftovers -> pool
+    rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); });
+    // empty slots stay unnamed districts
+    positions.forEach(p => {
+      if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
+    });
+    rows.forEach(r => delete r._placed);
+  }
+  // "Freeuse" hex starts as a free-use park; fill curated style descriptions
+  Object.values(hexes).forEach(h => {
+    if (h.name === "Freeuse") h.type = "park";
+    if (h.name && !h.style) { const ci = CITY_INFO[h.name.trim().toLowerCase()]; if (ci) h.style = ci[1]; }
+  });
+}
+function placeRow(pos, row) {
+  const key = pos.q + "," + pos.r;
+  hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
+}
+
+// ---------- SVG rendering ----------
+const svg = document.getElementById("map");
+const NS = "http://www.w3.org/2000/svg";
+let viewBox = { x: -330, y: -330, w: 660, h: 660 };
+let gHexes, gLabels;
+
+function render() {
+  svg.innerHTML = "";
+  const defs = document.createElementNS(NS, "defs");
+  defs.innerHTML = '<radialGradient id="glow"><stop offset="0%" stop-color="#1b2635"/><stop offset="100%" stop-color="#0d1117"/></radialGradient>';
+  svg.appendChild(defs);
+  gHexes = document.createElementNS(NS, "g"); gHexes.id = "gHexes";
+  gLabels = document.createElementNS(NS, "g"); gLabels.id = "gLabels";
+  svg.appendChild(gHexes); svg.appendChild(gLabels);
+  const keys = Object.keys(hexes);
+  for (const key of keys) {
+    const h = hexes[key];
+    const { x, y } = axialToPixel(h.q, h.r);
+    const poly = document.createElementNS(NS, "polygon");
+    poly.setAttribute("points", hexCorners(x, y, SIZE - 2.2));
+    poly.setAttribute("class", "hex" + (selected === key ? " selected" : ""));
+    poly.setAttribute("fill", TYPES[h.type].fill);
+    poly.dataset.key = key;
+    const ttl = document.createElementNS(NS, "title");
+    ttl.textContent = h.circle + " · " + (h.name || "Unnamed") + " · " + h.num + (h.style ? "\n" + h.style : "");
+    poly.appendChild(ttl);
+    gHexes.appendChild(poly);
+    if (h.name) {
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("x", x); t.setAttribute("y", y + 1);
+      t.setAttribute("class", "hlabel"); t.setAttribute("font-size", 8.2);
+      let label = h.name;
+      if (label.length > 11) label = label.slice(0, 10) + "…";
+      t.textContent = label;
+      gLabels.appendChild(t);
+    }
+    const n = document.createElementNS(NS, "text");
+    n.setAttribute("x", x); n.setAttribute("y", y + SIZE * 0.52);
+    n.setAttribute("class", "nlabel"); n.setAttribute("font-size", 6.4);
+    n.textContent = h.circle + "·" + h.num;
+    gLabels.appendChild(n);
+  }
+  applyViewBox();
+}
+function applyViewBox() {
+  svg.setAttribute("viewBox", viewBox.x + " " + viewBox.y + " " + viewBox.w + " " + viewBox.h);
+}
+
+// ---------- Interaction: pan / zoom / click ----------
+let dragging = false, moved = false, lastX = 0, lastY = 0;
+svg.addEventListener("mousedown", e => { dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; svg.classList.add("panning"); });
+window.addEventListener("mouseup", () => { dragging = false; svg.classList.remove("panning"); });
+svg.addEventListener("mousemove", e => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+  const k = viewBox.w / svg.clientWidth;
+  viewBox.x -= dx * k; viewBox.y -= dy * k;
+  lastX = e.clientX; lastY = e.clientY;
+  applyViewBox();
+});
+svg.addEventListener("wheel", e => {
+  e.preventDefault();
+  const f = e.deltaY > 0 ? 1.15 : 0.87;
+  const r = svg.getBoundingClientRect();
+  const mx = viewBox.x + (e.clientX - r.left) / r.width * viewBox.w;
+  const my = viewBox.y + (e.clientY - r.top) / r.height * viewBox.h;
+  viewBox.w *= f; viewBox.h *= f;
+  viewBox.x = mx - (mx - viewBox.x) * f;
+  viewBox.y = my - (my - viewBox.y) * f;
+  applyViewBox();
+}, { passive: false });
+gHexes = null; // will bind after render
+svg.addEventListener("click", e => {
+  if (moved) return;
+  const t = e.target.closest(".hex");
+  if (!t) return;
+  const key = t.dataset.key;
+  if (paintMode) { hexes[key].type = armedType; refresh(); if (selected === key) showInspector(); }
+  else if (armedPoolName !== null) {
+    hexes[key].name = armedPoolName;
+    const ci = CITY_INFO[armedPoolName.trim().toLowerCase()];
+    if (ci && !hexes[key].style) hexes[key].style = ci[1];
+    pool = pool.filter(p => p.name !== armedPoolName);
+    armedPoolName = null; renderPool(); refresh();
+  } else { selected = key; refresh(); showInspector(); }
+});
+
+function refresh() { render(); renderStats(); }
+
+// ---------- Inspector ----------
+const inspector = document.getElementById("inspector");
+function showInspector() {
+  if (!selected || !hexes[selected]) { inspector.innerHTML = '<div class="emptysel">Click a hexagon to see the city it copies and its style. Drag to pan, scroll to zoom.</div>'; return; }
+  const h = hexes[selected];
+  const ci = h.name ? CITY_INFO[h.name.trim().toLowerCase()] : null;
+  const label = h.circle + " " + (h.name || "_____") + " " + h.num;
+  const ringLen = h.circle > 0 ? " of " + (h.circle * 6) : "";
+  const infoCard =
+    '<div class="infocard">' +
+      '<div class="ictitle"><span class="icflag">' + (ci ? ci[0] : "⬡") + '</span>' + esc(h.name || "Unnamed hex") + '</div>' +
+      '<div class="icsub">Circle ' + h.circle + ' · Hexagon ' + h.num + ringLen + '</div>' +
+      (ci || h.style ? '<div class="icstyle">' + esc(h.style || ci[1]) + '</div>' : '<div class="icstyle none">No style set — type a name (e.g. Paris) to auto-fill.</div>') +
+    '</div>';
+  inspector.innerHTML =
+    '<div class="postalcode">PCODE ' + esc(label) + '</div>' +
+    infoCard +
+    '<label class="field">Name</label><input type="text" id="iName" value="' + esc(h.name) + '">' +
+    '<label class="field">Type</label><select id="iType">' +
+      Object.entries(TYPES).map(([k, v]) => '<option value="' + k + '"' + (h.type === k ? " selected" : "") + '>' + v.label + '</option>').join("") +
+    '</select>' +
+    '<label class="field">Density (people/km²)</label><input type="number" id="iDensity" step="any" value="' + (h.density ?? "") + '">' +
+    '<label class="field">Population ≈ <span id="iPop"></span></label>' +
+    '<label class="field">Style / what it copies</label><textarea id="iStyle">' + esc(h.style || "") + '</textarea>' +
+    '<label class="field">Notes</label><textarea id="iNotes">' + esc(h.notes || "") + '</textarea>' +
+    '<div class="rowbtns" style="margin-top:10px"><button id="iApply">Apply</button><button id="iClearName" class="warn">Clear name</button></div>';
+  const upd = () => {
+    const d = parseFloat(document.getElementById("iDensity").value);
+    document.getElementById("iPop").textContent = isFinite(d) ? Math.round(d * HEX_AREA).toLocaleString() : "—";
+  };
+  document.getElementById("iDensity").addEventListener("input", upd); upd();
+  document.getElementById("iApply").addEventListener("click", () => {
+    h.name = document.getElementById("iName").value.trim();
+    h.type = document.getElementById("iType").value;
+    const dv = document.getElementById("iDensity").value;
+    h.density = dv === "" ? null : parseFloat(dv);
+    h.notes = document.getElementById("iNotes").value;
+    const typedStyle = document.getElementById("iStyle").value;
+    if (typedStyle.trim()) h.style = typedStyle;
+    else { const ci2 = h.name ? CITY_INFO[h.name.toLowerCase()] : null; h.style = ci2 ? ci2[1] : ""; }
+    refresh(); showInspector();
+  });
+  document.getElementById("iClearName").addEventListener("click", () => { h.name = ""; refresh(); showInspector(); });
+}
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+// ---------- Type chips ----------
+const typesDiv = document.getElementById("types");
+function renderTypes() {
+  typesDiv.innerHTML = "";
+  Object.entries(TYPES).forEach(([k, v]) => {
+    const chip = document.createElement("div");
+    chip.className = "typechip" + (armedType === k ? " active" : "");
+    chip.innerHTML = '<div class="sw" style="background:' + v.fill + '"></div>' + v.label;
+    chip.addEventListener("click", () => {
+      armedType = k; renderTypes();
+      if (!paintMode && selected && hexes[selected]) { hexes[selected].type = k; refresh(); showInspector(); }
+    });
+    typesDiv.appendChild(chip);
+  });
+}
+
+// ---------- Pool ----------
+function renderPool() {
+  const box = document.getElementById("pool");
+  document.getElementById("poolCount").textContent = "(" + pool.length + ")";
+  box.innerHTML = pool.length ? "" : '<div class="hint">All names are placed.</div>';
+  pool.forEach(p => {
+    const el = document.createElement("div");
+    el.className = "poolname" + (armedPoolName === p.name ? " armed" : "");
+    el.textContent = p.name;
+    el.addEventListener("click", () => { armedPoolName = armedPoolName === p.name ? null : p.name; renderPool(); });
+    box.appendChild(el);
+  });
+}
+
+// ---------- Stats ----------
+function renderStats() {
+  const all = Object.values(hexes);
+  const named = all.filter(h => h.name);
+  const parks = all.filter(h => h.type === "park");
+  let pop = 0, popCount = 0;
+  all.forEach(h => { if (h.density != null && isFinite(h.density)) { pop += h.density * HEX_AREA; popCount++; } });
+  const avg = popCount ? pop / popCount : 0;
+  const rings = maxCircle;
+  document.getElementById("stats").innerHTML =
+    stat(all.length, "Hexagons (rings 0–" + rings + ")") +
+    stat(named.length, "Named hexes") +
+    stat(parks.length, "Free-use parks") +
+    stat(Math.round(pop).toLocaleString(), "Population (known dens.)") +
+    stat(Math.round(avg).toLocaleString(), "Avg hex population") +
+    stat((all.length * HEX_AREA).toLocaleString() + " km²", "Total area");
+}
+function stat(v, l) { return '<div class="b"><div class="v">' + v + '</div>' + l + "</div>"; }
+
+// ---------- Validator (free-use park lattice) ----------
+document.getElementById("btnValidate").addEventListener("click", () => {
+  const out = [];
+  document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
+  let parkPark = 0, noPark = 0, checked = 0;
+  Object.values(hexes).forEach(h => {
+    const neigh = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean);
+    if (h.type === "park") {
+      const bad = neigh.filter(n => n.type === "park");
+      if (bad.length) { parkPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-invalid"); }
+      checked++;
+    } else if (h.circle < maxCircle && neigh.length === 6) { // interior non-park hexes
+      if (!neigh.some(n => n.type === "park")) { noPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-nopark"); }
+    }
+  });
+  const el = document.getElementById("validatorOut");
+  if (parkPark === 0 && noPark === 0) {
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no park touches another park, and every interior hex touches at least one free-use park.</span>';
+  } else {
+    el.innerHTML =
+      (parkPark ? '<span class="bad">' + parkPark + ' park hex(es) touch other parks (red dashed).</span><br>' : '<span class="ok">No park-park adjacency.</span><br>') +
+      (noPark ? '<span class="warn2">' + noPark + ' non-park hex(es) lack a park neighbour (orange dashed).</span>' : '<span class="ok">Every interior non-park hex touches a park.</span>');
+  }
+});
+document.getElementById("btnClearFlags").addEventListener("click", () => {
+  document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
+  document.getElementById("validatorOut").innerHTML = "Flags cleared.";
+});
+
+// ---------- Modes ----------
+document.getElementById("modeSelect").addEventListener("click", () => setPaint(false));
+document.getElementById("modePaint").addEventListener("click", () => setPaint(true));
+function setPaint(on) {
+  paintMode = on;
+  document.getElementById("modeSelect").classList.toggle("on", !on);
+  document.getElementById("modePaint").classList.toggle("on", on);
+  armedPoolName = null; renderPool();
+}
+
+// ---------- Rings ----------
+document.getElementById("btnAddRing").addEventListener("click", () => {
+  const old = JSON.parse(exportJSON());
+  maxCircle++;
+  buildCity();
+  // re-apply saved edits
+  const imported = JSON.parse(old);
+  imported.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
+  refresh();
+});
+
+// ---------- Save / Load / Export ----------
+function exportJSON() {
+  return JSON.stringify({
+    format: "mondiala-city-designer",
+    maxCircle,
+    hexes: Object.values(hexes).map(h => ({ q: h.q, r: h.r, circle: h.circle, num: h.num, name: h.name, density: h.density, type: h.type, style: h.style || "", notes: h.notes }))
+  });
+}
+function importJSON(text) {
+  const data = JSON.parse(text);
+  if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
+  maxCircle = data.maxCircle || 7;
+  buildCity();
+  data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
+  selected = null; refresh();
+}
+document.getElementById("btnExport").addEventListener("click", () => {
+  const ta = document.getElementById("jsonio");
+  ta.value = exportJSON();
+  try {
+    const blob = new Blob([ta.value], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mondiala-city.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  } catch (e) { /* downloads may be blocked in preview; JSON stays in the textarea */ }
+});
+document.getElementById("btnImport").addEventListener("click", () => {
+  try { importJSON(document.getElementById("jsonio").value); document.getElementById("validatorOut").textContent = "Imported ✓"; }
+  catch (e) { document.getElementById("validatorOut").textContent = "Import failed: " + e.message; }
+});
+document.getElementById("btnSaveLocal").addEventListener("click", () => {
+  try { localStorage.setItem("mondiala-city", exportJSON()); document.getElementById("validatorOut").textContent = "Saved to browser storage ✓"; }
+  catch (e) { document.getElementById("validatorOut").innerHTML = "Browser storage unavailable in preview — use Export JSON and keep the file."; }
+});
+document.getElementById("btnLoadLocal").addEventListener("click", () => {
+  try {
+    const s = localStorage.getItem("mondiala-city");
+    if (!s) { document.getElementById("validatorOut").textContent = "No saved city found."; return; }
+    importJSON(s);
+  } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
+});
+document.getElementById("btnReset").addEventListener("click", () => {
+  maxCircle = 7; selected = null; buildCity(); refresh(); renderPool();
+});
+
+// ---------- Init ----------
+buildCity();
+renderTypes();
+renderPool();
+refresh();
+</script>
+</body>
+</html>

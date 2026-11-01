@@ -228,6 +228,7 @@ function buildCity() {
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
   // every hex named for a god of love is a pink free-use district; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
   Object.values(hexes).forEach(h => { if (SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
+  Object.values(hexes).forEach(h => { if (!h.name && h.circle > 4 && (PINK_SLOTS[h.circle] || []).indexOf(h.num) > -1) h.name = "Freeuse"; }); // v1.7: an empty frontier pink district is a free-use park, waiting for its god
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
     if (h.name === "Freeuse") h.type = "park";
@@ -368,10 +369,7 @@ function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: the deit
   for (let pos = 0; pos < seated.length; pos++) if (!seated[pos]) seated[pos] = rest[ci++] || null;
   return slots.map((sl, pos) => [sl.num, seated[pos]]);
 }
-function computeWorldPlan() { // the full rings 5..maxCircle city assignment + the centre + the leftovers
-  const cands = [];
-  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => { if (coordOf(n) && cands.indexOf(n) === -1) cands.push(n); });
-  const center = computeCenter(cands);
+function fillWorldPlan(center, cands) { // one pass of the seating: distance ranks the chain, the compass seats each ring
   const ranked = cands
     .map(n => Object.assign({ n }, bearingDist(center, n)))
     .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance decides, population breaks ties
@@ -401,7 +399,24 @@ function computeWorldPlan() { // the full rings 5..maxCircle city assignment + t
     }
     plan[c] = slots.map((sl, i) => [sl.num, cities[(i + rot) % cities.length].n]);
   }
-  return { plan, center, leftover: ranked.slice(idx).map(x => x.n) };
+  return { plan, leftover: ranked.slice(idx).map(x => x.n) };
+}
+function computeWorldPlan() { // v1.7 "the city finds the centre": the heart's real cities pull, every tiled city pulls, and the centre settles by iteration
+  const cands = [];
+  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => { if (coordOf(n) && cands.indexOf(n) === -1) cands.push(n); });
+  const heart = RAW.filter(r => Array.isArray(r) && r[2] && coordOf(r[2])).map(r => r[2]); // the heart's own real cities — their real-life location pulls the centre too
+  let center = computeCenter(heart.concat(cands)); // the boot centre: the whole world before the first seating
+  let out = fillWorldPlan(center, cands);
+  for (let it = 0; it < 30; it++) { // re-seat, re-centre, repeat — until the centre settles
+    const seated = [];
+    for (let c = 5; c <= maxCircle; c++) (out.plan[c] || []).forEach(p => seated.push(p[1]));
+    const next = computeCenter(heart.concat(seated)); // the heart plus exactly the cities tiled in the current view
+    const moved = Math.abs(next.lat - center.lat) >= 1e-9 || Math.abs(next.lon - center.lon) >= 1e-9;
+    center = next;
+    out = fillWorldPlan(center, cands);
+    if (!moved) break; // the seated set reproduces its own centre — the city has found its centre
+  }
+  return { plan: out.plan, center, leftover: out.leftover };
 }
 
 // ---------- SVG rendering ----------
@@ -577,8 +592,8 @@ document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
   recenter();
 });
-document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — stops when the pool runs dry or at ring 11, the designed horizon
-  if (!pool.length || maxCircle >= 11) return;
+document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — the map is infinite now, so it stops only when the pool runs dry
+  if (!pool.length) return;
   maxCircle++; viewBox = cityViewBox(); moved = false; recenter();
 });
 document.getElementById("btnDropRing").addEventListener("click", () => { // view-only: remove rings one by one, all the way down to bare Metropol; the shipped city is rings 0–8

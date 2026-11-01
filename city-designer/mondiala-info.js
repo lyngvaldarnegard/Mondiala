@@ -19,7 +19,7 @@ const CITY_INFO = {
 "phoenicia":["🇱🇧","Phoenicia — the purple coast of the Levant: Tyre's dye works, cedar ships riding the whole Mediterranean, the alphabet carried to every harbour."],
 "tyre":["🇱🇧","Phoenician Tyre — Hiram's island fortress joined to the mainland by Alexander's mole, the murex purple dye works, the temple of Melqart, sailors' quarter stacked with cedar."],
 "chang'an":["🇨🇳","Chang'an — the eternal capital of a dozen dynasties: Tang grid boulevards, the Wild Goose Pagoda, a million souls at its peak."],
-"mohenjo-daro":["🇵🇰","Mohenjo-daro — the Indus metropolis: perfect brick grids, the Great Bath, covered sewers, standard weights and seals."],
+
 "uruk":["🇮🇶","Uruk — the world's first true city, Gilgamesh's walls, the White Temple on its ziggurat, the birthplace of writing."],
 "memphis":["🇪🇬","Memphis — Egypt's first capital at the delta's apex: white-walled palaces, Ptah's great temple, the colossus of Ramses."],
 "qosqo":["🇵🇪","Qosqo — the Inca capital, 'the navel of the world': ashlar masonry walls, the Qorikancha's gold-lined courts, the Temple of the Sun."],
@@ -30,21 +30,21 @@ const CITY_INFO = {
 "mesopotamia":["🇮🇶","Mesopotamia — the land between the rivers, the cradle hex of city civilisation: Babylon's ziggurats and blue-glazed Ishtar Gate brick, Uruk's towering White Temple, Ur's Royal Tombs and the Great Ziggurat."],
 "carthage":["🇹🇳","Punic harbour city — Tophet sanctuaries, Mediterranean trade grandeur."],
 "rome":["🇮🇹","The eternal city — travertine, baroque fountains, imperial forums, ochre palazzi."],
-"aksum":["🇪🇹","Aksumite stelae — carved granite obelisks, ancient Ethiopian courts."],
+
 "byzantium":["🇹🇷","Byzantine splendour — gold mosaics, domed basilicas, purple and iconography."],
 "mecca":["🇸🇦","Sacred geometry — minarets, marble plazas, the black cube as centrepiece."],
-"gaza":["🇵🇸","Gaza — the ancient Philistine port: sea-worn concrete and hilltop tells, olive groves, striped fishermen's boats, Souk al-Zawiya's spice alleys."],
+
 "medina":["🇸🇦","The City of the Prophet — the green-domed mosque, date-palm oasis streets, white marble courtyards, the hush of the second holiest city."],
 "jeddah":["🇸🇦","Red Sea gateway — coral-stone old town with carved roshan balconies, corniche glass towers, pilgrims' port."],
 "beirut":["🇱🇧","Phoenix city — Roman baths between glass towers, war-scarred facades, pine-clad hills, Levantine balconies and Mediterranean nightlife."],
 "damascus":["🇸🇾","The world's oldest living capital — Straight Street, the Umayyad courtyard mosque, jasmine over old-stone lanes, seven gates of the Old City."],
 "abu dhabi":["🇦🇪","Corniche capital — white marble mosques, museums on Saadiyat, mangrove-lined water, falcon and dune heritage."],
 "isfahan":["🇮🇷","Half the world — Naqsh-e Jahan's turquoise domes, blue-tiled bridges over the Zayandeh, bazaar vaults, boulevard plane trees."],
-"samarkand":["🇺🇿","Silk Road crown — the Registan's three tiled madrasas, turquoise domes, Timurid minarets, paper-mulberry lanes."],
-"luxor":["🇪🇬","Thebes of the hundred gates — Karnak's forest of columns, the West Bank's desert tombs, feluccas on the Nile, alabaster sphinxes."],
-"timbuktu":["🇲🇱","Desert's edge of gold and manuscripts — banco mosques with palm-log beams, salt-caravan doors, Sahel dust and adobe."],
+
+
+
 "marrakesh":["🇲🇦","The red city — pisé ramparts, Jemaa el-Fnaa's evening circus, riad courtyards, zellij and cedar, the Atlas on the horizon."],
-"tunis":["🇹🇳","Carthage's heir — whitewashed medina lanes studded with blue doors, French-era avenues, Punic ruins by the sea."],
+
 "kyoto":["🇯🇵","The old capital — Gion's geisha lanes, vermilion torii up the mountain, raked-gravel temples, machiya townhouses, cherry riverbanks."],
 "hiroshima":["🇯🇵","River city of peace — six delta channels, the A-Dome's skeleton frame, rebuilt streets, okonomiyaki counters."],
 "varanasi":["🇮🇳","Kashi on the Ganges — burning and bathing ghats, labyrinthine lanes, temple spires in dawn mist, silk weavers, the city of eternity."],
@@ -52,7 +52,7 @@ const CITY_INFO = {
 "chiang mai":["🇹🇭","Rose of Lanna — the moated old city, gilded wats with naga staircases, mountain temples, lantern-lit night markets."],
 "auckland":["🇳🇿","City of sails — volcanic cones, the Sky Needle over Waitematā harbour, bungalows on green ridgelines, Pacific water everywhere."],
 "brisbane":["🇦🇺","Sun-state capital — river bends, Queenslanders on stilts, subtropical verandahs, the Story Bridge, jacaranda streets."],
-"quebec city":["🇨🇦","Walled New France — the Château over the St Lawrence, copper roofs, snow-banked ramparts, rue du Petit-Champlain."],
+
 "new orleans":["🇺🇸","Creole crescent — French Quarter iron-lace balconies, jazz doorways, the Mississippi levee, above-ground tombs."],
 "honolulu":["🇺🇸","Pacific crossroads — Waikiki's shoreline towers, Diamond Head, royal palaces and banyan courts, surf on the reef."],
 "zurich":["🇨🇭","Lakeside precision — guild-house facades, blue-grey Limmat quays, trams, pale-stone banks, church towers over cobbled lanes."],
@@ -62,10 +62,10 @@ const CITY_INFO = {
 "marseille":["🇫🇷","The old port — shuttered lanes in limestone, the MuCEM's lattice, calanques, bouillabaisse quays, North African souk energy."],
 "tenochtitlan":["🇲🇽","Aztec island-capital — causeways, chinampa gardens, pyramid-temples, obsidian ornament."],
 "constantinople":["🇹🇷","Byzantine Constantinople — Justinian's vast dome of the Hagia Sophia, Theodosian triple land walls, sunken cisterns, the imperial Golden Horn."],
-"jericho":["🇵🇸","Jericho — the oldest city on Earth, Tell es-Sultan: a spring-fed oasis in the Jordan valley, ancient walls, mudbrick houses and Hisham's desert palace mosaic."],
+
 "babylon":["🇮🇶","Babylon — the gate of the gods: the blue-glazed Ishtar Gate, the Processional Way of lions, the ziggurat Etemenanki."],
 "ur":["🇮🇶","Ur — Sumer's moon city: the Great Ziggurat of Nanna, the Royal Tombs' gold, Abraham's traditional home."],
-"tikal":["🇬🇹","Tikal — the Maya capital in the Petén jungle: limestone step-temples over the canopy, stelae of the jaguar lords."],
+
 "venus":["♀","Venus — Roman goddess of love and desire; wherever she settles, Rome is not far away."],
 "aphrodite":["🐚","Aphrodite — Greek goddess of love, born of sea-foam; her district smells of salt and roses."],
 "eros":["💘","Eros — the god of desire; born of Chaos, he tips his arrows wherever hearts gather."],
@@ -201,7 +201,7 @@ const CITY_INFO = {
 "chennai":["🇮🇳","Dravidian temples — Marina Beach, filter coffee."],
 "shenzhen":["🇨🇳","Instant megacity — vertical villages, maker factories."],
 "manila":["🇵🇭","Walled Intramuros + jeepney energy — bay sunsets."],
-"xi'an":["🇨🇳","Ancient capital — the city-wall loop, terracotta memory."],
+
 "hangzhou":["🇨🇳","West Lake city — mist, tea fields, poetic bridges."],
 "bengaluru":["🇮🇳","Garden-tech capital — Cubbon Park, craft breweries."],
 "dar es salaam":["🇹🇿","Swahili coast — dhow harbour, German colonial core."],
@@ -259,7 +259,7 @@ const CITY_INFO = {
 "amman":["🇯🇴","White-stone city of seven hills — a Roman theatre, levantine stair-streets, café culture."],
 "kuwait city":["🇰🇼","Gulf harbour capital — mushroom water towers, a souk under glass, a dhow corniche."],
 "kathmandu":["🇳🇵","Valley of pagodas — brick-and-timber squares, prayer flags, Himalayan haze."],
-"macau":["🇲🇴","Portuguese-Chinese port — baroque church facades, wave-patterned mosaic streets, casino neon."],
+
 "hanoi":["🇻🇳","Old quarter of thirty-six trades — tube houses, lake pagodas, motorbike tides."],
 "nairobi":["🇰🇪","Green city in the sun — jacaranda season, matatu colour, a national park at the city fence."],
 "addis ababa":["🇪🇹","The new flower capital — eucalyptus hills, art-deco lanes, Africa's diplomatic seat."],
@@ -297,7 +297,7 @@ const CITY_INFO = {
 "san josé":["🇨🇷","Coffee-capital valley — tile-roofed barrio Amón, volcano views."],
 "san juan":["🇵🇷","El Morro capital — pastel old-town, fortress walls over the Atlantic."],
 "seattle":["🇺🇸","Emerald city — glasshouses over Pike Place, ferries in the sound, coffee on every corner."],
-"colombo":["🇱🇰","Port city of the east — colonial arcades, temple bells, cinnamon-scented streets."],
+
 "perth":["🇦🇺","Indian-ocean isolation city — endless white beaches, miners' money, Fremantle sunsets."],
 "ottawa":["🇨🇦","Bytown on three rivers — parliament gothic over the Ottawa, canal skaters in winter."],
 "mogadishu":["🇸🇴","The white pearl of the Indian Ocean — Arab-Swahili coral-stone merchant houses, whitewashed arcades, dhow harbour."],
@@ -306,8 +306,8 @@ const CITY_INFO = {
 "managua":["🇳🇮","Lakeside capital without a centre — the earthquake-rung old cathedral, revolution-roundabout murals, a line of volcanoes."],
 "asunción":["🇵🇾","South America's mother city — riverside terracotta lanes, orange trees, the colonial cabildo and a lazy wide Paraná."],
 "port-au-prince":["🇭🇹","Hillside capital of gingerbread houses — fretted gables and iron-lace balconies above the Golfe de la Gonâve."],
-"cap-haïtien":["🇭🇹","The Paris of the Antilles — a low colonial grid beneath the Citadelle Laferrière's mountain."],
-"jacmel":["🇭🇹","Carnival city on a horseshoe bay — painted gingerbread facades and the mask-makers' ateliers."],
+
+
 "bern":["🇨🇭","Federal capital of arcades — the Bundeshaus over the Aare, Zytglogge clock tower, Renaissance rooftops."],
 "luxembourg":["🇱🇺","Fortress gorge city — viaducts over deep valleys, bank towers above old bastions."],
 "valletta":["🇲🇹","The Knights' capital — baroque auberges, steep bastioned streets, balconied Maltese limestone."],
@@ -319,8 +319,8 @@ const CITY_INFO = {
 "podgorica":["🇲🇪","Confluence capital — modern blocks between the Morača gorge and the old Turkish quarter."],
 "pristina":["🇽🇰","Young capital — the Brutalist library, the NEWBORN monument, café boulevards."],
 "vaduz":["🇱🇮","Alpine microcapital — the castle above, the Rhine valley below, one stately pedestrian street."],
-"san marino":["🇸🇲","Three towers on Mount Titano — stone gate towers above the Apennine haze."],
-"vatican city":["🇻🇦","The smallest capital — St Peter's dome, the colonnade's arms, museums in a city of priests."],
+
+
 "monaco":["🇲🇨","Cliff city-state — belle époque casino, yacht harbour, towers pressed between rock and sea."],
 "andorra la vella":["🇦🇩","Pyrenean valley capital — granite-and-slate houses, a Romanesque bell tower, shopping streets."],
 "salzburg":["🇦🇹","Baroque on the Salzach — the domed cathedral, fortress funicular, Mozart's yellow facades."],
@@ -360,55 +360,55 @@ const CITY_INFO = {
 "verona":["🇮🇹","Roman arena city — pink marble lanes, Juliet's balcony, the Adige's river bend."],
 "rabat":["🇲🇦","Royal capital — the blue-and-white kasbah, the unfinished Hassan Tower, palace boulevards."],
 "tripoli":["🇱🇾","Mediterranean whitewash — the Ottoman piazza, the Red Castle museum, Italian-era arcades."],
-"yamoussoukro":["🇨🇮","Basilica capital — the world's largest church rising from the forest, planned avenues."],
-"porto-novo":["🇧🇯","Lagoon capital — Afro-Brazilian architecture, the grand mosque modelled on a church."],
+
+
 "ouagadougou":["🇧🇫","Red-dust capital — the central market, the grand mosque, crafts of the Sahel."],
 "bamako":["🇲🇱","Niger river city — mud-brick markets, the pink market dome, Malian music clubs."],
 "niamey":["🇳🇪","Sahelian capital on the Niger — mosque minarets, francophone boulevards, giraffe country beyond."],
 "lomé":["🇹🇬","Lagoon-side capital — voodoo shrines, palm-lined avenues, the fetish market."],
 "conakry":["🇬🇳","Tomato island capital — peninsula city, the Grand Mosque of Guinea, Atlantic humidity."],
 "freetown":["🇸🇱","Cotton tree capital — Krio wooden houses, mountains meeting the bay, freed-settler history."],
-"banjul":["🇬🇲","River-mouth capital — colonial sheds, Arch 22, oyster boats on the Gambia."],
-"bissau":["🇬🇼","Decay-elegant capital — the Portuguese quarter, carnival roots, cashew seasons."],
-"juba":["🇸🇸","Nile capital — new bridges over the White Nile, river port of the world's youngest state."],
-"gitega":["🇧🇮","Royal hill capital — the drum sanctuaries, the Gishora royal enclosure, central highlands."],
+
+
+
+
 "brazzaville":["🇨🇬","Pool-side capital — Nabemba tower, green-tiled basilica roofs, the rapids down the Congo."],
-"bangui":["🇨🇫","Riverbend capital — a colonial grid on the Ubangi, the grand market, boat piers."],
+
 "n'djamena":["🇹🇩","Confluence capital — Chari riverfront, the grand mosque, camel routes to the Sahel."],
-"windhoek":["🇳🇦","German colonial capital — the Christuskirche spire, high-veld light, desert roads out."],
-"gaborone":["🇧🇼","New city in the bush — the government enclave, diamond-finance towers, Kgale hill behind."],
+
+
 "harare":["🇿🇼","Jacaranda capital — flowering avenues, balanced kopje rocks, colonial-era arcades."],
 "lusaka":["🇿🇲","Copperbelt gateway — planned rondavel townships, July jacarandas, safari crossroads."],
 "lilongwe":["🇲🇼","Garden capital — the new city centre, ministries of red brick, tobacco auction floors."],
-"maseru":["🇱🇸","Kingdom capital — Basotho blankets in town, the Maseru tower, highland plateau."],
-"mbabane":["🇸🇿","Valley capital — the Ezulwini valley below, Swazi craft markets, granite hills."],
+
+
 "asmara":["🇪🇷","Frozen art deco capital — fascist-era cinemas, café boulevards, highland modernism."],
-"djibouti city":["🇩🇯","Gulf of Aden port — white coral lanes, plazas of the French quarter, salt lakes beyond."],
-"dodoma":["🇹🇿","Capital in the interior — the moved-parliament city, wine-country hills, baobab plains."],
-"port louis":["🇲🇺","Island harbour capital — Chinatown arcades, the citadel, sugarcane mountains behind."],
-"dili":["🇹🇱","Newest capital — Portuguese churches, resistance statues, a coral coast."],
+
+
+
+
 "pyongyang":["🇰🇵","Showcase capital — monumental avenues, metro palaces, the Juche tower over the Taedong."],
 "ulaanbaatar":["🇲🇳","Yurt-and-tower capital — Soviet blocks, gers on the hillsides, the steppe at the edge of town."],
-"vientiane":["🇱🇦","Slow capital — golden That Luang, riverside night market, French baguettes with pâté."],
+
 "phnom penh":["🇰🇭","Four rivers city — the royal palace's gold, art-deco Psar Thmei, the Mekong confluence."],
 "naypyidaw":["🇲🇲","The hidden capital — twenty-lane emptiness, replica parliament, carved teak halls."],
 "islamabad":["🇵🇰","Planned garden capital — Margalla hills, the Faisal mosque's desert tents, diplomatic groves."],
 "kabul":["🇦🇫","Mountain-ring capital — bazaars under the Hindu Kush, Timurid gardens, the street of the booksellers."],
 "muscat":["🇴🇲","Whitewashed capital — the sultan's palaces between jagged hills and the Gulf of Oman."],
 "sana'a":["🇾🇪","Mud-skyscraper city — tower houses with white gypsum frosting, a thousand-year-old old town."],
-"manama":["🇧🇭","Gulf island capital — world-trade towers, souq gold, causeways to the mainland."],
+
 "dushanbe":["🇹🇯","Monday-market capital — Soviet palaces, fountain avenues, the mountains of the victory park."],
 "ashgabat":["🇹🇲","White marble capital — golden statues, fountains everywhere, the Karakum at the edge."],
 "bishkek":["🇰🇬","Ala-too capital — Soviet boulevards, the opera house, the Tian Shan at the horizon."],
-"canberra":["🇦🇺","Designed capital — Lake Burley Griffin, the parliament's roof, garden suburbs of the bush."],
-"wellington":["🇳🇿","Windy harbour capital — wooden Victorian houses on hills, the Beehive parliament, a cable car."],
-"port moresby":["🇵🇬","Coral-reef capital — stilt villages over the water, the parliament's haus tambaran."],
+
+
+
 "santo domingo":["🇩🇴","First capital of the Americas — colonial-zone cobbles, the Alcázar de Colón, the first cathedral."],
-"port of spain":["🇹🇹","Carnival capital — the Magnificent Seven mansions, Queen's Park Savannah, steel-pan yards."],
-"bloemfontein":["🇿🇦","Judicial city of roses — the sandstone appeal court, Boer republic history, central plateau."],
+
+
 "nouakchott":["🇲🇷","Capital at the desert's edge — sand-floored quarters, the Saudi mosque's twin minarets, Atlantic fishing beaches, a city still half-nomad at heart."],
 "libreville":["🇬🇦","Estuary capital — waterfront boulevards, glass towers among the mangroves, Fang masks in the forest galleries."],
-"malabo":["🇬🇶","Volcanic island capital — Spanish colonial balconies under Pico Basilé, oil money on an equatorial bay."],
+
 "jinan":["🇨🇳","City of springs — the Black Spring's emerald pools, lake-gardens of Daming Hu, Confucian heartland nearby."],
 "dalian":["🇨🇳","Harbour modernism — star-shaped squares, coastal promenades, Russian-Japanese-era blocks on the Liaodong peninsula."],
 "qingdao":["🇨🇳","German brewery town — red-tiled roofs and the Zhanqiao pier, Tsingtao malt, beaches below Laoshan."],

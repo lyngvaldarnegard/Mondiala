@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.6 — the city reaches the horizon** | `main` (this push) | current · rings 9–11 get their pink lattice, no god hand-seated any more (the favourites rule), the dormant five wake, concepts of eros ride the horizon |
+| **v1.7 — the city finds the centre** | `main` (this push) | current · the heart pulls the centre (heart + seated roster, iterated), forty deletions, the map is infinite — ring 12 |
+| **v1.6 — the city reaches the horizon** | `8d26c34` | bookmark branch `archive/v1.6-the-city-reaches-the-horizon` |
 | **v1.5 — the lattice steps out** | `e059141` | bookmark branch `archive/v1.5-the-lattice-steps-out` |
 | **v1.4.1 — six-fold pink lattice** | `c70e1b9` | bookmark branch `archive/v1.4.1-six-fold-pink-lattice` |
 | **v1.4 — the heart goddesses** | `2e878bf` | bookmark branch `archive/v1.4-the-heart-goddesses` |
@@ -20,6 +21,16 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.7 — the city finds the centre
+
+The centre is no longer the roster's alone — the city finds its own centre, the roster thins by his forty, and the designed horizon dissolves:
+
+- **The heart pulls**: every city tiled on the map — the ancient heart and Norden included — pulls Mondiala's centre by its real-life location, and the seating iterates until the centre settles. Tenochtitlan and all of Norden got real coordinates for this. New fresh centres: geo the Kemenesalja foothills near Celldömölk, Hungary · pop the Volhynian uplands near Mizoch, Ukraine · great the Sárvíz valley south of Székesfehérvár, Hungary
+- **Forty deletions**: the 36 non-European cities under a million (Jerusalem exempted, his call), plus Vatican City and San Marino (his call) and Xi'an and Tunis (no modern duplicates of heart Chang'an and Carthage) — roster 310 → 270, every trace of their data removed
+- **The map is infinite**: the pool no longer stops at the designed horizon — ring 11 leaves six riders, ring 12 opens to seat them, and the frontier lattice (the {2,6,10} pattern, eighteen pink) holds all four laws; the frontier's parks wait as free-use districts, no god arrived yet. The pool runs dry: every city is tiled
+- Growth re-flows the whole outer seating now — the grow-back-restores-exact-city law is retired by his choice
+- Suite: **700 checks, all green** (the forty-deletion audit alone is 201 checks)
 
 ## v1.6 — the city reaches the horizon
 

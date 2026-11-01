@@ -3,14 +3,15 @@
 // Generated from the Mondiala City Designer canvas; edit there and re-split.
 // the pink free-use district lattice — reserved, minimal, six-fold symmetric with the green spokes and mirror-symmetric inside each of the six sections between them — no two pink districts ever touch;
 // the slot lattice never moves, but WHICH god sits in WHICH slot follows the compass:
-// each god faces their homeland, by bearing from Mondiala's centre — same rule as the cities; the lattice runs from ring 6 out to ring 11, the designed horizon
+// each god faces their homeland, by bearing from Mondiala's centre — same rule as the cities; the lattice runs from ring 6 outward with the city itself — the map is infinite (v1.7)
 const PINK_SLOTS = {
   6: [3,5,9,11,15,17,21,23,27,29,33,35],
   7: [2,7,9,14,16,21,23,28,30,35,37,42],
   8: [5,13,21,29,37,45],
   9: [3,8,12,17,21,26,30,35,39,44,48,53],
   10: [2,6,10,12,16,20,22,26,30,32,36,40,42,46,50,52,56,60],
-  11: [4,9,15,20,26,31,37,42,48,53,59,64]
+  11: [4,9,15,20,26,31,37,42,48,53,59,64],
+  12: [3,7,11,15,19,23,27,31,35,39,43,47,51,55,59,63,67,71] // v1.7: the frontier lattice — {2,6,10} per section, all four laws verified out here
 };
 // the favourites — the rules of seating favour them, so they end up close to the centre
 const FAVOURITE_GODS = ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama","Parvati","Lakshmi"];
@@ -22,7 +23,8 @@ const PINK_GODS = {
   8: ["Áine","Parvati","Yue Lao","Mami Wata","Tlazolteotl","Erzulie Freda"],
   9: ["Shaushka","Attis","Min","Lofn","Xochipilli","Tu'er Shen","Laka","Diyan Masalanta","Lel","Lelia","Volupia"],
   10: ["Suadela","Hedylogos","Lempo","Aengus","Wadd","Hymenaios","Aphroditus","Dali","Anal","Vagina","Penis","Oral","Tantra","Chastity","Romance","Intimacy","Bondage","Dominance"],
-  11: ["Lakshmi","Submission","Orgy","Promiscuity","Polyamory","Masturbation","Orgasm","Edging","Libido","Erotica","Nude","Voyeurism","Hedonism"]
+  11: ["Lakshmi","Submission","Orgy","Promiscuity","Polyamory","Masturbation","Orgasm","Edging","Libido","Erotica","Nude","Voyeurism","Hedonism"],
+  12: [] // v1.7: the frontier's pink districts wait as parks — no god has arrived yet
 };
 // where each god of love comes from [lat, lon] — the bearing from Mondiala to this spot decides
 // which pink hex an OUTER god takes: eastern gods sit with the eastern cities, western with western,

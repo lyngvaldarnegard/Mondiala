@@ -34,25 +34,25 @@ Five of the great six (**Aphrodite, Venus, Eros, Kama, Freyja**) sit at the ring
 
 Outside the authored heart, the city is **placed by real geography** instead of by hand:
 
-- One roster of **311 great cities** — the big ones, the livable ones, the walkable ones, the ancient ones and simply famous ones — each carrying its real latitude and longitude. The ancient and holy cities that once sat in the hand-made heart (**Aleppo, Diyarbakır, Jerusalem, Babylon, Mecca, Aksum**) are back on the roster and flow onto the outer rings by the same compass rule, settling near their kin
-- **The capital audit**: every European capital (all 50, from Vatican City and San Marino to Moscow and Ankara) and every capital of a country with more than a million people (from Washington D.C. and Mexico City to Nouakchott, Libreville and Malabo) is on the map — plus the classic non-capitals: Salzburg, Basel, Lausanne, Lucerne, Lyon, Marseille, Naples, Turin, Bologna, Genoa, Palermo, Verona, Rotterdam, The Hague, Antwerp, Ghent, Bruges, Cambridge, Oxford, Dublin, Cork, Birmingham, Leeds, Manchester, Edinburgh, Aberdeen, Glasgow, Lviv, Odesa, Thessaloniki…
+- One roster of **270 great cities** — the big ones, the livable ones, the walkable ones, the ancient ones and simply famous ones — each carrying its real latitude and longitude. The ancient and holy cities that once sat in the hand-made heart (**Aleppo, Diyarbakır, Jerusalem, Babylon, Mecca**) are back on the roster and flow onto the outer rings by the same compass rule, settling near their kin
+- **The capital audit**: every European capital but his two v1.7 exceptions (Vatican City and San Marino stepped off) and every capital of a country with more than a million people (from Washington D.C. and Mexico City to Nouakchott and Libreville) is on the map — plus the classic non-capitals: Salzburg, Basel, Lausanne, Lucerne, Lyon, Marseille, Naples, Turin, Bologna, Genoa, Palermo, Verona, Rotterdam, The Hague, Antwerp, Ghent, Bruges, Cambridge, Oxford, Dublin, Cork, Birmingham, Leeds, Manchester, Edinburgh, Aberdeen, Glasgow, Lviv, Odesa, Thessaloniki…
 - **Mondiala sits at the centre of that roster**: wherever the roster's centre falls on Earth, that is where Mondiala "is", and the rings read like a compass around it — a city's bearing from the centre picks its hexagon, its real distance picks its ring (near = inner), and population breaks ties
 - **Three switchable centre modes** (the panel shows the coordinates *and the country, with its flag*, wherever Mondiala ends up):
-  - **Geographic** — the plain midpoint of all 311 cities: ≈ 43.02°N 24.62°E, in the **Central Balkan foothills above the Rositsa valley, Bulgaria** (🇧🇬)
-  - **Population-weighted** — weighted by urban-area population (ancient cities at their ancient peaks): ≈ 39.13°N 68.15°E, in the **Fann mountains of the Zarafshan range, Tajikistan** (🇹🇯)
-  - **Greatness-weighted** — size + livability + walkability: ≈ 45.79°N 28.55°E, on the **Budjak steppe near Cahul, Moldova** (🇲🇩)
+  - **Geographic** — the plain midpoint of every tiled city, heart included: ≈ 47.21°N 17.24°E, in the **Kemenesalja foothills near Celldömölk, western Hungary** (🇭🇺)
+  - **Population-weighted** — weighted by urban-area population (ancient cities at their ancient peaks): ≈ 50.29°N 25.57°E, in the **Volhynian uplands near Mizoch, north-western Ukraine** (🇺🇦)
+  - **Greatness-weighted** — size + livability + walkability: ≈ 47.04°N 18.50°E, in the **Sárvíz valley south of Székesfehérvár, Hungary** (🇭🇺)
 - The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇺🇿 Uzbekistan (nearest: Tashkent, 96 km)")
-- **Add a city and the map re-flows**: add a name, coordinates and population to the roster data, and Mondiala's centre moves — every ring re-settles around the new middle. Removing the city again restores the exact previous map
-- **The pool = cities beyond the horizon**: the 185 cities too far from the centre to fit before ring 8 ends — in geographic mode the megacities of the far side (Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, São Paulo) plus the world's younger capitals (Canberra, Wellington, Pyongyang, Ottawa, Brasília, Nairobi, Kigali, Nouakchott, Libreville, Malabo), Japan's Kyoto and Hiroshima, the Pacific and Gulf cities (Auckland, Brisbane, Honolulu, New Orleans, Quebec City) and ancient Tikal and Timbuktu. Press **+ Next ring** and the city grows ring by ring: ring 9 takes 42 pool cities and 12 pink districts (pool 185 → 143), ring 10 takes 42 more with 18 pink (→ 101), ring 11 takes 54 more with 12 pink (→ 47) — adding stops at the designed horizon with 47 still in the pool; **− Remove ring** takes it back, nothing is saved
+- **Add a city and the map re-flows**: add a name, coordinates and population to the roster data, and Mondiala's centre moves — every ring re-settles around the new middle. Since v1.7 the centre iterates over the seated set, so removing a city re-flows the map — the old exact-restore law is retired
+- **The pool = cities beyond the rim**: the 144 cities too far from the centre to fit before ring 8 ends — in geographic mode the megacities of the far side (Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, São Paulo) plus the world's younger capitals (Pyongyang, Ottawa, Brasília, Nairobi, Kigali, Nouakchott, Libreville), Japan's Kyoto and Hiroshima and the Pacific and Gulf cities (Auckland, Brisbane, Honolulu, New Orleans). Press **+ Next ring** and the city grows ring by ring: ring 9 takes 42 pool cities and 12 pink districts (pool 144 → 102), ring 10 takes 42 more with 18 pink (→ 60), ring 11 takes 54 more with 12 pink (→ 6) — and then the map is infinite: ring 12 opens, seats the last six and the pool runs dry, every city tiled; **− Remove ring** takes it back, nothing is saved
 
 ## The pink free-use districts
 
-- **36 pink free-use districts ship in the fresh city** — six heart goddesses on ring 4's middles and 30 in the outer lattice: 12 in ring 6, 12 in ring 7, 6 in ring 8 — and the horizon brings 42 more: 12 on ring 9, 18 on ring 10, 12 on ring 11 (78 at the designed horizon) — all named after gods of love and sexuality, with concepts of eros riding the mixed horizon rings alongside them; the six cradle goddesses still wait unplaced
+- **36 pink free-use districts ship in the fresh city** — six heart goddesses on ring 4's middles and 30 in the outer lattice: 12 in ring 6, 12 in ring 7, 6 in ring 8 — and the growth rings bring 60 more: 12 on ring 9, 18 on ring 10, 12 on ring 11, 18 on ring 12 (96 at the frontier) — the god-named ones after gods of love and sexuality, with concepts of eros riding the mixed rings alongside them, and the frontier's pink districts waiting as free-use parks, their gods not yet arrived; the six cradle goddesses still wait unplaced
 - **Four lattice rules**, enforced by the checker:
   1. **No god on the green** — the pink districts are never allowed on Metropol or the green spokes, which carry the metro main lines
   2. **Symmetry** — the pink set is six-fold symmetric around the green spokes (the pattern repeats around every spoke) and mirror-symmetric inside each of the six sections between them
   3. **Every ordinary hexagon of the outer city touches a god** — any hex of rings 5 and beyond that is not green borders at least one pink free-use district; the authored heart stands on its own
-  4. **No two pinks ever touch** — a pink district never borders another; the ring-6 twelve sit at each section's 3rd and 5th hex, the ring-9 twelve at the 3rd and 8th, the ring-10 eighteen at the 2nd, 6th and 10th, and the ring-11 twelve at the 4th and 9th, so the lattice steps out and the pink tiles never meet
+  4. **No two pinks ever touch** — a pink district never borders another; the ring-6 twelve sit at each section's 3rd and 5th hex, the ring-9 twelve at the 3rd and 8th, the ring-10 eighteen at the 2nd, 6th and 10th, and the ring-11 twelve at the 4th and 9th, and the ring-12 eighteen at the 2nd, 6th and 10th, so the lattice steps out and the pink tiles never meet
 - The cradle goddesses wait unplaced; the heart's goddess star ships with the checker reading zero on every count — seating the cradle six is up to you
 - No god is hand-seated any more: the **favourites rule** seats the favoured eight (Eros, Aphrodite, Venus, Freyja, Cupid, Kama, Parvati, Lakshmi) close to the centre — Cupid, Parvati and Lakshmi claim ring 6 seats — and the outer gods sit **by compass**: each takes the reserved pink hex that faces their homeland, by bearing from Mondiala's centre — the same rule as the cities. Eastern gods (Nanaya, Anahita, Ishtar, Parvati, Yue Lao, Astghik, Aizen-Myōō) sit with the eastern cities; African gods (Oshun, Bastet, Bes, Mami Wata, Erzulie Freda) to the south; the Norse and Baltic ones (Sjöfn, Freyr, Zhiva) to the north — Milda moved up into the heart's north-east middle; the Mediterranean love gods (Cupid, Adonis, Astarte, Qetesh, Turan, Prende, Lada, Cybele, Dionysus, Himeros, Peitho, Anteros, Pothos) with the classical world; and Áine and Tlazolteotl to the west. Each god's homeland coordinates are part of the data
 - **The gods re-shuffle with the centre**: switch centre mode or add a city, and the outer gods re-settle onto the same reserved lattice to face their homelands from the new spot — and the heart gods never move
@@ -68,7 +68,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **Read-only in the browser** — every hex shows exactly what the data says; naming a hex for a god of love in the data makes it pink automatically
 - **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag)
 - **Lattice checker** enforcing the four lattice rules — green spokes stay sacred, symmetry stays whole, no ordinary hex gets left without a god, no two pinks ever touch
-- **Headless test suite**: 513 checks verify the roster's integrity, the heart's authored contents, the four lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
+- **Headless test suite**: 700 checks verify the roster's integrity, the heart's authored contents, the four lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
 
 ## Usage
 
@@ -79,7 +79,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only the controls stay selectable
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
-- **+ Next ring / − Remove ring** are view-only: grow the city ring by ring until the designed horizon (ring 11, or until the pool runs dry), or unwind it all the way down to bare Metropol and grow it back — the view re-fits so the new rim's edges touch the screen; nothing is saved, a reload resets to the shipped city
+- **+ Next ring / − Remove ring** are view-only: grow the city ring by ring — the map is infinite, so the rings keep opening until the pool runs dry (ring 12 in the shipped data), or unwind it all the way down to bare Metropol and grow it back — the view re-fits so the new rim's edges touch the screen; nothing is saved, a reload resets to the shipped city
 - Click a hexagon to inspect it
 - "Check lattice" flags violations of the four lattice rules on the map
 
@@ -88,7 +88,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 The headless suite that keeps every claim in this README honest lives in
 **[`test/`](test/)** and is part of the repository — so it survives everything and anyone
 can re-run it. It loads the *shipped* files (`mondiala.html` + its five themed data
-files) the same way a browser would, rebuilds the city, and runs **513 checks**: roster integrity, the
+files) the same way a browser would, rebuilds the city, and runs **700 checks**: roster integrity, the
 authored heart, the lattice rules and validator, the read-only map, the ring viewer, all three centre
 modes' placements, pools and centres, the capital audit, pan/zoom, and a full `DATA.md` consistency pass.
 
@@ -103,7 +103,7 @@ small file instead of a monolith:
 
 - **[`mondiala-heart.js`](mondiala-heart.js)** — the authored heart, rings 0–4: Metropol, the cradle
   civilisations, the ancient cities, Norden and the inspiration cities
-- **[`mondiala-cities.js`](mondiala-cities.js)** — the 311-city world roster with real
+- **[`mondiala-cities.js`](mondiala-cities.js)** — the 270-city world roster with real
   coordinates, each city's country, and the three verified centre spots
 - **[`mondiala-info.js`](mondiala-info.js)** — the info cards: [flag, style description] for
   every hexagon's real-world model
@@ -133,5 +133,5 @@ Real-city data in the info cards:
   to that index and marked "≈".
 - **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).
 - **Coordinates** — city-centre latitude/longitude in decimal degrees.
-- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Bulgaria, Tajikistan, Moldova).
+- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Hungary, Ukraine, Hungary).
 - **God homelands** — each love god's origin coordinates decide which reserved pink hex they face; the outer gods re-settle by compass whenever Mondiala's centre moves, and the twelve heart gods wait to be seated in the data.

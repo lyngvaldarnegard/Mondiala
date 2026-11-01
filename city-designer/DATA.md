@@ -39,10 +39,10 @@ Human-readable copy of [`mondiala-data.js`](mondiala-data.js) — auto-generated
 | 3 | 11 | Kaunas | 1903 |
 | 3 | 12 | Göteborg | 1367.3 |
 | 3 | 13 | Billund | 870 |
-| 3 | 14 | Turku | Åbo | 853.45 |
+| 3 | 14 | Turku \| Åbo | 853.45 |
 | 3 | 15 | Trondheim | 672.81 |
 | 3 | 16 | Bergen | 660.75 |
-| 3 | 17 | Tampere | Tammerfors | 501.7 |
+| 3 | 17 | Tampere \| Tammerfors | 501.7 |
 | 3 | 18 | Vyborg | 519 |
 
 ## The pink free-use district lattice — reserved, minimal, mirror-symmetric

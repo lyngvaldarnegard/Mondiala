@@ -50,7 +50,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **36 pink free-use districts ship today** — six heart goddesses on ring 4's middles and 30 in the outer lattice: 12 in ring 5, 12 in ring 7, 6 in ring 8 — all named after gods of love and sexuality; the six cradle goddesses wait unplaced, 42 in total once they're seated
 - **Three lattice rules**, enforced by the checker:
   1. **No god on the green** — the pink districts are never allowed on Metropol or the green spokes, which carry the metro main lines
-  2. **Mirror symmetry** — the pink set mirrors across the north–south axis; the left half of the city matches the right
+  2. **Symmetry** — the pink set is six-fold symmetric around the green spokes (the pattern repeats around every spoke) and mirrors across the north–south axis; the left half of the city matches the right
   3. **Every ordinary hexagon of the outer city touches a god** — any hex of rings 5 and beyond that is not green borders at least one pink free-use district; the authored heart stands on its own
 - The cradle goddesses wait unplaced; the heart's goddess star ships 0 / 0 / 0 (no flags) — seating the cradle six is up to you
 - The outer gods sit **by compass**: each takes the reserved pink hex that faces their homeland, by bearing from Mondiala's centre — the same rule as the cities. Eastern gods (Nanaya, Anahita, Ishtar, Parvati, Yue Lao, Astghik, Aizen-Myōō) sit with the eastern cities; African gods (Oshun, Bastet, Bes, Mami Wata, Erzulie Freda) to the south; the Norse and Baltic ones (Sjöfn, Freyr, Zhiva) to the north — Milda moved up into the heart's north-east middle; the Mediterranean love gods (Cupid, Adonis, Astarte, Qetesh, Turan, Prende, Lada, Cybele, Dionysus, Himeros, Peitho, Anteros, Pothos) with the classical world; and Áine and Tlazolteotl to the west. Each god's homeland coordinates are part of the data
@@ -67,7 +67,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **Read-only in the browser** — every hex shows exactly what the data says; naming a hex for a god of love in the data makes it pink automatically
 - **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag)
 - **Lattice checker** enforcing the three lattice rules — green spokes stay sacred, symmetry stays whole, no ordinary hex gets left without a god
-- **Headless test suite**: 468 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
+- **Headless test suite**: 472 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
 
 ## Usage
 
@@ -87,7 +87,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 The headless suite that keeps every claim in this README honest lives in
 **[`test/`](test/)** and is part of the repository — so it survives everything and anyone
 can re-run it. It loads the *shipped* files (`mondiala.html` + its five themed data
-files) the same way a browser would, rebuilds the city, and runs **468 checks**: roster integrity, the
+files) the same way a browser would, rebuilds the city, and runs **472 checks**: roster integrity, the
 authored heart, the lattice rules and validator, the read-only map, the ring viewer, all three centre
 modes' placements, pools and centres, the capital audit, pan/zoom, and a full `DATA.md` consistency pass.
 

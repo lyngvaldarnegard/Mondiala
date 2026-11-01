@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.4 — the heart goddesses** | `main` (this push) | current · six goddesses of love on the ring-4 middles by compass |
+| **v1.4.1 — six-fold pink lattice** | `main` (this push) | current · ring 5's pink slots go six-fold symmetric, like rings 7 and 8 |
+| **v1.4 — the heart goddesses** | `2e878bf` | bookmark branch `archive/v1.4-the-heart-goddesses` |
 | **v1.3.2 — down to bare Metropol** | `08d7440` | bookmark branch `archive/v1.3.2-down-to-bare-metropol` |
 | **v1.3.1 — the ring viewer** | `f945990` | bookmark branch `archive/v1.3.1-ring-viewer` |
 | **v1.3 — the map goes read-only** | `af81811` | bookmark branch `archive/v1.3-read-only-map` |
@@ -17,6 +18,15 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.4.1 — six-fold pink lattice
+
+The visible asymmetry, caught by his eye while the checker read zero: ring 5's twelve slots ran one rhythm around the east half of the ring (2nd and 4th hex of each spoke-to-spoke segment) and the flipped rhythm around the west half (1st and 3rd) — left-right mirror-symmetric, so the old check passed, but visibly lopsided: the north spoke flanked by no pink at all, the south spoke flanked by pink on both sides.
+
+- **Ring 5's slots now sit in middle pairs at the diagonals** — 3, 4, 8, 9, 13, 14, 18, 19, 23, 24, 28, 29 — six-fold symmetric like ring 7 (spoke-flanking) and ring 8 (diagonals), echoing the ring-4 goddess star and ring-8's diagonal seats
+- The twelve ring-5 gods re-shuffled onto the new slots by compass automatically; the spoke-flanking alternative was tested and rejected — it would have left six ring-6 hexes uncovered
+- **New suite checks**: every ring's pink set must be invariant under a 60° rotation — the check that would have caught this
+- Suite: **472 checks, all green**
 
 ## v1.4 — the heart goddesses
 

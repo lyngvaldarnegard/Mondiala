@@ -1,11 +1,11 @@
 // Mondiala City Designer — data 5/5: the gods of love — the pink slot lattice, the waiting gods
 // per ring, each god's homeland coordinates, and the full name set.
 // Generated from the Mondiala City Designer canvas; edit there and re-split.
-// the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
+// the pink free-use district lattice — reserved, minimal, six-fold symmetric with the green spokes and mirror-symmetric about the north–south axis;
 // the slot lattice never moves, but WHICH god sits in WHICH slot follows the compass:
 // each god faces their homeland, by bearing from Mondiala's centre — same rule as the cities
 const PINK_SLOTS = {
-  5: [3,5,8,10,13,15,17,19,22,24,27,29],
+  5: [3,4,8,9,13,14,18,19,23,24,28,29],
   7: [2,7,9,14,16,21,23,28,30,35,37,42],
   8: [5,13,21,29,37,45]
 };
@@ -29,4 +29,4 @@ const GOD_ORIGINS = {
 "áine":[52.48,-8.61],"parvati":[25.32,83.01],"yue lao":[39.90,116.41],"mami wata":[4.05,9.70],"tlazolteotl":[19.43,-99.13],"erzulie freda":[18.54,-72.34]
 };
 
-const SEX_GODS = new Set(["venus","aphrodite","kama","freyja","zhinü","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","cavillaca","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda","eros","ishtar","anteros","pothos","astghik","aizen-myōō"]); // gods of love and sexuality — any hex named for one of them is a pink free-use district; six goddesses sit in the heart's ring 4 by compass, each facing her homeland (Milda north-east, Kama east, Aphrodite south-east, Eros south-west, Venus west, Freyja north-west); the cradle goddesses wait unplaced — name any hexagon for one of them and it turns pink; the outer gods sit on the mirror-symmetric slot lattice, proven minimal, settling by compass and facing their homelands
+const SEX_GODS = new Set(["venus","aphrodite","kama","freyja","zhinü","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","cavillaca","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda","eros","ishtar","anteros","pothos","astghik","aizen-myōō"]); // gods of love and sexuality — any hex named for one of them is a pink free-use district; six goddesses sit in the heart's ring 4 by compass, each facing her homeland (Milda north-east, Kama east, Aphrodite south-east, Eros south-west, Venus west, Freyja north-west); the cradle goddesses wait unplaced — name any hexagon for one of them and it turns pink; the outer gods sit on the six-fold symmetric slot lattice, proven minimal, settling by compass and facing their homelands

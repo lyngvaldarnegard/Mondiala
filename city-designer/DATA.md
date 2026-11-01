@@ -103,31 +103,31 @@ Mondiala sits at 42.14872°, 24.79302° — 🇧🇬 Bulgaria (the Thracian plai
 | 1 | Budapest |
 | 2 | Lviv |
 | 3 | Sjöfn ♥ |
-| 4 | Bucharest |
-| 5 | Astghik ♥ |
+| 4 | Astghik ♥ |
+| 5 | Bucharest |
 | 6 | Chisinau |
 | 7 | Odesa |
 | 8 | Astarte ♥ |
-| 9 | Sevastopol |
-| 10 | Qetesh ♥ |
+| 9 | Qetesh ♥ |
+| 10 | Sevastopol |
 | 11 | Ankara |
 | 12 | Homoia |
 | 13 | Adonis ♥ |
-| 14 | Thessaloniki |
-| 15 | Anteros ♥ |
+| 14 | Anteros ♥ |
+| 15 | Thessaloniki |
 | 16 | Tirana |
-| 17 | Pothos ♥ |
-| 18 | Naples |
+| 17 | Naples |
+| 18 | Pothos ♥ |
 | 19 | Oshun ♥ |
 | 20 | Skopje |
 | 21 | Podgorica |
-| 22 | Prende ♥ |
-| 23 | Pristina |
+| 22 | Pristina |
+| 23 | Prende ♥ |
 | 24 | Cupid ♥ |
 | 25 | Sarajevo |
 | 26 | Sofia |
-| 27 | Turan ♥ |
-| 28 | Zagreb |
+| 27 | Zagreb |
+| 28 | Turan ♥ |
 | 29 | Lada ♥ |
 | 30 | Belgrade |
 
@@ -284,36 +284,36 @@ Mondiala sits at 36.93213°, 67.00018° — 🇹🇯 Tajikistan (the Babatag ran
 
 | Hex | Name |
 |---|---|
-| 1 | Tashkent |
-| 2 | Dushanbe |
-| 3 | Turan ♥ |
-| 4 | Bishkek |
-| 5 | Lada ♥ |
-| 6 | Almaty |
-| 7 | Islamabad |
-| 8 | Sjöfn ♥ |
-| 9 | Lahore |
-| 10 | Oshun ♥ |
-| 11 | Delhi |
-| 12 | Agra |
-| 13 | Adonis ♥ |
-| 14 | Kabul |
-| 15 | Qetesh ♥ |
-| 16 | Ahmedabad |
-| 17 | Astarte ♥ |
-| 18 | Karachi |
-| 19 | Anteros ♥ |
-| 20 | Muscat |
-| 21 | Isfahan |
-| 22 | Pothos ♥ |
-| 23 | Tehran |
-| 24 | Astghik ♥ |
-| 25 | Ashgabat |
-| 26 | Baku |
-| 27 | Prende ♥ |
-| 28 | Samarkand |
-| 29 | Cupid ♥ |
-| 30 | Astana |
+| 1 | Astana |
+| 2 | Tashkent |
+| 3 | Cupid ♥ |
+| 4 | Turan ♥ |
+| 5 | Dushanbe |
+| 6 | Bishkek |
+| 7 | Almaty |
+| 8 | Lada ♥ |
+| 9 | Sjöfn ♥ |
+| 10 | Islamabad |
+| 11 | Lahore |
+| 12 | Delhi |
+| 13 | Oshun ♥ |
+| 14 | Adonis ♥ |
+| 15 | Agra |
+| 16 | Kabul |
+| 17 | Ahmedabad |
+| 18 | Qetesh ♥ |
+| 19 | Astarte ♥ |
+| 20 | Karachi |
+| 21 | Muscat |
+| 22 | Isfahan |
+| 23 | Anteros ♥ |
+| 24 | Pothos ♥ |
+| 25 | Tehran |
+| 26 | Ashgabat |
+| 27 | Baku |
+| 28 | Astghik ♥ |
+| 29 | Prende ♥ |
+| 30 | Samarkand |
 
 ### Ring 6
 
@@ -468,36 +468,36 @@ Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe
 
 | Hex | Name |
 |---|---|
-| 1 | Kraków |
-| 2 | Lviv |
+| 1 | Lviv |
+| 2 | Chisinau |
 | 3 | Sjöfn ♥ |
-| 4 | Chisinau |
-| 5 | Astghik ♥ |
-| 6 | Kyiv |
-| 7 | Odesa |
+| 4 | Astghik ♥ |
+| 5 | Kyiv |
+| 6 | Odesa |
+| 7 | Sevastopol |
 | 8 | Qetesh ♥ |
-| 9 | Sevastopol |
-| 10 | Astarte ♥ |
-| 11 | Ankara |
-| 12 | Homoia |
+| 9 | Astarte ♥ |
+| 10 | Ankara |
+| 11 | Homoia |
+| 12 | Thessaloniki |
 | 13 | Adonis ♥ |
-| 14 | Thessaloniki |
-| 15 | Anteros ♥ |
-| 16 | Tirana |
-| 17 | Pothos ♥ |
-| 18 | Skopje |
+| 14 | Anteros ♥ |
+| 15 | Tirana |
+| 16 | Skopje |
+| 17 | Sofia |
+| 18 | Pothos ♥ |
 | 19 | Oshun ♥ |
-| 20 | Sofia |
-| 21 | Pristina |
-| 22 | Prende ♥ |
-| 23 | Podgorica |
+| 20 | Pristina |
+| 21 | Podgorica |
+| 22 | Sarajevo |
+| 23 | Prende ♥ |
 | 24 | Cupid ♥ |
-| 25 | Sarajevo |
-| 26 | Bucharest |
-| 27 | Turan ♥ |
-| 28 | Belgrade |
+| 25 | Bucharest |
+| 26 | Belgrade |
+| 27 | Budapest |
+| 28 | Turan ♥ |
 | 29 | Lada ♥ |
-| 30 | Budapest |
+| 30 | Kraków |
 
 ### Ring 6
 

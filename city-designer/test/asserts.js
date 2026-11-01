@@ -47,6 +47,11 @@ eq("no god on the green (fresh)", onSpokePark.length, 0);
 const mirror = (h) => X.hexes[(-h.q) + "," + (h.q + h.r)];
 const asym = Object.values(X.hexes).filter(h => h.type === "park" && (!mirror(h) || mirror(h).type !== "park"));
 eq("mirror symmetry (fresh)", asym.length, 0);
+const sixfold = (c) => { const parks = Object.values(X.hexes).filter(h => h.circle === c && h.type === "park").map(h => h.num).sort((a, b) => a - b); if (!parks.length) return true; const N = c * 6; return JSON.stringify(parks) === JSON.stringify(parks.map(n => ((n + c - 1) % N) + 1).sort((a, b) => a - b)); };
+ok("ring 4 six-fold", sixfold(4));
+ok("ring 5 six-fold", sixfold(5));
+ok("ring 7 six-fold", sixfold(7));
+ok("ring 8 six-fold", sixfold(8));
 const uncovered = [];
 for (const h of Object.values(X.hexes)) {
   if (h.type === "park" || h.circle <= 4 || X.onSpoke(h)) continue;

@@ -61,6 +61,7 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 Open `mondiala.html` in any browser — no build step, no dependencies. The map reads
 its world data from `mondiala-data.js` in the same folder, so keep the two files together
 (downloading the whole `city-designer` folder gets you everything).
+Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>** — kept up to date automatically.
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only form fields and the JSON box stay selectable
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it

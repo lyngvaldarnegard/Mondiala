@@ -2,6 +2,8 @@
 
 Worldbuilding project for **Mondiala**, the new world capital — centred on the interactive city map.
 
+**Try it live: <https://lyngvaldarnegard.github.io/Mondiala/>** — served by GitHub Pages, updated with every push to `main`.
+
 ## The city map
 
 The interactive hex-grid map lives in [`city-designer/`](city-designer/). Open

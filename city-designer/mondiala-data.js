@@ -19,25 +19,32 @@ const RAW = [
 // settle near their civilisations.
 const WORLD_CITIES = [
   // Europe
-  "London","Amsterdam","Vienna","Prague","Dublin","Berlin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Bratislava","Ljubljana","Sarajevo","Kraków","Lisbon","Madrid","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Paris","Barcelona","Rome","Athens","Moscow",
+  "London","Amsterdam","Vienna","Prague","Dublin","Berlin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Bratislava","Ljubljana","Sarajevo","Kraków","Lisbon","Madrid","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Paris","Barcelona","Rome","Athens","Moscow","Zurich","Geneva","Naples","Seville","Marseille",
   // Middle East & Caucasus
-  "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan","Constantinople","Jerusalem","Jericho","Homoia","Babylon","Ur",
+  "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan","Constantinople","Jerusalem","Jericho","Homoia","Babylon","Ur","Gaza","Medina","Mecca","Jeddah","Beirut","Damascus","Aleppo","Abu Dhabi","Isfahan","Samarkand",
   // Africa
-  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Carthago",
+  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Carthago","Luxor","Timbuktu","Marrakesh","Tunis",
   // Asia
-  "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Bandung","Singapore",
+  "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Bandung","Singapore","Kyoto","Hiroshima","Varanasi","Agra","Chiang Mai",
   // Oceania
-  "Melbourne","Sydney","Perth",
+  "Melbourne","Sydney","Perth","Auckland","Brisbane",
   // The Americas
-  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Vancouver","New York","Tikal",
-]; // big (megacities), livable (EIU-style), walkable (Walk Score) and ancient (the OG cities) — one roster for the whole outer city
+  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Vancouver","New York","Tikal","Quebec City","New Orleans","Honolulu",
+]; // big (megacities), livable (EIU-style), walkable (Walk Score), ancient (the OG cities) and simply famous — one roster for the whole outer city
 
 // real-world coordinates [latitude, longitude] for every candidate city
 const CITY_COORDS = {
 "london":[51.51,-0.13],"amsterdam":[52.37,4.9],"vienna":[48.21,16.37],"prague":[50.08,14.44],"ankara":[39.93,32.86],"dubai":[25.2,55.27],"karachi":[24.86,67.01],"delhi":[28.61,77.21],"beijing":[39.9,116.41],"tokyo":[35.68,139.69],"osaka":[34.69,135.5],"melbourne":[-37.81,144.96],"cairo":[30.04,31.24],"alexandria":[31.2,29.92],"addis ababa":[9.03,38.74],"cape town":[-33.92,18.42],"buenos aires":[-34.6,-58.38],"montevideo":[-34.9,-56.16],"rio de janeiro":[-22.91,-43.17],"caracas":[10.49,-66.88],"washington d.c.":[38.91,-77.04],"boston":[42.36,-71.06],"chicago":[41.88,-87.63],"dublin":[53.35,-6.26],"berlin":[52.52,13.4],"brussels":[50.85,4.35],"kyiv":[50.45,30.52],"tehran":[35.69,51.39],"baku":[40.41,49.87],"mumbai":[19.08,72.88],"shanghai":[31.23,121.47],"bangkok":[13.76,100.5],"sydney":[-33.87,151.21],"lagos":[6.52,3.38],"khartoum":[15.5,32.56],"luanda":[-8.84,13.23],"são paulo":[-23.55,-46.63],"quito":[-0.18,-78.47],"panama city":[8.98,-79.52],"toronto":[43.65,-79.38],"philadelphia":[39.95,-75.17],"edinburgh":[55.95,-3.19],"hamburg":[53.55,9.99],"budapest":[47.5,19.04],"warsaw":[52.23,21.01],"bucharest":[44.43,26.1],"belgrade":[44.79,20.45],"sofia":[42.7,23.32],"riyadh":[24.71,46.68],"tel aviv":[32.08,34.78],"tashkent":[41.3,69.24],"lahore":[31.55,74.32],"dhaka":[23.81,90.41],"bengaluru":[12.97,77.59],"hong kong":[22.32,114.17],"fukuoka":[33.59,130.4],"nagoya":[35.18,136.91],"taipei":[25.03,121.57],"ho chi minh city":[10.82,106.63],"manila":[14.6,120.98],"kinshasa":[-4.32,15.31],"dar es salaam":[-6.79,39.21],"abidjan":[5.35,-4.02],"accra":[5.6,-0.19],"dakar":[14.72,-17.47],"casablanca":[33.57,-7.59],"lima":[-12.05,-77.04],"brasília":[-15.79,-47.88],"medellín":[6.24,-75.58],"guatemala city":[14.63,-90.51],"monterrey":[25.69,-100.32],"guadalajara":[20.67,-103.35],"mexico city":[19.43,-99.13],"miami":[25.76,-80.19],"los angeles":[34.05,-118.24],"san francisco":[37.77,-122.42],"seattle":[47.61,-122.33],"manchester":[53.48,-2.24],"frankfurt":[50.11,8.68],"venice":[45.44,12.34],"milan":[45.46,9.19],"zagreb":[45.81,15.98],"saint petersburg":[59.94,30.31],"baghdad":[33.31,44.36],"doha":[25.29,51.53],"almaty":[43.24,76.89],"kolkata":[22.57,88.36],"chennai":[13.08,80.27],"macau":[22.2,113.55],"hanoi":[21.03,105.85],"yangon":[16.87,96.2],"wuhan":[30.59,114.31],"jakarta":[-6.21,106.85],"johannesburg":[-26.2,28.05],"kampala":[0.35,32.58],"durban":[-29.86,31.02],"kigali":[-1.94,30.06],"algiers":[36.75,3.06],"bogotá":[4.71,-74.07],"la paz":[-16.5,-68.15],"cusco":[-13.53,-71.97],"cartagena":[10.39,-75.51],"kingston":[17.97,-76.79],"havana":[23.11,-82.37],"atlanta":[33.75,-84.39],"san diego":[32.72,-117.16],"liverpool":[53.41,-2.98],"glasgow":[55.86,-4.25],"munich":[48.14,11.58],"bratislava":[48.15,17.11],"ljubljana":[46.06,14.51],"sarajevo":[43.86,18.41],"kraków":[50.06,19.94],"tbilisi":[41.72,44.78],"yerevan":[40.18,44.51],"astana":[51.17,71.43],"amman":[31.95,35.93],"kuwait city":[29.37,47.98],"kathmandu":[27.72,85.32],"hyderabad":[17.39,78.49],"ahmedabad":[23.03,72.58],"colombo":[6.93,79.86],"seoul":[37.57,126.98],"chengdu":[30.57,104.07],"shenzhen":[22.54,114.06],"guangzhou":[23.13,113.26],"hangzhou":[30.27,120.16],"kuala lumpur":[3.14,101.69],"perth":[-31.95,115.86],"nairobi":[-1.29,36.82],"antananarivo":[-18.88,47.51],"maputo":[-25.97,32.57],"pretoria":[-25.75,28.19],"yaoundé":[3.87,11.52],"abuja":[9.06,7.49],"monrovia":[6.3,-10.8],"santiago":[-33.45,-70.66],"valparaíso":[-33.05,-71.62],"salvador":[-12.97,-38.5],"manaus":[-3.12,-60.02],"cancún":[21.16,-86.85],"san josé":[9.93,-84.08],"san juan":[18.47,-66.11],"ottawa":[45.42,-75.7],"montreal":[45.5,-73.57],"las vegas":[36.17,-115.14],"dallas":[32.78,-96.8],"lisbon":[38.72,-9.14],"madrid":[40.42,-3.7],"bordeaux":[44.84,-0.58],"florence":[43.77,11.26],"utrecht":[52.09,5.12],"porto":[41.15,-8.61],"bristol":[51.45,-2.59],"portland":[45.52,-122.68],"houston":[29.76,-95.37],"xi'an":[34.34,108.94],"suzhou":[31.3,120.62],"nanjing":[32.06,118.8],"tianjin":[39.13,117.2],"bandung":[-6.92,107.61],
 "paris":[48.86,2.35],"barcelona":[41.39,2.17],"rome":[41.89,12.48],"athens":[37.98,23.73],"moscow":[55.75,37.62],
 "constantinople":[41.01,28.98],"jerusalem":[31.78,35.22],"jericho":[31.86,35.44],"homoia":[37.67,32.83],"babylon":[32.54,44.42],"ur":[30.96,46.10],
-"carthago":[36.85,10.32],"singapore":[1.35,103.82],"vancouver":[49.28,-123.12],"new york":[40.71,-74.01],"tikal":[17.22,-89.62]
+"carthago":[36.85,10.32],"singapore":[1.35,103.82],"vancouver":[49.28,-123.12],"new york":[40.71,-74.01],"tikal":[17.22,-89.62],
+"zurich":[47.37,8.54],"geneva":[46.20,6.15],"naples":[40.85,14.27],"seville":[37.39,-5.99],"marseille":[43.30,5.37],
+"gaza":[31.50,34.47],"medina":[24.47,39.61],"mecca":[21.42,39.83],"jeddah":[21.49,39.19],"beirut":[33.89,35.50],
+"damascus":[33.51,36.29],"aleppo":[36.20,37.13],"abu dhabi":[24.45,54.38],"isfahan":[32.65,51.67],"samarkand":[39.65,66.96],
+"luxor":[25.70,32.64],"timbuktu":[16.77,-3.01],"marrakesh":[31.63,-7.99],"tunis":[36.81,10.18],
+"kyoto":[35.01,135.77],"hiroshima":[34.39,132.46],"varanasi":[25.32,82.99],"agra":[27.18,78.01],"chiang mai":[18.79,98.98],
+"auckland":[-36.85,174.76],"brisbane":[-27.47,153.03],
+"quebec city":[46.81,-71.21],"new orleans":[29.95,-90.07],"honolulu":[21.31,-157.86]
 };
 
 // which country each roster city belongs to — names the country Mondiala sits in once the centre moves off the known spots
@@ -50,15 +57,22 @@ const CITY_COUNTRY = {
 "buenos aires":"Argentina","montevideo":"Uruguay","rio de janeiro":"Brazil","caracas":"Venezuela","washington d.c.":"the United States","boston":"the United States","chicago":"the United States","são paulo":"Brazil","quito":"Ecuador","panama city":"Panama","toronto":"Canada","philadelphia":"the United States","lima":"Peru","brasília":"Brazil","medellín":"Colombia","guatemala city":"Guatemala","monterrey":"Mexico","guadalajara":"Mexico","mexico city":"Mexico","miami":"the United States","los angeles":"the United States","san francisco":"the United States","seattle":"the United States","bogotá":"Colombia","la paz":"Bolivia","cusco":"Peru","cartagena":"Colombia","kingston":"Jamaica","havana":"Cuba","atlanta":"the United States","san diego":"the United States","santiago":"Chile","valparaíso":"Chile","salvador":"Brazil","manaus":"Brazil","cancún":"Mexico","san josé":"Costa Rica","san juan":"Puerto Rico (USA)","ottawa":"Canada","montreal":"Canada","las vegas":"the United States","dallas":"the United States","portland":"the United States","houston":"the United States",
 "paris":"France","barcelona":"Spain","rome":"Italy","athens":"Greece","moscow":"Russia",
 "constantinople":"Türkiye","jerusalem":"Israel","jericho":"Palestine","homoia":"Türkiye","babylon":"Iraq","ur":"Iraq",
-"carthago":"Tunisia","singapore":"Singapore","vancouver":"Canada","new york":"the United States","tikal":"Guatemala"
+"carthago":"Tunisia","singapore":"Singapore","vancouver":"Canada","new york":"the United States","tikal":"Guatemala",
+"zurich":"Switzerland","geneva":"Switzerland","naples":"Italy","seville":"Spain","marseille":"France",
+"gaza":"Palestine","medina":"Saudi Arabia","mecca":"Saudi Arabia","jeddah":"Saudi Arabia","beirut":"Lebanon",
+"damascus":"Syria","aleppo":"Syria","abu dhabi":"the United Arab Emirates","isfahan":"Iran","samarkand":"Uzbekistan",
+"luxor":"Egypt","timbuktu":"Mali","marrakesh":"Morocco","tunis":"Tunisia",
+"kyoto":"Japan","hiroshima":"Japan","varanasi":"India","agra":"India","chiang mai":"Thailand",
+"auckland":"New Zealand","brisbane":"Australia",
+"quebec city":"Canada","new orleans":"the United States","honolulu":"the United States"
 };
 
 // the three default centre spots — where Mondiala sits before any city is added, with the real country each one lands in
-// (geo: northern Slovakia, just off the Polish border · pop: the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya · great: northern Volyn, Ukraine, just south of the Shatsk lakes)
+// (geo: the Carpathian highlands of Ivano-Frankivsk Oblast, near Yaremche · pop: the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya · great: Volhynian Polissya, the woodland country of Zhytomyr Oblast, by Yemilchyne)
 const CENTER_SPOTS = [
-  { lat: 48.97089517, lon: 20.61563600, flag: "🇸🇰", country: "Slovakia", near: "just off the Polish border" },
-  { lat: 45.31562245, lon: 66.94086899, flag: "🇰🇿", country: "Kazakhstan", near: "the Kyzylkum steppe, north of the Syr Darya" },
-  { lat: 51.44497737, lon: 24.05198112, flag: "🇺🇦", country: "Ukraine", near: "northern Volyn, just south of the Shatsk lakes" }
+  { lat: 48.46155254, lon: 24.64759400, flag: "🇺🇦", country: "Ukraine", near: "the Carpathian highlands above the Prut valley, near Yaremche" },
+  { lat: 45.12289661, lon: 65.87565007, flag: "🇰🇿", country: "Kazakhstan", near: "the Kyzylkum steppe, north of the Syr Darya" },
+  { lat: 50.84910468, lon: 27.62662596, flag: "🇺🇦", country: "Ukraine", near: "Volhynian Polissya, the woodland country by Yemilchyne" }
 ];
 
 // the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
@@ -119,6 +133,33 @@ const CITY_INFO = {
 "aksum":["🇪🇹","Aksumite stelae — carved granite obelisks, ancient Ethiopian courts."],
 "byzantium":["🇹🇷","Byzantine splendour — gold mosaics, domed basilicas, purple and iconography."],
 "mecca":["🇸🇦","Sacred geometry — minarets, marble plazas, the black cube as centrepiece."],
+"gaza":["🇵🇸","Gaza — the ancient Philistine port: sea-worn concrete and hilltop tells, olive groves, striped fishermen's boats, Souk al-Zawiya's spice alleys."],
+"medina":["🇸🇦","The City of the Prophet — the green-domed mosque, date-palm oasis streets, white marble courtyards, the hush of the second holiest city."],
+"jeddah":["🇸🇦","Red Sea gateway — coral-stone old town with carved roshan balconies, corniche glass towers, pilgrims' port."],
+"beirut":["🇱🇧","Phoenix city — Roman baths between glass towers, war-scarred facades, pine-clad hills, Levantine balconies and Mediterranean nightlife."],
+"damascus":["🇸🇾","The world's oldest living capital — Straight Street, the Umayyad courtyard mosque, jasmine over old-stone lanes, seven gates of the Old City."],
+"abu dhabi":["🇦🇪","Corniche capital — white marble mosques, museums on Saadiyat, mangrove-lined water, falcon and dune heritage."],
+"isfahan":["🇮🇷","Half the world — Naqsh-e Jahan's turquoise domes, blue-tiled bridges over the Zayandeh, bazaar vaults, boulevard plane trees."],
+"samarkand":["🇺🇿","Silk Road crown — the Registan's three tiled madrasas, turquoise domes, Timurid minarets, paper-mulberry lanes."],
+"luxor":["🇪🇬","Thebes of the hundred gates — Karnak's forest of columns, the West Bank's desert tombs, feluccas on the Nile, alabaster sphinxes."],
+"timbuktu":["🇲🇱","Desert's edge of gold and manuscripts — banco mosques with palm-log beams, salt-caravan doors, Sahel dust and adobe."],
+"marrakesh":["🇲🇦","The red city — pisé ramparts, Jemaa el-Fnaa's evening circus, riad courtyards, zellij and cedar, the Atlas on the horizon."],
+"tunis":["🇹🇳","Carthage's heir — whitewashed medina lanes studded with blue doors, French-era avenues, Punic ruins by the sea."],
+"kyoto":["🇯🇵","The old capital — Gion's geisha lanes, vermilion torii up the mountain, raked-gravel temples, machiya townhouses, cherry riverbanks."],
+"hiroshima":["🇯🇵","River city of peace — six delta channels, the A-Dome's skeleton frame, rebuilt streets, okonomiyaki counters."],
+"varanasi":["🇮🇳","Kashi on the Ganges — burning and bathing ghats, labyrinthine lanes, temple spires in dawn mist, silk weavers, the city of eternity."],
+"agra":["🇮🇳","Mughal marble — the Taj beside the river, Red Fort ramparts, pietra dura inlay, the emperors' garden tombs."],
+"chiang mai":["🇹🇭","Rose of Lanna — the moated old city, gilded wats with naga staircases, mountain temples, lantern-lit night markets."],
+"auckland":["🇳🇿","City of sails — volcanic cones, the Sky Needle over Waitematā harbour, bungalows on green ridgelines, Pacific water everywhere."],
+"brisbane":["🇦🇺","Sun-state capital — river bends, Queenslanders on stilts, subtropical verandahs, the Story Bridge, jacaranda streets."],
+"quebec city":["🇨🇦","Walled New France — the Château over the St Lawrence, copper roofs, snow-banked ramparts, rue du Petit-Champlain."],
+"new orleans":["🇺🇸","Creole crescent — French Quarter iron-lace balconies, jazz doorways, the Mississippi levee, above-ground tombs."],
+"honolulu":["🇺🇸","Pacific crossroads — Waikiki's shoreline towers, Diamond Head, royal palaces and banyan courts, surf on the reef."],
+"zurich":["🇨🇭","Lakeside precision — guild-house facades, blue-grey Limmat quays, trams, pale-stone banks, church towers over cobbled lanes."],
+"geneva":["🇨🇭","Calvinist clarity on the lake — grey-stone cathedral, international palais, watchshop arcades, the Jet d'Eau."],
+"naples":["🇮🇹","Baroque overload — Spaccanapoli's narrow lanes, laundry over the alleys, pizza ovens, Vesuvius over the bay, marble under grime."],
+"seville":["🇪🇸","Moorish courtyards and heat — the Giralda tower, tiled patios, orange-tree lanes, azulejos, bullring brick and flamenco ironwork."],
+"marseille":["🇫🇷","The old port — shuttered lanes in limestone, the MuCEM's lattice, calanques, bouillabaisse quays, North African souk energy."],
 "tenochtitlan":["🇲🇽","Aztec island-capital — causeways, chinampa gardens, pyramid-temples, obsidian ornament."],
 "constantinople":["🇹🇷","Byzantine Constantinople — Justinian's vast dome of the Hagia Sophia, Theodosian triple land walls, sunken cisterns, the imperial Golden Horn."],
 "homoia":["🇹🇷","Homoia — the proto-city, humanity's first settlement, after Çatalhöyük on the Anatolian plain. Honeycombed mudbrick houses entered from the roofs, wall paintings, bull-horn shrines, no streets at all."],
@@ -366,7 +407,7 @@ const CITY_FACTS = {
 "vancouver":[2600000,"≈ urban area",95.8,"EIU GLI 2026"],
 "new york":[19426449,"urban area 2025",85,"EIU-style est.",88],
 "diyarbakır":[1100000,"≈ urban area",null,""],
-"aleppo":[1800000,"≈ pre-war urban area",null,""],
+"aleppo":[1800000,"≈ pre-war urban area",32,"EIU-style est."],
 "athens":[3200000,"≈ urban area",86,"EIU-style est."],
 "jerusalem":[980000,"≈ urban area",null,""],
 "mesopotamia":[null,"",null,""],
@@ -374,7 +415,7 @@ const CITY_FACTS = {
 "rome":[4300000,"≈ urban area",89,"EIU-style est."],
 "aksum":[70000,"town ≈",null,""],
 "byzantium":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
-"mecca":[2400000,"≈ urban area",null,""],
+"mecca":[2400000,"≈ urban area",74,"EIU-style est."],
 "tenochtitlan":[250000,"≈ ancient peak c. 1500 AD (Aztec)",null,""],
 "constantinople":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
 "homoia":[8000,"≈ ancient peak c. 7000 BC (Çatalhöyük)",null,""],
@@ -573,7 +614,34 @@ const CITY_FACTS = {
 "seattle":[3800000,"≈ urban area",85,"EIU-style est.",74],
 "colombo":[800000,"≈ urban area",66,"EIU-style est."],
 "perth":[2100000,"≈ urban area",93,"EIU-style est."],
-"ottawa":[1500000,"≈ urban area (National Capital Region)",89,"EIU-style est."]
+"ottawa":[1500000,"≈ urban area (National Capital Region)",89,"EIU-style est."],
+"zurich":[1400000,"≈ urban area",93,"EIU-style est."],
+"geneva":[1000000,"≈ urban area (Grand Genève)",91,"EIU-style est."],
+"naples":[3100000,"≈ metropolitan area",80,"EIU-style est."],
+"seville":[1500000,"≈ metropolitan area",84,"EIU-style est."],
+"marseille":[1900000,"≈ metropolitan area (Aix–Marseille)",82,"EIU-style est."],
+"gaza":[600000,"≈ city",35,"EIU-style est."],
+"medina":[1600000,"≈ city",73,"EIU-style est."],
+"jeddah":[4700000,"≈ urban area",76,"EIU-style est."],
+"beirut":[2400000,"≈ urban area",55,"EIU-style est."],
+"damascus":[2000000,"≈ urban area",30,"EIU-style est."],
+"abu dhabi":[1500000,"≈ urban area",81,"EIU-style est."],
+"isfahan":[2200000,"≈ urban area",60,"EIU-style est."],
+"samarkand":[600000,"≈ city",62,"EIU-style est."],
+"luxor":[500000,"≈ city",55,"EIU-style est."],
+"timbuktu":[55000,"town ≈",40,"EIU-style est."],
+"marrakesh":[1100000,"≈ urban area",68,"EIU-style est."],
+"tunis":[2700000,"≈ metropolitan area (Grand Tunis)",62,"EIU-style est."],
+"kyoto":[1500000,"≈ city",94,"EIU-style est."],
+"hiroshima":[2200000,"≈ metropolitan area",92,"EIU-style est."],
+"varanasi":[1600000,"≈ urban area",58,"EIU-style est."],
+"agra":[1900000,"≈ urban area",56,"EIU-style est."],
+"chiang mai":[1200000,"≈ metropolitan area",72,"EIU-style est."],
+"auckland":[1700000,"≈ urban area",93,"EIU-style est."],
+"brisbane":[2600000,"≈ urban area",92,"EIU-style est."],
+"quebec city":[840000,"≈ metropolitan area",90,"EIU-style est."],
+"new orleans":[1000000,"≈ urban area",78,"EIU-style est."],
+"honolulu":[1000000,"≈ urban area",87,"EIU-style est."]
 };
 
 

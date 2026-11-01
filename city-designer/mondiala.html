@@ -691,7 +691,12 @@ function renderExtraList() {
     const row = document.createElement("div");
     row.className = "poolname";
     row.textContent = "🌐 " + c.name + " (" + fmtLatLon(c) + ")  ✕ remove";
-    row.addEventListener("click", () => { extraCities.splice(i, 1); saveExtraCities(); recenter(); renderExtraList(); });
+    row.addEventListener("click", () => {
+      const snap = snapshotEdits(); // snapshot while the city still counts as computed — a removed city must never linger as a manual edit
+      extraCities.splice(i, 1); saveExtraCities();
+      buildCity(); reapplyEdits(snap);
+      selected = null; refresh(); renderPool(); renderCenterOut(); renderExtraList();
+    });
     el.appendChild(row);
   });
 }

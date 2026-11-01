@@ -10,9 +10,9 @@ Where Mondiala sits on Earth under each centre mode, before any extra city is ad
 
 | Mode | Flag | Country | Where | Coordinates |
 |---|---|---|---|---|
-| geo | 🇸🇰 | Slovakia | just off the Polish border | 48.9709, 20.6156 |
-| pop | 🇰🇿 | Kazakhstan | the Kyzylkum steppe, north of the Syr Darya | 45.3156, 66.9409 |
-| great | 🇺🇦 | Ukraine | northern Volyn, just south of the Shatsk lakes | 51.4450, 24.0520 |
+| geo | 🇺🇦 | Ukraine | the Carpathian highlands above the Prut valley, near Yaremche | 48.4616, 24.6476 |
+| pop | 🇰🇿 | Kazakhstan | the Kyzylkum steppe, north of the Syr Darya | 45.1229, 65.8757 |
+| great | 🇺🇦 | Ukraine | Volhynian Polissya, the woodland country by Yemilchyne | 50.8491, 27.6266 |
 
 ## The authored core — the cradle heart (rings 0–2)
 
@@ -58,11 +58,11 @@ Ring 1 carries the six cradle civilisations, each on the spoke its homeland bear
 | 3 | 17 | Tampere \| Tammerfors | 501.7 |
 | 3 | 18 | Vyborg | 519 |
 
-## The city roster — 177 great cities
+## The city roster — 206 great cities
 
-Big, livable, walkable — and ancient: the OG cities flow onto the outer rings by compass, settling near the civilisations they grew from.
+Big, livable, walkable — and ancient: the OG cities and the simply famous flow onto the outer rings by compass, settling near the civilisations they grew from.
 
-### Europe (40)
+### Europe (45)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -106,8 +106,13 @@ Big, livable, walkable — and ancient: the OG cities flow onto the outer rings 
 | Rome | 🇮🇹 | Italy | 41.89°N, 12.48°E | 4,300,000 *≈ urban area* |
 | Athens | 🇬🇷 | Greece | 37.98°N, 23.73°E | 3,200,000 *≈ urban area* |
 | Moscow | 🇷🇺 | Russia | 55.75°N, 37.62°E | 19,100,000 *urban area 2025* |
+| Zurich | 🇨🇭 | Switzerland | 47.37°N, 8.54°E | 1,400,000 *≈ urban area* |
+| Geneva | 🇨🇭 | Switzerland | 46.20°N, 6.15°E | 1,000,000 *≈ urban area (Grand Genève)* |
+| Naples | 🇮🇹 | Italy | 40.85°N, 14.27°E | 3,100,000 *≈ metropolitan area* |
+| Seville | 🇪🇸 | Spain | 37.39°N, 5.99°W | 1,500,000 *≈ metropolitan area* |
+| Marseille | 🇫🇷 | France | 43.30°N, 5.37°E | 1,900,000 *≈ metropolitan area (Aix–Marseille)* |
 
-### Middle East & Caucasus (18)
+### Middle East & Caucasus (28)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -129,8 +134,18 @@ Big, livable, walkable — and ancient: the OG cities flow onto the outer rings 
 | Homoia | 🇹🇷 | Türkiye | 37.67°N, 32.83°E | 8,000 *≈ ancient peak c. 7000 BC (Çatalhöyük)* |
 | Babylon | 🇮🇶 | Iraq | 32.54°N, 44.42°E | 850,000 *Hillah, modern site ≈* |
 | Ur | 🇮🇶 | Iraq | 30.96°N, 46.10°E | 650,000 *Nasiriyah, modern site ≈* |
+| Gaza | 🇵🇸 | Palestine | 31.50°N, 34.47°E | 600,000 *≈ city* |
+| Medina | 🇸🇦 | Saudi Arabia | 24.47°N, 39.61°E | 1,600,000 *≈ city* |
+| Mecca | 🇸🇦 | Saudi Arabia | 21.42°N, 39.83°E | 2,400,000 *≈ urban area* |
+| Jeddah | 🇸🇦 | Saudi Arabia | 21.49°N, 39.19°E | 4,700,000 *≈ urban area* |
+| Beirut | 🇱🇧 | Lebanon | 33.89°N, 35.50°E | 2,400,000 *≈ urban area* |
+| Damascus | 🇸🇾 | Syria | 33.51°N, 36.29°E | 2,000,000 *≈ urban area* |
+| Aleppo | 🇸🇾 | Syria | 36.20°N, 37.13°E | 1,800,000 *≈ pre-war urban area* |
+| Abu Dhabi | 🇦🇪 | the United Arab Emirates | 24.45°N, 54.38°E | 1,500,000 *≈ urban area* |
+| Isfahan | 🇮🇷 | Iran | 32.65°N, 51.67°E | 2,200,000 *≈ urban area* |
+| Samarkand | 🇺🇿 | Uzbekistan | 39.65°N, 66.96°E | 600,000 *≈ city* |
 
-### Africa (26)
+### Africa (30)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -160,8 +175,12 @@ Big, livable, walkable — and ancient: the OG cities flow onto the outer rings 
 | Monrovia | 🇱🇷 | Liberia | 6.30°N, 10.80°W | 1,500,000 *≈ urban area* |
 | Lagos | 🇳🇬 | Nigeria | 6.52°N, 3.38°E | 15,283,000 *urban area 2025* |
 | Carthago | 🇹🇳 | Tunisia | 36.85°N, 10.32°E | 2,400,000 *Tunis agglomeration ≈* |
+| Luxor | 🇪🇬 | Egypt | 25.70°N, 32.64°E | 500,000 *≈ city* |
+| Timbuktu | 🇲🇱 | Mali | 16.77°N, 3.01°W | 55,000 *town ≈* |
+| Marrakesh | 🇲🇦 | Morocco | 31.63°N, 7.99°W | 1,100,000 *≈ urban area* |
+| Tunis | 🇹🇳 | Tunisia | 36.81°N, 10.18°E | 2,700,000 *≈ metropolitan area (Grand Tunis)* |
 
-### Asia (43)
+### Asia (48)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -208,16 +227,23 @@ Big, livable, walkable — and ancient: the OG cities flow onto the outer rings 
 | Tianjin | 🇨🇳 | China | 39.13°N, 117.20°E | 12,095,000 *urban area 2025* |
 | Bandung | 🇮🇩 | Indonesia | 6.92°S, 107.61°E | 7,490,000 *urban area 2025* |
 | Singapore | 🇸🇬 | Singapore | 1.35°N, 103.82°E | 6,056,000 *urban area 2025* |
+| Kyoto | 🇯🇵 | Japan | 35.01°N, 135.77°E | 1,500,000 *≈ city* |
+| Hiroshima | 🇯🇵 | Japan | 34.39°N, 132.46°E | 2,200,000 *≈ metropolitan area* |
+| Varanasi | 🇮🇳 | India | 25.32°N, 82.99°E | 1,600,000 *≈ urban area* |
+| Agra | 🇮🇳 | India | 27.18°N, 78.01°E | 1,900,000 *≈ urban area* |
+| Chiang Mai | 🇹🇭 | Thailand | 18.79°N, 98.98°E | 1,200,000 *≈ metropolitan area* |
 
-### Oceania (3)
+### Oceania (5)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
 | Melbourne | 🇦🇺 | Australia | 37.81°S, 144.96°E | 5,185,000 *urban area 2025* |
 | Sydney | 🇦🇺 | Australia | 33.87°S, 151.21°E | 5,037,000 *urban area 2025* |
 | Perth | 🇦🇺 | Australia | 31.95°S, 115.86°E | 2,100,000 *≈ urban area* |
+| Auckland | 🇳🇿 | New Zealand | 36.85°S, 174.76°E | 1,700,000 *≈ urban area* |
+| Brisbane | 🇦🇺 | Australia | 27.47°S, 153.03°E | 2,600,000 *≈ urban area* |
 
-### The Americas (47)
+### The Americas (50)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -268,6 +294,9 @@ Big, livable, walkable — and ancient: the OG cities flow onto the outer rings 
 | Vancouver | 🇨🇦 | Canada | 49.28°N, 123.12°W | 2,600,000 *≈ urban area* |
 | New York | 🇺🇸 | the United States | 40.71°N, 74.01°W | 19,426,449 *urban area 2025* |
 | Tikal | 🇬🇹 | Guatemala | 17.22°N, 89.62°W | 65,000 *≈ ancient peak c. 700 AD (Maya)* |
+| Quebec City | 🇨🇦 | Canada | 46.81°N, 71.21°W | 840,000 *≈ metropolitan area* |
+| New Orleans | 🇺🇸 | the United States | 29.95°N, 90.07°W | 1,000,000 *≈ urban area* |
+| Honolulu | 🇺🇸 | the United States | 21.31°N, 157.86°W | 1,000,000 *≈ urban area* |
 
 ## The pink districts — gods of love and sex
 

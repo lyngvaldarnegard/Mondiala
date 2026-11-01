@@ -15,7 +15,8 @@
   header .motto { font-size: 11px; color: #7d8b9d; font-style: italic; }
   header .spacer { flex: 1; }
   button, select, input, textarea { font-family: inherit; font-size: 12px; }
-  button { background: #24303f; color: #dce3ec; border: 1px solid #35455a; border-radius: 6px; padding: 6px 11px; cursor: pointer; }
+  button { background: #24303f; color: #dce3ec; border: 1px solid #35455a; border-radius: 6px; padding: 6px 11px; cursor: pointer; touch-action: manipulation; min-height: 34px; }
+  @media (max-width: 700px) { header { gap: 8px; padding: 8px 10px; } button { padding: 8px 10px; min-height: 40px; font-size: 13px; } #sidebar { width: 100%; } #main { flex-direction: column; } }
   button:hover { background: #2e3f54; }
   button.warn { border-color: #8a4b4b; }
   button.primary { background: #e8b04b; color: #1a2230; border-color: #e8b04b; font-weight: 600; }
@@ -659,13 +660,11 @@ document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
   recenter();
 });
-document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — the map is infinite now, so it stops only when the pool runs dry
-  if (!pool.length) return;
-  maxCircle++; viewBox = cityViewBox(); moved = false; recenter();
-});
-document.getElementById("btnDropRing").addEventListener("click", () => { // view-only: remove rings one by one, all the way down to bare Metropol; the shipped city is rings 0–8
-  if (maxCircle > 0) { maxCircle--; viewBox = cityViewBox(); moved = false; recenter(); }
-});
+function bumpRing(d) { if (d > 0 && !pool.length) return; maxCircle = Math.max(0, maxCircle + d); viewBox = cityViewBox(); moved = false; recenter(); }
+document.getElementById("btnNextRing").addEventListener("click", () => bumpRing(1));
+document.getElementById("btnNextRing").addEventListener("touchend", e => { e.preventDefault(); bumpRing(1); });
+document.getElementById("btnDropRing").addEventListener("click", () => bumpRing(-1));
+document.getElementById("btnDropRing").addEventListener("touchend", e => { e.preventDefault(); bumpRing(-1); });
 document.getElementById("btnOrient").addEventListener("click", () => { // v1.8 the orientation toggle: the grid turns 30° as one rigid body and the compass re-flows — the round trip is identity, nothing is saved
   GRID_ROT = GRID_ROT ? 0 : 30;
   document.getElementById("btnOrient").textContent = "Orientation: " + (GRID_ROT ? "pointy-side-up" : "flat-side-up");

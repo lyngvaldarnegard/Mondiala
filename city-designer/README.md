@@ -21,16 +21,16 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 
 Outside the fixed heart, the city is **placed by real geography** instead of by hand:
 
-- One roster of **206 great cities** — the big ones, the livable ones, the walkable ones, the ancient ones (the OG cities) and simply famous ones — each carrying its real latitude and longitude
+- One roster of **214 great cities** — the big ones, the livable ones, the walkable ones, the ancient ones (the OG cities) and simply famous ones — each carrying its real latitude and longitude
 - **Mondiala sits at the centre of that roster**: wherever the roster's centre falls on Earth, that is where Mondiala "is", and the rings read like a compass around it — a city's bearing from the centre picks its hexagon, its real distance picks its ring (near = inner), and population breaks ties
-- **The classical and famous cities flow by compass onto the outer rings** — Rome, Athens, Alexandria, Jerusalem, Jericho, Constantinople, Carthage, Babylon, Ur and Tikal settle near the civilisations they grew from; the holy cities (Mecca, Medina, Gaza, Damascus) cluster together on their bearing; the Silk Road runs out through Isfahan and Samarkand; Kyoto and Hiroshima join the eastern rim alongside the modern giants
+- **The classical and famous cities flow by compass onto the outer rings** — Rome, Athens, Alexandria, Jerusalem, Jericho, Constantinople, Carthage, Babylon, Ur and Tikal settle near the civilisations they grew from; the holy cities (Mecca, Medina, Gaza, Damascus) cluster together on their bearing; the Silk Road runs out through Isfahan and Samarkand; Mogadishu joins the African arc and Cap-Haïtien the far western rim, alongside the modern giants
 - **Three switchable centre modes** (the panel shows the coordinates *and the country, with its flag*, wherever Mondiala ends up):
-  - **Geographic** — the plain midpoint of all 206 cities: ≈ 48.5°N 24.6°E, in the Carpathian highlands of Ukraine, above the Prut valley near Yaremche (🇺🇦)
-  - **Population-weighted** — weighted by urban-area population (ancient cities at their ancient peaks): ≈ 45.1°N 65.9°E, in the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya (🇰🇿)
-  - **Greatness-weighted** — size + livability + walkability: ≈ 50.8°N 27.6°E, in Volhynian Polissya, Ukraine's woodland country by Yemilchyne (🇺🇦)
-- The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇵🇱 Poland (nearest: Kraków, 359 km)")
+  - **Geographic** — the plain midpoint of all 214 cities: ≈ 49.0°N 19.8°E, on the granite main ridge of the Low Tatras, the mountain spine of central Slovakia (🇸🇰)
+  - **Population-weighted** — weighted by urban-area population (ancient cities at their ancient peaks): ≈ 45.3°N 65.4°E, in the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya near Kyzylorda (🇰🇿)
+  - **Greatness-weighted** — size + livability + walkability: ≈ 51.2°N 24.3°E, in the wooded country of northwest Volhynia, Ukraine, near Turiisk (🇺🇦)
+- The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇵🇱 Poland (nearest: Kraków, 123 km)")
 - **Add a city and the map re-flows**: type a name, latitude, longitude and population, and Mondiala's centre moves — every ring re-settles around the new middle
-- **The pool = cities beyond the horizon**: the 56 cities too far from the centre to fit before ring 8 ends (in geographic mode the far side of the world — Tokyo, Jakarta, Mexico City, São Paulo, Buenos Aires, Rio, the Andes cities, Australia, plus Auckland, Brisbane, New Orleans, Honolulu and ancient Tikal). Press **+ Add ring** and they settle onto the new rim by the same compass rule
+- **The pool = cities beyond the horizon**: the 64 cities too far from the centre to fit before ring 8 ends (in geographic mode the far side of the world — Tokyo, Jakarta, Mexico City, São Paulo, Buenos Aires, Rio, the Andes cities, Australia — plus Auckland, Brisbane, New Orleans, Honolulu, Central America's capitals, Haiti's Port-au-Prince and Jacmel, and ancient Tikal). Press **+ Add ring** and they settle onto the new rim by the same compass rule
 
 ## The pink free-use districts
 
@@ -72,7 +72,7 @@ its world data from `mondiala-data.js` in the same folder, so keep the two files
 ## Data
 
 The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
-fixed cradle heart (rings 0–3), the 206-city world roster with real coordinates, each city's
+fixed cradle heart (rings 0–3), the 214-city world roster with real coordinates, each city's
 country, the info cards, the real-city facts, the reserved god lattice and each god's homeland
 coordinates. Edit it directly on GitHub — the map reads it as-is, no regeneration needed.
 **[`DATA.md`](DATA.md)** is a human-readable copy of the same data (tables you can copy
@@ -95,5 +95,5 @@ Real-city data in the info cards:
   to that index and marked with "≈".
 - **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).
 - **Coordinates** — city-centre latitude/longitude in decimal degrees.
-- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Ukraine, Kazakhstan, Ukraine).
+- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Slovakia, Kazakhstan, Ukraine).
 - **God homelands** — each love god's origin coordinates decide which reserved pink hex they face; the outer gods re-settle by compass whenever Mondiala's centre moves.

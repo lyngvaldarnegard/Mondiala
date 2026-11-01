@@ -10,9 +10,9 @@ Where Mondiala sits on Earth under each centre mode, before any extra city is ad
 
 | Mode | Flag | Country | Where | Coordinates |
 |---|---|---|---|---|
-| geo | 🇺🇦 | Ukraine | the Carpathian highlands above the Prut valley, near Yaremche | 48.4616, 24.6476 |
-| pop | 🇰🇿 | Kazakhstan | the Kyzylkum steppe, north of the Syr Darya | 45.1229, 65.8757 |
-| great | 🇺🇦 | Ukraine | Volhynian Polissya, the woodland country by Yemilchyne | 50.8491, 27.6266 |
+| geo | 🇸🇰 | Slovakia | the granite main ridge of the Low Tatras, the mountain spine of central Slovakia | 48.9560, 19.7897 |
+| pop | 🇰🇿 | Kazakhstan | the Kyzylkum steppe north of the Syr Darya, near Kyzylorda | 45.2851, 65.3626 |
+| great | 🇺🇦 | Ukraine | the wooded country of northwest Volhynia, near Turiisk | 51.1893, 24.2740 |
 
 ## The authored core — the cradle heart (rings 0–2)
 
@@ -58,7 +58,7 @@ Ring 1 carries the six cradle civilisations, each on the spoke its homeland bear
 | 3 | 17 | Tampere \| Tammerfors | 501.7 |
 | 3 | 18 | Vyborg | 519 |
 
-## The city roster — 206 great cities
+## The city roster — 214 great cities
 
 Big, livable, walkable — and ancient: the OG cities and the simply famous flow onto the outer rings by compass, settling near the civilisations they grew from.
 
@@ -145,7 +145,7 @@ Big, livable, walkable — and ancient: the OG cities and the simply famous flow
 | Isfahan | 🇮🇷 | Iran | 32.65°N, 51.67°E | 2,200,000 *≈ urban area* |
 | Samarkand | 🇺🇿 | Uzbekistan | 39.65°N, 66.96°E | 600,000 *≈ city* |
 
-### Africa (30)
+### Africa (31)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -179,6 +179,7 @@ Big, livable, walkable — and ancient: the OG cities and the simply famous flow
 | Timbuktu | 🇲🇱 | Mali | 16.77°N, 3.01°W | 55,000 *town ≈* |
 | Marrakesh | 🇲🇦 | Morocco | 31.63°N, 7.99°W | 1,100,000 *≈ urban area* |
 | Tunis | 🇹🇳 | Tunisia | 36.81°N, 10.18°E | 2,700,000 *≈ metropolitan area (Grand Tunis)* |
+| Mogadishu | 🇸🇴 | Somalia | 2.04°N, 45.34°E | 2,600,000 *≈ urban area* |
 
 ### Asia (48)
 
@@ -243,7 +244,7 @@ Big, livable, walkable — and ancient: the OG cities and the simply famous flow
 | Auckland | 🇳🇿 | New Zealand | 36.85°S, 174.76°E | 1,700,000 *≈ urban area* |
 | Brisbane | 🇦🇺 | Australia | 27.47°S, 153.03°E | 2,600,000 *≈ urban area* |
 
-### The Americas (50)
+### The Americas (57)
 
 | City | Flag | Country | Coordinates | Population |
 |---|---|---|---|---|
@@ -297,6 +298,13 @@ Big, livable, walkable — and ancient: the OG cities and the simply famous flow
 | Quebec City | 🇨🇦 | Canada | 46.81°N, 71.21°W | 840,000 *≈ metropolitan area* |
 | New Orleans | 🇺🇸 | the United States | 29.95°N, 90.07°W | 1,000,000 *≈ urban area* |
 | Honolulu | 🇺🇸 | the United States | 21.31°N, 157.86°W | 1,000,000 *≈ urban area* |
+| San Salvador | 🇸🇻 | El Salvador | 13.69°N, 89.19°W | 1,100,000 *≈ urban area* |
+| Tegucigalpa | 🇭🇳 | Honduras | 14.07°N, 87.19°W | 1,000,000 *≈ urban area* |
+| Managua | 🇳🇮 | Nicaragua | 12.11°N, 86.24°W | 1,050,000 *≈ urban area* |
+| Asunción | 🇵🇾 | Paraguay | 25.28°S, 57.63°W | 1,200,000 *≈ urban area* |
+| Port-au-Prince | 🇭🇹 | Haiti | 18.54°N, 72.34°W | 1,100,000 *≈ urban area* |
+| Cap-Haïtien | 🇭🇹 | Haiti | 19.76°N, 72.20°W | 190,000 *≈ urban area* |
+| Jacmel | 🇭🇹 | Haiti | 18.23°N, 72.53°W | 35,000 *town ≈* |
 
 ## The pink districts — gods of love and sex
 

@@ -1,5 +1,7 @@
-"use strict";
-
+// Mondiala world data — read by mondiala.html in the same folder.
+// The fixed cradle heart (rings 0-3), the great-city roster with real coordinates, the
+// info cards, the real-city facts, the reserved god lattice and each god's homeland.
+// Edit directly on GitHub — the map reads it as-is, no regeneration needed.
 // ---------- Source data from Notion “Hexagons of Mondiala” ----------
 // [circle, hexagonNumber|null, name, density|null]
 const RAW = [
@@ -23,13 +25,13 @@ const WORLD_CITIES = [
   // Middle East & Caucasus
   "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan","Constantinople","Jerusalem","Jericho","Homoia","Babylon","Ur","Gaza","Medina","Mecca","Jeddah","Beirut","Damascus","Aleppo","Abu Dhabi","Isfahan","Samarkand",
   // Africa
-  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Carthago","Luxor","Timbuktu","Marrakesh","Tunis",
+  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Carthago","Luxor","Timbuktu","Marrakesh","Tunis","Mogadishu",
   // Asia
   "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Bandung","Singapore","Kyoto","Hiroshima","Varanasi","Agra","Chiang Mai",
   // Oceania
   "Melbourne","Sydney","Perth","Auckland","Brisbane",
   // The Americas
-  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Vancouver","New York","Tikal","Quebec City","New Orleans","Honolulu",
+  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Vancouver","New York","Tikal","Quebec City","New Orleans","Honolulu","San Salvador","Tegucigalpa","Managua","Asunción","Port-au-Prince","Cap-Haïtien","Jacmel",
 ]; // big (megacities), livable (EIU-style), walkable (Walk Score), ancient (the OG cities) and simply famous — one roster for the whole outer city
 
 // real-world coordinates [latitude, longitude] for every candidate city
@@ -44,7 +46,8 @@ const CITY_COORDS = {
 "luxor":[25.70,32.64],"timbuktu":[16.77,-3.01],"marrakesh":[31.63,-7.99],"tunis":[36.81,10.18],
 "kyoto":[35.01,135.77],"hiroshima":[34.39,132.46],"varanasi":[25.32,82.99],"agra":[27.18,78.01],"chiang mai":[18.79,98.98],
 "auckland":[-36.85,174.76],"brisbane":[-27.47,153.03],
-"quebec city":[46.81,-71.21],"new orleans":[29.95,-90.07],"honolulu":[21.31,-157.86]
+"quebec city":[46.81,-71.21],"new orleans":[29.95,-90.07],"honolulu":[21.31,-157.86],
+"mogadishu":[2.04,45.34],"san salvador":[13.69,-89.19],"tegucigalpa":[14.07,-87.19],"managua":[12.11,-86.24],"asunción":[-25.28,-57.63],"port-au-prince":[18.54,-72.34],"cap-haïtien":[19.76,-72.20],"jacmel":[18.23,-72.53]
 };
 
 // which country each roster city belongs to — names the country Mondiala sits in once the centre moves off the known spots
@@ -64,15 +67,16 @@ const CITY_COUNTRY = {
 "luxor":"Egypt","timbuktu":"Mali","marrakesh":"Morocco","tunis":"Tunisia",
 "kyoto":"Japan","hiroshima":"Japan","varanasi":"India","agra":"India","chiang mai":"Thailand",
 "auckland":"New Zealand","brisbane":"Australia",
-"quebec city":"Canada","new orleans":"the United States","honolulu":"the United States"
+"quebec city":"Canada","new orleans":"the United States","honolulu":"the United States",
+"mogadishu":"Somalia","san salvador":"El Salvador","tegucigalpa":"Honduras","managua":"Nicaragua","asunción":"Paraguay","port-au-prince":"Haiti","cap-haïtien":"Haiti","jacmel":"Haiti"
 };
 
 // the three default centre spots — where Mondiala sits before any city is added, with the real country each one lands in
-// (geo: the Carpathian highlands of Ivano-Frankivsk Oblast, near Yaremche · pop: the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya · great: Volhynian Polissya, the woodland country of Zhytomyr Oblast, by Yemilchyne)
+// (geo: the granite main ridge of the Low Tatras, central Slovakia · pop: the Kyzylkum steppe north of the Syr Darya, near Kyzylorda · great: the wooded country of northwest Volhynia, near Turiisk)
 const CENTER_SPOTS = [
-  { lat: 48.46155254, lon: 24.64759400, flag: "🇺🇦", country: "Ukraine", near: "the Carpathian highlands above the Prut valley, near Yaremche" },
-  { lat: 45.12289661, lon: 65.87565007, flag: "🇰🇿", country: "Kazakhstan", near: "the Kyzylkum steppe, north of the Syr Darya" },
-  { lat: 50.84910468, lon: 27.62662596, flag: "🇺🇦", country: "Ukraine", near: "Volhynian Polissya, the woodland country by Yemilchyne" }
+  { lat: 48.95602600, lon: 19.78965560, flag: "🇸🇰", country: "Slovakia", near: "the granite main ridge of the Low Tatras, the mountain spine of central Slovakia" },
+  { lat: 45.28506850, lon: 65.36256253, flag: "🇰🇿", country: "Kazakhstan", near: "the Kyzylkum steppe north of the Syr Darya, near Kyzylorda" },
+  { lat: 51.18929868, lon: 24.27396775, flag: "🇺🇦", country: "Ukraine", near: "the wooded country of northwest Volhynia, near Turiisk" }
 ];
 
 // the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
@@ -391,6 +395,14 @@ const CITY_INFO = {
 "colombo":["🇱🇰","Port city of the east — colonial arcades, temple bells, cinnamon-scented streets."],
 "perth":["🇦🇺","Indian-ocean isolation city — endless white beaches, miners' money, Fremantle sunsets."],
 "ottawa":["🇨🇦","Bytown on three rivers — parliament gothic over the Ottawa, canal skaters in winter."],
+"mogadishu":["🇸🇴","The white pearl of the Indian Ocean — Arab-Swahili coral-stone merchant houses, whitewashed arcades, dhow harbour."],
+"san salvador":["🇸🇻","Valley of the Saviour — a colonial grid of Metropolitan Cathedral and National Palace under a rim of volcanoes."],
+"tegucigalpa":["🇭🇳","Silver-mining mountain capital — hillside barrio stair-streets, colonial churches in the bowl of the Río Choluteca."],
+"managua":["🇳🇮","Lakeside capital without a centre — the earthquake-rung old cathedral, revolution-roundabout murals, a line of volcanoes."],
+"asunción":["🇵🇾","South America's mother city — riverside terracotta lanes, orange trees, the colonial cabildo and a lazy wide Paraná."],
+"port-au-prince":["🇭🇹","Hillside capital of gingerbread houses — fretted gables and iron-lace balconies above the Golfe de la Gonâve."],
+"cap-haïtien":["🇭🇹","The Paris of the Antilles — a low colonial grid beneath the Citadelle Laferrière's mountain."],
+"jacmel":["🇭🇹","Carnival city on a horseshoe bay — painted gingerbread facades and the mask-makers' ateliers."],
 "freeuse":["♥","Free-use district — consent-permissioned pink quarter with threshold architecture at its six edges."]
 };
 
@@ -641,7 +653,15 @@ const CITY_FACTS = {
 "brisbane":[2600000,"≈ urban area",92,"EIU-style est."],
 "quebec city":[840000,"≈ metropolitan area",90,"EIU-style est."],
 "new orleans":[1000000,"≈ urban area",78,"EIU-style est."],
-"honolulu":[1000000,"≈ urban area",87,"EIU-style est."]
+"honolulu":[1000000,"≈ urban area",87,"EIU-style est."],
+"mogadishu":[2600000,"≈ urban area",30,"EIU-style est."],
+"san salvador":[1100000,"≈ urban area",55,"EIU-style est."],
+"tegucigalpa":[1000000,"≈ urban area",48,"EIU-style est."],
+"managua":[1050000,"≈ urban area",50,"EIU-style est."],
+"asunción":[1200000,"≈ urban area",66,"EIU-style est."],
+"port-au-prince":[1100000,"≈ urban area",38,"EIU-style est."],
+"cap-haïtien":[190000,"≈ urban area",45,"EIU-style est."],
+"jacmel":[35000,"town ≈",null,""]
 };
 
 

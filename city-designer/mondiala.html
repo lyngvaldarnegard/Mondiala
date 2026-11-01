@@ -77,6 +77,8 @@
   <div class="motto">Liberty · Equality · Democracy · Reason · Progress</div>
   <div class="spacer"></div>
   <button id="btnView">View: rings</button>
+  <button id="btnNextRing" title="View-only: watch the pool settle onto one more ring — nothing is saved, reload resets">+ Next ring</button>
+  <button id="btnDropRing" title="View-only: take the last extra ring away — ring 8 is the shipped city">− Remove ring</button>
   <button id="btnValidate">✓ Check lattice</button>
   <button id="btnClearFlags" class="warn">Clear flags</button>
 </header>
@@ -527,6 +529,12 @@ function renderCenterOut() {
 document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
   recenter();
+});
+document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — nothing is saved, reload resets
+  maxCircle++; viewBox = cityViewBox(); moved = false; recenter();
+});
+document.getElementById("btnDropRing").addEventListener("click", () => { // view-only: take the last extra ring away; the shipped city is rings 0–8
+  if (maxCircle > 8) { maxCircle--; viewBox = cityViewBox(); moved = false; recenter(); }
 });
 function recenter() { // recompute the coordinate placement — the city is data-driven, so a rebuild is always the shipped state
   buildCity();

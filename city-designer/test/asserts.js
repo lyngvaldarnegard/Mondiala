@@ -116,6 +116,29 @@ ok("inspector shows the info card, not edit fields", !$("inspector").innerHTML.i
 ok("inspector has no Apply button", !__els.has("iApply"));
 X.selected = null; X.showInspector();
 
+// ---------- 7b · the ring viewer (view-only) ----------
+section("7b · the ring viewer (view-only)");
+ok("ring-viewer buttons wired", __els.has("btnNextRing") && __els.has("btnDropRing"));
+__fire($("btnNextRing"), "click", {});
+eq("ring 9 opens", X.maxCircle, 9);
+eq("hexes with ring 9", Object.keys(X.hexes).length, 271);
+eq("ring 9 carries plain cities only", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").length, 0);
+eq("pool after ring 9", X.pool.length, 125);
+eq("pool chips re-render", document.querySelectorAll(".poolname").length, 125);
+__fire($("btnNextRing"), "click", {});
+eq("ring 10 opens", X.maxCircle, 10);
+eq("pool after ring 10", X.pool.length, 65);
+__fire($("btnDropRing"), "click", {});
+eq("drop back to 9", X.maxCircle, 9);
+eq("pool back to 125", X.pool.length, 125);
+__fire($("btnDropRing"), "click", {});
+eq("drop back to 8", X.maxCircle, 8);
+eq("hexes restored", Object.keys(X.hexes).length, 217);
+eq("pool restored", X.pool.length, 179);
+__fire($("btnDropRing"), "click", {});
+eq("cannot drop below the shipped city", X.maxCircle, 8);
+X.recenter();
+
 // ---------- 8 · pan / zoom / click-guard ----------
 section("8 · pan / zoom / click-guard");
 const svg = $("map");

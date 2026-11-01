@@ -8,12 +8,26 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.3 — the map goes read-only** | `main` (this push) | current · in-browser editing removed — the map is a pure viewer, every change flows through the data |
+| **v1.3.1 — the ring viewer** | `main` (this push) | current · view-only + Next ring / − Remove ring buttons — watch the pool settle onto ring 9, nothing saved |
+| **v1.3 — the map goes read-only** | `af81811` | bookmark branch `archive/v1.3-read-only-map` |
 | **v1.2 — the civilisation heart** | `a42e888` | bookmark branch `archive/v1.2-the-civilisation-heart` |
 | **v1.1.2 — the data splits into five themed files** | `0484b199` | bookmark branch `archive/v1.1.2-split-data` |
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.3.1 — the ring viewer
+
+The add-ring control returns as what it always really was — a viewing feature (his call:
+"this was not editing feature this was viewing feature"):
+
+- **+ Next ring** — the pool settles onto ring 9 by the compass rule, right before your eyes
+  (54 cities, pool 179 → 125, the view re-fitting so the new rim touches the screen)
+- **− Remove ring** — takes the last extra ring away; ring 8 is the shipped city, so it
+  can't go below that
+- Pure view state — nothing is saved, a reload resets to the shipped city, the same
+  non-persisting deal as the centre-mode switch
+- Suite: **451 checks, all green** (14 new ring-viewer checks)
 
 ## v1.3 — the map goes read-only
 

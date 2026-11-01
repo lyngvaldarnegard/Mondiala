@@ -43,7 +43,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
   - **Greatness-weighted** — size + livability + walkability: ≈ 44.49°N 28.97°E, on the **Dobruja steppe of Romania** — the dry Casimcea plateau between the Danube and the Black Sea coast (🇷🇴)
 - The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇺🇿 Uzbekistan (nearest: Tashkent, 96 km)")
 - **Add a city and the map re-flows**: add a name, coordinates and population to the roster data, and Mondiala's centre moves — every ring re-settles around the new middle. Removing the city again restores the exact previous map
-- **The pool = cities beyond the horizon**: the 179 cities too far from the centre to fit before ring 8 ends — in geographic mode the megacities of the far side (Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, São Paulo) plus the world's younger capitals (Canberra, Wellington, Pyongyang, Ottawa, Brasília, Nairobi, Kigali, Nouakchott, Libreville, Malabo), Japan's Kyoto and Hiroshima, the Pacific and Gulf cities (Auckland, Brisbane, Honolulu, New Orleans, Quebec City) and ancient Tikal and Timbuktu. Ask for a ninth ring in the data and 54 of them settle onto the new rim by the same compass rule
+- **The pool = cities beyond the horizon**: the 179 cities too far from the centre to fit before ring 8 ends — in geographic mode the megacities of the far side (Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, São Paulo) plus the world's younger capitals (Canberra, Wellington, Pyongyang, Ottawa, Brasília, Nairobi, Kigali, Nouakchott, Libreville, Malabo), Japan's Kyoto and Hiroshima, the Pacific and Gulf cities (Auckland, Brisbane, Honolulu, New Orleans, Quebec City) and ancient Tikal and Timbuktu. Press **+ Next ring** and 54 of them settle onto the new rim by the same compass rule — a view-only peek; **− Remove ring** takes it back, nothing is saved
 
 ## The pink free-use districts
 
@@ -67,7 +67,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **Read-only in the browser** — every hex shows exactly what the data says; naming a hex for a god of love in the data makes it pink automatically
 - **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag)
 - **Lattice checker** enforcing the three lattice rules — green spokes stay sacred, symmetry stays whole, no ordinary hex gets left without a god
-- **Headless test suite**: 437 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map (viewing controls present, editing UI gone), the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
+- **Headless test suite**: 451 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
 
 ## Usage
 
@@ -78,7 +78,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only the controls stay selectable
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
-- A bigger city — a ring added in the data — re-fits the view the same way, so the new rim's edges touch the screen
+- **+ Next ring / − Remove ring** are view-only: watch the pool settle onto ring 9 (and beyond) — the view re-fits so the new rim's edges touch the screen; nothing is saved, a reload resets to the shipped city
 - Click a hexagon to inspect it
 - "Check lattice" flags violations of the three lattice rules on the map
 
@@ -87,10 +87,9 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 The headless suite that keeps every claim in this README honest lives in
 **[`test/`](test/)** and is part of the repository — so it survives everything and anyone
 can re-run it. It loads the *shipped* files (`mondiala.html` + its five themed data
-files) the same way a browser would, rebuilds the city, and runs **437 checks**: roster integrity, the
-authored heart, the lattice rules and validator, the read-only map (viewing controls present,
-editing UI gone), all three centre modes' placements, pools and centres, the capital audit,
-pan/zoom, and a full `DATA.md` consistency pass.
+files) the same way a browser would, rebuilds the city, and runs **451 checks**: roster integrity, the
+authored heart, the lattice rules and validator, the read-only map, the ring viewer, all three centre
+modes' placements, pools and centres, the capital audit, pan/zoom, and a full `DATA.md` consistency pass.
 
 Run it from the `city-designer` folder with `sh test/run.sh` — needs Node ≥ 18 and nothing
 else. `test/split_push.py` rebuilds `mondiala.html` and the five `mondiala-*.js` data

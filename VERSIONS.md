@@ -28,7 +28,7 @@ The heart rebuilt to the corrected design:
   the pink set mirror-symmetric about the north–south axis; every ordinary hexagon outside
   Norden touching a god. (The old invented "no two parks adjacent" rule is retired.)
 - **The ancient kin return to the roster** (318 cities — Aleppo, Diyarbakır, Jerusalem,
-  Babylon, Mecca, Aksum flow onto the outer rings by compass; Cusco and Constantinole live
+  Babylon, Mecca, Aksum flow onto the outer rings by compass; Cusco and Constantinople live
   in the heart instead of the roster)
 - **New centres**: the upper Tundzha valley by Kalofer, Bulgaria (geo) · the Turkistan steppe
   south-east of the Shardara reservoir, Kazakhstan (pop) · the western Budjak, Moldova (great)

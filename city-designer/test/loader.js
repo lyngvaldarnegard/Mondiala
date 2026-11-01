@@ -26,6 +26,8 @@ const __export = `
   DIRS, SIZE, HEX_AREA,
   get hexes() { return hexes; }, get pool() { return pool; },
   get maxCircle() { return maxCircle; }, set maxCircle(v) { maxCircle = v; },
+  get GRID_ROT() { return GRID_ROT; }, set GRID_ROT(v) { GRID_ROT = v; },
+  compassSeat, fillWorldPlan, RING4_ORIGINALS,
   get centerMode() { return centerMode; }, set centerMode(v) { centerMode = v; },
   get selected() { return selected; }, set selected(v) { selected = v; },
   get viewBox() { return viewBox; }, set viewBox(v) { viewBox = v; },

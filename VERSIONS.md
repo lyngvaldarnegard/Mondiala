@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.7 — the city finds the centre** | `main` (this push) | current · the heart pulls the centre (heart + seated roster, iterated), forty deletions, the map is infinite — ring 12 |
+| **v1.8 — the heart learns direction** | `main` (this push) | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
+| **v1.7 — the city finds the centre** | `a69254cb` (+ the density campaign's B1 `7e04820`) | bookmark branch `archive/v1.7-the-city-finds-the-centre` |
 | **v1.6 — the city reaches the horizon** | `8d26c34` | bookmark branch `archive/v1.6-the-city-reaches-the-horizon` |
 | **v1.5 — the lattice steps out** | `e059141` | bookmark branch `archive/v1.5-the-lattice-steps-out` |
 | **v1.4.1 — six-fold pink lattice** | `c70e1b9` | bookmark branch `archive/v1.4.1-six-fold-pink-lattice` |
@@ -21,6 +22,17 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.8 — the heart learns direction
+
+The compass takes over the seating — direction decides where every city and god sits, the favourites claim the heart's pink seats by rule, and the grid learns to turn:
+
+- **Direction-first seating (the compass decides)**: a city's true bearing picks its angle — green spokes included, they seat cities like any tile — and its real distance orders its direction's chain (near = inner). Crowded directions flow continuously into the neighbouring free tiles, so no ring but the outmost ever runs empty; only the frontier (ring 12, 48 empty city hexes) may. The whole compass stays one continuous band — Africa rides the south and west now, no city on the far side of its bearing
+- **Ring 4 seats by direction**: the six originals (Paris, Barcelona, Moscow, Singapore, Vancouver, New York) hold the green spokes — *which* spoke decided by each one's true bearing (in geo mode: Vancouver north, Moscow east-north-east, Singapore south-east, Barcelona south, Paris west-south-west, New York west-north-west) — and the twelve other inspiration cities keep their ring-4 seats, exact hex by bearing
+- **All pink tiles are equal — one allocation list, the favourites at the top**: the six favourites (Eros, Aphrodite, Venus, Freyja, Cupid, Kama) claim the ring-4 middles, each facing her homeland by compass. Milda — not a favourite — rejoins the god flow: she rides the lattice again from ring 7, Pothos fills Cupid's ring-6 seat, Aizen-Myōō slides to ring 8, and Astghik still rides the cascade out to ring 9
+- **The orientation toggle**: **Orientation: flat-side-up ↔ pointy-side-up** — the whole grid turns 30° as one rigid body and the compass re-flows live, every hex re-seating by the new north; the round trip is identity, and all four lattice laws hold in both orientations
+- The density campaign's B1 core figures for the eight big ring-4 cities (Paris, London, Madrid, Barcelona, Berlin, Vienna, Moscow, Tokyo) ride in the unnumbered heart rows
+- Suite: **737 checks, all green** — direction-first bounds (bearing error averages under 50° in every centre mode, no African city in the eastern sector), ring-4 pins, favourites pins, the cascade pins, empty-tile law, toggle round-trip and both-orientation lattice law
 
 ## v1.7 — the city finds the centre
 

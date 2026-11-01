@@ -23,7 +23,7 @@ eq("info cards", Object.keys(X.CITY_INFO).length, 415);
 eq("gods and concepts", X.SEX_GODS.size, 84);
 eq("favourites list", X.FAVOURITE_GODS, ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama","Parvati","Lakshmi"]);
 ok("every pink hex has an info card", Object.values(X.hexes).every(h => h.type !== "park" || X.CITY_INFO[(h.name || "").trim().toLowerCase()]));
-eq("RAW rows", X.RAW.length, 61);
+eq("RAW rows", X.RAW.length, 55);
 eq("pool (geo fresh)", X.pool.length, 144);
 eq("no double-placed roster city", (() => { const seen = new Set(); for (const h of Object.values(X.hexes)) { if (!h.name) continue; const n = h.name.trim().toLowerCase(); if (X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n)) { if (seen.has(n)) return false; seen.add(n); } } return true; })(), true);
 ok("every roster city has coordinates", X.WORLD_CITIES.every(w => X.CITY_COORDS[w.trim().toLowerCase()]));
@@ -35,15 +35,26 @@ eq("Metropol", X.hexes["0,0"].name, "Metropol");
 eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Mesopotamia", "Egypt", "Andes", "Mesoamerica"]);
 eq("ring 2", HEX_NAMES(2), ["Chang'an", "Constantinople", "Athens", "Tyre", "Uruk", "Ur", "Memphis", "Babylon", "Cusco", "Rome", "Tenochtitlan", "Carthage"]);
 eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Tampere | Tammerfors", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
-eq("ring 4", HEX_NAMES(4), ["Paris", "London", "Milda", "Madrid", "Barcelona", "Berlin", "Kama", "Vienna", "Moscow", "Tokyo", "Aphrodite", "Hong Kong", "Singapore", "Cape Town", "Eros", "Sydney", "Vancouver", "Amsterdam", "Venus", "Mexico City", "New York", "Rio de Janeiro", "Freyja", "Lisbon"]);
+eq("ring 4 (geo, direction-seated)", HEX_NAMES(4), ["Vancouver", "Berlin", "Kama", "Tokyo", "Moscow", "Hong Kong", "Aphrodite", "Sydney", "Singapore", "Cape Town", "Eros", "Rio de Janeiro", "Barcelona", "Madrid", "Cupid", "Lisbon", "Paris", "London", "Venus", "Mexico City", "New York", "Amsterdam", "Freyja", "Vienna"]);
 eq("ring 1 has no densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [null, null, null, null, null, null]);
 eq("Metropol density", X.hexes["0,0"].density, 4355.39);
 eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
 eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Mesopotamia,Egypt,Andes,Mesoamerica");
 
 // ---------- 3 · lattice rules (shipped state: six goddesses in the heart) ----------
-section("3 · lattice rules (shipped state: six goddesses in the heart, outer lattice on rings 6–8)");
-eq("heart goddesses by compass", [3, 7, 11, 15, 19, 23].map(n => { const h = Object.values(X.hexes).find(h => h.circle === 4 && h.num === n); return h ? h.name + ":" + h.type : "?"; }), ["Milda:park", "Kama:park", "Aphrodite:park", "Eros:park", "Venus:park", "Freyja:park"]);
+section("3 · lattice rules (shipped state: the six favourites in the heart, outer lattice on rings 6–8)");
+eq("the six favourites hold the ring-4 middles", [3, 7, 11, 15, 19, 23].map(n => { const h = Object.values(X.hexes).find(h => h.circle === 4 && h.num === n); return h ? h.name + ":" + h.type : "?"; }), ["Kama:park", "Aphrodite:park", "Eros:park", "Cupid:park", "Venus:park", "Freyja:park"]);
+eq("the six originals hold the spokes, which one by bearing", [1, 5, 9, 13, 17, 21].map(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n).name), ["Vancouver", "Moscow", "Singapore", "Barcelona", "Paris", "New York"]);
+ok("the ring-4 regulars keep compass order", (() => {
+  const regs = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n));
+  const pts = regs.map(h => { const p = X.axialToPixel(h.q, h.r); let a = Math.atan2(p.x, -p.y) / (Math.PI / 180); return a < 0 ? a + 360 : a; });
+  const bs = regs.map(h => X.bearingDist(X.worldCenter, h.name).bearing);
+  const oi = bs.map((b, i) => i).sort((a, b2) => bs[a] - bs[b2]);
+  let wraps = 0; for (let i = 1; i < oi.length; i++) if (pts[oi[i]] < pts[oi[i - 1]]) wraps++; // cyclic order: exactly one wrap allowed
+  return wraps <= 1;
+})());
+ok("every ring-4 city keeps its authored density", X.RAW.filter(r => r[0] === 4).every(r => { const h = Object.values(X.hexes).find(h => h.circle === 4 && (h.name || "") === r[2]); return h && h.density === r[3]; }));
+ok("the ring-4 favourites ride density-free", [3, 7, 11, 15, 19, 23].every(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n).density === null));
 const onSpokePark = Object.values(X.hexes).filter(h => h.type === "park" && (h.circle === 0 || X.onSpoke(h)));
 eq("no god on the green (fresh)", onSpokePark.length, 0);
 const mirrorOf = (h) => { const c = h.circle; if (c < 1) return null; const k = Math.floor((h.num - 1) / c); const twin = k * c + 1 + (c - (h.num - (k * c + 1))); return Object.values(X.hexes).find(x => x.circle === c && x.num === twin) || null; };
@@ -65,11 +76,16 @@ for (const h of Object.values(X.hexes)) {
 }
 uncovered.sort((a, b) => { const [c1, n1] = a.split("#"), [c2, n2] = b.split("#"); return (+c1 - +c2) || (+n1 - +n2); });
 eq("whole heart exempt, nothing uncovered (fresh)", uncovered, []);
-eq("parks (fresh: 12 ring 6 + 12 ring 7 + 6 ring 8 + 6 heart goddesses)", parkCount(), 36);
+eq("parks (fresh: 6 favourites on ring 4 + 12 ring 6 + 12 ring 7 + 6 ring 8)", parkCount(), 36);
 const parkNames = (c) => Object.values(X.hexes).filter(h => h.circle === c && h.type === "park").map(h => h.name).sort();
-ok("the favourites rule pulls Cupid, Parvati and Lakshmi onto ring 6", ["Cupid","Lakshmi","Parvati"].every(n => parkNames(6).includes(n)));
+ok("the favourites rule seats Eros, Aphrodite, Venus, Freyja, Cupid and Kama on ring 4", ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama"].every(n => parkNames(4).includes(n)));
+ok("Parvati and Lakshmi cascade to ring 6", ["Lakshmi","Parvati"].every(n => parkNames(6).includes(n)));
+ok("Pothos rides the overflow onto ring 6", parkNames(6).includes("Pothos"));
+ok("Milda rides the lattice again on ring 7", parkNames(7).includes("Milda"));
+ok("Ishtar keeps her ring-7 seat", parkNames(7).includes("Ishtar"));
+ok("Aizen-Myōō slides outward to ring 8", parkNames(8).includes("Aizen-Myōō"));
 eq("ring 6 seats twelve (favourites first)", parkNames(6).length, 12);
-ok("the displaced cascade outward: Pothos to ring 8, Astghik off ring 6", parkNames(8).includes("Pothos") && !parkNames(6).includes("Pothos") && !parkNames(6).includes("Astghik"));
+ok("the v1.8 cascade: Pothos fills Cupid's ring-6 seat, Astghik rides outward", parkNames(6).includes("Pothos") && !parkNames(6).includes("Astghik") && !parkNames(6).includes("Cupid"));
 eq("ring 8 keeps six (Parvati pulled inward)", parkNames(8).length, 6);
 
 // ---------- 4 · capitals aboard ----------
@@ -125,7 +141,28 @@ for (const m of Object.keys(spots)) {
   eq(m + " centre lon", X.worldCenter.lon.toFixed(8), lon);
   ok(m + " country is " + country, X.centerCountry(X.worldCenter).includes(country));
   eq(m + " pool (fresh)", X.pool.length, 144);
-  eq(m + " parks (12 ring 6 + 12 ring 7 + 6 ring 8 + 6 heart goddesses)", parkCount(), 36);
+  eq(m + " parks (6 favourites on ring 4 + 12 ring 6 + 12 ring 7 + 6 ring 8)", parkCount(), 36);
+}
+setMode("geo");
+
+// ---------- 6b · the compass decides (direction-first seating) ----------
+section("6b · the compass decides (direction-first seating)");
+const seatAngleOf = (h) => { const p = X.axialToPixel(h.q, h.r); let a = Math.atan2(p.x, -p.y) / (Math.PI / 180); return a < 0 ? a + 360 : a; };
+const errOf = (h) => { const b = X.bearingDist(X.worldCenter, h.name).bearing; const d = Math.abs(seatAngleOf(h) - b) % 360; return Math.min(d, 360 - d); };
+const seatedCityErrs = () => Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
+const AFRICA = ["Cairo", "Alexandria", "Algiers", "Marrakesh", "Casablanca", "Rabat", "Tunis", "Khartoum", "Lagos", "Accra", "Dakar", "Abuja", "Nairobi", "Addis Ababa", "Cape Town", "Pretoria", "Johannesburg", "Durban", "Kinshasa", "Luanda", "Maputo", "Harare", "Kampala", "Dar es Salaam", "Kigali"];
+for (const m of ["geo", "pop", "great"]) {
+  setMode(m);
+  const empties = Object.values(X.hexes).filter(h => h.circle >= 4 && h.circle <= 7 && !h.name && h.type !== "park").length;
+  eq(m + " no empty city tiles mid-map (rings 4–7)", empties, 0);
+  eq(m + " ring 8 fully seated", Object.values(X.hexes).filter(h => h.circle === 8 && !h.name && h.type !== "park").length, 0);
+  const errs = seatedCityErrs();
+  const avg = errs.reduce((s, e) => s + e, 0) / errs.length;
+  ok(m + " bearing error avg < 50° (got " + avg.toFixed(1) + ")", avg < 50);
+  ok(m + " bearing error max < 140° (got " + Math.max(...errs).toFixed(1) + ")", Math.max(...errs) < 140);
+  const seats = AFRICA.map(n => { const h = Object.values(X.hexes).find(h => h.name === n); return h ? seatAngleOf(h) : null; }).filter(a => a != null);
+  ok(m + " no African city in the eastern sector", seats.every(a => a >= 115), seats.map(a => Math.round(a)).join(","));
+  ok(m + " Africa rides one southern band", seats.every(a => a <= 340) && (seats.filter(a => a < 115).length === 0));
 }
 setMode("geo");
 
@@ -272,6 +309,29 @@ for (let i = 0; i < 40; i++) __fire(svg, "wheel", { deltaY: 300 }); // a hard fl
 ok("zoom-out floor is the city view", X.viewBox.w >= fit.w - 1e-6);
 X.viewBox = X.cityViewBox();
 X.refresh();
+
+// ---------- 8b · the orientation toggle (flat-side-up ↔ pointy-side-up) ----------
+section("8b · the orientation toggle (flat-side-up ↔ pointy-side-up)");
+const snapNames = () => { const m2 = {}; Object.values(X.hexes).forEach(h => m2[h.circle + "#" + h.num] = h.name); return JSON.stringify(m2); };
+ok("orientation button exists", !!__els.has("btnOrient"));
+eq("flat-side-up is the default", X.GRID_ROT, 0);
+const flatSnap = snapNames();
+const flatVB = [X.viewBox.w, X.viewBox.h];
+__fire($("btnOrient"), "click", {});
+eq("pointy-side-up turns the grid 30°", X.GRID_ROT, 30);
+ok("button labels pointy-side-up", $("btnOrient").textContent.includes("pointy-side-up"));
+ok("viewBox extents swap", Math.abs(X.viewBox.w - flatVB[1]) < 1e-6 && Math.abs(X.viewBox.h - flatVB[0]) < 1e-6);
+const pointyErrs = Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
+const pointyAvg = pointyErrs.reduce((s, e) => s + e, 0) / pointyErrs.length;
+ok("pointy bearing error avg < 55° (got " + pointyAvg.toFixed(1) + ")", pointyAvg < 55);
+ok("pointy bearing error max < 170° (got " + Math.max(...pointyErrs).toFixed(1) + ")", Math.max(...pointyErrs) < 170);
+__fire($("btnValidate"), "click", {});
+ok("lattice valid (pointy)", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
+__fire($("btnClearFlags"), "click", {});
+__fire($("btnOrient"), "click", {});
+eq("flat-side-up returns", X.GRID_ROT, 0);
+eq("the round trip is identity", snapNames(), flatSnap);
+X.viewBox = X.cityViewBox(); X.refresh();
 
 // ---------- 9 · DATA.md consistency ----------
 section("9 · DATA.md consistency");

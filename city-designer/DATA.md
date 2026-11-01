@@ -1,6 +1,6 @@
 # Mondiala — the city, hexagon by hexagon
 
-Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the favourites rule seats the favoured eight close to the centre; the cradle goddesses wait unplaced) · **311 world cities** on the roster, **185** of them waiting in the pool.
+Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the favourites rule seats the favoured eight close to the centre; the cradle goddesses wait unplaced) · **310 world cities** on the roster, **184** of them waiting in the pool.
 
 The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, Athens on the freed Indus spoke, and the Greek pair, Tyre, Ur, Babylon, Rome and Carthage grouped by culture between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; past ring 8 the pink lattice reaches the designed horizon — rings 9–11 seat the dormant five, fourteen new love-gods and the concepts of eros, deities by compass and concepts in authored order; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
 
@@ -94,23 +94,23 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 
 ## Outer city — geographic midpoint (geo mode)
 
-Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balkan foothills — the northern slopes of the Stara Planina above the Rositsa valley, between the Shipka passes and the Danubian plain, central Bulgaria).
+Mondiala sits at 43.04981°, 24.57248° — 🇧🇬 Bulgaria (the Central Balkan foothills — the northern slopes of the Stara Planina above the Rositsa valley, between the Shipka passes and the Danubian plain, central Bulgaria).
 
 ### Ring 5
 
 | Hex | Name |
 |---|---|
-| 1 | Budapest |
-| 2 | Kraków |
-| 3 | Warsaw |
-| 4 | Lviv |
-| 5 | Kyiv |
-| 6 | Chisinau |
-| 7 | Bucharest |
-| 8 | Odesa |
-| 9 | Sevastopol |
-| 10 | Ankara |
-| 11 | Homoia |
+| 1 | Prague |
+| 2 | Budapest |
+| 3 | Kraków |
+| 4 | Warsaw |
+| 5 | Lviv |
+| 6 | Kyiv |
+| 7 | Chisinau |
+| 8 | Bucharest |
+| 9 | Odesa |
+| 10 | Sevastopol |
+| 11 | Ankara |
 | 12 | Thessaloniki |
 | 13 | Palermo |
 | 14 | Tirana |
@@ -141,7 +141,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 4 | Strasbourg |
 | 5 | Parvati ♥ |
 | 6 | Munich |
-| 7 | Prague |
+| 7 | Frankfurt |
 | 8 | Minsk |
 | 9 | Lakshmi ♥ |
 | 10 | Diyarbakır |
@@ -176,12 +176,12 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 
 | Hex | Name |
 |---|---|
-| 1 | Rotterdam |
+| 1 | The Hague |
 | 2 | Aizen-Myōō ♥ |
-| 3 | The Hague |
-| 4 | Utrecht |
-| 5 | Hamburg |
-| 6 | Billund |
+| 3 | Utrecht |
+| 4 | Hamburg |
+| 5 | Billund |
+| 6 | Turku |
 | 7 | Anahita ♥ |
 | 8 | Narva |
 | 9 | Nanaya ♥ |
@@ -216,7 +216,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 38 | Ghent |
 | 39 | Bruges |
 | 40 | Antwerp |
-| 41 | Frankfurt |
+| 41 | Rotterdam |
 | 42 | Freyr ♥ |
 
 ### Ring 8
@@ -230,14 +230,14 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 5 | Tlazolteotl ♥ |
 | 6 | Stavanger |
 | 7 | Kristiansand |
-| 8 | Turku |
-| 9 | Vyborg |
-| 10 | Baku |
-| 11 | Ashgabat |
-| 12 | Tehran |
+| 8 | Vyborg |
+| 9 | Baku |
+| 10 | Ashgabat |
+| 11 | Tehran |
+| 12 | Isfahan |
 | 13 | Yue Lao ♥ |
-| 14 | Isfahan |
-| 15 | Baghdad |
+| 14 | Baghdad |
+| 15 | Abu Dhabi |
 | 16 | Kuwait City |
 | 17 | Manama |
 | 18 | Doha |
@@ -272,13 +272,13 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 47 | Belfast |
 | 48 | Leeds |
 
-### Pool — 185 unplaced (geo mode)
+### Pool — 184 unplaced (geo mode)
 
-Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Dubai, Jinan, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Accra, Mogadishu, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Abu Dhabi, Monrovia, Ottawa, Kyoto, San José, Astana, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Samarkand, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
+Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Dubai, Jinan, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Accra, Mogadishu, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Monrovia, Ottawa, Kyoto, San José, Astana, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Samarkand, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
 
 ## Outer city — population-weighted (pop mode)
 
-Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mountains of the Zarafshan range — high lake country above the Hisor valley, north-west of Dushanbe, western Tajikistan).
+Mondiala sits at 39.13404°, 68.15324° — 🇹🇯 Tajikistan (the Fann mountains of the Zarafshan range — high lake country above the Hisor valley, north-west of Dushanbe, western Tajikistan).
 
 ### Ring 5
 
@@ -320,13 +320,13 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 | Hex | Name |
 |---|---|
 | 1 | Diyarbakır |
-| 2 | Homoia |
+| 2 | Ankara |
 | 3 | Turan ♥ |
-| 4 | Ankara |
+| 4 | Sevastopol |
 | 5 | Lada ♥ |
-| 6 | Sevastopol |
-| 7 | Odesa |
-| 8 | Kyiv |
+| 6 | Odesa |
+| 7 | Kyiv |
+| 8 | Ulaanbaatar |
 | 9 | Sjöfn ♥ |
 | 10 | Dhaka |
 | 11 | Parvati ♥ |
@@ -360,16 +360,16 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 
 | Hex | Name |
 |---|---|
-| 1 | Warsaw |
+| 1 | Kraków |
 | 2 | Zhiva ♥ |
-| 3 | Minsk |
-| 4 | Narva |
-| 5 | Turku |
-| 6 | Saint Petersburg |
+| 3 | Warsaw |
+| 4 | Minsk |
+| 5 | Narva |
+| 6 | Turku |
 | 7 | Freyr ♥ |
-| 8 | Vyborg |
+| 8 | Saint Petersburg |
 | 9 | Aizen-Myōō ♥ |
-| 10 | Ulaanbaatar |
+| 10 | Vyborg |
 | 11 | Xi'an |
 | 12 | Chongqing |
 | 13 | Chengdu |
@@ -398,9 +398,9 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 | 36 | Pristina |
 | 37 | Peitho ♥ |
 | 38 | Bucharest |
-| 39 | Chisinau |
-| 40 | Lviv |
-| 41 | Kraków |
+| 39 | Belgrade |
+| 40 | Chisinau |
+| 41 | Lviv |
 | 42 | Dionysus ♥ |
 
 ### Ring 8
@@ -441,28 +441,28 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 | 32 | Podgorica |
 | 33 | Vatican City |
 | 34 | Sarajevo |
-| 35 | Belgrade |
-| 36 | San Marino |
+| 35 | San Marino |
+| 36 | Florence |
 | 37 | Áine ♥ |
-| 38 | Florence |
-| 39 | Bologna |
-| 40 | Zagreb |
-| 41 | Venice |
-| 42 | Verona |
-| 43 | Ljubljana |
-| 44 | Budapest |
+| 38 | Bologna |
+| 39 | Zagreb |
+| 40 | Venice |
+| 41 | Verona |
+| 42 | Ljubljana |
+| 43 | Budapest |
+| 44 | Vaduz |
 | 45 | Erzulie Freda ♥ |
 | 46 | Salzburg |
 | 47 | Bratislava |
 | 48 | Munich |
 
-### Pool — 185 unplaced (pop mode)
+### Pool — 184 unplaced (pop mode)
 
-Jakarta, Shanghai, Manila, Seoul, São Paulo, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Kinshasa, Hangzhou, Los Angeles, Luanda, Lima, Bogotá, Kuala Lumpur, Taipei, Nagoya, Dar es Salaam, Chicago, Washington D.C., Bandung, Boston, Santiago, Suzhou, Dallas, Surabaya, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Philadelphia, Milan, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Monterrey, Melbourne, Casablanca, Yaoundé, Montreal, Medellín, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Las Vegas, Santo Domingo, Pyongyang, Lusaka, Guatemala City, Pretoria, Caracas, Manchester, Algiers, Bamako, Frankfurt, Tunis, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Birmingham, Manaus, Hiroshima, Brussels, Conakry, Perth, Havana, Quito, Marseille, Rabat, Panama City, La Paz, Lyon, Leeds, Lomé, Montevideo, Turin, Glasgow, Auckland, N'Djamena, Harare, Kyoto, Seville, Monrovia, Ottawa, San José, Zurich, Rotterdam, Nouakchott, Porto, Niamey, Maputo, Kingston, Dublin, Tripoli, Kigali, Freetown, Asunción, The Hague, Antwerp, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Lille, Managua, Nice, Geneva, Toulouse, Bordeaux, Libreville, Honolulu, New Orleans, Tegucigalpa, Valparaíso, Nantes, Bangui, Newcastle upon Tyne, Strasbourg, Liverpool, Genoa, Quebec City, Dodoma, Bristol, Belfast, Basel, Edinburgh, Bloemfontein, Ghent, Juba, Bissau, Cardiff, Canberra, Windhoek, Banjul, Bern, Lausanne, Wellington, Port Moresby, Utrecht, Yamoussoukro, Maseru, Malabo, Porto-Novo, Port of Spain, Dili, Gaborone, Stavanger, Lucerne, Aberdeen, Cork, Luxembourg, Cap-Haïtien, Oxford, Cambridge, Lugano, Port Louis, Gitega, St. Gallen, Bruges, Mbabane, Tikal, Timbuktu, Monaco, Jacmel, Andorra la Vella, Vaduz
+Jakarta, Shanghai, Manila, Seoul, São Paulo, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Kinshasa, Hangzhou, Los Angeles, Luanda, Lima, Bogotá, Kuala Lumpur, Taipei, Nagoya, Dar es Salaam, Chicago, Washington D.C., Bandung, Boston, Santiago, Suzhou, Dallas, Surabaya, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Philadelphia, Milan, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Monterrey, Melbourne, Casablanca, Yaoundé, Montreal, Medellín, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Las Vegas, Santo Domingo, Pyongyang, Lusaka, Guatemala City, Pretoria, Caracas, Manchester, Algiers, Bamako, Frankfurt, Tunis, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Birmingham, Manaus, Hiroshima, Brussels, Conakry, Perth, Havana, Quito, Marseille, Rabat, Panama City, La Paz, Lyon, Leeds, Lomé, Montevideo, Turin, Glasgow, Auckland, N'Djamena, Harare, Kyoto, Seville, Monrovia, Ottawa, San José, Zurich, Rotterdam, Nouakchott, Porto, Niamey, Maputo, Kingston, Dublin, Tripoli, Kigali, Freetown, Asunción, The Hague, Antwerp, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Lille, Managua, Nice, Geneva, Toulouse, Bordeaux, Libreville, Honolulu, New Orleans, Tegucigalpa, Valparaíso, Nantes, Bangui, Newcastle upon Tyne, Strasbourg, Liverpool, Genoa, Quebec City, Dodoma, Bristol, Belfast, Basel, Edinburgh, Bloemfontein, Ghent, Juba, Bissau, Cardiff, Canberra, Windhoek, Banjul, Bern, Lausanne, Wellington, Port Moresby, Utrecht, Yamoussoukro, Maseru, Malabo, Porto-Novo, Port of Spain, Dili, Gaborone, Stavanger, Lucerne, Aberdeen, Cork, Luxembourg, Cap-Haïtien, Oxford, Cambridge, Lugano, Port Louis, Gitega, St. Gallen, Bruges, Mbabane, Tikal, Timbuktu, Monaco, Jacmel, Andorra la Vella
 
 ## Outer city — greatness-weighted (great mode)
 
-Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe of southern Moldova — rolling open country near Cahul, between the Prut and the Dniester lowlands).
+Mondiala sits at 45.79967°, 28.54838° — 🇲🇩 Moldova (the Budjak steppe of southern Moldova — rolling open country near Cahul, between the Prut and the Dniester lowlands).
 
 ### Ring 5
 
@@ -477,9 +477,9 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 7 | Kyiv |
 | 8 | Odesa |
 | 9 | Sevastopol |
-| 10 | Aleppo |
-| 11 | Ankara |
-| 12 | Homoia |
+| 10 | Diyarbakır |
+| 11 | Aleppo |
+| 12 | Ankara |
 | 13 | Nicosia |
 | 14 | Thessaloniki |
 | 15 | Sofia |
@@ -515,10 +515,10 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 10 | Tbilisi |
 | 11 | Qetesh ♥ |
 | 12 | Yerevan |
-| 13 | Diyarbakır |
-| 14 | Damascus |
+| 13 | Damascus |
+| 14 | Beirut |
 | 15 | Astarte ♥ |
-| 16 | Beirut |
+| 16 | Valletta |
 | 17 | Adonis ♥ |
 | 18 | Palermo |
 | 19 | Vatican City |
@@ -568,23 +568,23 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 22 | Alexandria |
 | 23 | Bastet ♥ |
 | 24 | Tripoli |
-| 25 | Valletta |
-| 26 | Tunis |
-| 27 | Marseille |
+| 25 | Tunis |
+| 26 | Marseille |
+| 27 | Nice |
 | 28 | Himeros ♥ |
-| 29 | Nice |
+| 29 | Monaco |
 | 30 | Peitho ♥ |
-| 31 | Monaco |
-| 32 | Turin |
-| 33 | Lyon |
-| 34 | Geneva |
+| 31 | Turin |
+| 32 | Lyon |
+| 33 | Geneva |
+| 34 | Lausanne |
 | 35 | Dionysus ♥ |
-| 36 | Lausanne |
+| 36 | Bern |
 | 37 | Zhiva ♥ |
-| 38 | Bern |
-| 39 | Luxembourg |
-| 40 | Brussels |
-| 41 | Ghent |
+| 38 | Luxembourg |
+| 39 | Brussels |
+| 40 | Ghent |
+| 41 | Bruges |
 | 42 | Freyr ♥ |
 
 ### Ring 8
@@ -607,29 +607,29 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 14 | Tehran |
 | 15 | Isfahan |
 | 16 | Dubai |
-| 17 | Doha |
-| 18 | Kuwait City |
-| 19 | Manama |
-| 20 | Riyadh |
+| 17 | Abu Dhabi |
+| 18 | Doha |
+| 19 | Kuwait City |
+| 20 | Manama |
 | 21 | Pothos ♥ |
-| 22 | Medina |
-| 23 | Mecca |
-| 24 | Jeddah |
-| 25 | Luxor |
-| 26 | Algiers |
-| 27 | Rabat |
-| 28 | Seville |
+| 22 | Riyadh |
+| 23 | Medina |
+| 24 | Mecca |
+| 25 | Jeddah |
+| 26 | Luxor |
+| 27 | Algiers |
+| 28 | Rabat |
 | 29 | Mami Wata ♥ |
-| 30 | Andorra la Vella |
-| 31 | Toulouse |
-| 32 | Porto |
-| 33 | Bordeaux |
-| 34 | Nantes |
-| 35 | Lille |
-| 36 | Bristol |
+| 30 | Seville |
+| 31 | Andorra la Vella |
+| 32 | Toulouse |
+| 33 | Porto |
+| 34 | Bordeaux |
+| 35 | Nantes |
+| 36 | Lille |
 | 37 | Erzulie Freda ♥ |
-| 38 | Cardiff |
-| 39 | Bruges |
+| 38 | Bristol |
+| 39 | Cardiff |
 | 40 | Cork |
 | 41 | Oxford |
 | 42 | Cambridge |
@@ -640,7 +640,7 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 47 | Manchester |
 | 48 | Leeds |
 
-### Pool — 185 unplaced (great mode)
+### Pool — 184 unplaced (great mode)
 
-Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Khartoum, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Kabul, Casablanca, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Pretoria, Caracas, Bamako, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Abu Dhabi, Monrovia, Ottawa, Kyoto, San José, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Asmara, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
+Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Khartoum, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Kabul, Casablanca, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Pretoria, Caracas, Bamako, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Monrovia, Ottawa, Kyoto, San José, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Asmara, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
 

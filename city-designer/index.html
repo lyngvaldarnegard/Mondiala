@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -120,7 +119,7 @@
     </div>
     <div class="card">
       <h2>Lattice report</h2>
-      <div id="validatorOut" class="hint">Run “Check lattice” to verify the free-use park lattice: every park should be surrounded by six non-park hexes, and every non-park hex should touch at least one park.</div>
+      <div id="validatorOut" class="hint">Run “Check lattice” to verify the free-use district lattice: no two districts should touch, and every other interior hex should touch at least one district.</div>
     </div>
   </div>
 </div>
@@ -130,7 +129,7 @@
 // ---------- Types ----------
 const TYPES = {
   district:   { label: "District",        fill: "#31404f", stroke: "#1a2530" },
-  park:       { label: "Free-use park",  fill: "#e0218a", stroke: "#92125b" },
+  park:       { label: "Free-use district",  fill: "#e0218a", stroke: "#92125b" },
   water:      { label: "Water",          fill: "#24546e", stroke: "#153648" },
   plaza:      { label: "Plaza",          fill: "#a8842f", stroke: "#6d551d" },
   civic:      { label: "Civic / landmark", fill: "#6d4fa0", stroke: "#47346c" },
@@ -142,7 +141,7 @@ const TYPES = {
 const RAW = [
 [0,0,"Metropol",4355.39],
 [1,1,"Paris",19430],[1,2,"Barcelona",16630],[1,3,"Moscow",5080],[1,4,"Singapore",8188.27],[1,5,"Vancouver",5749.9],[1,6,"New York",11313.8],
-[2,1,"Diyarbakır",null],[2,2,"Aleppo",null],[2,3,"Athens",null],[2,4,"Jerusalem",null],[2,5,"Babylon",null],[2,7,"Carthago",null],[2,8,"Rome",null],[2,9,"Aksum",null],[2,10,"Byzantium",null],[2,11,"Mecca",null],[2,12,"Tenochtitlan",null],
+[2,1,"Rome",null],[2,3,"Athens",null],[2,5,"Constantinople",null],[2,7,"Babylon",null],[2,9,"Jerusalem",null],[2,11,"Çatalhöyük",null], // green spokes: the famous ancient cities; non-spoke slots 2,4,6,8,10,12 stay blank free-use districts
 [3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
 [4,1,"Vienna",null],[4,2,"Lisbon",null],[4,3,"Amsterdam",null],[4,4,"Florence",null],[4,5,"Venice",null],[4,6,"Madrid",null],[4,7,"Porto",null],[4,8,"Hamburg",null],[4,9,"Sydney",null],[4,10,"Seoul",null],[4,11,"Bordeaux",null],[4,12,"Istanbul",null],[4,13,"Melbourne",null],[4,14,"Prague",null],[4,15,"Budapest",null],[4,16,"Dublin",null],[4,17,"London",5782],[4,18,"Buenos Aires",null],[4,19,"Mexico City",null],[4,20,"San Francisco",null],[4,21,"Tokyo",null],[4,22,"Tel Aviv",null],[4,23,"Hong Kong",6801],[4,24,"Saint Petersburg",null],
 [5,1,"Milan",null],[5,2,"Berlin",null],[5,3,"Osaka",null],[5,4,"Edinburgh",null],[5,5,"Toronto",null],[5,6,"Montreal",null],[5,7,"Rio de Janeiro",null],[5,8,"Taipai",null],[5,9,"Shanghai",null],[5,10,"Brussels",null],[5,11,"Cape Town",null],[5,12,"Utrecht",null],[5,13,"Buenos Aires",null],[5,14,"Bangkok",null],[5,15,"Cairo",null],[5,16,"Munich",null],[5,17,"Delhi",null],[5,18,"Lima",null],[5,19,"Dubai",null],[5,20,"Bogotá",null],[5,21,"Beijing",null],[5,22,"Washington D.C.",null],[5,23,"Chicago",null],[5,24,"Boston",null],[5,25,"Philadelphia",null],[5,26,"Liverpool",null],[5,27,"Bristol",null],[5,28,"Houston",null],[5,29,"Las Vegas",null],[5,30,"Miami",null],
@@ -169,6 +168,8 @@ const CITY_INFO = {
 "byzantium":["🇹🇷","Byzantine splendour — gold mosaics, domed basilicas, purple and iconography."],
 "mecca":["🇸🇦","Sacred geometry — minarets, marble plazas, the black cube as centrepiece."],
 "tenochtitlan":["🇲🇽","Aztec island-capital — causeways, chinampa gardens, pyramid-temples, obsidian ornament."],
+"constantinople":["🇹🇷","Byzantine Constantinople — Justinian's vast dome of the Hagia Sophia, Theodosian triple land walls, sunken cisterns, the imperial Golden Horn."],
+"çatalhöyük":["🇹🇷","Çatalhöyük — the world's oldest city, on the Konya plain of Anatolia: 9,000-year-old honeycombed mudbrick houses entered from the roofs, wall paintings, bull-horn shrines, no streets at all."],
 "stockholm":["🇸🇪","Nordic capital on water — Gamla Stan pastel facades, functionalist housing, archipelago light."],
 "københavn":["🇩🇰","Copenhagen humanism — colourful Nyhavn, protected bike streets, quietly modern royal architecture."],
 "oslo":["🇳🇴","Fjord city — the white marble opera roof you can walk on, Munch-museum curves, timber modernism."],
@@ -284,7 +285,7 @@ const CITY_INFO = {
 "atlanta":["🇺🇸","Peachtree ridge city — civil-rights memory, a forest metro."],
 "san diego":["🇺🇸","Balboa Park Spanish revival — border-city light."],
 "portland":["🇺🇸","Bridge-city urbanism — craft cores, eco density."],
-"freeuse":["🌿","Free-use park — consent-permissioned public space with threshold architecture at its six edges."]
+"freeuse":["♥","Free-use district — consent-permissioned pink quarter with threshold architecture at its six edges."]
 };
 
 // ---------- Real-city facts: [population, population source, livability score, livability source, Walk Score?] ----------
@@ -310,6 +311,8 @@ const CITY_FACTS = {
 "byzantium":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
 "mecca":[2400000,"≈ urban area",null,""],
 "tenochtitlan":[23146802,"Mexico City urban area 2025",72,"EIU-style est."],
+"constantinople":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
+"çatalhöyük":[null,"",null,""],
 "stockholm":[1652895,"tätort 2023",95,"EIU-style est."],
 "københavn":[1408439,"byområde 2026",98.0,"EIU GLI 2026"],
 "oslo":[1082575,"tettsted 2025",94,"EIU-style est."],
@@ -514,6 +517,8 @@ function buildCity() {
     }
   }
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
+  // ring 2: the six non-spoke hexes are blank, unnamed free-use districts (pink, off the green metro spokes)
+  Object.values(hexes).forEach(h => { if (h.circle === 2 && !h.name && !onSpoke(h)) h.type = "park"; });
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
     if (h.name === "Freeuse") h.type = "park";
@@ -756,14 +761,14 @@ function renderStats() {
   document.getElementById("stats").innerHTML =
     stat(all.length, "Hexagons (rings 0–" + rings + ")") +
     stat(named.length, "Named hexes") +
-    stat(parks.length, "Free-use parks") +
+    stat(parks.length, "Free-use districts") +
     stat(Math.round(pop).toLocaleString(), "Population (known dens.)") +
     stat(Math.round(avg).toLocaleString(), "Avg hex population") +
     stat((all.length * HEX_AREA).toLocaleString() + " km²", "Total area");
 }
 function stat(v, l) { return '<div class="b"><div class="v">' + v + '</div>' + l + "</div>"; }
 
-// ---------- Validator (free-use park lattice) ----------
+// ---------- Validator (free-use district lattice) ----------
 document.getElementById("btnValidate").addEventListener("click", () => {
   const out = [];
   document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
@@ -780,11 +785,11 @@ document.getElementById("btnValidate").addEventListener("click", () => {
   });
   const el = document.getElementById("validatorOut");
   if (parkPark === 0 && noPark === 0) {
-    el.innerHTML = '<span class="ok">✓ Lattice valid: no park touches another park, and every interior hex touches at least one free-use park.</span>';
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no district touches another district, and every interior hex touches at least one free-use district.</span>';
   } else {
     el.innerHTML =
-      (parkPark ? '<span class="bad">' + parkPark + ' park hex(es) touch other parks (red dashed).</span><br>' : '<span class="ok">No park-park adjacency.</span><br>') +
-      (noPark ? '<span class="warn2">' + noPark + ' non-park hex(es) lack a park neighbour (orange dashed).</span>' : '<span class="ok">Every interior non-park hex touches a park.</span>');
+      (parkPark ? '<span class="bad">' + parkPark + ' district hex(es) touch other districts (red dashed).</span><br>' : '<span class="ok">No district-district adjacency.</span><br>') +
+      (noPark ? '<span class="warn2">' + noPark + ' hex(es) lack a district neighbour (orange dashed).</span>' : '<span class="ok">Every interior hex touches a district.</span>');
   }
 });
 document.getElementById("btnClearFlags").addEventListener("click", () => {

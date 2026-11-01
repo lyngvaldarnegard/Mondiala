@@ -67,16 +67,16 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 
 | Hex | Name | Density |
 |---|---|---|
-| 1 | Paris | 19430 |
-| 2 | London | 5400 |
+| 1 | Paris | 37690 |
+| 2 | London | 9886 |
 | 3 | Milda | — |
-| 4 | Madrid | 6600 |
-| 5 | Barcelona | 16630 |
-| 6 | Berlin | 4100 |
+| 4 | Madrid | 28587 |
+| 5 | Barcelona | 36105.8 |
+| 6 | Berlin | 10062 |
 | 7 | Kama | — |
-| 8 | Vienna | 3700 |
-| 9 | Moscow | 5080 |
-| 10 | Tokyo | 4500 |
+| 8 | Vienna | 5675 |
+| 9 | Moscow | 10576.2 |
+| 10 | Tokyo | 22920 |
 | 11 | Aphrodite | — |
 | 12 | Hong Kong | 27700 |
 | 13 | Singapore | 8188.27 |

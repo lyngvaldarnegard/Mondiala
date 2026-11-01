@@ -62,7 +62,6 @@ const CITY_INFO = {
 "marseille":["🇫🇷","The old port — shuttered lanes in limestone, the MuCEM's lattice, calanques, bouillabaisse quays, North African souk energy."],
 "tenochtitlan":["🇲🇽","Aztec island-capital — causeways, chinampa gardens, pyramid-temples, obsidian ornament."],
 "constantinople":["🇹🇷","Byzantine Constantinople — Justinian's vast dome of the Hagia Sophia, Theodosian triple land walls, sunken cisterns, the imperial Golden Horn."],
-"homoia":["🇹🇷","Homoia — the proto-city, humanity's first settlement, after Çatalhöyük on the Anatolian plain. Honeycombed mudbrick houses entered from the roofs, wall paintings, bull-horn shrines, no streets at all."],
 "jericho":["🇵🇸","Jericho — the oldest city on Earth, Tell es-Sultan: a spring-fed oasis in the Jordan valley, ancient walls, mudbrick houses and Hisham's desert palace mosaic."],
 "babylon":["🇮🇶","Babylon — the gate of the gods: the blue-glazed Ishtar Gate, the Processional Way of lions, the ziggurat Etemenanki."],
 "ur":["🇮🇶","Ur — Sumer's moon city: the Great Ziggurat of Nanna, the Royal Tombs' gold, Abraham's traditional home."],

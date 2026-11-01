@@ -25,7 +25,6 @@ const CITY_FACTS = {
 "mecca":[2400000,"≈ urban area",74,"EIU-style est."],
 "tenochtitlan":[250000,"≈ ancient peak c. 1500 AD (Aztec)",null,""],
 "constantinople":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
-"homoia":[8000,"≈ ancient peak c. 7000 BC (Çatalhöyük)",null,""],
 "jericho":[28000,"≈ urban area (the oasis town)",null,""],
 "babylon":[850000,"Hillah, modern site ≈",null,""],
 "tyre":[200000,"Tyre, modern site ≈",null,""],

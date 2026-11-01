@@ -1,4 +1,4 @@
-// Mondiala City Designer — data 2/5: the world's great cities — the 318-city roster with real
+// Mondiala City Designer — data 2/5: the world's great cities — the 305-city roster with real
 // coordinates and countries, and the three verified centre spots.
 // Generated from the Mondiala City Designer canvas; edit there and re-split.
 // ---------- The great cities of the world — placed by their real coordinates ----------

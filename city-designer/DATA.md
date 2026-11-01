@@ -1,8 +1,8 @@
 # Mondiala — the city, hexagon by hexagon
 
-Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **30 pink free-use districts** (the twelve heart gods wait unplaced — name any hexagon for a god and it turns pink) · **305 world cities** on the roster, **179** of them waiting in the pool.
+Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **30 pink free-use districts** (the twelve heart gods wait unplaced, to be seated by editing the data) · **305 world cities** on the roster, **179** of them waiting in the pool.
 
-The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. The twelve gods of love stay unplaced — name any hexagon for one of them and it turns pink.
+The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. The twelve gods of love stay unplaced. The map is read-only in the browser — every change happens in the data files.
 
 ## The heart — rings 0–4 (authored; identical in every centre mode)
 

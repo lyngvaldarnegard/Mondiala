@@ -77,7 +77,6 @@
   <div class="motto">Liberty · Equality · Democracy · Reason · Progress</div>
   <div class="spacer"></div>
   <button id="btnView">View: rings</button>
-  <button id="btnAddRing">+ Add ring</button>
   <button id="btnValidate">✓ Check lattice</button>
   <button id="btnClearFlags" class="warn">Clear flags</button>
 </header>
@@ -86,21 +85,12 @@
   <div id="sidebar">
     <div class="card" id="inspectorCard">
       <h2>Inspector</h2>
-      <div id="inspector"><div class="emptysel">Click a hexagon to edit it. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div></div>
-    </div>
-    <div class="card">
-      <h2>Brush</h2>
-      <div class="modebar">
-        <button id="modeSelect" class="on">Select</button>
-        <button id="modePaint">Paint</button>
-      </div>
-      <div class="types" id="types"></div>
-      <div class="hint" style="margin-top:8px">Paint mode: click hexes to apply the armed type. In Select mode, click a type to change the selected hex.</div>
+      <div id="inspector"><div class="emptysel">Click a hexagon to see its card. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div></div>
     </div>
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Rings 5–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Name any hexagon for a god of love and it turns pink. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink district.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Rings 5–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink district.</div>
     </div>
     <div class="card">
       <h2>World placement</h2>
@@ -111,35 +101,15 @@
         <option value="great">Greatness-weighted — size + livability + walkability</option>
       </select>
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
-      <label class="field" style="margin-top:8px">Add a city — the centre moves and the map re-flows</label>
-      <input type="text" id="addName" placeholder="Name (e.g. Auckland)">
-      <div class="rowbtns" style="margin-top:6px">
-        <input type="number" id="addLat" placeholder="Lat" step="any">
-        <input type="number" id="addLon" placeholder="Lon" step="any">
-        <input type="number" id="addPop" placeholder="Population" step="any">
-      </div>
-      <div class="rowbtns" style="margin-top:6px"><button id="btnAddCity">+ Add city</button></div>
-      <div id="extraList" class="hint" style="margin-top:6px"></div>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
-      <div class="hint" style="margin-bottom:6px">Cities beyond the map's current horizon — add a ring or more cities to reach them. Click to arm, then click a hex (Select mode) to place a name by hand.</div>
+      <div class="hint" style="margin-bottom:6px">Cities beyond the map's horizon, waiting for a future Mondiala.</div>
       <div class="poolbox" id="pool"></div>
     </div>
     <div class="card">
-      <h2>Save / Load</h2>
-      <div class="rowbtns">
-        <button id="btnSaveLocal">Save to browser</button>
-        <button id="btnLoadLocal">Load</button>
-        <button id="btnExport">Export JSON ↓</button>
-        <button id="btnImport">Import JSON ↑</button>
-        <button id="btnReset" class="warn">Reset city</button>
-      </div>
-      <textarea id="jsonio" placeholder="Exported JSON appears here. Paste JSON and press Import to load."></textarea>
-    </div>
-    <div class="card">
       <h2>Lattice report</h2>
-      <div id="validatorOut" class="hint">Run “Check lattice” to verify the love-god lattice: no god may sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon outside Norden must touch a pink district.</div>
+      <div id="validatorOut" class="hint">Run “Check lattice” to verify the love-god lattice: no god may sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city must touch a pink district.</div>
     </div>
   </div>
 </div>
@@ -208,9 +178,6 @@ let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
 let pool = [];         // unplaced names — cities beyond the map's current horizon
 let worldCenter = null; // where Mondiala sits on Earth under the active centre mode
 let selected = null;  // key
-let armedType = "district";
-let armedPoolName = null;
-let paintMode = false;
 let viewMode = "rings"; // "rings" (alternating red/blue rings + green spokes) or "type"
 
 function buildCity() {
@@ -499,15 +466,7 @@ svg.addEventListener("click", e => {
   if (moved) return;
   const t = e.target.closest(".hex");
   if (!t) return;
-  const key = t.dataset.key;
-  if (paintMode) { hexes[key].type = armedType; refresh(); if (selected === key) showInspector(); }
-  else if (armedPoolName !== null) {
-    hexes[key].name = armedPoolName;
-    const ci = CITY_INFO[armedPoolName.trim().toLowerCase()];
-    if (ci && !hexes[key].style) hexes[key].style = ci[1];
-    pool = pool.filter(p => p.name !== armedPoolName);
-    armedPoolName = null; renderPool(); refresh();
-  } else { selected = key; refresh(); showInspector(); }
+  selected = t.dataset.key; refresh(); showInspector(); // read-only: clicking only looks
 });
 
 function refresh() { render(); renderStats(); }
@@ -525,41 +484,9 @@ function showInspector() {
       '<div class="ictitle"><span class="icflag">' + (ci ? ci[0] : "⬡") + '</span>' + esc(h.name || "Unnamed hex") + '</div>' +
       '<div class="icsub">Circle ' + h.circle + ' · Hexagon ' + h.num + ringLen + '</div>' +
       factsBlock(h.name) +
-      (ci || h.style ? '<div class="icstyle">' + esc(h.style || ci[1]) + '</div>' : '<div class="icstyle none">No style set — type a name (e.g. Paris) to auto-fill.</div>') +
+      (ci || h.style ? '<div class="icstyle">' + esc(h.style || ci[1]) + '</div>' : '<div class="icstyle none">No style set.</div>') +
     '</div>';
-  inspector.innerHTML =
-    '<div class="postalcode">PCODE ' + esc(label) + '</div>' +
-    infoCard +
-    '<label class="field">Name</label><input type="text" id="iName" value="' + esc(h.name) + '">' +
-    '<label class="field">Type</label><select id="iType">' +
-      Object.entries(TYPES).map(([k, v]) => '<option value="' + k + '"' + (h.type === k ? " selected" : "") + '>' + v.label + '</option>').join("") +
-    '</select>' +
-    '<label class="field">Density (people/km²)</label><input type="number" id="iDensity" step="any" value="' + (h.density ?? "") + '">' +
-    '<label class="field">Population ≈ <span id="iPop"></span></label>' +
-    '<label class="field">Style / what it copies</label><textarea id="iStyle">' + esc(h.style || "") + '</textarea>' +
-    '<label class="field">Notes</label><textarea id="iNotes">' + esc(h.notes || "") + '</textarea>' +
-    '<div class="rowbtns" style="margin-top:10px"><button id="iApply">Apply</button><button id="iClearName" class="warn">Clear name</button></div>';
-  const upd = () => {
-    const d = parseFloat(document.getElementById("iDensity").value);
-    document.getElementById("iPop").textContent = isFinite(d) ? Math.round(d * HEX_AREA).toLocaleString() : "—";
-  };
-  document.getElementById("iDensity").addEventListener("input", upd); upd();
-  document.getElementById("iApply").addEventListener("click", () => {
-    h.name = document.getElementById("iName").value.trim();
-    h.type = document.getElementById("iType").value;
-    if (h.name && SEX_GODS.has(h.name.toLowerCase())) h.type = "park"; // naming a hex for a god of love makes it a pink free-use district
-    const dv = document.getElementById("iDensity").value;
-    h.density = dv === "" ? null : parseFloat(dv);
-    h.notes = document.getElementById("iNotes").value;
-    const typedStyle = document.getElementById("iStyle").value;
-    if (typedStyle.trim()) h.style = typedStyle;
-    else { const ci2 = h.name ? CITY_INFO[h.name.toLowerCase()] : null; h.style = ci2 ? ci2[1] : ""; }
-    refresh(); showInspector();
-  });
-  document.getElementById("iClearName").addEventListener("click", () => {
-    if (h.type === "park" && SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "district"; // the pink came with the god's name — it goes when the name goes
-    h.name = ""; refresh(); showInspector();
-  });
+  inspector.innerHTML = '<div class="postalcode">PCODE ' + esc(label) + '</div>' + infoCard; // read-only: the map is viewed here, edited in the data
 }
 function factsBlock(name) { // real-world data for the city this hex copies
   const f = name ? CITY_FACTS[name.trim().toLowerCase()] : null;
@@ -572,22 +499,6 @@ function factsBlock(name) { // real-world data for the city this hex copies
 }
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
 
-// ---------- Type chips ----------
-const typesDiv = document.getElementById("types");
-function renderTypes() {
-  typesDiv.innerHTML = "";
-  Object.entries(TYPES).forEach(([k, v]) => {
-    const chip = document.createElement("div");
-    chip.className = "typechip" + (armedType === k ? " active" : "");
-    chip.innerHTML = '<div class="sw" style="background:' + v.fill + '"></div>' + v.label;
-    chip.addEventListener("click", () => {
-      armedType = k; renderTypes();
-      if (!paintMode && selected && hexes[selected]) { hexes[selected].type = k; refresh(); showInspector(); }
-    });
-    typesDiv.appendChild(chip);
-  });
-}
-
 // ---------- Pool ----------
 function renderPool() {
   const box = document.getElementById("pool");
@@ -595,9 +506,8 @@ function renderPool() {
   box.innerHTML = pool.length ? "" : '<div class="hint">All names are placed.</div>';
   pool.forEach(p => {
     const el = document.createElement("div");
-    el.className = "poolname" + (armedPoolName === p.name ? " armed" : "");
+    el.className = "poolname";
     el.textContent = p.name;
-    el.addEventListener("click", () => { armedPoolName = armedPoolName === p.name ? null : p.name; renderPool(); });
     box.appendChild(el);
   });
 }
@@ -618,109 +528,10 @@ document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
   recenter();
 });
-function snapshotEdits() { // manual edits worth keeping when the placement re-flows
-  const byName = {}, byKey = {};
-  const computed = new Set(WORLD_CITIES.map(w => w.trim().toLowerCase()).concat(extraCities.map(c => c.name.trim().toLowerCase())));
-  Object.values(hexes).forEach(h => {
-    const key = h.q + "," + h.r, name = (h.name || "").trim().toLowerCase();
-    if (h.circle <= 4) { // the authored heart is hand territory — every named hex (cities, civilisations, hand-placed gods) keeps its exact hexagon through every re-flow
-      if (h.name) byKey[key] = { manual: true, name: h.name, type: h.type, notes: h.notes, style: h.style, density: h.density };
-      else if (h.notes || (h.type !== "district" && h.type !== "park")) byKey[key] = { manual: false, type: h.type, notes: h.notes };
-    } else if (h.name && SEX_GODS.has(name)) {
-      byKey[key] = { manual: true, name: h.name, type: h.type, notes: h.notes, style: h.style, density: h.density }; // a god placed on an outer hex keeps it too — never evict a god
-    } else if (h.name && !SEX_GODS.has(name) && computed.has(name)) {
-      const e = { type: h.type, notes: h.notes, style: h.style, density: h.density };
-      const autoStyle = (CITY_INFO[name] || [])[1];
-      if (e.type !== "district" || e.notes || (e.style && e.style !== autoStyle) || e.density != null) byName[h.name.trim()] = e;
-    } else if (h.name) {
-      byKey[key] = { manual: true, name: h.name, type: h.type, notes: h.notes, style: h.style, density: h.density };
-    } else {
-      if (h.notes || (h.type !== "district" && h.type !== "park")) byKey[key] = { manual: false, type: h.type, notes: h.notes };
-    }
-  });
-  return { byName, byKey };
-}
-function reapplyEdits(snap) {
-  Object.values(hexes).forEach(h => {
-    const e = h.name && snap.byName[h.name.trim()];
-    if (!e || SEX_GODS.has(h.name.trim().toLowerCase())) return; // the gods keep their hexes no matter what
-    if (e.type && e.type !== "district") h.type = e.type;
-    if (e.notes) h.notes = e.notes;
-    if (e.style) h.style = e.style;
-    if (e.density != null) h.density = e.density;
-  });
-  Object.keys(snap.byKey).forEach(key => {
-    const e = snap.byKey[key], h = hexes[key];
-    if (!h) return;
-    if (e.manual) {
-      if (SEX_GODS.has((h.name || "").trim().toLowerCase())) return; // never evict a god
-      if (h.name && h.name !== e.name) pool.push({ name: h.name, density: null }); // the computed city yields its hexagon and waits in the pool
-      h.name = e.name; h.type = e.type; h.notes = e.notes; h.style = e.style; h.density = e.density;
-    } else if (!h.name) {
-      if (e.type !== "district" && e.type !== "park") h.type = e.type;
-      if (e.notes) h.notes = e.notes;
-    }
-  });
-  pool.sort((a, b) => factPop(b.name) - factPop(a.name));
-}
-function recenter() { // recompute the coordinate placement, keeping manual edits
-  const snap = snapshotEdits();
+function recenter() { // recompute the coordinate placement — the city is data-driven, so a rebuild is always the shipped state
   buildCity();
-  reapplyEdits(snap);
   selected = null; refresh(); renderPool(); renderCenterOut();
 }
-function saveExtraCities() { try { localStorage.setItem("mondiala-extra-cities", JSON.stringify(extraCities)); } catch (e) { /* preview: no storage */ } }
-function injectExtra(city) { // make a user-added city fully native: coordinates, flag, facts
-  const key = city.name.trim().toLowerCase();
-  CITY_COORDS[key] = [city.lat, city.lon];
-  if (!CITY_INFO[key]) CITY_INFO[key] = ["🌐", "A newly added world city — its districts will take shape as Mondiala grows."];
-  if (!CITY_FACTS[key] && city.pop) CITY_FACTS[key] = [city.pop, "user-provided", null, "", null];
-}
-function setExtraCities(list) {
-  extraCities = [];
-  (list || []).forEach(c => {
-    if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lon) || Math.abs(c.lat) > 90 || Math.abs(c.lon) > 180) return;
-    const city = { name: String(c.name).trim(), lat: +c.lat, lon: +c.lon, pop: isFinite(c.pop) ? +c.pop : null };
-    const key = city.name.toLowerCase();
-    if (extraCities.some(x => x.name.toLowerCase() === key)) return;
-    if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key)) return; // already on the roster
-    injectExtra(city);
-    extraCities.push(city);
-  });
-  saveExtraCities();
-}
-function loadExtraCities() { try { setExtraCities(JSON.parse(localStorage.getItem("mondiala-extra-cities") || "[]")); } catch (e) { setExtraCities([]); } }
-function renderExtraList() {
-  const el = document.getElementById("extraList");
-  el.innerHTML = extraCities.length ? "" : "No cities added yet.";
-  extraCities.forEach((c, i) => {
-    const row = document.createElement("div");
-    row.className = "poolname";
-    row.textContent = "🌐 " + c.name + " (" + fmtLatLon(c) + ")  ✕ remove";
-    row.addEventListener("click", () => {
-      const snap = snapshotEdits(); // snapshot while the city still counts as computed — a removed city must never linger as a manual edit
-      extraCities.splice(i, 1); saveExtraCities();
-      buildCity(); reapplyEdits(snap);
-      selected = null; refresh(); renderPool(); renderCenterOut(); renderExtraList();
-    });
-    el.appendChild(row);
-  });
-}
-document.getElementById("btnAddCity").addEventListener("click", () => {
-  const name = document.getElementById("addName").value.trim();
-  const lat = parseFloat(document.getElementById("addLat").value);
-  const lon = parseFloat(document.getElementById("addLon").value);
-  const pop = parseFloat(document.getElementById("addPop").value);
-  const out = document.getElementById("validatorOut");
-  if (!name || !isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { out.textContent = "Add city: give it a name and valid coordinates."; return; }
-  const key = name.toLowerCase();
-  if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key) || extraCities.some(c => c.name.trim().toLowerCase() === key)) { out.textContent = "Add city: " + name + " is already on the map."; return; }
-  setExtraCities(extraCities.concat([{ name, lat, lon, pop: isFinite(pop) ? pop : null }]));
-  recenter();
-  renderExtraList();
-  out.textContent = name + " added — the centre moved and the map re-flowed ✓";
-});
-
 // ---------- Stats ----------
 function renderStats() {
   const all = Object.values(hexes);
@@ -778,87 +589,10 @@ document.getElementById("btnView").addEventListener("click", () => {
   refresh();
 });
 
-// ---------- Modes ----------
-document.getElementById("modeSelect").addEventListener("click", () => setPaint(false));
-document.getElementById("modePaint").addEventListener("click", () => setPaint(true));
-function setPaint(on) {
-  paintMode = on;
-  document.getElementById("modeSelect").classList.toggle("on", !on);
-  document.getElementById("modePaint").classList.toggle("on", on);
-  armedPoolName = null; renderPool();
-}
-
-// ---------- Rings ----------
-document.getElementById("btnAddRing").addEventListener("click", () => {
-  const snap = snapshotEdits();
-  maxCircle++;
-  buildCity();
-  reapplyEdits(snap);
-  viewBox = cityViewBox(); // fit the grown city — the new rim's edges touch the screen again
-  refresh(); renderPool(); renderCenterOut(); // a new ring reaches further out — pool cities settle onto it
-});
-
-// ---------- Save / Load / Export ----------
-function exportJSON() {
-  return JSON.stringify({
-    format: "mondiala-city-designer",
-    maxCircle,
-    centerMode,
-    extraCities,
-    hexes: Object.values(hexes).map(h => ({ q: h.q, r: h.r, circle: h.circle, num: h.num, name: h.name, density: h.density, type: h.type, style: h.style || "", notes: h.notes }))
-  });
-}
-function importJSON(text) {
-  const data = JSON.parse(text);
-  if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
-  maxCircle = data.maxCircle || 8;
-  if (data.centerMode) centerMode = data.centerMode;
-  if (Array.isArray(data.extraCities)) setExtraCities(data.extraCities);
-  buildCity();
-  data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
-  document.getElementById("centerMode").value = centerMode;
-  selected = null; refresh(); renderPool(); renderCenterOut();
-}
-document.getElementById("btnExport").addEventListener("click", () => {
-  const ta = document.getElementById("jsonio");
-  ta.value = exportJSON();
-  try {
-    const blob = new Blob([ta.value], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "mondiala-city.json";
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  } catch (e) { /* downloads may be blocked in preview; JSON stays in the textarea */ }
-});
-document.getElementById("btnImport").addEventListener("click", () => {
-  try { importJSON(document.getElementById("jsonio").value); document.getElementById("validatorOut").textContent = "Imported ✓"; }
-  catch (e) { document.getElementById("validatorOut").textContent = "Import failed: " + e.message; }
-});
-document.getElementById("btnSaveLocal").addEventListener("click", () => {
-  try { localStorage.setItem("mondiala-city", exportJSON()); document.getElementById("validatorOut").textContent = "Saved to browser storage ✓"; }
-  catch (e) { document.getElementById("validatorOut").innerHTML = "Browser storage unavailable in preview — use Export JSON and keep the file."; }
-});
-document.getElementById("btnLoadLocal").addEventListener("click", () => {
-  try {
-    const s = localStorage.getItem("mondiala-city");
-    if (!s) { document.getElementById("validatorOut").textContent = "No saved city found."; return; }
-    importJSON(s);
-  } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
-});
-document.getElementById("btnReset").addEventListener("click", () => {
-  const snap = snapshotEdits(); // hand-placed gods, renames and styled hexes survive even a full reset
-  maxCircle = 8; selected = null; buildCity(); reapplyEdits(snap);
-  viewBox = cityViewBox(); refresh(); renderPool(); renderCenterOut();
-});
-
 // ---------- Init ----------
-loadExtraCities();
 document.getElementById("centerMode").value = centerMode;
 buildCity();
-renderTypes();
 renderPool();
-renderExtraList();
 refresh();
 renderCenterOut();
 

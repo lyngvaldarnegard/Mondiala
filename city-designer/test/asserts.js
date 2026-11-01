@@ -4,10 +4,8 @@
 (async () => {
 "use strict";
 const X = globalThis.__X;
-const baselineExport = X.exportJSON(); // the pristine fresh build — later sections mutate state, this restores it
 const $ = id => document.getElementById(id);
 const keyOf = (c, n) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h ? h.q + "," + h.r : null; };
-const namesOf = (c) => { const out = []; for (let n = 1; n <= c * 6; n++) { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); out.push(h && h.name ? h.name : "—"); } return out; };
 const HEX_NAMES = (c) => { const out = []; for (let n = 1; n <= c * 6; n++) { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); out.push(h && h.name ? h.name : "—"); } return out; };
 const HEART_NAMES = new Set([].concat(...[1, 2, 3, 4].map(c => HEX_NAMES(c))).filter(n => n !== "—"));
 let PASS = 0, FAIL = 0, SECTION = "";
@@ -41,7 +39,7 @@ eq("Metropol density", X.hexes["0,0"].density, 4355.39);
 eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
 eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Mesopotamia,Egypt,Andes,Mesoamerica");
 
-// ---------- 3 · lattice rules (shipped state: empty heart) ----------
+// ---------- 3 · lattice rules (shipped state: no gods in the heart) ----------
 section("3 · lattice rules (shipped state: no gods in the heart)");
 const onSpokePark = Object.values(X.hexes).filter(h => h.type === "park" && (h.circle === 0 || X.onSpoke(h)));
 eq("no god on the green (fresh)", onSpokePark.length, 0);
@@ -76,71 +74,9 @@ ok("validator says lattice valid (fresh)", $("validatorOut").innerHTML.includes(
 __fire($("btnClearFlags"), "click", {});
 ok("clear flags works", document.querySelectorAll(".flag-nopark").length === 0);
 
-// ---------- 6 · hand-placing the twelve heart gods (the fill-later flow) ----------
-section("6 · hand-placing the twelve heart gods (the fill-later flow)");
-// a verified symmetric fill — the gods are named onto ordinary heart hexes (over the cities;
-// btnReset below restores the shipped heart): ring 2 mids pair (2,12)(4,10)(6,8), ring 4 mids pair (2,24)(3,23)(6,20)
-const GODS = [["Zhinü", 2, 2], ["Xochiquetzal", 2, 12], ["Aphrodite", 2, 4], ["Ishtar", 2, 10],
-             ["Inanna", 2, 6], ["Hathor", 2, 8],
-             ["Venus", 4, 2], ["Freyja", 4, 24], ["Kama", 4, 3], ["Eros", 4, 23],
-             ["Rati", 4, 6], ["Cavillaca", 4, 20]];
-for (const [g, c, n] of GODS) {
-  X.selected = keyOf(c, n);
-  X.showInspector();
-  $("iName").value = g;
-  $("iType").value = "district";
-  __fire($("iApply"), "click", {});
-}
-eq("all twelve placed", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g && h.type === "park"; }), true);
-eq("parks now 42", parkCount(), 42);
-__fire($("btnValidate"), "click", {});
-eq("valid 0/0/0 after fill", [document.querySelectorAll(".flag-invalid").length, document.querySelectorAll(".flag-nopark").length].join("/"), "0/0");
-// survives a mode switch (which re-flows the computed placement)
+// ---------- 6 · centres ----------
+section("6 · centres");
 const setMode = (m) => { $("centerMode").value = m; __fire($("centerMode"), "change", {}); };
-setMode("great");
-ok("gods survive mode switch", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g; }));
-setMode("geo");
-// survives export → import
-const filledExport = X.exportJSON();
-X.importJSON(filledExport);
-ok("gods survive export→import", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g && h.type === "park"; }));
-// survives add-ring (ring 9) and reset back
-__fire($("btnAddRing"), "click", {});
-ok("gods survive add-ring", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g; }));
-eq("ring 9 exists", Object.values(X.hexes).some(h => h.circle === 9), true);
-__fire($("btnReset"), "click", {});
-eq("reset back to 217", Object.keys(X.hexes).length, 217);
-ok("gods survive reset", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g; }));
-// removing a god breaks symmetry (Eros at 4#23 loses his mirror Kama at 4#3)…
-X.selected = keyOf(4, 23);
-X.showInspector();
-__fire($("iClearName"), "click", {});
-__fire($("btnValidate"), "click", {});
-ok("removing Eros breaks symmetry (Kama unmirrored)", document.querySelectorAll(".flag-invalid").length >= 1);
-// …and restoring him heals it
-X.selected = keyOf(4, 23);
-X.showInspector();
-$("iName").value = "Eros";
-$("iType").value = "district";
-__fire($("iApply"), "click", {});
-__fire($("btnValidate"), "click", {});
-eq("restored: valid again", [document.querySelectorAll(".flag-invalid").length, document.querySelectorAll(".flag-nopark").length].join("/"), "0/0");
-// a god on a green spoke is flagged (rule 1) — then undone
-X.selected = keyOf(5, 1);
-X.showInspector();
-$("iName").value = "Prende";
-$("iType").value = "district";
-__fire($("iApply"), "click", {});
-__fire($("btnValidate"), "click", {});
-ok("god on spoke flagged", document.querySelectorAll(".flag-invalid").length >= 1);
-X.hexes[keyOf(5, 1)].name = "";
-X.hexes[keyOf(5, 1)].type = "district";
-X.refresh();
-__fire($("btnValidate"), "click", {});
-eq("clean again", [document.querySelectorAll(".flag-invalid").length, document.querySelectorAll(".flag-nopark").length].join("/"), "0/0");
-
-// ---------- 7 · centres ----------
-section("7 · centres");
 const spots = { geo: ["42.14872240", "24.79302491", "Bulgaria"], pop: ["36.93213238", "67.00017894", "Tajikistan"], great: ["44.48894929", "28.97183031", "Romania"] };
 for (const m of Object.keys(spots)) {
   setMode(m);
@@ -148,68 +84,40 @@ for (const m of Object.keys(spots)) {
   eq(m + " centre lat", X.worldCenter.lat.toFixed(8), lat);
   eq(m + " centre lon", X.worldCenter.lon.toFixed(8), lon);
   ok(m + " country is " + country, X.centerCountry(X.worldCenter).includes(country));
-  eq(m + " pool (gods displaced 12 heart cities back)", X.pool.length, 191);
-  eq(m + " parks (gods placed)", parkCount(), 42);
+  eq(m + " pool (fresh)", X.pool.length, 179);
+  eq(m + " parks (no gods placed)", parkCount(), 30);
 }
 setMode("geo");
 
-// ---------- 8 · save / load / export / import / add-remove city ----------
-section("8 · save / load / export / import / add-remove city");
-X.importJSON(baselineExport);
-const baseExport = baselineExport;
-eq("import baseline: identical export", X.exportJSON(), baseExport);
-$("jsonio").value = baseExport;
-__fire($("btnImport"), "click", {});
-eq("textarea import round-trip", X.exportJSON(), baseExport);
-$("addName").value = "Anchorage"; $("addLat").value = "61.218"; $("addLon").value = "-149.903"; $("addPop").value = "291247";
-__fire($("btnAddCity"), "click", {});
-ok("Anchorage added", X.extraCities.length === 1 && (Object.values(X.hexes).some(h => h.name === "Anchorage") || X.pool.some(p => p.name === "Anchorage")));
-ok("centre moved (weighted)", Math.abs(X.worldCenter.lat - 42.14872240) > 0.00001);
-const anchChip = [...document.querySelectorAll(".poolname")].find(el => (el.textContent || "").includes("Anchorage") && el.textContent.includes("remove"));
-ok("Anchorage listed for removal", !!anchChip);
-__fire(anchChip, "click", {}); // remove it
-eq("removal restores the exact map", X.exportJSON(), baseExport);
-__fire($("btnSaveLocal"), "click", {});
-eq("saved to storage", localStorage.getItem("mondiala-city"), baseExport);
-X.importJSON(filledExport); // dirty the state…
-__fire($("btnLoadLocal"), "click", {});
-eq("load from browser restores baseline", X.exportJSON(), baseExport);
-
-// ---------- 9 · pool, paint, inspector ----------
-section("9 · pool, paint, inspector");
-X.importJSON(baselineExport); // clean slate for this section
-eq("pool chips rendered", document.querySelectorAll(".poolname").length, 179);
-const tokyoEl = [...document.querySelectorAll(".poolname")].find(el => el.textContent === "Jakarta");
-ok("Jakarta in the pool", !!tokyoEl);
-__fire(tokyoEl, "click", {}); // arm
-eq("Jakarta armed", X.armedPoolName, "Jakarta");
-const spoke6 = keyOf(6, 3); // spoke hexes accept armed placement — there is no spoke guard on placing
-__fire($("map"), "click", { target: document.querySelector('[data-key="' + spoke6 + '"]') });
-eq("Jakarta placed on 6#3", X.hexes[spoke6].name, "Jakarta");
-eq("Jakarta left the pool", X.pool.some(p => p.name === "Jakarta"), false);
-eq("unarmed after placing", X.armedPoolName, null);
-X.selected = spoke6;
-X.showInspector();
-$("iStyle").value = "Test style";
-$("iNotes").value = "Test note";
-__fire($("iApply"), "click", {});
-ok("inspector edits stick", X.hexes[spoke6].style === "Test style" && X.hexes[spoke6].notes === "Test note");
-__fire($("modePaint"), "click", {});
-eq("paint mode on", X.paintMode, true);
-const plazaChip = [...document.querySelectorAll(".typechip")].find(el => (el.innerHTML || "").toLowerCase().includes("plaza"));
-ok("plaza chip exists", !!plazaChip);
-__fire(plazaChip, "click", {}); // arm the brush
-const mid5 = keyOf(5, 2);
-__fire($("map"), "click", { target: document.querySelector('[data-key="' + mid5 + '"]') });
-eq("paint plaza", X.hexes[mid5].type, "plaza");
-__fire($("modeSelect"), "click", {});
-eq("select mode back", X.paintMode, false);
+// ---------- 7 · the read-only map ----------
+section("7 · the read-only map");
+// the editing UI is gone: none of these ids are ever looked up by the app,
+// so they never exist in the stub DOM (do not $() them — that would create them)
+ok("no add-ring button", !__els.has("btnAddRing"));
+ok("no paint mode", !__els.has("modePaint"));
+ok("no save/load card", !__els.has("btnSaveLocal") && !__els.has("btnLoadLocal") && !__els.has("jsonio"));
+ok("no export/import", !__els.has("btnExport") && !__els.has("btnImport"));
+ok("no reset button", !__els.has("btnReset"));
+ok("no add-city form", !__els.has("btnAddCity") && !__els.has("addName") && !__els.has("extraList"));
+ok("no brush / type chips", !__els.has("types") && !__els.has("modeSelect"));
+// the viewing controls stay
+ok("view toggle kept", !!__els.has("btnView"));
+ok("validator kept", !!__els.has("btnValidate") && !!__els.has("btnClearFlags"));
+ok("centre-mode switch kept", !!__els.has("centerMode"));
+ok("pool list kept", !!__els.has("pool"));
+ok("stats kept", !!__els.has("stats"));
+eq("pool chips rendered (read-only)", document.querySelectorAll(".poolname").length, 179);
+eq("mode switch rebuilds fresh state", (() => { setMode("pop"); setMode("geo"); return X.pool.length; })(), 179);
+// clicking a hex still shows its read-only card
 X.selected = keyOf(1, 1);
 X.showInspector();
 ok("PCODE label", $("inspector").innerHTML.includes("1 China 1"));
+ok("inspector shows the info card, not edit fields", !$("inspector").innerHTML.includes("iApply"));
+ok("inspector has no Apply button", !__els.has("iApply"));
+X.selected = null; X.showInspector();
 
-// ---------- 10 · pan / zoom / click-guard ----------
-section("10 · pan / zoom / click-guard");
+// ---------- 8 · pan / zoom / click-guard ----------
+section("8 · pan / zoom / click-guard");
 const svg = $("map");
 const fit = X.cityViewBox();
 eq("fresh view is the full-city fit", [X.viewBox.x, X.viewBox.y, X.viewBox.w, X.viewBox.h].join(","), [fit.x, fit.y, fit.w, fit.h].join(","));
@@ -220,11 +128,11 @@ __fire(svg, "mousedown", { clientX: 500, clientY: 400 });
 eq("mousedown starts still", X.moved, false);
 __fire(svg, "mousemove", { clientX: 570, clientY: 430 }); // |70| + |30| = 100 > 2
 ok("drag sets the moved guard", X.moved === true);
-const parisEl = document.querySelector('[data-key="' + keyOf(1, 1) + '"]');
-__fire($("map"), "click", { target: parisEl });
+const hexEl = document.querySelector('[data-key="' + keyOf(1, 1) + '"]');
+__fire($("map"), "click", { target: hexEl });
 eq("click suppressed while moved", X.selected, null);
 X.moved = false;
-__fire($("map"), "click", { target: parisEl });
+__fire($("map"), "click", { target: hexEl });
 eq("click selects when still", X.selected, keyOf(1, 1));
 // zoom in shrinks the view; zooming out can never shrink past the full-city view
 X.moved = false;
@@ -235,9 +143,9 @@ ok("zoom-out floor is the city view", X.viewBox.w >= fit.w - 1e-6);
 X.viewBox = X.cityViewBox();
 X.refresh();
 
-// ---------- 11 · DATA.md consistency ----------
-section("11 · DATA.md consistency");
-X.importJSON(baselineExport);
+// ---------- 9 · DATA.md consistency ----------
+section("9 · DATA.md consistency");
+X.recenter(); // the data-driven rebuild IS the fresh state — there is nothing else to restore
 const md = fs.readFileSync("../DATA.md", "utf8");
 const lines = md.split("\n");
 const hexLine = (l) => l.startsWith("| ") && l.indexOf("Hex") === -1 && l.indexOf("---") === -1;

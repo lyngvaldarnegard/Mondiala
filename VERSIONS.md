@@ -8,11 +8,27 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.2 — the civilisation heart** | `main` (this push) | current · the heart refilled: cradle civilisations, ancient cities, Norden, inspiration cities — no gods, every hexagon named |
+| **v1.3 — the map goes read-only** | `main` (this push) | current · in-browser editing removed — the map is a pure viewer, every change flows through the data |
+| **v1.2 — the civilisation heart** | `a42e888` | bookmark branch `archive/v1.2-the-civilisation-heart` |
 | **v1.1.2 — the data splits into five themed files** | `0484b199` | bookmark branch `archive/v1.1.2-split-data` |
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.3 — the map goes read-only
+
+The browser stops being an editor and becomes a pure viewer — it could never save
+anything anyway, and every change already flowed through the data:
+
+- **Removed**: the inspector's edit fields, brush/paint mode and the type chips,
+  pool click-to-place, the add-city form, the add-ring button, and the whole
+  save/load/export/import/reset card
+- **Kept**: pan and zoom, the three centre modes, click-for-card inspection,
+  the stats, the read-only pool list, the lattice checker and the view toggle
+- `mondiala.html` shrank from 50 KB to 36 KB — pure app, no editing machinery
+- The suite was reshaped with it: **437 checks, all green** — the editing-flow
+  sections replaced by a read-only-map section (viewing controls present,
+  editing UI gone)
 
 ## v1.2 — the civilisation heart
 

@@ -30,13 +30,12 @@ const __export = `
   get selected() { return selected; }, set selected(v) { selected = v; },
   get viewBox() { return viewBox; }, set viewBox(v) { viewBox = v; },
   get worldCenter() { return worldCenter; }, get extraCities() { return extraCities; },
-  get paintMode() { return paintMode; }, get armedType() { return armedType; }, get armedPoolName() { return armedPoolName; },
   get viewMode() { return viewMode; },
   get moved() { return moved; }, set moved(v) { moved = v; },
   get gHexes() { return gHexes; },
   buildCity, computeWorldPlan, computeCenter, bearingDist, greatCircleKm, coordOf, factPop, factLiv, factWalk, factsFor, factPopPos, geoWeight,
   centerCountry, pinkPlan, worldSlots, neighborKeys, onSpoke, ringPositions, axialToPixel, cityViewBox,
-  exportJSON, importJSON, recenter, refresh, renderPool, renderTypes, renderStats, renderCenterOut, renderExtraList, showInspector, setPaint, snapshotEdits,
+  recenter, refresh, renderPool, renderStats, renderCenterOut, showInspector,
   fmtPop, fmtLatLon
 };
 `;

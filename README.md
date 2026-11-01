@@ -5,7 +5,7 @@ Worldbuilding project for **Mondiala**, the new world capital — centred on the
 ## The city map
 
 The interactive hex-grid map lives in [`city-designer/`](city-designer/). Open
-[`city-designer/mondiala-map.html`](city-designer/mondiala-map.html) in any browser —
+[`city-designer/mondiala.html`](city-designer/mondiala.html) in any browser —
 no build step, no dependencies.
 
 - **Rings 0–8: 217 named hexagons.** The fixed heart — Metropol, the six largest inspirations, the ancient inspirations + Venus, Aphrodite, Eros, Ishtar, Kama and Freyja, and the Nordic ring — is set forever

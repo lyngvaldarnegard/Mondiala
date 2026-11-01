@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mondiala City Designer</title>
+<style>
+  :root { font-family: Inter, system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #dce3ec; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; -webkit-user-select: none; }
+  input, textarea, select { user-select: text; -webkit-user-select: text; }
+  header { display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: #121a24; border-bottom: 1px solid #24303f; flex-wrap: wrap; }
+  header h1 { font-size: 17px; letter-spacing: .5px; }
+  header h1 span { color: #e8b04b; }
+  header .motto { font-size: 11px; color: #7d8b9d; font-style: italic; }
+  header .spacer { flex: 1; }
+  button, select, input, textarea { font-family: inherit; font-size: 12px; }
+  button { background: #24303f; color: #dce3ec; border: 1px solid #35455a; border-radius: 6px; padding: 6px 11px; cursor: pointer; }
+  button:hover { background: #2e3f54; }
+  button.warn { border-color: #8a4b4b; }
+  button.primary { background: #e8b04b; color: #1a2230; border-color: #e8b04b; font-weight: 600; }
+  #main { flex: 1; display: flex; min-height: 0; }
+  #mapwrap { flex: 1; position: relative; background: radial-gradient(ellipse at center, #131c28 0%, #0d1117 75%); }
+  svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  svg.panning { cursor: grabbing; }
+  .hex { stroke: #0d1117; stroke-width: 1.6; transition: filter .1s; }
+  .hex:hover { filter: brightness(1.35); }
+  .hex.selected { stroke: #e8b04b; stroke-width: 2.6; }
+  .hlabel { fill: #f2f6fa; text-anchor: middle; pointer-events: none; font-weight: 600; }
+  .nlabel { fill: #ffffff; opacity: .42; text-anchor: middle; pointer-events: none; }
+  .flag-invalid { stroke: #ff5c5c !important; stroke-width: 2.2; stroke-dasharray: 4 3; }
+  .flag-nopark { stroke: #ffb84d !important; stroke-width: 2.2; stroke-dasharray: 2 3; }
+  #sidebar { width: 320px; background: #121a24; border-left: 1px solid #24303f; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+  .card { background: #0f1620; border: 1px solid #24303f; border-radius: 10px; padding: 12px; }
+  .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #8b9aab; margin-bottom: 10px; }
+  .postalcode { font-size: 13px; color: #e8b04b; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; }
+  label.field { display: block; font-size: 11px; color: #8b9aab; margin: 8px 0 3px; }
+  input[type=text], input[type=number], textarea, select { width: 100%; background: #0d1420; border: 1px solid #2c3a4d; color: #dce3ec; border-radius: 6px; padding: 6px 8px; }
+  textarea { resize: vertical; min-height: 46px; }
+  .types { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .typechip { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border: 1px solid #2c3a4d; border-radius: 6px; cursor: pointer; font-size: 12px; background: #0d1420; }
+  .typechip.active { border-color: #e8b04b; background: #231d10; }
+  .typechip .sw { width: 13px; height: 13px; border-radius: 3px; flex: none; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+  .stats .b { background: #0d1420; border-radius: 6px; padding: 7px 9px; }
+  .stats .b .v { font-size: 15px; font-weight: 700; color: #e8b04b; }
+  .modebar { display: flex; gap: 6px; margin-bottom: 8px; }
+  .modebar button { flex: 1; }
+  .modebar button.on { background: #e8b04b; color: #1a2230; font-weight: 600; }
+  .hint { font-size: 11px; color: #7d8b9d; line-height: 1.45; }
+  .poolbox { max-height: 110px; overflow-y: auto; display: flex; flex-wrap: wrap; gap: 5px; }
+  .poolname { font-size: 11px; background: #1b2635; border: 1px solid #2c3a4d; padding: 2px 7px; border-radius: 10px; cursor: pointer; }
+  .poolname.armed { background: #e8b04b; color: #1a2230; font-weight: 600; }
+  #validatorOut { font-size: 11px; line-height: 1.5; margin-top: 8px; }
+  #validatorOut .ok { color: #6fd18a; }
+  #validatorOut .bad { color: #ff8a8a; }
+  #validatorOut .warn2 { color: #ffc266; }
+  #jsonio { width: 100%; height: 90px; font-family: ui-monospace, monospace; font-size: 10px; }
+  .rowbtns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .emptysel { color: #7d8b9d; font-size: 12px; padding: 10px 2px; }
+  .infocard { background: #0d1420; border: 1px solid #2c3a4d; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+  .ictitle { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 7px; }
+  .icflag { font-size: 16px; }
+  .icsub { font-size: 11px; color: #7d8b9d; margin: 3px 0 7px; }
+  .icstyle { font-size: 12px; line-height: 1.5; color: #c4cfdd; }
+  .icstyle.none { color: #7d8b9d; font-style: italic; }
+  .icfacts { margin: 7px 0; border: 1px solid #22303f; border-radius: 6px; background: #0b121b; padding: 6px 8px; display: flex; flex-direction: column; gap: 4px; }
+  .factline { display: flex; align-items: baseline; gap: 7px; font-size: 11px; }
+  .factline .fk { color: #7d8b9d; width: 84px; flex: none; }
+  .factline .fv { color: #e8b04b; font-weight: 700; font-size: 12.5px; }
+  .factline .fs { color: #6c7a8d; font-size: 10px; font-style: italic; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⬡ <span>Mondiala</span> City Designer</h1>
+  <div class="motto">Liberty · Equality · Democracy · Reason · Progress</div>
+  <div class="spacer"></div>
+  <button id="btnView">View: rings</button>
+  <button id="btnAddRing">+ Add ring</button>
+  <button id="btnValidate">✓ Check lattice</button>
+  <button id="btnClearFlags" class="warn">Clear flags</button>
+</header>
+<div id="main">
+  <div id="mapwrap"><svg id="map" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div id="sidebar">
+    <div class="card" id="inspectorCard">
+      <h2>Inspector</h2>
+      <div id="inspector"><div class="emptysel">Click a hexagon to edit it. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div></div>
+    </div>
+    <div class="card">
+      <h2>Brush</h2>
+      <div class="modebar">
+        <button id="modeSelect" class="on">Select</button>
+        <button id="modePaint">Paint</button>
+      </div>
+      <div class="types" id="types"></div>
+      <div class="hint" style="margin-top:8px">Paint mode: click hexes to apply the armed type. In Select mode, click a type to change the selected hex.</div>
+    </div>
+    <div class="card">
+      <h2>City stats</h2>
+      <div class="stats" id="stats"></div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Ring 3 (Norden) sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
+    </div>
+    <div class="card">
+      <h2>World placement</h2>
+      <label class="field">Where Mondiala sits — the centre of the great cities</label>
+      <select id="centerMode">
+        <option value="geo">Geographic midpoint — every city weighs the same</option>
+        <option value="pop">Population-weighted — big cities pull the centre</option>
+        <option value="great">Greatness-weighted — size + livability + walkability</option>
+      </select>
+      <div id="centerOut" class="hint" style="margin-top:6px"></div>
+      <label class="field" style="margin-top:8px">Add a city — the centre moves and the map re-flows</label>
+      <input type="text" id="addName" placeholder="Name (e.g. Auckland)">
+      <div class="rowbtns" style="margin-top:6px">
+        <input type="number" id="addLat" placeholder="Lat" step="any">
+        <input type="number" id="addLon" placeholder="Lon" step="any">
+        <input type="number" id="addPop" placeholder="Population" step="any">
+      </div>
+      <div class="rowbtns" style="margin-top:6px"><button id="btnAddCity">+ Add city</button></div>
+      <div id="extraList" class="hint" style="margin-top:6px"></div>
+    </div>
+    <div class="card">
+      <h2>Unplaced names <span id="poolCount"></span></h2>
+      <div class="hint" style="margin-bottom:6px">Cities beyond the map's current horizon — add a ring or more cities to reach them. Click to arm, then click a hex (Select mode) to place a name by hand.</div>
+      <div class="poolbox" id="pool"></div>
+    </div>
+    <div class="card">
+      <h2>Save / Load</h2>
+      <div class="rowbtns">
+        <button id="btnSaveLocal">Save to browser</button>
+        <button id="btnLoadLocal">Load</button>
+        <button id="btnExport">Export JSON ↓</button>
+        <button id="btnImport">Import JSON ↑</button>
+        <button id="btnReset" class="warn">Reset city</button>
+      </div>
+      <textarea id="jsonio" placeholder="Exported JSON appears here. Paste JSON and press Import to load."></textarea>
+    </div>
+    <div class="card">
+      <h2>Lattice report</h2>
+      <div id="validatorOut" class="hint">Run “Check lattice” to verify the free-use district lattice: no two districts should touch, and every hexagon that is not green should touch at least one district.</div>
+    </div>
+  </div>
+</div>
+<script src="mondiala-data.js"></script>
+<script>
+"use strict";
+
+// ---------- Types ----------
+const TYPES = {
+  district:   { label: "District",        fill: "#31404f", stroke: "#1a2530" },
+  park:       { label: "Free-use district",  fill: "#e0218a", stroke: "#92125b" },
+  water:      { label: "Water",          fill: "#24546e", stroke: "#153648" },
+  plaza:      { label: "Plaza",          fill: "#a8842f", stroke: "#6d551d" },
+  civic:      { label: "Civic / landmark", fill: "#6d4fa0", stroke: "#47346c" },
+  industrial: { label: "Industrial",     fill: "#57616c", stroke: "#39424b" }
+};
+
+// ---------- Hex math (axial coords, flat-top: flat side up, so the spoke through Metropol runs straight north–south) ----------
+const SQ3 = Math.sqrt(3);
+const SIZE = 36; // px per 1 km side
+const HEX_AREA = 3 * Math.sqrt(3) / 2; // km²
+const DIRS = [[1,-1,0],[1,0,-1],[0,1,-1],[-1,1,0],[-1,0,1],[0,-1,1]]; // cube dirs
+function axialToPixel(q, r) { return { x: SIZE * 1.5 * q, y: SIZE * SQ3 * (r + q / 2) }; } // flat-top: the q=0 spoke is a straight vertical line
+function hexCorners(cx, cy, s) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI / 180 * (60 * i); // flat-top: flat side up, points to the left and right
+    pts.push((cx + s * Math.cos(a)).toFixed(2) + "," + (cy + s * Math.sin(a)).toFixed(2));
+  }
+  return pts.join(" ");
+}
+function ringPositions(n) { // {q,r,num} for ring n (n>=1), numbered 1..6n with 1 at the top, running clockwise
+  const out = [];
+  let x = 0, y = n, z = -n; // cube; the topmost hex of the ring (axial 0,-n — straight above Metropol)
+  const walk = [0, 5, 4, 3, 2, 1]; // clockwise on screen (flat-top): upper-right, right, lower-right, lower-left, left, upper-left
+  for (const i of walk) {
+    for (let j = 0; j < n; j++) {
+      out.push({ q: x, r: z, num: out.length + 1 });
+      const d = DIRS[i];
+      x += d[0]; y += d[1]; z += d[2];
+    }
+  }
+  return out;
+}
+function neighborKeys(q, r) {
+  return [[q+1,r],[q+1,r-1],[q,r-1],[q-1,r],[q-1,r+1],[q,r+1]];
+}
+
+// ---------- City model ----------
+let maxCircle = 8;
+let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
+let pool = [];         // unplaced names — cities beyond the map's current horizon
+let worldCenter = null; // where Mondiala sits on Earth under the active centre mode
+let selected = null;  // key
+let armedType = "district";
+let armedPoolName = null;
+let paintMode = false;
+let viewMode = "rings"; // "rings" (alternating red/blue rings + green spokes) or "type"
+
+function buildCity() {
+  hexes = {}; pool = [];
+  const worldPlan = computeWorldPlan(); // where Mondiala sits on Earth + which city lands in which hexagon
+  worldCenter = worldPlan.center;
+  // group RAW by circle
+  const byCircle = {};
+  RAW.forEach(row => { (byCircle[row[0]] = byCircle[row[0]] || []).push(row); });
+  // center
+  hexes["0,0"] = { q: 0, r: 0, circle: 0, num: 0, name: "", density: null, type: "district", notes: "", style: "" };
+  const c0 = (byCircle[0] || [])[0];
+  if (c0) { hexes["0,0"].name = c0[2]; hexes["0,0"].density = c0[3]; }
+  for (let c = 1; c <= maxCircle; c++) {
+    const positions = ringPositions(c).sort((a, b) => a.num - b.num); // slot 1 = topmost hex of the ring, then clockwise
+    const rows = byCircle[c] || [];
+    if (c <= 2) { // rings 1–2 keep the authored Notion order (by Hexagon number)
+      const slots = {}; positions.forEach(p => slots[p.num] = p);
+      const filled = new Set();
+      // pass 1: explicit numbers (first row wins on duplicates)
+      rows.forEach(row => {
+        const n = row[1];
+        if (n != null && slots[n] && !filled.has(n)) { placeRow(slots[n], row); filled.add(n); row._placed = true; }
+      });
+      // pass 2: fill remaining slots with unnumbered rows, in order
+      let si = 1;
+      rows.forEach(row => {
+        if (row._placed) return;
+        while (si <= positions.length && filled.has(si)) si++;
+        if (si <= positions.length) { placeRow(slots[si], row); filled.add(si); si++; row._placed = true; }
+      });
+      rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); });
+      // empty slots stay unnamed districts
+      positions.forEach(p => {
+        if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
+      });
+      rows.forEach(r => delete r._placed);
+    } else if (c === 3) { // ring 3: Norden, two-tier population sort (capitals + Göteborg hold the green spokes)
+      const placed = placeSortedRing(c, positions, rows);
+      rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
+      positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
+    } else { // rings 4–8: coordinate-driven placement — the gods keep their reserved lattice hexes, cities slot by bearing from Mondiala
+      const slots = {}; positions.forEach(p => slots[p.num] = p);
+      (PINK_SLOTS[c] || []).forEach(pair => { if (slots[pair[0]]) placeRow(slots[pair[0]], [c, pair[0], pair[1], null]); });
+      (worldPlan.plan[c] || []).forEach(pair => { const p = slots[pair[0]]; if (p && !hexes[p.q + "," + p.r]) placeRow(p, [c, pair[0], pair[1], null]); });
+      positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
+    }
+  }
+  worldPlan.leftover.forEach(n => pool.push({ name: n, density: null })); // candidates beyond the map's current horizon wait here
+  pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
+  // ring 2: all six non-spoke hexes are pink free-use districts; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
+  Object.values(hexes).forEach(h => { if ((h.circle === 2 && !onSpoke(h)) || SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
+  // "Freeuse" hex starts as a free-use park; fill curated style descriptions
+  Object.values(hexes).forEach(h => {
+    if (h.name === "Freeuse") h.type = "park";
+    if (h.name && !h.style) { const ci = CITY_INFO[h.name.trim().toLowerCase()]; if (ci) h.style = ci[1]; }
+  });
+}
+function placeRow(pos, row) {
+  const key = pos.q + "," + pos.r;
+  hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
+}
+function placeSortedRing(c, positions, rows) { // ring 3: Norden — Nordic capitals + Göteborg hold the green spokes, the smaller cities between them; both tiers sorted by population
+  const placed = [];
+  const byName = (a, b) => a[2].localeCompare(b[2]);
+  const byPop = (a, b) => (factPop(b[2]) - factPop(a[2])) || byName(a, b);
+  const isSpoke = p => p.q === 0 || p.r === 0 || (p.q + p.r) === 0;
+  const spokePos = positions.filter(isSpoke), midPos = positions.filter(p => !isSpoke(p));
+  const nordic = rows.filter(r => NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+  const rest = rows.filter(r => !NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+  nordic.sort(byPop); rest.sort(byPop);
+  spokePos.forEach((p, i) => { if (nordic[i]) { placeRow(p, nordic[i]); placed.push(nordic[i]); } });
+  midPos.forEach((p, i) => { if (rest[i]) { placeRow(p, rest[i]); placed.push(rest[i]); } });
+  return placed;
+}
+
+// ---------- Coordinate-driven world placement ----------
+// Mondiala sits at the centre of the world's great cities; each city's real bearing from
+// that centre picks its hexagon, its real distance picks its ring (near = inner), and
+// population breaks distance ties. Rings 0–3 (Metropol, the ancient six, Norden) are fixed.
+const GEO_RAD = Math.PI / 180, GEO_R = 6371; // km
+function coordOf(name) { return CITY_COORDS[name.trim().toLowerCase()] || null; }
+function factLiv(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : 70; }
+function factWalk(name) { const f = factsFor(name); return f && f[4] != null ? f[4] : 50; }
+function factPopPos(name) { const p = factPop(name); return isFinite(p) && p > 0 ? p : 500000; } // a centre weight must stay positive
+function geoWeight(name) { // how hard a city pulls the centre under the active mode
+  if (centerMode === "pop") return factPopPos(name);
+  if (centerMode === "great") { // size + livability + walkability
+    const p = Math.min(1, Math.log(factPopPos(name) / 100000) / Math.log(350)); // 100k..35M → 0..1
+    return 0.5 * p + 0.3 * (factLiv(name) / 100) + 0.2 * (factWalk(name) / 100);
+  }
+  return 1; // geo: every great city weighs the same
+}
+function computeCenter(names) { // the (weighted) midpoint of the great cities — Mondiala's spot on Earth
+  const acc = [0, 0, 0];
+  names.forEach(n => {
+    const co = coordOf(n); if (!co) return;
+    const [lat, lon] = co, w = geoWeight(n);
+    acc[0] += w * Math.cos(lat * GEO_RAD) * Math.cos(lon * GEO_RAD);
+    acc[1] += w * Math.cos(lat * GEO_RAD) * Math.sin(lon * GEO_RAD);
+    acc[2] += w * Math.sin(lat * GEO_RAD);
+  });
+  const len = Math.hypot(acc[0], acc[1], acc[2]);
+  return { lat: Math.asin(acc[2] / len) / GEO_RAD, lon: Math.atan2(acc[1], acc[0]) / GEO_RAD };
+}
+function bearingDist(center, name) { // bearing (0° = north, clockwise) and great-circle km from Mondiala
+  const [lat, lon] = coordOf(name), clat = center.lat, clon = center.lon;
+  const y = Math.sin((lon - clon) * GEO_RAD) * Math.cos(lat * GEO_RAD);
+  const x = Math.cos(clat * GEO_RAD) * Math.sin(lat * GEO_RAD) - Math.sin(clat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - clon) * GEO_RAD);
+  let b = Math.atan2(y, x) / GEO_RAD; if (b < 0) b += 360;
+  const dot = Math.sin(clat * GEO_RAD) * Math.sin(lat * GEO_RAD) + Math.cos(clat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - clon) * GEO_RAD);
+  return { bearing: b, dist: GEO_R * Math.acos(Math.max(-1, Math.min(1, dot))) };
+}
+function greatCircleKm(a, b) { // km between two {lat, lon} points on Earth
+  const dot = Math.sin(a.lat * GEO_RAD) * Math.sin(b.lat * GEO_RAD) + Math.cos(a.lat * GEO_RAD) * Math.cos(b.lat * GEO_RAD) * Math.cos((b.lon - a.lon) * GEO_RAD);
+  return GEO_R * Math.acos(Math.max(-1, Math.min(1, dot)));
+}
+function centerCountry(center) { // the country Mondiala sits in — a verified spot if the centre is on one, else the nearest known city's country
+  for (const s of CENTER_SPOTS) if (greatCircleKm(center, s) < 15) return s.flag + " " + s.country + " (" + s.near + ")";
+  let best = null, bd = Infinity;
+  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => {
+    const key = n.trim().toLowerCase();
+    if (!CITY_COUNTRY[key]) return; // we can only name the countries we know
+    const d = bearingDist(center, n).dist;
+    if (d < bd) { bd = d; best = n; }
+  });
+  if (!best) return null;
+  const key = best.trim().toLowerCase();
+  return ((CITY_INFO[key] || ["📍"])[0]) + " " + CITY_COUNTRY[key] + " (nearest: " + best + ", " + Math.round(bd) + " km)";
+}
+function worldSlots(c) { // this ring's placeable slots with their true compass bearing; the gods' reserved hexes are skipped
+  const reserved = new Set((PINK_SLOTS[c] || []).map(p => p[0]));
+  return ringPositions(c)
+    .filter(p => !reserved.has(p.num))
+    .map(p => { const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num: p.num, a }; })
+    .sort((u, v) => u.a - v.a);
+}
+function computeWorldPlan() { // the full rings 4..maxCircle city assignment + the centre + the leftovers
+  const cands = [];
+  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => { if (coordOf(n) && cands.indexOf(n) === -1) cands.push(n); });
+  const center = computeCenter(cands);
+  const ranked = cands
+    .map(n => Object.assign({ n }, bearingDist(center, n)))
+    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance decides, population breaks ties
+  const plan = {}; let idx = 0;
+  for (let c = 4; c <= maxCircle; c++) {
+    const slots = worldSlots(c);
+    const take = ranked.slice(idx, idx + slots.length); idx += slots.length;
+    if (!take.length) { plan[c] = []; continue; }
+    if (take.length < slots.length) { // not enough cities yet: nearest-free-slot greedy
+      const free = slots.slice(); plan[c] = [];
+      take.slice().sort((a, b) => a.bearing - b.bearing).forEach(city => {
+        let bi = 0, bd = 1e9;
+        free.forEach((sl, i) => { const d = Math.abs(sl.a - city.bearing); const dd = Math.min(d, 360 - d); if (dd < bd) { bd = dd; bi = i; } });
+        plan[c].push([free[bi].num, city.n]); free.splice(bi, 1);
+      });
+      continue;
+    }
+    const cities = take.slice().sort((a, b) => a.bearing - b.bearing); // circular order matching: try every rotation, keep the truest to the compass
+    let rot = 0, best = 1e18;
+    for (let r = 0; r < cities.length; r++) {
+      let cost = 0;
+      for (let i = 0; i < cities.length; i++) {
+        const city = cities[(i + r) % cities.length];
+        const d = Math.abs(slots[i].a - city.bearing); cost += Math.min(d, 360 - d);
+      }
+      if (cost < best) { best = cost; rot = r; }
+    }
+    plan[c] = slots.map((sl, i) => [sl.num, cities[(i + rot) % cities.length].n]);
+  }
+  return { plan, center, leftover: ranked.slice(idx).map(x => x.n) };
+}
+
+// ---------- SVG rendering ----------
+const svg = document.getElementById("map");
+const NS = "http://www.w3.org/2000/svg";
+function cityViewBox() { // the default view — the whole city, its edges exactly touching the view screen
+  const hw = 1.5 * SIZE * maxCircle + 48, hh = Math.sqrt(3) * SIZE * maxCircle + 53.17;
+  return { x: -hw, y: -hh, w: 2 * hw, h: 2 * hh };
+}
+let viewBox = cityViewBox(); // flat-top extents: ring 8 spans ±432 px wide, ±499 px tall (plus hex margin) — and zooming out can never show more than this
+let gHexes, gLabels;
+
+function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
+function ringFill(h) {
+  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes; the q=0 spoke runs straight north–south
+  return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
+}
+function render() {
+  svg.innerHTML = "";
+  const defs = document.createElementNS(NS, "defs");
+  defs.innerHTML = '<radialGradient id="glow"><stop offset="0%" stop-color="#1b2635"/><stop offset="100%" stop-color="#0d1117"/></radialGradient>';
+  svg.appendChild(defs);
+  gHexes = document.createElementNS(NS, "g"); gHexes.id = "gHexes";
+  gLabels = document.createElementNS(NS, "g"); gLabels.id = "gLabels";
+  svg.appendChild(gHexes); svg.appendChild(gLabels);
+  const keys = Object.keys(hexes);
+  for (const key of keys) {
+    const h = hexes[key];
+    const { x, y } = axialToPixel(h.q, h.r);
+    const poly = document.createElementNS(NS, "polygon");
+    poly.setAttribute("points", hexCorners(x, y, SIZE - 2.2));
+    poly.setAttribute("class", "hex" + (selected === key ? " selected" : ""));
+    poly.setAttribute("fill", viewMode === "rings" ? (h.type === "park" ? TYPES.park.fill : ringFill(h)) : TYPES[h.type].fill);
+    poly.dataset.key = key;
+    const ttl = document.createElementNS(NS, "title");
+    let tip = h.circle + " · " + (h.name || "Unnamed") + " · " + h.num;
+    const fct = h.name ? CITY_FACTS[h.name.trim().toLowerCase()] : null;
+    if (fct) {
+      if (fct[0] != null) tip += "\nPop " + fmtPop(fct[0]) + (fct[1] ? " — " + fct[1] : "");
+      if (fct[2] != null) tip += "\nLivability " + (fct[3].indexOf("est.") !== -1 ? "≈" : "") + fct[2] + " (" + fct[3] + ")";
+      if (fct[4] != null) tip += "\nWalk Score " + fct[4];
+    }
+    if (h.style) tip += "\n" + h.style;
+    ttl.textContent = tip;
+    poly.appendChild(ttl);
+    gHexes.appendChild(poly);
+    if (h.name) {
+      const ci = CITY_INFO[h.name.trim().toLowerCase()];
+      if (ci) {
+        const f = document.createElementNS(NS, "text");
+        f.setAttribute("x", x); f.setAttribute("y", y - 3.4);
+        f.setAttribute("class", "hlabel"); f.setAttribute("font-size", 9.5);
+        f.textContent = ci[0];
+        gLabels.appendChild(f);
+      }
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("x", x); t.setAttribute("y", y + (ci ? 6.9 : 1));
+      t.setAttribute("class", "hlabel"); t.setAttribute("font-size", 8.2);
+      let label = h.name;
+      if (label.length > 11) label = label.slice(0, 10) + "…";
+      t.textContent = label;
+      gLabels.appendChild(t);
+    }
+    const n = document.createElementNS(NS, "text");
+    n.setAttribute("x", x); n.setAttribute("y", y + SIZE * 0.72);
+    n.setAttribute("class", "nlabel"); n.setAttribute("font-size", 6.4);
+    n.textContent = h.circle + "·" + h.num;
+    gLabels.appendChild(n);
+  }
+  applyViewBox();
+}
+function applyViewBox() {
+  svg.setAttribute("viewBox", viewBox.x + " " + viewBox.y + " " + viewBox.w + " " + viewBox.h);
+}
+
+// ---------- Interaction: pan / zoom / click ----------
+let dragging = false, moved = false, lastX = 0, lastY = 0;
+svg.addEventListener("mousedown", e => { dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY; svg.classList.add("panning"); });
+window.addEventListener("mouseup", () => { dragging = false; svg.classList.remove("panning"); });
+svg.addEventListener("mousemove", e => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+  const k = viewBox.w / svg.clientWidth;
+  viewBox.x -= dx * k; viewBox.y -= dy * k;
+  lastX = e.clientX; lastY = e.clientY;
+  applyViewBox();
+});
+svg.addEventListener("wheel", e => {
+  e.preventDefault();
+  const dy = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY; // Firefox line-mode → pixels
+  let f = Math.exp(dy * 0.0012);        // smooth zoom: the step follows the wheel, no fixed jumps
+  f = Math.max(0.8, Math.min(1.25, f)); // even a hard flick moves one gentle step, never a leap
+  const fit = cityViewBox();
+  if (viewBox.w * f >= fit.w) { viewBox = fit; applyViewBox(); return; } // zoomed out to the edge of the city — snap to the full view, so the map can never shrink away and get lost
+  const r = svg.getBoundingClientRect();
+  const mx = viewBox.x + (e.clientX - r.left) / r.width * viewBox.w;
+  const my = viewBox.y + (e.clientY - r.top) / r.height * viewBox.h;
+  viewBox.w *= f; viewBox.h *= f;
+  viewBox.x = mx - (mx - viewBox.x) * f;
+  viewBox.y = my - (my - viewBox.y) * f;
+  applyViewBox();
+}, { passive: false });
+gHexes = null; // will bind after render
+svg.addEventListener("click", e => {
+  if (moved) return;
+  const t = e.target.closest(".hex");
+  if (!t) return;
+  const key = t.dataset.key;
+  if (paintMode) { hexes[key].type = armedType; refresh(); if (selected === key) showInspector(); }
+  else if (armedPoolName !== null) {
+    hexes[key].name = armedPoolName;
+    const ci = CITY_INFO[armedPoolName.trim().toLowerCase()];
+    if (ci && !hexes[key].style) hexes[key].style = ci[1];
+    pool = pool.filter(p => p.name !== armedPoolName);
+    armedPoolName = null; renderPool(); refresh();
+  } else { selected = key; refresh(); showInspector(); }
+});
+
+function refresh() { render(); renderStats(); }
+
+// ---------- Inspector ----------
+const inspector = document.getElementById("inspector");
+function showInspector() {
+  if (!selected || !hexes[selected]) { inspector.innerHTML = '<div class="emptysel">Click a hexagon to see the city it copies and its style. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div>'; return; }
+  const h = hexes[selected];
+  const ci = h.name ? CITY_INFO[h.name.trim().toLowerCase()] : null;
+  const label = h.circle + " " + (h.name || "_____") + " " + h.num;
+  const ringLen = h.circle > 0 ? " of " + (h.circle * 6) : "";
+  const infoCard =
+    '<div class="infocard">' +
+      '<div class="ictitle"><span class="icflag">' + (ci ? ci[0] : "⬡") + '</span>' + esc(h.name || "Unnamed hex") + '</div>' +
+      '<div class="icsub">Circle ' + h.circle + ' · Hexagon ' + h.num + ringLen + '</div>' +
+      factsBlock(h.name) +
+      (ci || h.style ? '<div class="icstyle">' + esc(h.style || ci[1]) + '</div>' : '<div class="icstyle none">No style set — type a name (e.g. Paris) to auto-fill.</div>') +
+    '</div>';
+  inspector.innerHTML =
+    '<div class="postalcode">PCODE ' + esc(label) + '</div>' +
+    infoCard +
+    '<label class="field">Name</label><input type="text" id="iName" value="' + esc(h.name) + '">' +
+    '<label class="field">Type</label><select id="iType">' +
+      Object.entries(TYPES).map(([k, v]) => '<option value="' + k + '"' + (h.type === k ? " selected" : "") + '>' + v.label + '</option>').join("") +
+    '</select>' +
+    '<label class="field">Density (people/km²)</label><input type="number" id="iDensity" step="any" value="' + (h.density ?? "") + '">' +
+    '<label class="field">Population ≈ <span id="iPop"></span></label>' +
+    '<label class="field">Style / what it copies</label><textarea id="iStyle">' + esc(h.style || "") + '</textarea>' +
+    '<label class="field">Notes</label><textarea id="iNotes">' + esc(h.notes || "") + '</textarea>' +
+    '<div class="rowbtns" style="margin-top:10px"><button id="iApply">Apply</button><button id="iClearName" class="warn">Clear name</button></div>';
+  const upd = () => {
+    const d = parseFloat(document.getElementById("iDensity").value);
+    document.getElementById("iPop").textContent = isFinite(d) ? Math.round(d * HEX_AREA).toLocaleString() : "—";
+  };
+  document.getElementById("iDensity").addEventListener("input", upd); upd();
+  document.getElementById("iApply").addEventListener("click", () => {
+    h.name = document.getElementById("iName").value.trim();
+    h.type = document.getElementById("iType").value;
+    const dv = document.getElementById("iDensity").value;
+    h.density = dv === "" ? null : parseFloat(dv);
+    h.notes = document.getElementById("iNotes").value;
+    const typedStyle = document.getElementById("iStyle").value;
+    if (typedStyle.trim()) h.style = typedStyle;
+    else { const ci2 = h.name ? CITY_INFO[h.name.toLowerCase()] : null; h.style = ci2 ? ci2[1] : ""; }
+    refresh(); showInspector();
+  });
+  document.getElementById("iClearName").addEventListener("click", () => { h.name = ""; refresh(); showInspector(); });
+}
+function factsBlock(name) { // real-world data for the city this hex copies
+  const f = name ? CITY_FACTS[name.trim().toLowerCase()] : null;
+  if (!f || (f[0] == null && f[2] == null && f[4] == null)) return "";
+  let out = '<div class="icfacts">';
+  if (f[0] != null) out += '<div class="factline"><span class="fk">Real-city pop</span><span class="fv">' + (String(f[1]).indexOf("≈") !== -1 ? "≈" : "") + fmtPop(f[0]) + '</span><span class="fs">' + esc(f[1]) + '</span></div>';
+  if (f[2] != null) out += '<div class="factline"><span class="fk">Livability</span><span class="fv">' + (f[3].indexOf("est.") !== -1 ? "≈" : "") + f[2] + '</span><span class="fs">' + esc(f[3]) + '</span></div>';
+  if (f[4] != null) out += '<div class="factline"><span class="fk">Walk Score</span><span class="fv">' + f[4] + '</span><span class="fs">walkscore.com</span></div>';
+  return out + '</div>';
+}
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+// ---------- Type chips ----------
+const typesDiv = document.getElementById("types");
+function renderTypes() {
+  typesDiv.innerHTML = "";
+  Object.entries(TYPES).forEach(([k, v]) => {
+    const chip = document.createElement("div");
+    chip.className = "typechip" + (armedType === k ? " active" : "");
+    chip.innerHTML = '<div class="sw" style="background:' + v.fill + '"></div>' + v.label;
+    chip.addEventListener("click", () => {
+      armedType = k; renderTypes();
+      if (!paintMode && selected && hexes[selected]) { hexes[selected].type = k; refresh(); showInspector(); }
+    });
+    typesDiv.appendChild(chip);
+  });
+}
+
+// ---------- Pool ----------
+function renderPool() {
+  const box = document.getElementById("pool");
+  document.getElementById("poolCount").textContent = "(" + pool.length + ")";
+  box.innerHTML = pool.length ? "" : '<div class="hint">All names are placed.</div>';
+  pool.forEach(p => {
+    const el = document.createElement("div");
+    el.className = "poolname" + (armedPoolName === p.name ? " armed" : "");
+    el.textContent = p.name;
+    el.addEventListener("click", () => { armedPoolName = armedPoolName === p.name ? null : p.name; renderPool(); });
+    box.appendChild(el);
+  });
+}
+
+// ---------- World placement controls ----------
+function fmtLatLon(c) {
+  return Math.abs(c.lat).toFixed(1) + "°" + (c.lat >= 0 ? "N" : "S") + ", " + Math.abs(c.lon).toFixed(1) + "°" + (c.lon >= 0 ? "E" : "W");
+}
+function renderCenterOut() {
+  const el = document.getElementById("centerOut");
+  if (!worldCenter) { el.textContent = ""; return; }
+  const modeName = centerMode === "pop" ? "population-weighted" : centerMode === "great" ? "greatness-weighted" : "geographic";
+  const where = centerCountry(worldCenter);
+  el.textContent = "Mondiala sits at ≈ " + fmtLatLon(worldCenter) + (where ? " · " + where : "") + " — the " + modeName +
+    " centre of the great cities. The nearest cities fill the inner rings; the pool holds the ones beyond the horizon.";
+}
+document.getElementById("centerMode").addEventListener("change", () => {
+  centerMode = document.getElementById("centerMode").value;
+  recenter();
+});
+function snapshotEdits() { // manual edits worth keeping when the placement re-flows
+  const byName = {}, byKey = {};
+  const computed = new Set(WORLD_CITIES.map(w => w.trim().toLowerCase()).concat(extraCities.map(c => c.name.trim().toLowerCase())));
+  Object.values(hexes).forEach(h => {
+    const key = h.q + "," + h.r, name = (h.name || "").trim().toLowerCase();
+    if (h.name && !SEX_GODS.has(name) && (computed.has(name) || h.circle <= 3)) {
+      const e = { type: h.type, notes: h.notes, style: h.style, density: h.density };
+      const autoStyle = (CITY_INFO[name] || [])[1];
+      if (e.type !== "district" || e.notes || (e.style && e.style !== autoStyle) || e.density != null) byName[h.name.trim()] = e;
+    } else if (h.name && !SEX_GODS.has(name) && h.circle >= 4) {
+      byKey[key] = { manual: true, name: h.name, type: h.type, notes: h.notes, style: h.style, density: h.density };
+    } else if (!h.name) {
+      if (h.notes || (h.type !== "district" && h.type !== "park")) byKey[key] = { manual: false, type: h.type, notes: h.notes };
+    }
+  });
+  return { byName, byKey };
+}
+function reapplyEdits(snap) {
+  Object.values(hexes).forEach(h => {
+    const e = h.name && snap.byName[h.name.trim()];
+    if (!e || SEX_GODS.has(h.name.trim().toLowerCase())) return; // the gods keep their hexes no matter what
+    if (e.type && e.type !== "district") h.type = e.type;
+    if (e.notes) h.notes = e.notes;
+    if (e.style) h.style = e.style;
+    if (e.density != null) h.density = e.density;
+  });
+  Object.keys(snap.byKey).forEach(key => {
+    const e = snap.byKey[key], h = hexes[key];
+    if (!h) return;
+    if (e.manual) {
+      if (SEX_GODS.has((h.name || "").trim().toLowerCase())) return; // never evict a god
+      if (h.name && h.name !== e.name) pool.push({ name: h.name, density: null }); // the computed city yields its hexagon and waits in the pool
+      h.name = e.name; h.type = e.type; h.notes = e.notes; h.style = e.style; h.density = e.density;
+    } else if (!h.name) {
+      if (e.type !== "district" && e.type !== "park") h.type = e.type;
+      if (e.notes) h.notes = e.notes;
+    }
+  });
+  pool.sort((a, b) => factPop(b.name) - factPop(a.name));
+}
+function recenter() { // recompute the coordinate placement, keeping manual edits
+  const snap = snapshotEdits();
+  buildCity();
+  reapplyEdits(snap);
+  selected = null; refresh(); renderPool(); renderCenterOut();
+}
+function saveExtraCities() { try { localStorage.setItem("mondiala-extra-cities", JSON.stringify(extraCities)); } catch (e) { /* preview: no storage */ } }
+function injectExtra(city) { // make a user-added city fully native: coordinates, flag, facts
+  const key = city.name.trim().toLowerCase();
+  CITY_COORDS[key] = [city.lat, city.lon];
+  if (!CITY_INFO[key]) CITY_INFO[key] = ["🌐", "A newly added world city — its districts will take shape as Mondiala grows."];
+  if (!CITY_FACTS[key] && city.pop) CITY_FACTS[key] = [city.pop, "user-provided", null, "", null];
+}
+function setExtraCities(list) {
+  extraCities = [];
+  (list || []).forEach(c => {
+    if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lon) || Math.abs(c.lat) > 90 || Math.abs(c.lon) > 180) return;
+    const city = { name: String(c.name).trim(), lat: +c.lat, lon: +c.lon, pop: isFinite(c.pop) ? +c.pop : null };
+    const key = city.name.toLowerCase();
+    if (extraCities.some(x => x.name.toLowerCase() === key)) return;
+    if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key)) return; // already on the roster
+    injectExtra(city);
+    extraCities.push(city);
+  });
+  saveExtraCities();
+}
+function loadExtraCities() { try { setExtraCities(JSON.parse(localStorage.getItem("mondiala-extra-cities") || "[]")); } catch (e) { setExtraCities([]); } }
+function renderExtraList() {
+  const el = document.getElementById("extraList");
+  el.innerHTML = extraCities.length ? "" : "No cities added yet.";
+  extraCities.forEach((c, i) => {
+    const row = document.createElement("div");
+    row.className = "poolname";
+    row.textContent = "🌐 " + c.name + " (" + fmtLatLon(c) + ")  ✕ remove";
+    row.addEventListener("click", () => { extraCities.splice(i, 1); saveExtraCities(); recenter(); renderExtraList(); });
+    el.appendChild(row);
+  });
+}
+document.getElementById("btnAddCity").addEventListener("click", () => {
+  const name = document.getElementById("addName").value.trim();
+  const lat = parseFloat(document.getElementById("addLat").value);
+  const lon = parseFloat(document.getElementById("addLon").value);
+  const pop = parseFloat(document.getElementById("addPop").value);
+  const out = document.getElementById("validatorOut");
+  if (!name || !isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { out.textContent = "Add city: give it a name and valid coordinates."; return; }
+  const key = name.toLowerCase();
+  if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key) || extraCities.some(c => c.name.trim().toLowerCase() === key)) { out.textContent = "Add city: " + name + " is already on the map."; return; }
+  setExtraCities(extraCities.concat([{ name, lat, lon, pop: isFinite(pop) ? pop : null }]));
+  recenter();
+  renderExtraList();
+  out.textContent = name + " added — the centre moved and the map re-flowed ✓";
+});
+
+// ---------- Stats ----------
+function renderStats() {
+  const all = Object.values(hexes);
+  const named = all.filter(h => h.name);
+  const parks = all.filter(h => h.type === "park");
+  let pop = 0, popCount = 0;
+  all.forEach(h => { if (h.density != null && isFinite(h.density)) { pop += h.density * HEX_AREA; popCount++; } });
+  const avg = popCount ? pop / popCount : 0;
+  const rings = maxCircle;
+  document.getElementById("stats").innerHTML =
+    stat(all.length, "Hexagons (rings 0–" + rings + ")") +
+    stat(named.length, "Named hexes") +
+    stat(parks.length, "Free-use districts") +
+    stat(Math.round(pop).toLocaleString(), "Population (known dens.)") +
+    stat(Math.round(avg).toLocaleString(), "Avg hex population") +
+    stat((all.length * HEX_AREA).toLocaleString() + " km²", "Total area");
+}
+function stat(v, l) { return '<div class="b"><div class="v">' + v + '</div>' + l + "</div>"; }
+
+// ---------- Validator (free-use district lattice) ----------
+document.getElementById("btnValidate").addEventListener("click", () => {
+  const out = [];
+  document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
+  let parkPark = 0, noPark = 0, checked = 0;
+  Object.values(hexes).forEach(h => {
+    const neigh = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean);
+    if (h.type === "park") {
+      const bad = neigh.filter(n => n.type === "park");
+      if (bad.length) { parkPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-invalid"); }
+      checked++;
+    } else if (h.circle !== 0 && !onSpoke(h)) { // every non-green hexagon must touch a district — the green hexes (Metropol + the metro spokes) are exempt; the outer rim counts too
+      if (!neigh.some(n => n.type === "park")) { noPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-nopark"); }
+    }
+  });
+  const el = document.getElementById("validatorOut");
+  if (parkPark === 0 && noPark === 0) {
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no district touches another district, and every non-green hexagon touches at least one free-use district.</span>';
+  } else {
+    el.innerHTML =
+      (parkPark ? '<span class="bad">' + parkPark + ' district hex(es) touch other districts (red dashed).</span><br>' : '<span class="ok">No district-district adjacency.</span><br>') +
+      (noPark ? '<span class="warn2">' + noPark + ' non-green hex(es) lack a district neighbour (orange dashed).</span>' : '<span class="ok">Every non-green hexagon touches a district.</span>');
+  }
+});
+document.getElementById("btnClearFlags").addEventListener("click", () => {
+  document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
+  document.getElementById("validatorOut").innerHTML = "Flags cleared.";
+});
+document.getElementById("btnView").addEventListener("click", () => {
+  viewMode = viewMode === "rings" ? "type" : "rings";
+  document.getElementById("btnView").textContent = "View: " + viewMode;
+  refresh();
+});
+
+// ---------- Modes ----------
+document.getElementById("modeSelect").addEventListener("click", () => setPaint(false));
+document.getElementById("modePaint").addEventListener("click", () => setPaint(true));
+function setPaint(on) {
+  paintMode = on;
+  document.getElementById("modeSelect").classList.toggle("on", !on);
+  document.getElementById("modePaint").classList.toggle("on", on);
+  armedPoolName = null; renderPool();
+}
+
+// ---------- Rings ----------
+document.getElementById("btnAddRing").addEventListener("click", () => {
+  const snap = snapshotEdits();
+  maxCircle++;
+  buildCity();
+  reapplyEdits(snap);
+  viewBox = cityViewBox(); // fit the grown city — the new rim's edges touch the screen again
+  refresh(); renderPool(); renderCenterOut(); // a new ring reaches further out — pool cities settle onto it
+});
+
+// ---------- Save / Load / Export ----------
+function exportJSON() {
+  return JSON.stringify({
+    format: "mondiala-city-designer",
+    maxCircle,
+    centerMode,
+    extraCities,
+    hexes: Object.values(hexes).map(h => ({ q: h.q, r: h.r, circle: h.circle, num: h.num, name: h.name, density: h.density, type: h.type, style: h.style || "", notes: h.notes }))
+  });
+}
+function importJSON(text) {
+  const data = JSON.parse(text);
+  if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
+  maxCircle = data.maxCircle || 8;
+  if (data.centerMode) centerMode = data.centerMode;
+  if (Array.isArray(data.extraCities)) setExtraCities(data.extraCities);
+  buildCity();
+  data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
+  document.getElementById("centerMode").value = centerMode;
+  selected = null; refresh(); renderPool(); renderCenterOut();
+}
+document.getElementById("btnExport").addEventListener("click", () => {
+  const ta = document.getElementById("jsonio");
+  ta.value = exportJSON();
+  try {
+    const blob = new Blob([ta.value], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "mondiala-city.json";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  } catch (e) { /* downloads may be blocked in preview; JSON stays in the textarea */ }
+});
+document.getElementById("btnImport").addEventListener("click", () => {
+  try { importJSON(document.getElementById("jsonio").value); document.getElementById("validatorOut").textContent = "Imported ✓"; }
+  catch (e) { document.getElementById("validatorOut").textContent = "Import failed: " + e.message; }
+});
+document.getElementById("btnSaveLocal").addEventListener("click", () => {
+  try { localStorage.setItem("mondiala-city", exportJSON()); document.getElementById("validatorOut").textContent = "Saved to browser storage ✓"; }
+  catch (e) { document.getElementById("validatorOut").innerHTML = "Browser storage unavailable in preview — use Export JSON and keep the file."; }
+});
+document.getElementById("btnLoadLocal").addEventListener("click", () => {
+  try {
+    const s = localStorage.getItem("mondiala-city");
+    if (!s) { document.getElementById("validatorOut").textContent = "No saved city found."; return; }
+    importJSON(s);
+  } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
+});
+document.getElementById("btnReset").addEventListener("click", () => {
+  maxCircle = 8; selected = null; buildCity(); viewBox = cityViewBox(); refresh(); renderPool(); renderCenterOut();
+});
+
+// ---------- Init ----------
+loadExtraCities();
+document.getElementById("centerMode").value = centerMode;
+buildCity();
+renderTypes();
+renderPool();
+renderExtraList();
+refresh();
+renderCenterOut();
+</script>
+</body>
+</html>
+

@@ -1,6 +1,6 @@
 # Mondiala — city data
 
-This is the human-readable copy of `mondiala-data.js`, the data file behind [mondiala-map.html](mondiala-map.html). Edit the data file (or ask Vibe to), and this page can be regenerated from it.
+This is the human-readable copy of `mondiala-data.js`, the data file behind [mondiala.html](mondiala.html). Edit the data file (or ask Vibe to), and this page can be regenerated from it.
 
 ## Where Mondiala sits — the three default centres
 

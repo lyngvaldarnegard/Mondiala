@@ -53,7 +53,7 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 
 ## Usage
 
-Open `mondiala-map.html` in any browser — no build step, no dependencies. The map reads
+Open `mondiala.html` in any browser — no build step, no dependencies. The map reads
 its world data from `mondiala-data.js` in the same folder, so keep the two files together
 (downloading the whole `city-designer` folder gets you everything).
 

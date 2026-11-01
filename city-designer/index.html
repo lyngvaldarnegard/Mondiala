@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -100,7 +99,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 are the world map — Europe north, Asia &amp; Oceania east, Africa south, the Americas west; green spokes hold capitals and largest cities. Ring 3 sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 are the world map — Europe north, Asia &amp; Oceania east, Africa south, the Americas west; green spokes hold capitals and largest cities. Ring 3 sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
@@ -145,11 +144,11 @@ const RAW = [
 [2,1,"Rome",null],[2,3,"Athens",null],[2,5,"Constantinople",null],[2,7,"Mesopotamia",null],[2,9,"Jerusalem",null],[2,11,"Homoia",null],[2,2,"Venus",null],[2,4,"Aphrodite",null],[2,6,"Eros",null],[2,8,"Ishtar",null],[2,10,"Kama",null],[2,12,"Freyja",null], // green spokes: the famous ancient cities; the pink hexes between them are free-use districts named after gods of sexuality
 [3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
 [4,1,"London",null],[4,2,"Amsterdam",null],[4,3,"Vienna",null],[4,4,"Prague",null],[4,5,"Ankara",null],[4,6,"Dubai",null],[4,7,"Karachi",null],[4,8,"Delhi",null],[4,9,"Beijing",null],[4,10,"Tokyo",null],[4,11,"Osaka",null],[4,12,"Melbourne",null],[4,13,"Cairo",null],[4,14,"Alexandria",null],[4,15,"Addis Ababa",null],[4,16,"Cape Town",null],[4,17,"Buenos Aires",null],[4,18,"Montevideo",null],[4,19,"Rio de Janeiro",null],[4,20,"Caracas",null],[4,21,"Washington D.C.",null],[4,22,"Boston",null],[4,23,"Chicago",null],[4,24,"Dublin",null], // the Grand Tour — the world's iconic cities laid out like a map: Europe north, Asia east, Africa south, the Americas west; green spokes hold capitals and largest cities
-[5,1,"Berlin",null],[5,2,"Inanna",null],[5,3,"Brussels",null],[5,4,"Kyiv",null],[5,5,"Cupid",null],[5,6,"Tehran",null],[5,7,"Adonis",null],[5,8,"Baku",null],[5,9,"Mumbai",null],[5,10,"Hathor",null],[5,11,"Shanghai",null],[5,12,"Oshun",null],[5,13,"Bangkok",null],[5,14,"Sydney",null],[5,15,"Rati",null],[5,16,"Lagos",null],[5,17,"Astarte",null],[5,18,"Khartoum",null],[5,19,"Luanda",null],[5,20,"Sjöfn",null],[5,21,"São Paulo",null],[5,22,"Prende",null],[5,23,"Quito",null],[5,24,"Panama City",null],[5,25,"Lada",null],[5,26,"Toronto",null],[5,27,"Qetesh",null],[5,28,"Philadelphia",null],[5,29,"Edinburgh",null],[5,30,"Turan",null], // the capitals ring — pink free-use buffers flank every green spoke, named after gods of sexuality, always off the metro lines
+[5,1,"Berlin",null],[5,2,"Brussels",null],[5,3,"Inanna",null],[5,4,"Kyiv",null],[5,5,"Cupid",null],[5,6,"Tehran",null],[5,7,"Baku",null],[5,8,"Adonis",null],[5,9,"Mumbai",null],[5,10,"Hathor",null],[5,11,"Shanghai",null],[5,12,"Bangkok",null],[5,13,"Oshun",null],[5,14,"Sydney",null],[5,15,"Rati",null],[5,16,"Lagos",null],[5,17,"Khartoum",null],[5,18,"Astarte",null],[5,19,"Luanda",null],[5,20,"Sjöfn",null],[5,21,"São Paulo",null],[5,22,"Quito",null],[5,23,"Prende",null],[5,24,"Panama City",null],[5,25,"Lada",null],[5,26,"Toronto",null],[5,27,"Philadelphia",null],[5,28,"Qetesh",null],[5,29,"Edinburgh",null],[5,30,"Turan",null], // the capitals ring — pink free-use buffers flank each spoke and hold each side's middle, so every non-green hex of ring 4 touches a district; named after gods of sexuality, always off the metro lines
 [6,1,"Hamburg",null],[6,2,"Budapest",null],[6,3,"Warsaw",null],[6,4,"Bucharest",null],[6,5,"Belgrade",null],[6,6,"Sofia",null],[6,7,"Riyadh",null],[6,8,"Tel Aviv",null],[6,9,"Tashkent",null],[6,10,"Lahore",null],[6,11,"Dhaka",null],[6,12,"Bengaluru",null],[6,13,"Hong Kong",null],[6,14,"Fukuoka",null],[6,15,"Nagoya",null],[6,16,"Taipei",null],[6,17,"Ho Chi Minh City",null],[6,18,"Manila",null],[6,19,"Kinshasa",null],[6,20,"Dar es Salaam",null],[6,21,"Abidjan",null],[6,22,"Accra",null],[6,23,"Dakar",null],[6,24,"Casablanca",null],[6,25,"Lima",null],[6,26,"Brasília",null],[6,27,"Medellín",null],[6,28,"Guatemala City",null],[6,29,"Monterrey",null],[6,30,"Guadalajara",null],[6,31,"Mexico City",null],[6,32,"Miami",null],[6,33,"Los Angeles",null],[6,34,"San Francisco",null],[6,35,"Seattle",null],[6,36,"Manchester",null], // the dense world belt — a full circuit of the map with no buffers
 [7,1,"Frankfurt",null],[7,2,"Nanaya",null],[7,3,"Venice",null],[7,4,"Milan",null],[7,5,"Shaushka",null],[7,6,"Saint Petersburg",null],[7,7,"Anahita",null],[7,8,"Baghdad",null],[7,9,"Cybele",null],[7,10,"Doha",null],[7,11,"Almaty",null],[7,12,"Attis",null],[7,13,"Chennai",null],[7,14,"Dionysus",null],[7,15,"Macau",null],[7,16,"Himeros",null],[7,17,"Hanoi",null],[7,18,"Yangon",null],[7,19,"Pothos",null],[7,20,"Jakarta",null],[7,21,"Peitho",null],[7,22,"Johannesburg",null],[7,23,"Bastet",null],[7,24,"Kampala",null],[7,25,"Durban",null],[7,26,"Min",null],[7,27,"Algiers",null],[7,28,"Bes",null],[7,29,"Bogotá",null],[7,30,"Freyr",null],[7,31,"La Paz",null],[7,32,"Cusco",null],[7,33,"Lofn",null],[7,34,"Kingston",null],[7,35,"Milda",null],[7,36,"Havana",null],[7,37,"Zhiva",null],[7,38,"Atlanta",null],[7,39,"San Diego",null],[7,40,"Xochipilli",null],[7,41,"Glasgow",null],[7,42,"Xochiquetzal",null], // the second capitals ring — pink buffers flank the spokes and anchor the middle of each side
-[8,1,"Munich",null],[8,2,"Bratislava",null],[8,3,"Ljubljana",null],[8,4,"Sarajevo",null],[8,5,"Zagreb",null],[8,6,"Kraków",null],[8,7,"Tbilisi",null],[8,8,"Yerevan",null],[8,9,"Astana",null],[8,10,"Amman",null],[8,11,"Kuwait City",null],[8,12,"Kathmandu",null],[8,13,"Kolkata",null],[8,14,"Hyderabad",null],[8,15,"Ahmedabad",null],[8,16,"Colombo",null],[8,17,"Seoul",null],[8,18,"Chengdu",null],[8,19,"Shenzhen",null],[8,20,"Guangzhou",null],[8,21,"Wuhan",null],[8,22,"Hangzhou",null],[8,23,"Kuala Lumpur",null],[8,24,"Perth",null],[8,25,"Nairobi",null],[8,26,"Antananarivo",null],[8,27,"Maputo",null],[8,28,"Pretoria",null],[8,29,"Kigali",null],[8,30,"Yaoundé",null],[8,31,"Abuja",null],[8,32,"Monrovia",null],[8,33,"Santiago",null],[8,34,"Valparaíso",null],[8,35,"Salvador",null],[8,36,"Manaus",null],[8,37,"Cartagena",null],[8,38,"Cancún",null],[8,39,"San José",null],[8,40,"San Juan",null],[8,41,"Ottawa",null],[8,42,"Montreal",null],[8,43,"Las Vegas",null],[8,44,"Dallas",null],[8,45,"Liverpool",null],[8,46,"Lisbon",null],[8,47,"Madrid",null],[8,48,"Bordeaux",null], // the outer world — completing every continent
-[6,null,"Florence",null],[6,null,"Utrecht",null],[6,null,"Porto",null],[6,null,"Bristol",null],[6,null,"Portland",null],[6,null,"Houston",null],[6,null,"Xi'an",null],[6,null,"Suzhou",null],[6,null,"Nanjing",null],[6,null,"Tianjin",null],[6,null,"Bandung",null] // the pool: famous names still waiting for a hexagon
+[8,1,"Munich",null],[8,2,"Bratislava",null],[8,3,"Ljubljana",null],[8,4,"Áine",null],[8,5,"Zagreb",null],[8,6,"Kraków",null],[8,7,"Tbilisi",null],[8,8,"Yerevan",null],[8,9,"Astana",null],[8,10,"Amman",null],[8,11,"Kuwait City",null],[8,12,"Parvati",null],[8,13,"Kolkata",null],[8,14,"Hyderabad",null],[8,15,"Ahmedabad",null],[8,16,"Colombo",null],[8,17,"Seoul",null],[8,18,"Chengdu",null],[8,19,"Shenzhen",null],[8,20,"Yue Lao",null],[8,21,"Wuhan",null],[8,22,"Hangzhou",null],[8,23,"Kuala Lumpur",null],[8,24,"Perth",null],[8,25,"Nairobi",null],[8,26,"Antananarivo",null],[8,27,"Maputo",null],[8,28,"Mami Wata",null],[8,29,"Kigali",null],[8,30,"Yaoundé",null],[8,31,"Abuja",null],[8,32,"Monrovia",null],[8,33,"Santiago",null],[8,34,"Valparaíso",null],[8,35,"Salvador",null],[8,36,"Tlazolteotl",null],[8,37,"Cartagena",null],[8,38,"Cancún",null],[8,39,"San José",null],[8,40,"San Juan",null],[8,41,"Ottawa",null],[8,42,"Montreal",null],[8,43,"Las Vegas",null],[8,44,"Erzulie Freda",null],[8,45,"Liverpool",null],[8,46,"Lisbon",null],[8,47,"Madrid",null],[8,48,"Bordeaux",null], // the outer world — completing every continent, with pink free-use districts anchoring the middle of each side so the rim's non-green hexes touch a district too
+[6,null,"Florence",null],[6,null,"Utrecht",null],[6,null,"Porto",null],[6,null,"Bristol",null],[6,null,"Portland",null],[6,null,"Houston",null],[6,null,"Xi'an",null],[6,null,"Suzhou",null],[6,null,"Nanjing",null],[6,null,"Tianjin",null],[6,null,"Bandung",null],[8,null,"Sarajevo",null],[8,null,"Kathmandu",null],[8,null,"Guangzhou",null],[8,null,"Pretoria",null],[8,null,"Manaus",null],[8,null,"Dallas",null] // the pool: famous names still waiting for a hexagon (the six rim cities yielded their mid-side hexes to the new pink districts)
 ];
 
 // ---------- What each hex copies: [flag, style description] ----------
@@ -325,6 +324,12 @@ const CITY_INFO = {
 "zhiva":["🍃","Zhiva — Slavic goddess of life, love and fertility, green as new leaves."],
 "xochipilli":["🎨","Xochipilli — the Aztec Flower Prince, patron of art, dance and sacred pleasure."],
 "xochiquetzal":["🦋","Xochiquetzal — Aztec goddess of love, beauty and flowers, attended by butterflies."],
+"áine":["🌞","Áine — Irish goddess of love, summer and sovereignty, crowned by the midsummer sun."],
+"parvati":["🕉","Parvati — Hindu goddess of love and devotion, the mountain's daughter; her quarter rises in terraced silence."],
+"yue lao":["🧵","Yue Lao — the Old Man Under the Moon, who ties the red thread that binds destined lovers."],
+"mami wata":["🐍","Mami Wata — water spirit of love, beauty and fertility, draped in a serpent's embrace."],
+"tlazolteotl":["♨","Tlazolteotl — Aztec goddess of lust and the steam bath, who receives the confessions of desire."],
+"erzulie freda":["💎","Erzulie Freda — Vodou spirit of love and luxury, weeping in pink and gold at her mirrored altar."],
 "kyiv":["🇺🇦","Golden-domed city on the Dnipro — St Sophia's mosaics, chestnut boulevards, modernist blocks."],
 "warsaw":["🇵🇱","The rebuilt capital — the Old Town raised again brick by brick, a riverfront of new promenades."],
 "kraków":["🇵🇱","Medieval royal core — the cloth hall, Wawel hill, a green ring where the city walls stood."],
@@ -601,7 +606,7 @@ const CITY_FACTS = {
 };
 
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
-const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","shaushka","anahita","cybele","attis","dionysus","himeros","pothos","peitho","bastet","min","bes","freyr","lofn","milda","zhiva","xochipilli","xochiquetzal"]); // gods of love and sexuality — the pink free-use district hexes
+const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","shaushka","anahita","cybele","attis","dionysus","himeros","pothos","peitho","bastet","min","bes","freyr","lofn","milda","zhiva","xochipilli","xochiquetzal","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes, positioned so every non-green hexagon touches one
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
 function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
 function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
@@ -949,17 +954,17 @@ document.getElementById("btnValidate").addEventListener("click", () => {
       const bad = neigh.filter(n => n.type === "park");
       if (bad.length) { parkPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-invalid"); }
       checked++;
-    } else if (h.circle < maxCircle && neigh.length === 6) { // interior non-park hexes
+    } else if (h.circle !== 0 && !onSpoke(h)) { // every non-green hexagon must touch a district — the green hexes (Metropol + the metro spokes) are exempt; the outer rim counts too
       if (!neigh.some(n => n.type === "park")) { noPark++; document.querySelector('[data-key="' + h.q + "," + h.r + '"]').classList.add("flag-nopark"); }
     }
   });
   const el = document.getElementById("validatorOut");
   if (parkPark === 0 && noPark === 0) {
-    el.innerHTML = '<span class="ok">✓ Lattice valid: no district touches another district, and every interior hex touches at least one free-use district.</span>';
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no district touches another district, and every non-green hexagon touches at least one free-use district.</span>';
   } else {
     el.innerHTML =
       (parkPark ? '<span class="bad">' + parkPark + ' district hex(es) touch other districts (red dashed).</span><br>' : '<span class="ok">No district-district adjacency.</span><br>') +
-      (noPark ? '<span class="warn2">' + noPark + ' hex(es) lack a district neighbour (orange dashed).</span>' : '<span class="ok">Every interior hex touches a district.</span>');
+      (noPark ? '<span class="warn2">' + noPark + ' non-green hex(es) lack a district neighbour (orange dashed).</span>' : '<span class="ok">Every non-green hexagon touches a district.</span>');
   }
 });
 document.getElementById("btnClearFlags").addEventListener("click", () => {

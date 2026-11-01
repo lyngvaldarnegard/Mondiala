@@ -10,13 +10,14 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - **Orientation numbers**: hexagon 1 is the topmost hex of every ring; numbers run clockwise, so the numbers help you read the compass
 - Rings 0–8: 217 hexagons, every one named
 - **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homoia (the proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital)
-- **36 pink free-use districts** in total (6 in ring 2, 12 in ring 5, 18 in ring 7), all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines
+- **42 pink free-use districts** in total (6 in ring 2, 12 in ring 5, 18 in ring 7, 6 in ring 8), all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines. New deities on the rim: Áine (Ireland), Parvati (India), Yue Lao (China), Mami Wata (West and Central Africa), Tlazolteotl (Mesoamerica) and Erzulie Freda (Vodou)
+- **The lattice rule**: every hexagon that is not green borders at least one pink free-use district — the green hexes (Metropol and the six metro spokes) are the only exemption
 - **The world map (rings 4–8)**: laid out like a map of Earth, with Metropol imagined in the Mediterranean — Europe in the north, Asia and Oceania in the east, Africa in the south, the Americas in the west. Every green spoke outside Norden carries a national capital or the country's largest city, plus the approved exceptions (Berlin, Hamburg, Munich and Frankfurt; Beijing, Shanghai, Hong Kong and Macau):
   - Ring 4 — the Grand Tour of iconic cities (London holds the top spoke; Ankara, Beijing, Cairo, Buenos Aires and Washington D.C. the others)
-  - Ring 5 — the capitals ring, with pink free-use buffers flanking every green spoke so no city touches the metro line (Berlin, Tehran, Shanghai, Lagos, São Paulo, Toronto hold the spokes)
+  - Ring 5 — the capitals ring, with pink free-use buffers flanking each spoke and holding each side's middle, so every ring-4 city touches a district (Berlin, Tehran, Shanghai, Lagos, São Paulo, Toronto hold the spokes)
   - Ring 6 — the dense world belt: 36 cities in one full circuit with no buffers (Hamburg, Riyadh, Hong Kong, Kinshasa, Lima and Mexico City on the spokes)
   - Ring 7 — the second capitals ring, with pink buffers flanking the spokes and anchoring the middle of each side (Frankfurt, Baghdad, Macau, Johannesburg, Bogotá and Havana hold the spokes)
-  - Ring 8 — the outer world, completing every continent (Munich, Astana, Seoul, Nairobi, Santiago and Ottawa on the spokes)
+  - Ring 8 — the outer world, completing every continent, with pink free-use districts anchoring the middle of each side so the rim's hexes touch a district too (Munich, Astana, Seoul, Nairobi, Santiago and Ottawa on the spokes)
   - Ring 3 (Norden) — unchanged: two population tiers, the five Nordic capitals + Göteborg hold the green spokes, smaller cities sorted by population between them
 - **Ring view**: alternating red and blue rings, with Metropol and the six radial spoke hexes green — toggle with "View"
 - **Type view**: paint hexes as District, Free-use district, Water, Plaza, Civic, Industrial (free-use hexes are pink, Kondomeriet-style)
@@ -24,9 +25,9 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - Every hexagon shows its flag and name on the map; tooltips show the data too
 - Postal-code labels in the `Circle · Name · Hexagon number` system
 - Editable name, type, density, style and notes per hex
-- **Lattice checker** validating the free-use district lattice (no two districts touch; every other interior hex touches one)
+- **Lattice checker** validating the free-use district lattice (no two districts touch; every non-green hexagon touches one)
 - Save to browser storage, JSON export/import, add rings beyond circle 8
-- **Unplaced-names pool**: famous cities still waiting for a hexagon (Florence, Utrecht, Porto, Bristol, Houston, Portland, Xi'an, Suzhou, Nanjing, Tianjin, Bandung) — click to arm, click a hex to place
+- **Unplaced-names pool**: famous cities still waiting for a hexagon (Florence, Utrecht, Porto, Bristol, Houston, Portland, Xi'an, Suzhou, Nanjing, Tianjin, Bandung, plus Sarajevo, Kathmandu, Guangzhou, Pretoria, Manaus and Dallas, which yielded their rim hexes to the new pink districts) — click to arm, click a hex to place
 
 ## Usage
 

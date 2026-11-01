@@ -53,11 +53,27 @@ const CENTER_SPOTS = [
 ];
 
 // the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
-// the gods of love and sexuality keep their hexes no matter where the city flow settles
+// the slot lattice never moves, but WHICH god sits in WHICH slot follows the compass:
+// each god faces their homeland, by bearing from Mondiala's centre — same rule as the cities
 const PINK_SLOTS = {
-  5: [[3,"Inanna"],[5,"Cupid"],[8,"Adonis"],[10,"Hathor"],[13,"Oshun"],[15,"Rati"],[17,"Astarte"],[19,"Sjöfn"],[22,"Prende"],[24,"Lada"],[27,"Qetesh"],[29,"Turan"]],
-  7: [[2,"Nanaya"],[7,"Anahita"],[9,"Cybele"],[14,"Dionysus"],[16,"Himeros"],[21,"Peitho"],[23,"Bastet"],[28,"Bes"],[30,"Freyr"],[35,"Milda"],[37,"Zhiva"],[42,"Xochiquetzal"]],
-  8: [[5,"Áine"],[13,"Parvati"],[21,"Yue Lao"],[29,"Mami Wata"],[37,"Tlazolteotl"],[45,"Erzulie Freda"]]
+  5: [3,5,8,10,13,15,17,19,22,24,27,29],
+  7: [2,7,9,14,16,21,23,28,30,35,37,42],
+  8: [5,13,21,29,37,45]
+};
+// the love gods waiting around each ring — they settle onto that ring's pink slots by compass
+const PINK_GODS = {
+  5: ["Inanna","Cupid","Adonis","Hathor","Oshun","Rati","Astarte","Sjöfn","Prende","Lada","Qetesh","Turan"],
+  7: ["Nanaya","Anahita","Cybele","Dionysus","Himeros","Peitho","Bastet","Bes","Freyr","Milda","Zhiva","Xochiquetzal"],
+  8: ["Áine","Parvati","Yue Lao","Mami Wata","Tlazolteotl","Erzulie Freda"]
+};
+// where each god of love comes from [lat, lon] — the bearing from Mondiala to this spot decides
+// which pink hex the god takes: eastern gods sit with the eastern cities, western with western,
+// African to the south, and the Norse/Baltic ones to the north
+const GOD_ORIGINS = {
+"venus":[41.90,12.50],"aphrodite":[34.75,32.41],"eros":[37.98,23.73],"ishtar":[31.32,45.64],"kama":[23.18,75.78],"freyja":[59.86,17.64], // ring 2 keeps its authored hexes; origins kept for the record
+"inanna":[31.32,45.64],"cupid":[41.90,12.50],"adonis":[34.12,35.65],"hathor":[26.14,32.33],"oshun":[7.90,4.55],"rati":[23.18,75.78],"astarte":[35.60,35.77],"sjöfn":[59.86,17.64],"prende":[42.06,19.49],"lada":[52.23,21.01],"qetesh":[34.73,36.72],"turan":[43.47,11.03],
+"nanaya":[32.13,45.23],"anahita":[32.65,51.67],"cybele":[39.32,31.58],"dionysus":[38.33,23.32],"himeros":[37.98,23.73],"peitho":[37.98,23.73],"bastet":[30.58,31.51],"bes":[26.14,32.33],"freyr":[59.86,17.64],"milda":[54.69,25.28],"zhiva":[52.52,13.40],"xochiquetzal":[19.43,-99.13],
+"áine":[52.48,-8.61],"parvati":[25.32,83.01],"yue lao":[39.90,116.41],"mami wata":[4.05,9.70],"tlazolteotl":[19.43,-99.13],"erzulie freda":[18.54,-72.34]
 };
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
@@ -518,9 +534,8 @@ const CITY_FACTS = {
 
 
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
-const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes, placed mirror-symmetrically about the north–south axis so every non-green hexagon touches one with as few districts as possible
+const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes; the slot lattice is the mirror-symmetric proven minimum, while the outer gods settle onto it by compass, facing their homelands
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
 function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
 function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
 function fmtPop(p) { return p >= 1e6 ? (Math.round(p / 1e5) / 10) + "M" : p.toLocaleString("en-US"); }
-

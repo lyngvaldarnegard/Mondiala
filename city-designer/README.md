@@ -37,7 +37,10 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 - The lattice is a **proven minimum**: with the six ring-2 hexes fixed, no arrangement covers every non-green hexagon with fewer districts
 - **Mirror-symmetric about the north–south axis**: the left half of the city mirrors the right half
 - **The lattice rule**: every hexagon that is not green borders at least one pink free-use district — the green hexes (Metropol and the six metro spokes) are the only exemption — and no two districts touch each other
-- The district hexes are **reserved**: wherever the city flow settles, the gods keep their slots. Six deities (Shaushka, Attis, Pothos, Min, Lofn, Xochipilli) are dormant for now — their info cards remain, waiting for a future ring
+- The district hexes are **reserved**: wherever the city flow settles, the gods keep the lattice — the slot lattice itself never moves
+- **The outer gods (rings 5, 7, 8) sit by compass**: each god takes the reserved pink hex that faces their homeland, by bearing from Mondiala's centre — the same rule as the cities. Eastern gods (Inanna, Nanaya, Anahita, Rati, Parvati, Yue Lao) sit with the eastern cities; African gods (Hathor, Bastet, Bes, Oshun, Mami Wata) to the south; the Norse and Baltic ones (Sjöfn, Freyr, Milda, Zhiva) to the north; and Áine, Xochiquetzal, Tlazolteotl and Erzulie Freda to the west. Each god's homeland coordinates are part of the data
+- **The gods re-shuffle with the centre**: switch centre mode or add a city, and the gods re-settle onto the same lattice to face their homelands from the new spot — they never give up their reserved slots, and the ring-2 six keep their authored hexes
+- Six deities (Shaushka, Attis, Pothos, Min, Lofn, Xochipilli) are dormant for now — their info cards remain, waiting for a future ring
 
 ## The tools
 
@@ -68,10 +71,10 @@ its world data from `mondiala-data.js` in the same folder, so keep the two files
 
 The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
 fixed rings 0–3, the 161-city world roster with real coordinates, each city's country,
-the info cards, the real-city facts and the reserved god lattice. Edit it directly on
-GitHub — the map reads it as-is, no regeneration needed. **[`DATA.md`](DATA.md)** is a
-human-readable copy of the same data (tables you can copy into Notion), generated from
-the `.js` file.
+the info cards, the real-city facts, the reserved god lattice and each god's homeland
+coordinates. Edit it directly on GitHub — the map reads it as-is, no regeneration needed.
+**[`DATA.md`](DATA.md)** is a human-readable copy of the same data (tables you can copy
+into Notion), generated from the `.js` file.
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion; the city roster extends the database
@@ -90,3 +93,4 @@ Real-city data in the info cards:
 - **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).
 - **Coordinates** — city-centre latitude/longitude in decimal degrees.
 - **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Slovakia, Kyrgyzstan, Ukraine).
+- **God homelands** — each love god's origin coordinates decide which reserved pink hex they face; the outer gods re-settle by compass whenever Mondiala's centre moves.

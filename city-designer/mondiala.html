@@ -238,9 +238,9 @@ function buildCity() {
       const placed = placeSortedRing(c, positions, rows);
       rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
-    } else { // rings 4–8: coordinate-driven placement — the gods keep their reserved lattice hexes, cities slot by bearing from Mondiala
+    } else { // rings 4–8: coordinate-driven placement — the gods take the pink slots facing their homelands, cities slot by bearing from Mondiala
       const slots = {}; positions.forEach(p => slots[p.num] = p);
-      (PINK_SLOTS[c] || []).forEach(pair => { if (slots[pair[0]]) placeRow(slots[pair[0]], [c, pair[0], pair[1], null]); });
+      pinkPlan(c, worldPlan.center).forEach(pair => { if (slots[pair[0]]) placeRow(slots[pair[0]], [c, pair[0], pair[1], null]); });
       (worldPlan.plan[c] || []).forEach(pair => { const p = slots[pair[0]]; if (p && !hexes[p.q + "," + p.r]) placeRow(p, [c, pair[0], pair[1], null]); });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
     }
@@ -328,11 +328,37 @@ function centerCountry(center) { // the country Mondiala sits in — a verified 
   return ((CITY_INFO[key] || ["📍"])[0]) + " " + CITY_COUNTRY[key] + " (nearest: " + best + ", " + Math.round(bd) + " km)";
 }
 function worldSlots(c) { // this ring's placeable slots with their true compass bearing; the gods' reserved hexes are skipped
-  const reserved = new Set((PINK_SLOTS[c] || []).map(p => p[0]));
+  const reserved = new Set(PINK_SLOTS[c] || []);
   return ringPositions(c)
     .filter(p => !reserved.has(p.num))
     .map(p => { const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num: p.num, a }; })
     .sort((u, v) => u.a - v.a);
+}
+function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: each god faces their homeland, by bearing from Mondiala
+  const nums = PINK_SLOTS[c] || [];
+  if (!nums.length) return [];
+  const slotOf = {}; ringPositions(c).forEach(p => slotOf[p.num] = p);
+  const slots = nums.map(num => { const p = slotOf[num]; const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num, a }; }).sort((u, v) => u.a - v.a);
+  const gods = (PINK_GODS[c] || []).map(name => {
+    const co = GOD_ORIGINS[name.trim().toLowerCase()]; if (!co) return null;
+    const [lat, lon] = co;
+    const y = Math.sin((lon - center.lon) * GEO_RAD) * Math.cos(lat * GEO_RAD);
+    const x = Math.cos(center.lat * GEO_RAD) * Math.sin(lat * GEO_RAD) - Math.sin(center.lat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - center.lon) * GEO_RAD);
+    let b = Math.atan2(y, x) / GEO_RAD; if (b < 0) b += 360;
+    return { name, b };
+  });
+  if (gods.some(g => !g) || gods.length !== slots.length) return nums.map((num, i) => [num, (PINK_GODS[c] || [])[i]]); // no origin known: keep the authored order
+  gods.sort((u, v) => u.b - v.b);
+  let rot = 0, best = 1e18; // circular order matching, same as the cities: try every rotation, keep the truest to the compass
+  for (let r = 0; r < gods.length; r++) {
+    let cost = 0;
+    for (let i = 0; i < gods.length; i++) {
+      const g = gods[(i + r) % gods.length];
+      const d = Math.abs(slots[i].a - g.b); cost += Math.min(d, 360 - d);
+    }
+    if (cost < best) { best = cost; rot = r; }
+  }
+  return slots.map((sl, i) => [sl.num, gods[(i + rot) % gods.length].name]);
 }
 function computeWorldPlan() { // the full rings 4..maxCircle city assignment + the centre + the leftovers
   const cands = [];
@@ -821,4 +847,3 @@ renderCenterOut();
 </script>
 </body>
 </html>
-

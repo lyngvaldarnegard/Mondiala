@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.3.2 — down to bare Metropol** | `main` (this push) | current · the ring viewer unwinds the whole city to Metropol and back |
+| **v1.4 — the heart goddesses** | `main` (this push) | current · six goddesses of love on the ring-4 middles by compass |
+| **v1.3.2 — down to bare Metropol** | `08d7440` | bookmark branch `archive/v1.3.2-down-to-bare-metropol` |
 | **v1.3.1 — the ring viewer** | `f945990` | bookmark branch `archive/v1.3.1-ring-viewer` |
 | **v1.3 — the map goes read-only** | `af81811` | bookmark branch `archive/v1.3-read-only-map` |
 | **v1.2 — the civilisation heart** | `a42e888` | bookmark branch `archive/v1.2-the-civilisation-heart` |
@@ -16,6 +17,16 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.4 — the heart goddesses
+
+The heart gets its goddess star — six of love on the six ring-4 middles, each facing her homeland by the compass rule:
+
+- **The middles of the six triads turn pink**: Milda north-east, Kama east, Aphrodite south-east, Eros south-west, Venus west, Freyja north-west — three exact mirror pairs, so the pink set stays symmetric and the checker reads 0 / 0 / 0
+- **The pink tiles that had to move, moved**: Milda left the outer ring-7 lattice for the north-east middle, and Ishtar backfills her slot by her own compass (the cradle goddesses still wait unplaced)
+- **No city deleted**: Vienna, Tokyo, Cape Town, Sydney and Amsterdam stay in the heart (hexes 8, 10, 14, 16, 18); Prague, Seoul, Dubai, San Francisco, Toronto and Chicago stepped off the heart and are kept in the data — coordinates, countries, info cards and facts all intact for later use
+- **Centres unchanged**: the roster did not move, so Mondiala still sits on the Thracian plain (geo), the Babatag range (pop) and the Dobruja steppe (great)
+- Suite: **468 checks, all green** (six new goddess, kept-city and pink-count checks)
 
 ## v1.3.2 — down to bare Metropol
 

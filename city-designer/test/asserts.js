@@ -33,14 +33,15 @@ eq("Metropol", X.hexes["0,0"].name, "Metropol");
 eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Mesopotamia", "Egypt", "Andes", "Mesoamerica"]);
 eq("ring 2", HEX_NAMES(2), ["Chang'an", "Constantinople", "Mohenjo-daro", "Athens", "Uruk", "Babylon", "Memphis", "Rome", "Cusco", "Tyre", "Tenochtitlan", "Carthage"]);
 eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Tampere | Tammerfors", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
-eq("ring 4", HEX_NAMES(4), ["Paris", "London", "Amsterdam", "Madrid", "Barcelona", "Berlin", "Vienna", "Prague", "Moscow", "Seoul", "Tokyo", "Hong Kong", "Singapore", "Dubai", "Sydney", "San Francisco", "Vancouver", "Toronto", "Chicago", "Mexico City", "New York", "Rio de Janeiro", "Cape Town", "Lisbon"]);
+eq("ring 4", HEX_NAMES(4), ["Paris", "London", "Milda", "Madrid", "Barcelona", "Berlin", "Kama", "Vienna", "Moscow", "Tokyo", "Aphrodite", "Hong Kong", "Singapore", "Cape Town", "Eros", "Sydney", "Vancouver", "Amsterdam", "Venus", "Mexico City", "New York", "Rio de Janeiro", "Freyja", "Lisbon"]);
 eq("ring 1 has no densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [null, null, null, null, null, null]);
 eq("Metropol density", X.hexes["0,0"].density, 4355.39);
 eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
 eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Mesopotamia,Egypt,Andes,Mesoamerica");
 
-// ---------- 3 · lattice rules (shipped state: no gods in the heart) ----------
-section("3 · lattice rules (shipped state: no gods in the heart)");
+// ---------- 3 · lattice rules (shipped state: six goddesses in the heart) ----------
+section("3 · lattice rules (shipped state: six goddesses in the heart)");
+eq("heart goddesses by compass", [3, 7, 11, 15, 19, 23].map(n => { const h = Object.values(X.hexes).find(h => h.circle === 4 && h.num === n); return h ? h.name + ":" + h.type : "?"; }), ["Milda:park", "Kama:park", "Aphrodite:park", "Eros:park", "Venus:park", "Freyja:park"]);
 const onSpokePark = Object.values(X.hexes).filter(h => h.type === "park" && (h.circle === 0 || X.onSpoke(h)));
 eq("no god on the green (fresh)", onSpokePark.length, 0);
 const mirror = (h) => X.hexes[(-h.q) + "," + (h.q + h.r)];
@@ -54,16 +55,22 @@ for (const h of Object.values(X.hexes)) {
 }
 uncovered.sort((a, b) => { const [c1, n1] = a.split("#"), [c2, n2] = b.split("#"); return (+c1 - +c2) || (+n1 - +n2); });
 eq("whole heart exempt, nothing uncovered (fresh)", uncovered, []);
-eq("outer parks (fresh)", parkCount(), 30);
+eq("parks (fresh: 30 outer + 6 heart goddesses)", parkCount(), 36);
 
 // ---------- 4 · capitals aboard ----------
 section("4 · capitals aboard");
 const NORDIC = new Set(["Helsinki", "Stockholm", "Oslo", "København", "Reykjavík", "Tórshavn", "Nuuk", "Mariehamn"]);
 const CAPS = ["Washington D.C.", "Mexico City", "Ottawa", "Havana", "Kingston", "Santo Domingo", "San Juan", "Port-au-Prince", "Panama City", "San José", "Managua", "Guatemala City", "Tegucigalpa", "San Salvador", "Bogotá", "Quito", "Lima", "La Paz", "Santiago", "Buenos Aires", "Montevideo", "Asunción", "Brasília", "São Paulo", "Rio de Janeiro", "Caracas", "London", "Dublin", "Paris", "Brussels", "Amsterdam", "Luxembourg", "Madrid", "Lisbon", "Andorra la Vella", "Monaco", "Bern", "Vienna", "Berlin", "Prague", "Bratislava", "Budapest", "Ljubljana", "Zagreb", "Sarajevo", "Belgrade", "Podgorica", "Tirana", "Skopje", "Athens", "Sofia", "Bucharest", "Chisinau", "Kyiv", "Minsk", "Vilnius", "Riga", "Tallinn", "Warsaw", "Vatican City", "San Marino", "Rome", "Valletta", "Nicosia", "Reykjavík", "Tórshavn", "Nuuk", "Mariehamn", "Oslo", "Stockholm", "Helsinki", "København", "Moscow", "Ankara", "Tbilisi", "Yerevan", "Baku", "Astana", "Tashkent", "Bishkek", "Dushanbe", "Ashgabat", "Kabul", "Islamabad", "Delhi", "Kathmandu", "Dhaka", "Colombo", "Yangon", "Bangkok", "Vientiane", "Phnom Penh", "Hanoi", "Beijing", "Ulaanbaatar", "Seoul", "Tokyo", "Manila", "Jakarta", "Kuala Lumpur", "Singapore", "Nairobi", "Addis Ababa", "Asmara", "Mogadishu", "Kampala", "Kigali", "Dodoma", "Lusaka", "Harare", "Maputo", "Lilongwe", "Maseru", "Gaborone", "Windhoek", "Pretoria", "Cape Town", "Bloemfontein", "Cairo", "Tripoli", "Tunis", "Algiers", "Rabat", "Nouakchott", "Banjul", "Bissau", "Conakry", "Freetown", "Monrovia", "Yamoussoukro", "Accra", "Lomé", "Porto-Novo", "Abuja", "Niamey", "Bamako", "Ouagadougou", "N'Djamena", "Yaoundé", "Libreville", "Brazzaville", "Bangui", "Kinshasa", "Brazzaville", "Luanda", "Windhoek", "Juba", "Khartoum", "Port Moresby", "Wellington", "Canberra"];
+const KEPT = ["Prague", "Seoul", "Dubai", "San Francisco", "Toronto", "Chicago"]; // stepped off the heart, kept in the data for later
 for (const cap of CAPS) {
-  ok("capital aboard: " + cap, X.WORLD_CITIES.includes(cap) || HEART_NAMES.has(cap) || NORDIC.has(cap) || X.WORLD_CITIES.some(w => w.trim().toLowerCase() === cap.toLowerCase()));
+  ok("capital aboard: " + cap, X.WORLD_CITIES.includes(cap) || HEART_NAMES.has(cap) || NORDIC.has(cap) || KEPT.includes(cap) || X.WORLD_CITIES.some(w => w.trim().toLowerCase() === cap.toLowerCase()));
 }
 eq("heart cities count", HEART_NAMES.size, 60);
+ok("every kept city keeps its coordinates", KEPT.every(n => X.CITY_COORDS[n.toLowerCase()]));
+ok("every kept city keeps its country", KEPT.every(n => X.CITY_COUNTRY[n.toLowerCase()]));
+ok("every kept city keeps its info card", KEPT.every(n => X.CITY_INFO[n.toLowerCase()]));
+ok("every kept city keeps its facts", KEPT.every(n => X.CITY_FACTS[n.toLowerCase()]));
+ok("no kept city is on the map or the roster", KEPT.every(n => !HEART_NAMES.has(n) && !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n.toLowerCase())));
 
 // ---------- 5 · validator (fresh state → the three rules) ----------
 section("5 · validator (fresh state → the three rules)");
@@ -85,7 +92,7 @@ for (const m of Object.keys(spots)) {
   eq(m + " centre lon", X.worldCenter.lon.toFixed(8), lon);
   ok(m + " country is " + country, X.centerCountry(X.worldCenter).includes(country));
   eq(m + " pool (fresh)", X.pool.length, 179);
-  eq(m + " parks (no gods placed)", parkCount(), 30);
+  eq(m + " parks (30 outer + 6 heart goddesses)", parkCount(), 36);
 }
 setMode("geo");
 

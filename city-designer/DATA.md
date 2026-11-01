@@ -1,8 +1,8 @@
 # Mondiala — the city, hexagon by hexagon
 
-Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **30 pink free-use districts** (the twelve heart gods wait unplaced, to be seated by editing the data) · **305 world cities** on the roster, **179** of them waiting in the pool.
+Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the cradle goddesses wait unplaced) · **305 world cities** on the roster, **179** of them waiting in the pool.
 
-The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. The twelve gods of love stay unplaced. The map is read-only in the browser — every change happens in the data files.
+The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
 
 ## The heart — rings 0–4 (authored; identical in every centre mode)
 
@@ -69,27 +69,27 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 |---|---|---|
 | 1 | Paris | 19430 |
 | 2 | London | 5400 |
-| 3 | Amsterdam | 4900 |
+| 3 | Milda | — |
 | 4 | Madrid | 6600 |
 | 5 | Barcelona | 16630 |
 | 6 | Berlin | 4100 |
-| 7 | Vienna | 3700 |
-| 8 | Prague | 4800 |
+| 7 | Kama | — |
+| 8 | Vienna | 3700 |
 | 9 | Moscow | 5080 |
-| 10 | Seoul | 10400 |
-| 11 | Tokyo | 4500 |
+| 10 | Tokyo | 4500 |
+| 11 | Aphrodite | — |
 | 12 | Hong Kong | 27700 |
 | 13 | Singapore | 8188.27 |
-| 14 | Dubai | 3300 |
-| 15 | Sydney | 2300 |
-| 16 | San Francisco | 2200 |
+| 14 | Cape Town | 3100 |
+| 15 | Eros | — |
+| 16 | Sydney | 2300 |
 | 17 | Vancouver | 5749.9 |
-| 18 | Toronto | 3800 |
-| 19 | Chicago | 4100 |
+| 18 | Amsterdam | 4900 |
+| 19 | Venus | — |
 | 20 | Mexico City | 9100 |
 | 21 | New York | 11313.8 |
 | 22 | Rio de Janeiro | 6700 |
-| 23 | Cape Town | 3100 |
+| 23 | Freyja | — |
 | 24 | Lisbon | 3300 |
 
 ## Outer city — geographic midpoint (geo mode)
@@ -177,19 +177,19 @@ Mondiala sits at 42.14872°, 24.79302° — 🇧🇬 Bulgaria (the Thracian plai
 | Hex | Name |
 |---|---|
 | 1 | Antwerp |
-| 2 | Milda ♥ |
+| 2 | Aizen-Myōō ♥ |
 | 3 | Frankfurt |
 | 4 | Rotterdam |
 | 5 | The Hague |
 | 6 | Utrecht |
-| 7 | Aizen-Myōō ♥ |
+| 7 | Anahita ♥ |
 | 8 | Hamburg |
-| 9 | Anahita ♥ |
+| 9 | Nanaya ♥ |
 | 10 | Billund |
 | 11 | Narva |
 | 12 | Tbilisi |
 | 13 | Yerevan |
-| 14 | Nanaya ♥ |
+| 14 | Ishtar ♥ |
 | 15 | Amman |
 | 16 | Cybele ♥ |
 | 17 | Jericho |
@@ -361,7 +361,7 @@ Mondiala sits at 36.93213°, 67.00018° — 🇹🇯 Tajikistan (the Babatag ran
 | Hex | Name |
 |---|---|
 | 1 | Warsaw |
-| 2 | Milda ♥ |
+| 2 | Zhiva ♥ |
 | 3 | Minsk |
 | 4 | Narva |
 | 5 | Saint Petersburg |
@@ -375,33 +375,33 @@ Mondiala sits at 36.93213°, 67.00018° — 🇹🇯 Tajikistan (the Babatag ran
 | 13 | Chiang Mai |
 | 14 | Anahita ♥ |
 | 15 | Naypyidaw |
-| 16 | Bes ♥ |
+| 16 | Ishtar ♥ |
 | 17 | Yangon |
 | 18 | Colombo |
 | 19 | Djibouti City |
 | 20 | Sana'a |
-| 21 | Nanaya ♥ |
+| 21 | Bes ♥ |
 | 22 | Aksum |
-| 23 | Bastet ♥ |
+| 23 | Nanaya ♥ |
 | 24 | Asmara |
 | 25 | Luxor |
 | 26 | Cairo |
 | 27 | Alexandria |
-| 28 | Himeros ♥ |
+| 28 | Bastet ♥ |
 | 29 | Thessaloniki |
-| 30 | Peitho ♥ |
+| 30 | Himeros ♥ |
 | 31 | Skopje |
 | 32 | Sofia |
 | 33 | Pristina |
 | 34 | Bucharest |
-| 35 | Cybele ♥ |
+| 35 | Peitho ♥ |
 | 36 | Belgrade |
-| 37 | Dionysus ♥ |
+| 37 | Cybele ♥ |
 | 38 | Chisinau |
 | 39 | Lviv |
 | 40 | Kraków |
 | 41 | Kyiv |
-| 42 | Zhiva ♥ |
+| 42 | Dionysus ♥ |
 
 ### Ring 8
 
@@ -545,19 +545,19 @@ Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe
 | Hex | Name |
 |---|---|
 | 1 | Rotterdam |
-| 2 | Milda ♥ |
+| 2 | Aizen-Myōō ♥ |
 | 3 | The Hague |
 | 4 | Utrecht |
 | 5 | Hamburg |
 | 6 | Billund |
-| 7 | Aizen-Myōō ♥ |
+| 7 | Anahita ♥ |
 | 8 | Turku |
-| 9 | Anahita ♥ |
+| 9 | Nanaya ♥ |
 | 10 | Narva |
 | 11 | Vyborg |
 | 12 | Saint Petersburg |
 | 13 | Baku |
-| 14 | Nanaya ♥ |
+| 14 | Ishtar ♥ |
 | 15 | Baghdad |
 | 16 | Cybele ♥ |
 | 17 | Tripoli |

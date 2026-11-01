@@ -54,7 +54,9 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 
 Open `index.html` in any browser — fully self-contained, no build step, no dependencies.
 
-- Drag to pan, scroll to zoom
+- Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step
+- **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
+- Adding a ring (or resetting) re-fits the view the same way, so the new rim's edges touch the screen
 - Click a hexagon to inspect and edit it
 - Paint mode applies an armed type to every hex you click
 - "Check lattice" flags violations of the free-use district lattice on the map

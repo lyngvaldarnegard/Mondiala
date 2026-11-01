@@ -85,7 +85,7 @@
   <div id="sidebar">
     <div class="card" id="inspectorCard">
       <h2>Inspector</h2>
-      <div id="inspector"><div class="emptysel">Click a hexagon to edit it. Drag to pan, scroll to zoom.</div></div>
+      <div id="inspector"><div class="emptysel">Click a hexagon to edit it. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div></div>
     </div>
     <div class="card">
       <h2>Brush</h2>
@@ -860,7 +860,11 @@ function computeWorldPlan() { // the full rings 4..maxCircle city assignment + t
 // ---------- SVG rendering ----------
 const svg = document.getElementById("map");
 const NS = "http://www.w3.org/2000/svg";
-let viewBox = { x: -480, y: -552, w: 960, h: 1104 }; // flat-top extents: ring 8 spans ±432 px wide, ±499 px tall (plus hex margin)
+function cityViewBox() { // the default view — the whole city, its edges exactly touching the view screen
+  const hw = 1.5 * SIZE * maxCircle + 48, hh = Math.sqrt(3) * SIZE * maxCircle + 53.17;
+  return { x: -hw, y: -hh, w: 2 * hw, h: 2 * hh };
+}
+let viewBox = cityViewBox(); // flat-top extents: ring 8 spans ±432 px wide, ±499 px tall (plus hex margin) — and zooming out can never show more than this
 let gHexes, gLabels;
 
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
@@ -941,7 +945,11 @@ svg.addEventListener("mousemove", e => {
 });
 svg.addEventListener("wheel", e => {
   e.preventDefault();
-  const f = e.deltaY > 0 ? 1.15 : 0.87;
+  const dy = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY; // Firefox line-mode → pixels
+  let f = Math.exp(dy * 0.0012);        // smooth zoom: the step follows the wheel, no fixed jumps
+  f = Math.max(0.8, Math.min(1.25, f)); // even a hard flick moves one gentle step, never a leap
+  const fit = cityViewBox();
+  if (viewBox.w * f >= fit.w) { viewBox = fit; applyViewBox(); return; } // zoomed out to the edge of the city — snap to the full view, so the map can never shrink away and get lost
   const r = svg.getBoundingClientRect();
   const mx = viewBox.x + (e.clientX - r.left) / r.width * viewBox.w;
   const my = viewBox.y + (e.clientY - r.top) / r.height * viewBox.h;
@@ -971,7 +979,7 @@ function refresh() { render(); renderStats(); }
 // ---------- Inspector ----------
 const inspector = document.getElementById("inspector");
 function showInspector() {
-  if (!selected || !hexes[selected]) { inspector.innerHTML = '<div class="emptysel">Click a hexagon to see the city it copies and its style. Drag to pan, scroll to zoom.</div>'; return; }
+  if (!selected || !hexes[selected]) { inspector.innerHTML = '<div class="emptysel">Click a hexagon to see the city it copies and its style. Drag to pan, scroll to zoom — zooming out stops at the full-city view.</div>'; return; }
   const h = hexes[selected];
   const ci = h.name ? CITY_INFO[h.name.trim().toLowerCase()] : null;
   const label = h.circle + " " + (h.name || "_____") + " " + h.num;
@@ -1231,6 +1239,7 @@ document.getElementById("btnAddRing").addEventListener("click", () => {
   maxCircle++;
   buildCity();
   reapplyEdits(snap);
+  viewBox = cityViewBox(); // fit the grown city — the new rim's edges touch the screen again
   refresh(); renderPool(); renderCenterOut(); // a new ring reaches further out — pool cities settle onto it
 });
 
@@ -1283,7 +1292,7 @@ document.getElementById("btnLoadLocal").addEventListener("click", () => {
   } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
 });
 document.getElementById("btnReset").addEventListener("click", () => {
-  maxCircle = 8; selected = null; buildCity(); refresh(); renderPool(); renderCenterOut();
+  maxCircle = 8; selected = null; buildCity(); viewBox = cityViewBox(); refresh(); renderPool(); renderCenterOut();
 });
 
 // ---------- Init ----------

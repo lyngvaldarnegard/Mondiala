@@ -93,7 +93,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden with every Nordic country represented. Ring 4 (v1.8): the six original inspiration cities hold the green spokes (which spoke by their true bearing), the six favourite gods of love take the triads' middles facing their homelands, and the twelve other inspiration cities keep their ring-4 seats by bearing. Rings 5 and beyond place the world's great cities by their real coordinates — the compass picks the angle (spokes included), distance orders each direction's chain, and crowded directions flow into the neighbouring free tiles; only the outmost ring may hold empty city tiles. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink district.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden with every Nordic country represented. Ring 4 (v1.8): the six original inspiration cities hold the green spokes (which spoke by their true bearing), the six favourite gods of love take the triads' middles facing their homelands, and the twelve other inspiration cities keep their ring-4 seats by bearing. Rings 5 and beyond place the world's great cities by their real coordinates — bearing picks the hex, one band (v1.9): all free hexes of rings 5+ form one continuous compass band (by angle, inner ring first within an angle), the nearest distance-ranked batch of cities rides the band in bearing order in one monotone pass, so each direction stays contiguous across ALL rings (Africa south, the Americas west, Asia and Oceania east), near = inner within a direction, spokes are ordinary tiles, only the outmost ring may hold empty city tiles. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink district.</div>
     </div>
     <div class="card">
       <h2>World placement</h2>
@@ -298,7 +298,7 @@ function placeRow(pos, row) {
 // Mondiala sits at the centre of the world's great cities; the compass picks each city's
 // hexagon — its true bearing, trued as closely as the lattice allows, spokes included —
 // and its real distance picks its ring (near = inner). Rings 0–3 (Metropol, the cradle
-// civilisations, the ancient cities, Norden) are fixed; ring 4 seats by direction; rings 5+ by compass and distance.
+// civilisations, the ancient cities, Norden) are fixed; ring 4 seats by direction; rings 5+ by bearing over one band (v1.9: directions stay contiguous across all rings, near = inner within a direction).
 const GEO_RAD = Math.PI / 180, GEO_R = 6371; // km
 function coordOf(name) { return CITY_COORDS[name.trim().toLowerCase()] || null; }
 function factLiv(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : 70; }
@@ -427,28 +427,36 @@ function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: the deit
 function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band": enough cities → all free hexes of rings 5+ form one continuous compass band and the nearest batch rides it in bearing order (directions contiguous across ALL rings); the frontier (fewer cities than slots) fills ring by ring inner to outer so only the outmost ring can run empty, each ring still bearing-anchored
   const ranked = cands
     .map(n => Object.assign({ n }, bearingDist(center, n)))
-    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance ranks who gets seated, population breaks ties
+    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance ranks who gets seated at all (near = inner batch), population breaks ties
   const slots = [];
   for (let c = 5; c <= maxCircle; c++) worldSlots(c).forEach(sl => slots.push({ c, num: sl.num, a: sl.a }));
-  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c));
+  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
-  if (ranked.length >= slots.length) {
+  if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings
     const take = ranked.slice(0, slots.length).sort((a, b) => a.bearing - b.bearing || a.dist - b.dist);
     const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), slots.map(sl => sl.a));
     pairs.forEach(pair => plan[slots[pair[1]].c].push([slots[pair[1]].num, pair[0].key]));
-  } else {
+  } else { // the frontier: fewer cities than slots — fill ring by ring inner to outer so only the outmost ring can run empty, each ring still bearing-anchored
     let idx = 0;
     for (let c = 5; c <= maxCircle; c++) {
       const rslots = worldSlots(c);
       const take = ranked.slice(idx, idx + rslots.length); idx += take.length;
       if (!take.length) continue;
-      if (take.length < rslots.length) {
-        const free = rslots.slice();
-        take.slice().sort((a, b) => a.bearing - b.bearing).forEach(city => {
-          let bi = 0, bd = 1e9;
-          free.forEach((sl, i) => { const d = Math.abs(sl.a - city.bearing); const dd = Math.min(d, 360 - d); if (dd < bd) { bd = dd; bi = i; } });
-          plan[c].push([free[bi].num, city.n]); free.splice(bi, 1);
-        });
+      if (take.length < rslots.length) { // partial ring: circular order matching — try every rotation, keep the truest to the compass (so the 0°/360° seam never splits a direction)
+        const cities = take.slice().sort((a, b) => a.bearing - b.bearing);
+        let rot = 0, best = 1e18;
+        for (let r = 0; r < rslots.length; r++) {
+          let cost = 0, ok = true;
+          const used = new Set();
+          for (let i = 0; i < cities.length; i++) {
+            const sl = rslots[(r + i) % rslots.length];
+            if (used.has(sl.num)) { ok = false; break; }
+            used.add(sl.num);
+            const d = Math.abs(sl.a - cities[i].bearing); cost += Math.min(d, 360 - d);
+          }
+          if (ok && cost < best) { best = cost; rot = r; }
+        }
+        cities.forEach((city, i) => { const sl = rslots[(rot + i) % rslots.length]; plan[c].push([sl.num, city.n]); });
         continue;
       }
       const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), rslots.map(sl => sl.a));

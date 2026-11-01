@@ -1,21 +1,25 @@
-// loader.js — reads the SHIPPED app (../mondiala.html + ../mondiala-data.js),
-// evals it in this scope (with the stubs above) in browser script order, exposes __X.
-// Run from this test directory (run.sh does that): the app files sit one level up.
+// loader.js — reads the SHIPPED app (../mondiala.html + the five data files it
+// references), evals it in this scope (with the stubs above) in browser script
+// order, exposes __X. Run from this test directory (run.sh does that): the app
+// files sit one level up.
 "use strict";
 const __fs = require("fs");
-function __read(p) { return __fs.readFileSync(p, "utf8"); }
-const __html = __read("../mondiala.html");
-const __data = __read("../mondiala-data.js");
+const __html = __fs.readFileSync("../mondiala.html", "utf8");
 const __scripts = [];
 {
   const re = /<script(?:\s+src="([^"]*)")?>([\s\S]*?)<\/script>/g;
   let m;
   while ((m = re.exec(__html))) __scripts.push({ src: m[1] || null, body: m[2] });
 }
-// expected structure: [app head (inline), mondiala-data.js (src tag), app tail (inline)]
-if (__scripts.length !== 3) throw new Error("mondiala.html: expected 3 script tags, found " + __scripts.length);
-if (__scripts[1].src !== "mondiala-data.js" || __scripts[1].body.trim()) throw new Error("mondiala.html: expected an empty <script src=\"mondiala-data.js\"> in the middle");
-const __parts = { src: __scripts[0].body + "\n" + __data + "\n" + __scripts[2].body };
+// expected structure: [app head (inline), the five themed data files (src tags, empty), app tail (inline)]
+const __DATA_FILES = ["mondiala-heart.js", "mondiala-cities.js", "mondiala-info.js", "mondiala-facts.js", "mondiala-gods.js"];
+if (__scripts.length !== 2 + __DATA_FILES.length) throw new Error("mondiala.html: expected " + (2 + __DATA_FILES.length) + " script tags, found " + __scripts.length);
+const __srcs = __scripts.slice(1, -1).map(s => s.src);
+if (JSON.stringify(__srcs) !== JSON.stringify(__DATA_FILES)) throw new Error("mondiala.html: unexpected data files " + JSON.stringify(__srcs));
+if (__scripts.slice(1, -1).some(s => s.body.trim())) throw new Error("mondiala.html: data script tags must be empty (src only)");
+let __src = __scripts[0].body;
+for (const s of __scripts.slice(1, -1)) __src += "\n" + __fs.readFileSync("../" + s.src, "utf8");
+__src += "\n" + __scripts[__scripts.length - 1].body;
 const __export = `
 ;globalThis.__X = {
   RAW, WORLD_CITIES, CITY_COORDS, CITY_COUNTRY, CITY_INFO, CITY_FACTS, SEX_GODS, PINK_GODS, PINK_SLOTS, GOD_ORIGINS, CENTER_SPOTS, TYPES,
@@ -36,4 +40,4 @@ const __export = `
   fmtPop, fmtLatLon
 };
 `;
-eval(__parts.src + "\n" + __export);
+eval(__src + "\n" + __export);

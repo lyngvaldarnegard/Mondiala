@@ -17,10 +17,13 @@ no build step, no dependencies.
 - **Smooth zoom that can never lose the map**: zooming out stops exactly at the full-city view, with the rim touching the screen edges
 - Save to browser storage, JSON export/import, add rings beyond circle 8 — and a headless test suite of **453 checks** keeps it all honest. The suite is versioned right here in the repo, in [`city-designer/test/`](city-designer/test/)
 
-The worldbuilding data lives in its own file,
-[`city-designer/mondiala-data.js`](city-designer/mondiala-data.js) — the roster, coordinates,
-info cards, real-city facts, the god lattice and each god's homeland coordinates. It can be
-edited directly on GitHub; the map reads it as-is, nothing to regenerate.
+The worldbuilding data lives in five themed files in
+[`city-designer/`](city-designer/) — `mondiala-heart.js` (the authored rings 0–4),
+`mondiala-cities.js` (the roster, coordinates, countries, centre spots),
+`mondiala-info.js` (the info cards), `mondiala-facts.js` (the real-city facts) and
+`mondiala-gods.js` (the god lattice and homelands) — so a change means editing one small
+file, not a monolith. They can be edited directly on GitHub; the map reads them as-is,
+nothing to regenerate.
 [`city-designer/DATA.md`](city-designer/DATA.md) is a human-readable,
 copy-into-Notion-friendly copy of all of it.
 

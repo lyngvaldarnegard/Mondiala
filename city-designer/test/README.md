@@ -2,8 +2,8 @@
 
 Headless checks for the city designer — no browser, no dependencies beyond Node ≥ 18.
 453 checks, run in one process: the app is loaded from the *shipped* files
-(`../mondiala.html` + `../mondiala-data.js`, in browser script order), given a minimal
-fake DOM, and exercised end to end:
+(`../mondiala.html` + the five themed data files it references, in browser
+script order), given a minimal fake DOM, and exercised end to end:
 
 1. **Roster integrity** — 318 cities, 372 fact entries, 418 info cards, 42 gods, no city placed twice, no heart name on the roster
 2. **The authored heart** — rings 0–4 exactly as designed, including densities
@@ -27,12 +27,13 @@ shows a change there after you edited the app data, commit it.
 - `gen_data_md.js` — regenerates `../DATA.md` from the live fresh build
 - `asserts.js` — the 453 checks (self-wrapped so the concatenation shares one scope)
 - `run.sh` — concatenates the four and runs them: `./run.sh`, exit 0 = all green
-- `split_push.py` — rebuilds the two shipped files from the Vibe-side canvas
-  (the authored source; the path inside points at the Vibe environment that owns it)
+- `split_push.py` — rebuilds the six shipped files from the Vibe-side canvas (the
+  authored source; the path inside points at the Vibe environment that owns it):
+  `mondiala.html` plus the five data files `mondiala-{heart,cities,info,facts,gods}.js`
 
 ## Workflow
 
-The app is authored in the Mondiala City Designer canvas (Vibe), split into the two
-shipped files by `split_push.py`, and tested here. Never edit `mondiala.html` or
-`mondiala-data.js` by hand unless fixing a bug in a hurry — the canvas is the
+The app is authored in the Mondiala City Designer canvas (Vibe), split into the six
+shipped files by `split_push.py`, and tested here. Never edit `mondiala.html` or the
+`mondiala-*.js` data files by hand unless fixing a bug in a hurry — the canvas is the
 source of truth, and the next split would overwrite hand edits.

@@ -72,8 +72,8 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 ## Usage
 
 Open `mondiala.html` in any browser — no build step, no dependencies. The map reads
-its world data from `mondiala-data.js` in the same folder, so keep the two files together
-(downloading the whole `city-designer` folder gets you everything).
+its world data from the five `mondiala-*.js` files in the same folder, so keep the whole
+`city-designer` folder together (downloading the folder gets you everything).
 Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only form fields and the JSON box stay selectable
@@ -87,22 +87,33 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 
 The headless suite that keeps every claim in this README honest lives in
 **[`test/`](test/)** and is part of the repository — so it survives everything and anyone
-can re-run it. It loads the *shipped* files (`mondiala.html` + `mondiala-data.js`) the same
-way a browser would, rebuilds the city, and runs **453 checks**: roster integrity, the
+can re-run it. It loads the *shipped* files (`mondiala.html` + its five themed data
+files) the same way a browser would, rebuilds the city, and runs **453 checks**: roster integrity, the
 authored heart, the lattice rules and validator, the fill-later god flow, all three centre
 modes' placements, pools and centres, the capital audit, save/load, pool arm-and-place,
 paint, inspector, pan/zoom, and a full `DATA.md` consistency pass.
 
 Run it from the `city-designer` folder with `sh test/run.sh` — needs Node ≥ 18 and nothing
-else. `test/split_push.py` rebuilds `mondiala-data.js` and `mondiala.html` from the source
-canvas; `test/gen_data_md.js` regenerates `DATA.md` from the live city.
+else. `test/split_push.py` rebuilds `mondiala.html` and the five `mondiala-*.js` data
+files from the source canvas; `test/gen_data_md.js` regenerates `DATA.md` from the live city.
 
 ## Data
 
-The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
-authored heart (rings 0–4), the 318-city world roster with real coordinates, each city's
-country, the info cards, the real-city facts, the reserved god lattice and each god's homeland
-coordinates. Edit it directly on GitHub — the map reads it as-is, no regeneration needed.
+The worldbuilding data lives in **five themed files**, so a change means editing one
+small file instead of a monolith:
+
+- **[`mondiala-heart.js`](mondiala-heart.js)** — the authored heart, rings 0–4: Metropol, the
+  inspiration cities, the cradle civilisations, the cradle cities and Norden
+- **[`mondiala-cities.js`](mondiala-cities.js)** — the 318-city world roster with real
+  coordinates, each city's country, and the three verified centre spots
+- **[`mondiala-info.js`](mondiala-info.js)** — the info cards: [flag, style description] for
+  every hexagon's real-world model
+- **[`mondiala-facts.js`](mondiala-facts.js)** — the real-city facts: population, livability
+  and Walk Score per city
+- **[`mondiala-gods.js`](mondiala-gods.js)** — the gods of love: the reserved pink slot
+  lattice, the waiting gods per ring, each god's homeland coordinates and the full name set
+
+Edit them directly on GitHub — the map reads them as-is, no regeneration needed.
 **[`DATA.md`](DATA.md)** is a human-readable copy of the same data (tables you can copy
 into Notion), generated from the live city.
 

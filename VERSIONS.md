@@ -8,9 +8,27 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.1.1 — the test toolchain joins the repo** | `main` (this push) | current · no app changes; the 453-check headless suite versioned in `city-designer/test/` |
+| **v1.1.2 — the data splits into five themed files** | `main` (this push) | current · no app changes; one monolith → heart, cities, info, facts, gods |
+| **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.1.2 — the data splits into five themed files
+
+No app changes — the city, its data and its 453 green checks are exactly as v1.1.1 left
+them. What changed is the shape of the data: the single `mondiala-data.js` monolith (with
+the info cards and facts baked into the HTML itself) is now **five small themed files**,
+each editable on its own:
+
+- `mondiala-heart.js` — the authored rings 0–4
+- `mondiala-cities.js` — the 318-city roster, coordinates, countries, centre spots
+- `mondiala-info.js` — the 418 info cards
+- `mondiala-facts.js` — the 372 real-city fact entries
+- `mondiala-gods.js` — the pink slot lattice, the waiting gods, the homelands, the name set
+
+`mondiala.html` shrank from 122 KB to 50 KB — it now carries only the app, and the old
+`mondiala-data.js` is deleted. Change a city? Edit `mondiala-cities.js`. Change a goddess?
+Only `mondiala-gods.js` moves.
 
 ## v1.1.1 — the test toolchain joins the repo
 

@@ -52,7 +52,9 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 
 ## Usage
 
-Open `mondiala-map.html` in any browser — fully self-contained, no build step, no dependencies.
+Open `mondiala-map.html` in any browser — no build step, no dependencies. The map reads
+its world data from `mondiala-data.js` in the same folder, so keep the two files together
+(downloading the whole `city-designer` folder gets you everything).
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
@@ -62,6 +64,12 @@ Open `mondiala-map.html` in any browser — fully self-contained, no build step,
 - "Check lattice" flags violations of the free-use district lattice on the map
 
 ## Data
+
+The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
+fixed rings 0–3, the 161-city world roster with real coordinates, the info cards, the
+real-city facts and the reserved god lattice. Edit it directly on GitHub — the map reads
+it as-is, no regeneration needed. **[`DATA.md`](DATA.md)** is a human-readable copy of the
+same data (tables you can copy into Notion), generated from the `.js` file.
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion; the city roster extends the database

@@ -8,8 +8,8 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - Hexagonal ring grid following the `L(n) = n × 6` circle system, with **Metropol** at the centre (1 km hex sides, 100 m boulevards)
 - **Flat-top hexes**: the green radial spoke runs straight north–south through Metropol
 - **Orientation numbers**: hexagon 1 is the topmost hex of every ring; numbers run clockwise, so the numbers help you read the compass
-- Rings 0–6: 127 hexagons built from the Notion database (121 named)
-- **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homo Sapiens (the generic proto-city, after Çatalhöyük in Anatolia); the six hexes between them are blank, unnamed pink free-use districts, kept off the green spokes (which are reserved for the metro lines)
+- Rings 0–6: 127 hexagons built from the Notion database, every one named
+- **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homo Sapiens (the generic proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital) — all kept off the green spokes, which are reserved for the metro main lines
 - **Sorted rings**:
   - Ring 3 (Norden) — two population tiers: the five Nordic capitals + Göteborg hold the green spokes (Stockholm first, at the top), smaller cities sorted by population between them
   - Rings 4–5 — sorted by livability (EIU Global Liveability-style), best city at the top of the ring

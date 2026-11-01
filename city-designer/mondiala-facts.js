@@ -243,8 +243,6 @@ const CITY_FACTS = {
 "abu dhabi":[1500000,"≈ urban area",81,"EIU-style est."],
 "isfahan":[2200000,"≈ urban area",60,"EIU-style est."],
 
-
-
 "marrakesh":[1100000,"≈ urban area",68,"EIU-style est."],
 
 "kyoto":[1500000,"≈ city",94,"EIU-style est."],
@@ -264,7 +262,6 @@ const CITY_FACTS = {
 "asunción":[1200000,"≈ urban area",66,"EIU-style est."],
 "port-au-prince":[1100000,"≈ urban area",38,"EIU-style est."],
 
-
 "bern":[420000,"≈ urban area (agglomeration)",91,"EIU-style est."],
 "luxembourg":[200000,"≈ urban area",90,"EIU-style est."],
 "valletta":[6000,"≈ city",80,"EIU-style est."],
@@ -276,8 +273,6 @@ const CITY_FACTS = {
 "podgorica":[190000,"≈ urban area",70,"EIU-style est."],
 "pristina":[200000,"≈ urban area",66,"EIU-style est."],
 "vaduz":[5700,"≈ town",90,"EIU-style est."],
-
-
 "monaco":[39000,"≈ city-state",92,"EIU-style est."],
 "andorra la vella":[25000,"≈ town",82,"EIU-style est."],
 "salzburg":[270000,"≈ urban area",89,"EIU-style est."],
@@ -285,7 +280,7 @@ const CITY_FACTS = {
 "lausanne":[420000,"≈ urban area",90,"EIU-style est."],
 "lucerne":[230000,"≈ urban area",90,"EIU-style est."],
 "lugano":[150000,"≈ urban area",90,"EIU-style est."],
-"st. gallen":[120000,"≈ urban area",89,"EIU-style est."],
+
 "lyon":[1800000,"≈ urban area",87,"EIU-style est."],
 "toulouse":[1000000,"≈ urban area",85,"EIU-style est."],
 "strasbourg":[860000,"≈ urban area",86,"EIU-style est."],
@@ -295,7 +290,6 @@ const CITY_FACTS = {
 "rotterdam":[1400000,"≈ urban area",86,"EIU-style est."],
 "the hague":[1100000,"≈ urban area",88,"EIU-style est."],
 "antwerp":[1100000,"≈ urban area",85,"EIU-style est."],
-"ghent":[500000,"≈ urban area",87,"EIU-style est."],
 "bruges":[120000,"≈ city",87,"EIU-style est."],
 "cambridge":[160000,"≈ urban area",89,"EIU-style est."],
 "oxford":[165000,"≈ urban area",89,"EIU-style est."],
@@ -318,54 +312,32 @@ const CITY_FACTS = {
 "rabat":[1900000,"≈ urban area",66,"EIU-style est."],
 "tripoli":[1200000,"≈ urban area",40,"EIU-style est."],
 
-
 "ouagadougou":[2700000,"≈ urban area",50,"EIU-style est."],
 "bamako":[2800000,"≈ urban area",48,"EIU-style est."],
 "niamey":[1300000,"≈ urban area",45,"EIU-style est."],
 "lomé":[1800000,"≈ urban area",50,"EIU-style est."],
 "conakry":[2100000,"≈ urban area",42,"EIU-style est."],
 "freetown":[1200000,"≈ urban area",45,"EIU-style est."],
-
-
-
-
 "brazzaville":[2400000,"≈ urban area",48,"EIU-style est."],
-
 "n'djamena":[1600000,"≈ urban area",38,"EIU-style est."],
-
-
 "harare":[1600000,"≈ urban area",45,"EIU-style est."],
 "lusaka":[3000000,"≈ urban area",48,"EIU-style est."],
 "lilongwe":[1100000,"≈ urban area",45,"EIU-style est."],
-
-
 "asmara":[1000000,"≈ urban area",40,"EIU-style est."],
-
-
-
-
 "pyongyang":[3000000,"≈ urban area",38,"EIU-style est."],
 "ulaanbaatar":[1600000,"≈ urban area",58,"EIU-style est."],
-
 "phnom penh":[2300000,"≈ urban area",58,"EIU-style est."],
 "naypyidaw":[1200000,"≈ urban area",42,"EIU-style est."],
 "islamabad":[1200000,"≈ city proper",55,"EIU-style est."],
 "kabul":[4600000,"≈ urban area",35,"EIU-style est."],
 "muscat":[1700000,"≈ urban area",70,"EIU-style est."],
 "sana'a":[3900000,"≈ urban area",32,"EIU-style est."],
-
 "dushanbe":[1000000,"≈ urban area",55,"EIU-style est."],
 "ashgabat":[1000000,"≈ urban area",55,"EIU-style est."],
 "bishkek":[1250000,"≈ urban area",58,"EIU-style est."],
-
-
-
 "santo domingo":[3200000,"≈ urban area",62,"EIU-style est."],
-
-
 "nouakchott":[1400000,"≈ urban area",46,"EIU-style est."],
 "libreville":[1000000,"≈ urban area",56,"EIU-style est."],
-
 "jinan":[5052000,"urban area 2025",72,"EIU-style est."],
 "dalian":[5300000,"urban area 2025",74,"EIU-style est."],
 "qingdao":[5381000,"urban area 2025",76,"EIU-style est."],

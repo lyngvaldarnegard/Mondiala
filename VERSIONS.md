@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.4.1 — six-fold pink lattice** | `main` (this push) | current · ring 5's pink slots go six-fold symmetric, like rings 7 and 8 |
+| **v1.5 — the lattice steps out** | `main` (this push) | current · the pink lattice moves to ring 6, ring 2 regroups by culture, the six cities ride again, the checker learns the fourth law |
+| **v1.4.1 — six-fold pink lattice** | `c70e1b9` | bookmark branch `archive/v1.4.1-six-fold-pink-lattice` |
 | **v1.4 — the heart goddesses** | `2e878bf` | bookmark branch `archive/v1.4-the-heart-goddesses` |
 | **v1.3.2 — down to bare Metropol** | `08d7440` | bookmark branch `archive/v1.3.2-down-to-bare-metropol` |
 | **v1.3.1 — the ring viewer** | `f945990` | bookmark branch `archive/v1.3.1-ring-viewer` |
@@ -18,6 +19,17 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.5 — the lattice steps out
+
+The outer pink lattice moves out one ring, the ancient heart regroups by culture, and the six cities kept off the map ride again:
+
+- **The twelve outer pink slots move from ring 5 to ring 6** — seated at each section's 3rd and 5th hex, six-fold symmetric and mirror-symmetric inside each of the six sections, so no two pink districts ever touch
+- **Ring 2 regroups by culture**: Ur rides at Uruk's side, Tyre sits flanked by the Greek pair and faces its Mesopotamian neighbours across Uruk, Athens holds the freed Indus spoke seat — Mohenjo-daro stepped off the heart and onto the roster (kept in the data, facts and all)
+- **The six cities are back aboard**: Prague rides the map at ring 6, hex 7; Seoul, Dubai, San Francisco, Toronto and Chicago ride the visible pool, settling on rings 9–11 as the city grows — five stay beyond the designed horizon
+- **New centres**: the 311-city roster moves Mondiala to the Central Balkan foothills above the Rositsa valley (geo, Bulgaria), the Fann mountains of the Zarafshan range (pop, Tajikistan) and the Budjak steppe near Cahul (great, Moldova)
+- **The checker learns the fourth law**: no two pink districts may ever touch — alongside no god on the green, section-mirror symmetry and the six-fold repeat; **+ Next ring** now stops at ring 11, the designed horizon
+- Suite: **484 checks, all green**
 
 ## v1.4.1 — six-fold pink lattice
 

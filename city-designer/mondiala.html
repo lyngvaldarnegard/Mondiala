@@ -373,6 +373,11 @@ let viewBox = cityViewBox(); // flat-top extents: ring 8 spans ±432 px wide, ±
 let gHexes, gLabels;
 
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
+function mirrorOf(h) { // the twin seat inside this hex's own green-spoke section: position p ↔ c − p
+  if (!h || h.circle < 1) return null;
+  const c = h.circle, k = Math.floor((h.num - 1) / c), twin = k * c + 1 + (c - (h.num - (k * c + 1)));
+  return Object.values(hexes).find(x => x.circle === c && x.num === twin) || null;
+}
 function ringFill(h) {
   if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes; the q=0 spoke runs straight north–south
   return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
@@ -530,8 +535,8 @@ document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
   recenter();
 });
-document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — stops when the pool runs dry
-  if (!pool.length) return;
+document.getElementById("btnNextRing").addEventListener("click", () => { // view-only: the pool settles onto one more ring by the compass rule — stops when the pool runs dry or at ring 11, the designed horizon
+  if (!pool.length || maxCircle >= 11) return;
   maxCircle++; viewBox = cityViewBox(); moved = false; recenter();
 });
 document.getElementById("btnDropRing").addEventListener("click", () => { // view-only: remove rings one by one, all the way down to bare Metropol; the shipped city is rings 0–8
@@ -560,18 +565,19 @@ function renderStats() {
 }
 function stat(v, l) { return '<div class="b"><div class="v">' + v + '</div>' + l + "</div>"; }
 
-// ---------- Validator (the three rules of the love-god lattice) ----------
+// ---------- Validator (the four rules of the love-god lattice) ----------
 document.getElementById("btnValidate").addEventListener("click", () => {
   const out = [];
   document.querySelectorAll(".hex").forEach(el => el.classList.remove("flag-invalid", "flag-nopark"));
-  let onGreen = 0, asym = 0, noPark = 0, parks = 0;
+  let onGreen = 0, asym = 0, touching = 0, noPark = 0, parks = 0;
   const flag = (h, cls) => { const el = document.querySelector('[data-key="' + h.q + "," + h.r + '"]'); if (el) el.classList.add(cls); };
   Object.values(hexes).forEach(h => {
     if (h.type !== "park") return;
     parks++;
     if (h.circle === 0 || onSpoke(h)) { onGreen++; flag(h, "flag-invalid"); } // rule 1: gods of love never sit on the green — no major transport line runs through a pink district
-    const mirror = hexes[(-h.q) + "," + (h.q + h.r)]; // mirror across the north–south axis
-    if (!mirror || mirror.type !== "park") { asym++; flag(h, "flag-invalid"); } // rule 2: the pink set is mirror-symmetric about the axis
+    const twin = mirrorOf(h); // the twin seat inside this hex's own green-spoke section
+    if (!twin || twin.type !== "park") { asym++; flag(h, "flag-invalid"); } // rule 2: the pink set is mirror-symmetric inside each of the six sections between the green spokes
+    if (neighborKeys(h.q, h.r).map(k => hexes[k]).some(n => n && n.type === "park" && n.circle > 0)) { touching++; flag(h, "flag-invalid"); } // rule 3: no two pink districts touch
   });
   Object.values(hexes).forEach(h => {
     if (h.type === "park" || h.circle <= 4 || onSpoke(h)) return; // rule 3: every ordinary hexagon of the outer city (rings 5 and beyond) touches a pink free-use district — the authored heart and the green spokes are exempt
@@ -579,12 +585,13 @@ document.getElementById("btnValidate").addEventListener("click", () => {
     if (!neigh.some(n => n.type === "park")) { noPark++; flag(h, "flag-nopark"); }
   });
   const el = document.getElementById("validatorOut");
-  if (onGreen === 0 && asym === 0 && noPark === 0) {
-    el.innerHTML = '<span class="ok">✓ Lattice valid: no god sits on the green, the pink districts are mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink free-use district.</span>';
+  if (onGreen === 0 && asym === 0 && touching === 0 && noPark === 0) {
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no god sits on the green, the pink districts are mirror-symmetric inside each of the six sections between the green spokes, no two pink districts touch, and every ordinary hexagon of the outer city touches a pink free-use district.</span>';
   } else {
     el.innerHTML =
       (onGreen ? '<span class="bad">' + onGreen + ' god hex(es) sit on the green spokes (red dashed) — gods of love never sit on the metro lines.</span><br>' : '<span class="ok">No god on the green spokes.</span><br>') +
-      (asym ? '<span class="bad">' + asym + ' pink hex(es) are not mirrored across the north–south axis (red dashed).</span><br>' : '<span class="ok">The pink set is mirror-symmetric.</span><br>') +
+      (asym ? '<span class="bad">' + asym + ' pink hex(es) are not mirrored inside their own green-spoke section (red dashed).</span><br>' : '<span class="ok">The pink set is mirror-symmetric inside every section.</span><br>') +
+      (touching ? '<span class="bad">' + touching + ' pink hex(es) touch another pink district (red dashed).</span><br>' : '<span class="ok">No two pink districts touch.</span><br>') +
       (noPark ? '<span class="warn2">' + noPark + ' ordinary hex(es) of the outer city lack a god neighbour (orange dashed) — restore the pink districts (or place gods of love) until none remain.</span>' : '<span class="ok">Every ordinary hexagon of the outer city touches a pink district.</span>');
   }
 });

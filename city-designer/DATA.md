@@ -1,8 +1,8 @@
 # Mondiala — the city, hexagon by hexagon
 
-Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the cradle goddesses wait unplaced) · **305 world cities** on the roster, **179** of them waiting in the pool.
+Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the cradle goddesses wait unplaced) · **311 world cities** on the roster, **185** of them waiting in the pool.
 
-The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
+The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, Athens on the freed Indus spoke, and the Greek pair, Tyre, Ur, Babylon, Rome and Carthage grouped by culture between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
 
 ## The heart — rings 0–4 (authored; identical in every centre mode)
 
@@ -29,14 +29,14 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 |---|---|
 | 1 | Chang'an |
 | 2 | Constantinople |
-| 3 | Mohenjo-daro |
-| 4 | Athens |
+| 3 | Athens |
+| 4 | Tyre |
 | 5 | Uruk |
-| 6 | Babylon |
+| 6 | Ur |
 | 7 | Memphis |
-| 8 | Rome |
+| 8 | Babylon |
 | 9 | Cusco |
-| 10 | Tyre |
+| 10 | Rome |
 | 11 | Tenochtitlan |
 | 12 | Carthage |
 
@@ -94,450 +94,82 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 
 ## Outer city — geographic midpoint (geo mode)
 
-Mondiala sits at 42.14872°, 24.79302° — 🇧🇬 Bulgaria (the Thracian plain at Plovdiv's eastern edge — the upper Maritsa valley under the Rhodope foothills, on the site of ancient Philipopolis).
+Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balkan foothills — the northern slopes of the Stara Planina above the Rositsa valley, between the Shipka passes and the Danubian plain, central Bulgaria).
 
 ### Ring 5
 
 | Hex | Name |
 |---|---|
 | 1 | Budapest |
-| 2 | Lviv |
-| 3 | Sjöfn ♥ |
-| 4 | Astghik ♥ |
-| 5 | Bucharest |
-| 6 | Chisinau |
-| 7 | Odesa |
-| 8 | Astarte ♥ |
-| 9 | Qetesh ♥ |
-| 10 | Sevastopol |
-| 11 | Ankara |
-| 12 | Homoia |
-| 13 | Adonis ♥ |
-| 14 | Anteros ♥ |
-| 15 | Thessaloniki |
-| 16 | Tirana |
-| 17 | Naples |
-| 18 | Pothos ♥ |
-| 19 | Oshun ♥ |
-| 20 | Skopje |
-| 21 | Podgorica |
-| 22 | Pristina |
-| 23 | Prende ♥ |
-| 24 | Cupid ♥ |
-| 25 | Sarajevo |
-| 26 | Sofia |
-| 27 | Zagreb |
-| 28 | Turan ♥ |
-| 29 | Lada ♥ |
-| 30 | Belgrade |
-
-### Ring 6
-
-| Hex | Name |
-|---|---|
-| 1 | St. Gallen |
-| 2 | Ljubljana |
-| 3 | Munich |
-| 4 | Salzburg |
-| 5 | Bratislava |
-| 6 | Kraków |
-| 7 | Warsaw |
-| 8 | Minsk |
-| 9 | Kyiv |
-| 10 | Diyarbakır |
-| 11 | Aleppo |
-| 12 | Damascus |
-| 13 | Beirut |
-| 14 | Nicosia |
-| 15 | Tel Aviv |
-| 16 | Gaza |
-| 17 | Alexandria |
-| 18 | Tripoli |
-| 19 | Valletta |
-| 20 | Palermo |
-| 21 | Tunis |
-| 22 | Vatican City |
-| 23 | Nice |
-| 24 | Monaco |
-| 25 | Florence |
-| 26 | San Marino |
-| 27 | Genoa |
-| 28 | Bologna |
-| 29 | Turin |
-| 30 | Milan |
-| 31 | Verona |
-| 32 | Lugano |
-| 33 | Venice |
-| 34 | Lucerne |
-| 35 | Vaduz |
-| 36 | Zurich |
-
-### Ring 7
-
-| Hex | Name |
-|---|---|
-| 1 | Antwerp |
-| 2 | Aizen-Myōō ♥ |
-| 3 | Frankfurt |
-| 4 | Rotterdam |
-| 5 | The Hague |
-| 6 | Utrecht |
-| 7 | Anahita ♥ |
-| 8 | Hamburg |
-| 9 | Nanaya ♥ |
-| 10 | Billund |
-| 11 | Narva |
-| 12 | Tbilisi |
-| 13 | Yerevan |
-| 14 | Ishtar ♥ |
-| 15 | Amman |
-| 16 | Cybele ♥ |
-| 17 | Jericho |
-| 18 | Jerusalem |
-| 19 | Cairo |
-| 20 | Luxor |
-| 21 | Bastet ♥ |
-| 22 | Algiers |
-| 23 | Bes ♥ |
-| 24 | Andorra la Vella |
-| 25 | Marseille |
-| 26 | Toulouse |
-| 27 | Lyon |
-| 28 | Himeros ♥ |
-| 29 | Geneva |
-| 30 | Peitho ♥ |
-| 31 | Lausanne |
-| 32 | Bern |
-| 33 | Basel |
-| 34 | Strasbourg |
-| 35 | Dionysus ♥ |
-| 36 | Luxembourg |
-| 37 | Zhiva ♥ |
-| 38 | Lille |
-| 39 | Brussels |
-| 40 | Ghent |
-| 41 | Bruges |
-| 42 | Freyr ♥ |
-
-### Ring 8
-
-| Hex | Name |
-|---|---|
-| 1 | Glasgow |
-| 2 | Edinburgh |
-| 3 | Aberdeen |
-| 4 | Stavanger |
-| 5 | Yue Lao ♥ |
-| 6 | Kristiansand |
-| 7 | Turku |
-| 8 | Vyborg |
-| 9 | Saint Petersburg |
-| 10 | Baku |
-| 11 | Ashgabat |
-| 12 | Tehran |
-| 13 | Parvati ♥ |
-| 14 | Isfahan |
-| 15 | Baghdad |
-| 16 | Ur |
-| 17 | Kuwait City |
-| 18 | Manama |
-| 19 | Doha |
-| 20 | Riyadh |
-| 21 | Mami Wata ♥ |
-| 22 | Medina |
-| 23 | Mecca |
-| 24 | Jeddah |
-| 25 | Asmara |
-| 26 | Khartoum |
-| 27 | Marrakesh |
-| 28 | Casablanca |
-| 29 | Erzulie Freda ♥ |
-| 30 | Rabat |
-| 31 | Seville |
-| 32 | Porto |
-| 33 | Bordeaux |
-| 34 | Nantes |
-| 35 | Cork |
-| 36 | Cardiff |
-| 37 | Áine ♥ |
-| 38 | Bristol |
-| 39 | Oxford |
-| 40 | Birmingham |
-| 41 | Dublin |
-| 42 | Cambridge |
-| 43 | Liverpool |
-| 44 | Manchester |
-| 45 | Tlazolteotl ♥ |
-| 46 | Belfast |
-| 47 | Leeds |
-| 48 | Newcastle upon Tyne |
-
-### Pool — 179 unplaced (geo mode)
-
-Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Accra, Mogadishu, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Abu Dhabi, Monrovia, Ottawa, Kyoto, San José, Astana, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Lilongwe, Port-au-Prince, Cartagena, Cancún, San Salvador, Managua, Dushanbe, Libreville, New Orleans, Tegucigalpa, Valparaíso, Honolulu, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Samarkand, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Jacmel
-
-## Outer city — population-weighted (pop mode)
-
-Mondiala sits at 36.93213°, 67.00018° — 🇹🇯 Tajikistan (the Babatag range — arid border hills south of the Hisor valley, above the Amu Darya plain, south-western Tajikistan).
-
-### Ring 5
-
-| Hex | Name |
-|---|---|
-| 1 | Astana |
-| 2 | Tashkent |
-| 3 | Cupid ♥ |
-| 4 | Turan ♥ |
-| 5 | Dushanbe |
-| 6 | Bishkek |
-| 7 | Almaty |
-| 8 | Lada ♥ |
-| 9 | Sjöfn ♥ |
-| 10 | Islamabad |
-| 11 | Lahore |
-| 12 | Delhi |
-| 13 | Oshun ♥ |
-| 14 | Adonis ♥ |
-| 15 | Agra |
-| 16 | Kabul |
-| 17 | Ahmedabad |
-| 18 | Qetesh ♥ |
-| 19 | Astarte ♥ |
-| 20 | Karachi |
-| 21 | Muscat |
-| 22 | Isfahan |
-| 23 | Anteros ♥ |
-| 24 | Pothos ♥ |
-| 25 | Tehran |
-| 26 | Ashgabat |
-| 27 | Baku |
-| 28 | Astghik ♥ |
-| 29 | Prende ♥ |
-| 30 | Samarkand |
-
-### Ring 6
-
-| Hex | Name |
-|---|---|
-| 1 | Aleppo |
-| 2 | Diyarbakır |
-| 3 | Homoia |
-| 4 | Ankara |
-| 5 | Yerevan |
-| 6 | Tbilisi |
-| 7 | Sevastopol |
-| 8 | Odesa |
-| 9 | Kathmandu |
-| 10 | Dhaka |
-| 11 | Kolkata |
-| 12 | Varanasi |
-| 13 | Hyderabad |
-| 14 | Chennai |
-| 15 | Bengaluru |
-| 16 | Pune |
-| 17 | Surat |
-| 18 | Mumbai |
-| 19 | Abu Dhabi |
-| 20 | Doha |
-| 21 | Manama |
-| 22 | Riyadh |
-| 23 | Mecca |
-| 24 | Jeddah |
-| 25 | Medina |
-| 26 | Kuwait City |
-| 27 | Ur |
-| 28 | Baghdad |
-| 29 | Amman |
-| 30 | Gaza |
-| 31 | Jerusalem |
-| 32 | Jericho |
-| 33 | Tel Aviv |
-| 34 | Damascus |
-| 35 | Beirut |
-| 36 | Nicosia |
-
-### Ring 7
-
-| Hex | Name |
-|---|---|
-| 1 | Warsaw |
-| 2 | Zhiva ♥ |
-| 3 | Minsk |
-| 4 | Narva |
-| 5 | Saint Petersburg |
-| 6 | Vyborg |
-| 7 | Freyr ♥ |
-| 8 | Ulaanbaatar |
-| 9 | Aizen-Myōō ♥ |
-| 10 | Xi'an |
-| 11 | Chengdu |
-| 12 | Chongqing |
-| 13 | Chiang Mai |
-| 14 | Anahita ♥ |
-| 15 | Naypyidaw |
-| 16 | Ishtar ♥ |
-| 17 | Yangon |
-| 18 | Colombo |
-| 19 | Djibouti City |
-| 20 | Sana'a |
-| 21 | Bes ♥ |
-| 22 | Aksum |
-| 23 | Nanaya ♥ |
-| 24 | Asmara |
-| 25 | Luxor |
-| 26 | Cairo |
-| 27 | Alexandria |
-| 28 | Bastet ♥ |
-| 29 | Thessaloniki |
-| 30 | Himeros ♥ |
-| 31 | Skopje |
-| 32 | Sofia |
-| 33 | Pristina |
-| 34 | Bucharest |
-| 35 | Peitho ♥ |
-| 36 | Belgrade |
-| 37 | Cybele ♥ |
-| 38 | Chisinau |
-| 39 | Lviv |
-| 40 | Kraków |
-| 41 | Kyiv |
-| 42 | Dionysus ♥ |
-
-### Ring 8
-
-| Hex | Name |
-|---|---|
-| 1 | Munich |
-| 2 | Hamburg |
-| 3 | Billund |
-| 4 | Turku |
-| 5 | Tlazolteotl ♥ |
-| 6 | Beijing |
-| 7 | Dalian |
-| 8 | Tianjin |
-| 9 | Qingdao |
-| 10 | Jinan |
-| 11 | Nanjing |
-| 12 | Wuhan |
-| 13 | Yue Lao ♥ |
-| 14 | Dongguan |
-| 15 | Guangzhou |
-| 16 | Shenzhen |
-| 17 | Foshan |
-| 18 | Macau |
-| 19 | Hanoi |
-| 20 | Vientiane |
-| 21 | Parvati ♥ |
-| 22 | Phnom Penh |
-| 23 | Bangkok |
-| 24 | Mogadishu |
-| 25 | Addis Ababa |
-| 26 | Khartoum |
-| 27 | Valletta |
-| 28 | Palermo |
-| 29 | Mami Wata ♥ |
-| 30 | Tirana |
-| 31 | Naples |
-| 32 | Podgorica |
-| 33 | Vatican City |
-| 34 | Sarajevo |
-| 35 | Florence |
-| 36 | San Marino |
-| 37 | Áine ♥ |
-| 38 | Bologna |
-| 39 | Venice |
-| 40 | Zagreb |
-| 41 | Verona |
-| 42 | Ljubljana |
-| 43 | Budapest |
-| 44 | Vaduz |
-| 45 | Erzulie Freda ♥ |
-| 46 | St. Gallen |
-| 47 | Salzburg |
-| 48 | Bratislava |
-
-### Pool — 179 unplaced (pop mode)
-
-Jakarta, Shanghai, Manila, São Paulo, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Kinshasa, Hangzhou, Los Angeles, Luanda, Lima, Bogotá, Kuala Lumpur, Taipei, Nagoya, Dar es Salaam, Washington D.C., Bandung, Boston, Santiago, Suzhou, Dallas, Shenyang, Surabaya, Houston, Miami, Harbin, Belo Horizonte, Philadelphia, Milan, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Monterrey, Melbourne, Casablanca, Yaoundé, Montreal, Medellín, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Las Vegas, Santo Domingo, Pyongyang, Lusaka, Guatemala City, Pretoria, Caracas, Manchester, Algiers, Bamako, Frankfurt, Tunis, Ouagadougou, Accra, Brisbane, Portland, San Juan, Brazzaville, Birmingham, Manaus, Hiroshima, Brussels, Conakry, Perth, Havana, Quito, Marseille, Rabat, Panama City, La Paz, Lyon, Leeds, Lomé, Montevideo, Turin, Glasgow, Auckland, N'Djamena, Harare, Kyoto, Seville, Monrovia, Ottawa, San José, Zurich, Rotterdam, Nouakchott, Porto, Niamey, Maputo, Kingston, Dublin, Tripoli, Kigali, Freetown, Asunción, The Hague, Antwerp, Lilongwe, Marrakesh, Port-au-Prince, Cancún, Cartagena, San Salvador, Lille, Managua, Nice, Geneva, Toulouse, Bordeaux, Libreville, Honolulu, New Orleans, Tegucigalpa, Valparaíso, Nantes, Bangui, Newcastle upon Tyne, Strasbourg, Liverpool, Genoa, Quebec City, Dodoma, Bristol, Belfast, Basel, Edinburgh, Bloemfontein, Juba, Ghent, Bissau, Cardiff, Canberra, Windhoek, Banjul, Bern, Lausanne, Wellington, Port Moresby, Utrecht, Yamoussoukro, Maseru, Malabo, Porto-Novo, Port of Spain, Dili, Gaborone, Stavanger, Lucerne, Aberdeen, Cork, Luxembourg, Cap-Haïtien, Oxford, Cambridge, Lugano, Port Louis, Gitega, Bruges, Mbabane, Kristiansand, Tikal, Timbuktu, Monaco, Jacmel, Andorra la Vella
-
-## Outer city — greatness-weighted (great mode)
-
-Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe — the dry Casimcea plateau between the Danube and the Black Sea coast, south-eastern Romania).
-
-### Ring 5
-
-| Hex | Name |
-|---|---|
-| 1 | Lviv |
-| 2 | Chisinau |
-| 3 | Sjöfn ♥ |
-| 4 | Astghik ♥ |
+| 2 | Kraków |
+| 3 | Warsaw |
+| 4 | Lviv |
 | 5 | Kyiv |
-| 6 | Odesa |
-| 7 | Sevastopol |
-| 8 | Qetesh ♥ |
-| 9 | Astarte ♥ |
+| 6 | Chisinau |
+| 7 | Bucharest |
+| 8 | Odesa |
+| 9 | Sevastopol |
 | 10 | Ankara |
 | 11 | Homoia |
 | 12 | Thessaloniki |
-| 13 | Adonis ♥ |
-| 14 | Anteros ♥ |
-| 15 | Tirana |
-| 16 | Skopje |
-| 17 | Sofia |
-| 18 | Pothos ♥ |
-| 19 | Oshun ♥ |
-| 20 | Pristina |
-| 21 | Podgorica |
-| 22 | Sarajevo |
-| 23 | Prende ♥ |
-| 24 | Cupid ♥ |
-| 25 | Bucharest |
-| 26 | Belgrade |
-| 27 | Budapest |
-| 28 | Turan ♥ |
-| 29 | Lada ♥ |
-| 30 | Kraków |
+| 13 | Palermo |
+| 14 | Tirana |
+| 15 | Skopje |
+| 16 | Sofia |
+| 17 | Naples |
+| 18 | Pristina |
+| 19 | Podgorica |
+| 20 | Vatican City |
+| 21 | Florence |
+| 22 | San Marino |
+| 23 | Sarajevo |
+| 24 | Bologna |
+| 25 | Venice |
+| 26 | Ljubljana |
+| 27 | Zagreb |
+| 28 | Belgrade |
+| 29 | Salzburg |
+| 30 | Bratislava |
 
 ### Ring 6
 
 | Hex | Name |
 |---|---|
-| 1 | St. Gallen |
-| 2 | Salzburg |
-| 3 | Munich |
-| 4 | Bratislava |
-| 5 | Warsaw |
-| 6 | Minsk |
-| 7 | Tbilisi |
-| 8 | Yerevan |
-| 9 | Diyarbakır |
-| 10 | Aleppo |
-| 11 | Damascus |
-| 12 | Beirut |
-| 13 | Amman |
-| 14 | Jericho |
-| 15 | Jerusalem |
-| 16 | Tel Aviv |
-| 17 | Nicosia |
-| 18 | Gaza |
-| 19 | Cairo |
-| 20 | Alexandria |
-| 21 | Valletta |
-| 22 | Palermo |
-| 23 | Naples |
-| 24 | Vatican City |
-| 25 | Florence |
-| 26 | San Marino |
-| 27 | Bologna |
-| 28 | Genoa |
-| 29 | Venice |
-| 30 | Verona |
-| 31 | Milan |
-| 32 | Zagreb |
-| 33 | Lugano |
-| 34 | Ljubljana |
-| 35 | Vaduz |
+| 1 | Basel |
+| 2 | St. Gallen |
+| 3 | Sjöfn ♥ |
+| 4 | Strasbourg |
+| 5 | Astghik ♥ |
+| 6 | Munich |
+| 7 | Prague |
+| 8 | Minsk |
+| 9 | Astarte ♥ |
+| 10 | Diyarbakır |
+| 11 | Qetesh ♥ |
+| 12 | Aleppo |
+| 13 | Beirut |
+| 14 | Nicosia |
+| 15 | Adonis ♥ |
+| 16 | Alexandria |
+| 17 | Anteros ♥ |
+| 18 | Valletta |
+| 19 | Tunis |
+| 20 | Nice |
+| 21 | Pothos ♥ |
+| 22 | Monaco |
+| 23 | Oshun ♥ |
+| 24 | Genoa |
+| 25 | Turin |
+| 26 | Milan |
+| 27 | Prende ♥ |
+| 28 | Verona |
+| 29 | Cupid ♥ |
+| 30 | Lugano |
+| 31 | Bern |
+| 32 | Lucerne |
+| 33 | Turan ♥ |
+| 34 | Vaduz |
+| 35 | Lada ♥ |
 | 36 | Zurich |
 
 ### Ring 7
@@ -551,40 +183,408 @@ Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe
 | 5 | Hamburg |
 | 6 | Billund |
 | 7 | Anahita ♥ |
+| 8 | Narva |
+| 9 | Nanaya ♥ |
+| 10 | Saint Petersburg |
+| 11 | Tbilisi |
+| 12 | Yerevan |
+| 13 | Damascus |
+| 14 | Ishtar ♥ |
+| 15 | Amman |
+| 16 | Cybele ♥ |
+| 17 | Jericho |
+| 18 | Jerusalem |
+| 19 | Tel Aviv |
+| 20 | Gaza |
+| 21 | Bastet ♥ |
+| 22 | Cairo |
+| 23 | Bes ♥ |
+| 24 | Tripoli |
+| 25 | Andorra la Vella |
+| 26 | Marseille |
+| 27 | Toulouse |
+| 28 | Himeros ♥ |
+| 29 | Lyon |
+| 30 | Peitho ♥ |
+| 31 | Geneva |
+| 32 | Lausanne |
+| 33 | Luxembourg |
+| 34 | Lille |
+| 35 | Dionysus ♥ |
+| 36 | Brussels |
+| 37 | Zhiva ♥ |
+| 38 | Ghent |
+| 39 | Bruges |
+| 40 | Antwerp |
+| 41 | Frankfurt |
+| 42 | Freyr ♥ |
+
+### Ring 8
+
+| Hex | Name |
+|---|---|
+| 1 | Newcastle upon Tyne |
+| 2 | Glasgow |
+| 3 | Edinburgh |
+| 4 | Aberdeen |
+| 5 | Yue Lao ♥ |
+| 6 | Stavanger |
+| 7 | Kristiansand |
+| 8 | Turku |
+| 9 | Vyborg |
+| 10 | Baku |
+| 11 | Ashgabat |
+| 12 | Tehran |
+| 13 | Parvati ♥ |
+| 14 | Isfahan |
+| 15 | Baghdad |
+| 16 | Kuwait City |
+| 17 | Manama |
+| 18 | Doha |
+| 19 | Riyadh |
+| 20 | Medina |
+| 21 | Mami Wata ♥ |
+| 22 | Mecca |
+| 23 | Jeddah |
+| 24 | Asmara |
+| 25 | Luxor |
+| 26 | Khartoum |
+| 27 | Algiers |
+| 28 | Marrakesh |
+| 29 | Erzulie Freda ♥ |
+| 30 | Casablanca |
+| 31 | Rabat |
+| 32 | Seville |
+| 33 | Porto |
+| 34 | Bordeaux |
+| 35 | Nantes |
+| 36 | Cork |
+| 37 | Áine ♥ |
+| 38 | Cardiff |
+| 39 | Bristol |
+| 40 | Oxford |
+| 41 | Birmingham |
+| 42 | Dublin |
+| 43 | Cambridge |
+| 44 | Liverpool |
+| 45 | Tlazolteotl ♥ |
+| 46 | Manchester |
+| 47 | Belfast |
+| 48 | Leeds |
+
+### Pool — 185 unplaced (geo mode)
+
+Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Dubai, Jinan, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Accra, Mogadishu, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Abu Dhabi, Monrovia, Ottawa, Kyoto, San José, Astana, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Samarkand, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
+
+## Outer city — population-weighted (pop mode)
+
+Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mountains of the Zarafshan range — high lake country above the Hisor valley, north-west of Dushanbe, western Tajikistan).
+
+### Ring 5
+
+| Hex | Name |
+|---|---|
+| 1 | Samarkand |
+| 2 | Astana |
+| 3 | Tashkent |
+| 4 | Bishkek |
+| 5 | Almaty |
+| 6 | Kathmandu |
+| 7 | Varanasi |
+| 8 | Dushanbe |
+| 9 | Delhi |
+| 10 | Agra |
+| 11 | Islamabad |
+| 12 | Lahore |
+| 13 | Ahmedabad |
+| 14 | Surat |
+| 15 | Kabul |
+| 16 | Mohenjo-daro |
+| 17 | Karachi |
+| 18 | Muscat |
+| 19 | Dubai |
+| 20 | Abu Dhabi |
+| 21 | Doha |
+| 22 | Manama |
+| 23 | Kuwait City |
+| 24 | Isfahan |
+| 25 | Baghdad |
+| 26 | Tehran |
+| 27 | Ashgabat |
+| 28 | Yerevan |
+| 29 | Baku |
+| 30 | Tbilisi |
+
+### Ring 6
+
+| Hex | Name |
+|---|---|
+| 1 | Diyarbakır |
+| 2 | Homoia |
+| 3 | Cupid ♥ |
+| 4 | Ankara |
+| 5 | Turan ♥ |
+| 6 | Sevastopol |
+| 7 | Odesa |
+| 8 | Kyiv |
+| 9 | Lada ♥ |
+| 10 | Dhaka |
+| 11 | Sjöfn ♥ |
+| 12 | Kolkata |
+| 13 | Chennai |
+| 14 | Hyderabad |
+| 15 | Oshun ♥ |
+| 16 | Bengaluru |
+| 17 | Adonis ♥ |
+| 18 | Pune |
+| 19 | Mumbai |
+| 20 | Riyadh |
+| 21 | Qetesh ♥ |
+| 22 | Medina |
+| 23 | Astarte ♥ |
+| 24 | Amman |
+| 25 | Jericho |
+| 26 | Jerusalem |
+| 27 | Astghik ♥ |
+| 28 | Gaza |
+| 29 | Anteros ♥ |
+| 30 | Tel Aviv |
+| 31 | Damascus |
+| 32 | Beirut |
+| 33 | Pothos ♥ |
+| 34 | Nicosia |
+| 35 | Prende ♥ |
+| 36 | Aleppo |
+
+### Ring 7
+
+| Hex | Name |
+|---|---|
+| 1 | Warsaw |
+| 2 | Zhiva ♥ |
+| 3 | Minsk |
+| 4 | Narva |
+| 5 | Turku |
+| 6 | Saint Petersburg |
+| 7 | Freyr ♥ |
+| 8 | Vyborg |
+| 9 | Aizen-Myōō ♥ |
+| 10 | Ulaanbaatar |
+| 11 | Xi'an |
+| 12 | Chongqing |
+| 13 | Chengdu |
+| 14 | Anahita ♥ |
+| 15 | Chiang Mai |
+| 16 | Ishtar ♥ |
+| 17 | Naypyidaw |
+| 18 | Yangon |
+| 19 | Colombo |
+| 20 | Djibouti City |
+| 21 | Nanaya ♥ |
+| 22 | Sana'a |
+| 23 | Bes ♥ |
+| 24 | Asmara |
+| 25 | Mecca |
+| 26 | Jeddah |
+| 27 | Luxor |
+| 28 | Bastet ♥ |
+| 29 | Cairo |
+| 30 | Cybele ♥ |
+| 31 | Alexandria |
+| 32 | Thessaloniki |
+| 33 | Skopje |
+| 34 | Sofia |
+| 35 | Himeros ♥ |
+| 36 | Pristina |
+| 37 | Peitho ♥ |
+| 38 | Bucharest |
+| 39 | Chisinau |
+| 40 | Lviv |
+| 41 | Kraków |
+| 42 | Dionysus ♥ |
+
+### Ring 8
+
+| Hex | Name |
+|---|---|
+| 1 | Prague |
+| 2 | Hamburg |
+| 3 | Billund |
+| 4 | Kristiansand |
+| 5 | Tlazolteotl ♥ |
+| 6 | Shenyang |
+| 7 | Dalian |
+| 8 | Beijing |
+| 9 | Tianjin |
+| 10 | Qingdao |
+| 11 | Jinan |
+| 12 | Nanjing |
+| 13 | Yue Lao ♥ |
+| 14 | Wuhan |
+| 15 | Dongguan |
+| 16 | Guangzhou |
+| 17 | Shenzhen |
+| 18 | Foshan |
+| 19 | Macau |
+| 20 | Hanoi |
+| 21 | Parvati ♥ |
+| 22 | Vientiane |
+| 23 | Bangkok |
+| 24 | Addis Ababa |
+| 25 | Aksum |
+| 26 | Khartoum |
+| 27 | Valletta |
+| 28 | Palermo |
+| 29 | Mami Wata ♥ |
+| 30 | Tirana |
+| 31 | Naples |
+| 32 | Podgorica |
+| 33 | Vatican City |
+| 34 | Sarajevo |
+| 35 | Belgrade |
+| 36 | San Marino |
+| 37 | Áine ♥ |
+| 38 | Florence |
+| 39 | Bologna |
+| 40 | Zagreb |
+| 41 | Venice |
+| 42 | Verona |
+| 43 | Ljubljana |
+| 44 | Budapest |
+| 45 | Erzulie Freda ♥ |
+| 46 | Salzburg |
+| 47 | Bratislava |
+| 48 | Munich |
+
+### Pool — 185 unplaced (pop mode)
+
+Jakarta, Shanghai, Manila, Seoul, São Paulo, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Kinshasa, Hangzhou, Los Angeles, Luanda, Lima, Bogotá, Kuala Lumpur, Taipei, Nagoya, Dar es Salaam, Chicago, Washington D.C., Bandung, Boston, Santiago, Suzhou, Dallas, Surabaya, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Philadelphia, Milan, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Monterrey, Melbourne, Casablanca, Yaoundé, Montreal, Medellín, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Las Vegas, Santo Domingo, Pyongyang, Lusaka, Guatemala City, Pretoria, Caracas, Manchester, Algiers, Bamako, Frankfurt, Tunis, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Birmingham, Manaus, Hiroshima, Brussels, Conakry, Perth, Havana, Quito, Marseille, Rabat, Panama City, La Paz, Lyon, Leeds, Lomé, Montevideo, Turin, Glasgow, Auckland, N'Djamena, Harare, Kyoto, Seville, Monrovia, Ottawa, San José, Zurich, Rotterdam, Nouakchott, Porto, Niamey, Maputo, Kingston, Dublin, Tripoli, Kigali, Freetown, Asunción, The Hague, Antwerp, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Lille, Managua, Nice, Geneva, Toulouse, Bordeaux, Libreville, Honolulu, New Orleans, Tegucigalpa, Valparaíso, Nantes, Bangui, Newcastle upon Tyne, Strasbourg, Liverpool, Genoa, Quebec City, Dodoma, Bristol, Belfast, Basel, Edinburgh, Bloemfontein, Ghent, Juba, Bissau, Cardiff, Canberra, Windhoek, Banjul, Bern, Lausanne, Wellington, Port Moresby, Utrecht, Yamoussoukro, Maseru, Malabo, Porto-Novo, Port of Spain, Dili, Gaborone, Stavanger, Lucerne, Aberdeen, Cork, Luxembourg, Cap-Haïtien, Oxford, Cambridge, Lugano, Port Louis, Gitega, St. Gallen, Bruges, Mbabane, Tikal, Timbuktu, Monaco, Jacmel, Andorra la Vella, Vaduz
+
+## Outer city — greatness-weighted (great mode)
+
+Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe of southern Moldova — rolling open country near Cahul, between the Prut and the Dniester lowlands).
+
+### Ring 5
+
+| Hex | Name |
+|---|---|
+| 1 | Prague |
+| 2 | Kraków |
+| 3 | Lviv |
+| 4 | Warsaw |
+| 5 | Minsk |
+| 6 | Chisinau |
+| 7 | Kyiv |
+| 8 | Odesa |
+| 9 | Sevastopol |
+| 10 | Aleppo |
+| 11 | Ankara |
+| 12 | Homoia |
+| 13 | Nicosia |
+| 14 | Thessaloniki |
+| 15 | Sofia |
+| 16 | Bucharest |
+| 17 | Skopje |
+| 18 | Tirana |
+| 19 | Pristina |
+| 20 | Podgorica |
+| 21 | Naples |
+| 22 | Sarajevo |
+| 23 | Belgrade |
+| 24 | San Marino |
+| 25 | Venice |
+| 26 | Zagreb |
+| 27 | Ljubljana |
+| 28 | Salzburg |
+| 29 | Budapest |
+| 30 | Bratislava |
+
+### Ring 6
+
+| Hex | Name |
+|---|---|
+| 1 | Munich |
+| 2 | Strasbourg |
+| 3 | Sjöfn ♥ |
+| 4 | Frankfurt |
+| 5 | Astghik ♥ |
+| 6 | Hamburg |
+| 7 | Narva |
+| 8 | Saint Petersburg |
+| 9 | Qetesh ♥ |
+| 10 | Tbilisi |
+| 11 | Astarte ♥ |
+| 12 | Yerevan |
+| 13 | Diyarbakır |
+| 14 | Damascus |
+| 15 | Adonis ♥ |
+| 16 | Beirut |
+| 17 | Anteros ♥ |
+| 18 | Palermo |
+| 19 | Vatican City |
+| 20 | Florence |
+| 21 | Pothos ♥ |
+| 22 | Bologna |
+| 23 | Oshun ♥ |
+| 24 | Genoa |
+| 25 | Verona |
+| 26 | Milan |
+| 27 | Prende ♥ |
+| 28 | Lugano |
+| 29 | Cupid ♥ |
+| 30 | Lucerne |
+| 31 | Vaduz |
+| 32 | Zurich |
+| 33 | Turan ♥ |
+| 34 | St. Gallen |
+| 35 | Lada ♥ |
+| 36 | Basel |
+
+### Ring 7
+
+| Hex | Name |
+|---|---|
+| 1 | Antwerp |
+| 2 | Aizen-Myōō ♥ |
+| 3 | Rotterdam |
+| 4 | The Hague |
+| 5 | Utrecht |
+| 6 | Billund |
+| 7 | Anahita ♥ |
 | 8 | Turku |
 | 9 | Nanaya ♥ |
-| 10 | Narva |
-| 11 | Vyborg |
-| 12 | Saint Petersburg |
-| 13 | Baku |
+| 10 | Vyborg |
+| 11 | Baku |
+| 12 | Baghdad |
+| 13 | Amman |
 | 14 | Ishtar ♥ |
-| 15 | Baghdad |
+| 15 | Jericho |
 | 16 | Cybele ♥ |
-| 17 | Tripoli |
-| 18 | Tunis |
-| 19 | Marseille |
-| 20 | Nice |
+| 17 | Jerusalem |
+| 18 | Tel Aviv |
+| 19 | Gaza |
+| 20 | Cairo |
 | 21 | Bes ♥ |
-| 22 | Monaco |
+| 22 | Alexandria |
 | 23 | Bastet ♥ |
-| 24 | Turin |
-| 25 | Lyon |
-| 26 | Geneva |
-| 27 | Lausanne |
+| 24 | Tripoli |
+| 25 | Valletta |
+| 26 | Tunis |
+| 27 | Marseille |
 | 28 | Himeros ♥ |
-| 29 | Bern |
+| 29 | Nice |
 | 30 | Peitho ♥ |
-| 31 | Lucerne |
-| 32 | Basel |
-| 33 | Strasbourg |
-| 34 | Luxembourg |
+| 31 | Monaco |
+| 32 | Turin |
+| 33 | Lyon |
+| 34 | Geneva |
 | 35 | Dionysus ♥ |
-| 36 | Lille |
+| 36 | Lausanne |
 | 37 | Zhiva ♥ |
-| 38 | Frankfurt |
-| 39 | Brussels |
-| 40 | Ghent |
-| 41 | Antwerp |
+| 38 | Bern |
+| 39 | Luxembourg |
+| 40 | Brussels |
+| 41 | Ghent |
 | 42 | Freyr ♥ |
 
 ### Ring 8
@@ -600,37 +600,37 @@ Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe
 | 7 | Stavanger |
 | 8 | Kristiansand |
 | 9 | Astana |
-| 10 | Samarkand |
-| 11 | Ashgabat |
-| 12 | Tehran |
+| 10 | Tashkent |
+| 11 | Samarkand |
+| 12 | Ashgabat |
 | 13 | Yue Lao ♥ |
-| 14 | Isfahan |
-| 15 | Abu Dhabi |
-| 16 | Kuwait City |
+| 14 | Tehran |
+| 15 | Isfahan |
+| 16 | Dubai |
 | 17 | Doha |
-| 18 | Manama |
-| 19 | Ur |
+| 18 | Kuwait City |
+| 19 | Manama |
 | 20 | Riyadh |
 | 21 | Parvati ♥ |
 | 22 | Medina |
 | 23 | Mecca |
 | 24 | Jeddah |
 | 25 | Luxor |
-| 26 | Khartoum |
-| 27 | Algiers |
-| 28 | Rabat |
+| 26 | Algiers |
+| 27 | Rabat |
+| 28 | Seville |
 | 29 | Mami Wata ♥ |
-| 30 | Seville |
-| 31 | Andorra la Vella |
+| 30 | Andorra la Vella |
+| 31 | Toulouse |
 | 32 | Porto |
-| 33 | Toulouse |
-| 34 | Bordeaux |
-| 35 | Nantes |
-| 36 | Cardiff |
+| 33 | Bordeaux |
+| 34 | Nantes |
+| 35 | Lille |
+| 36 | Bristol |
 | 37 | Erzulie Freda ♥ |
-| 38 | Bristol |
-| 39 | Cork |
-| 40 | Bruges |
+| 38 | Cardiff |
+| 39 | Bruges |
+| 40 | Cork |
 | 41 | Oxford |
 | 42 | Cambridge |
 | 43 | Birmingham |
@@ -640,7 +640,7 @@ Mondiala sits at 44.48895°, 28.97183° — 🇷🇴 Romania (the Dobruja steppe
 | 47 | Manchester |
 | 48 | Leeds |
 
-### Pool — 179 unplaced (great mode)
+### Pool — 185 unplaced (great mode)
 
-Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Kabul, Casablanca, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Monrovia, Ottawa, Kyoto, San José, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Asmara, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Jacmel
+Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Khartoum, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Kabul, Casablanca, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Pretoria, Caracas, Bamako, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Abu Dhabi, Monrovia, Ottawa, Kyoto, San José, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Asmara, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Djibouti City, Bloemfontein, Juba, Bissau, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Aksum, Tikal, Timbuktu, Mohenjo-daro, Jacmel
 

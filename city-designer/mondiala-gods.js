@@ -1,18 +1,18 @@
 // Mondiala City Designer — data 5/5: the gods of love — the pink slot lattice, the waiting gods
 // per ring, each god's homeland coordinates, and the full name set.
 // Generated from the Mondiala City Designer canvas; edit there and re-split.
-// the pink free-use district lattice — reserved, minimal, six-fold symmetric with the green spokes and mirror-symmetric about the north–south axis;
+// the pink free-use district lattice — reserved, minimal, six-fold symmetric with the green spokes and mirror-symmetric inside each of the six sections between them — no two pink districts ever touch;
 // the slot lattice never moves, but WHICH god sits in WHICH slot follows the compass:
 // each god faces their homeland, by bearing from Mondiala's centre — same rule as the cities
 const PINK_SLOTS = {
-  5: [3,4,8,9,13,14,18,19,23,24,28,29],
+  6: [3,5,9,11,15,17,21,23,27,29,33,35],
   7: [2,7,9,14,16,21,23,28,30,35,37,42],
   8: [5,13,21,29,37,45]
 };
 // the love gods waiting around each ring — they settle onto that ring's pink slots by compass
 // the cradle goddesses are NOT here — they wait unplaced, to be hand-placed wherever you like; the great six sit at the ring-4 middles, and Ishtar backfills Milda's ring-7 slot — Milda moved up into the heart; the outer rings swap by compass
 const PINK_GODS = {
-  5: ["Cupid","Adonis","Oshun","Astarte","Sjöfn","Prende","Lada","Qetesh","Turan","Anteros","Pothos","Astghik"],
+  6: ["Cupid","Adonis","Oshun","Astarte","Sjöfn","Prende","Lada","Qetesh","Turan","Anteros","Pothos","Astghik"],
   7: ["Nanaya","Anahita","Cybele","Dionysus","Himeros","Peitho","Bastet","Bes","Freyr","Ishtar","Zhiva","Aizen-Myōō"],
   8: ["Áine","Parvati","Yue Lao","Mami Wata","Tlazolteotl","Erzulie Freda"]
 };

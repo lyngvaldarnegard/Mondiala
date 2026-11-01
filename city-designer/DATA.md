@@ -1,485 +1,651 @@
-# Mondiala — city data
+# Mondiala — the data
 
-_Generated from the design canvas — do not edit by hand; regenerate after any roster, facts or centre-spot change._
+Every hexagon of the city, from the data file behind the map. The heart (rings 0–4) is authored by hand from the Notion database “Hexagons of Mondiala”; rings 5–8 flow the world's great cities in by their real coordinates, and the pool holds the 188 cities beyond the horizon.
 
-**Roster: 315 great cities** — every European capital and every capital of a country with more than a million people, plus the megacities, the livable, the walkable, the ancient and the simply famous. 150 of them flow onto the map (rings 4–8); 165 wait in the pool beyond the horizon.
+- Roster: **314 world cities**
+- Fixed heart: 1 Metropol · 6 inspiration cities · 6 cradle civilisations + 6 goddesses · 11 ancient cities + 6 love gods · 18 Nordic cities
+- Love gods: **42** — 12 in the heart, 30 on the outer pink lattice
+- Hexagons: **217** across rings 0–8 (ring 9 can be added in the app)
 
-## Where Mondiala sits — the three default centre spots
+## The heart (fixed in every mode)
 
-| centre mode | latitude | longitude | where |
-| --- | --- | --- | --- |
-| geographic | 42.3669°N | 20.1076°E | 🇦🇱 Albania — the Gjakova Highlands — the Accursed Mountains above Bajram Curri, gateway to the Valbona valley |
-| population-weighted | 44.7870°N | 60.5940°E | 🇰🇿 Kazakhstan — the Aralkum — the desert floor of the Aral Sea's dried eastern basin |
-| greatness-weighted | 45.4804°N | 22.6427°E | 🇷🇴 Romania — the Bistra valley in the Banat, between the Țarcu and Poiana Ruscă mountains, above Oțelu Roșu |
+Hexagon 1 is the top hexagon of each ring; numbers run clockwise. ♥ marks a pink free-use district.
 
-Distance decides the ring (near = inner), population breaks ties, and each city settles in the hexagon matching its real bearing from the centre. Adding a city or switching centre mode re-flows the whole placement.
+### Ring 0 — Metropol
 
-## The cradle heart (rings 0–2) — authored by hand
+| Hex | Name | Density |
+|---|---|---|
+| 0 | Metropol ⬡ | 4355.39 |
 
-| ring | hex | name | people/km² |
-| --- | --- | --- | --- |
-| 0 | 0 | Metropol | 4,355.39 |
-| 1 | 1 | Ancient China | — |
-| 1 | 2 | Indus Valley | — |
-| 1 | 3 | Mesopotamia | — |
-| 1 | 4 | Ancient Egypt | — |
-| 1 | 5 | Ancient Andes | — |
-| 1 | 6 | Mesoamerica | — |
-| 2 | 1 | Chang'an | — |
-| 2 | 3 | Mohenjo-daro | — |
-| 2 | 5 | Uruk | — |
-| 2 | 7 | Memphis | — |
-| 2 | 9 | Qosqo | — |
-| 2 | 11 | Tenochtitlan | — |
-| 2 | 2 | Zhinü | — |
-| 2 | 4 | Rati | — |
-| 2 | 6 | Inanna | — |
-| 2 | 8 | Hathor | — |
-| 2 | 10 | Cavillaca | — |
-| 2 | 12 | Xochiquetzal | — |
+### Ring 1 — the inspiration cities
 
-The six non-spoke hexes of ring 2 are the pink free-use districts — a goddess of love beside each cradle civilisation.
+| Hex | Name | Density |
+|---|---|---|
+| 1 | Paris 🇫🇷 | 19430 |
+| 2 | Barcelona 🇪🇸 | 16630 |
+| 3 | Moscow 🇷🇺 | 5080 |
+| 4 | Singapore 🇸🇬 | 8188.27 |
+| 5 | Vancouver 🇨🇦 | 5749.9 |
+| 6 | New York 🇺🇸 | 11313.8 |
 
-## Ring 3 — Norden, the green spokes
+### Ring 2 — the cradle civilisations and their goddesses
 
-The five Nordic capitals + Göteborg hold the six green spokes; the smaller Nordic cities sit between them. Both tiers are sorted by population.
+| Hex | Name | Density |
+|---|---|---|
+| 1 | Ancient China 🇨🇳 | — |
+| 2 | Zhinü 🧵 | ♥ |
+| 3 | Indus Valley 🇵🇰 | — |
+| 4 | Rati 💃 | ♥ |
+| 5 | Mesopotamia 🇮🇶 | — |
+| 6 | Inanna ⭐ | ♥ |
+| 7 | Ancient Egypt 🇪🇬 | — |
+| 8 | Hathor 🐄 | ♥ |
+| 9 | Ancient Andes 🇵🇪 | — |
+| 10 | Cavillaca 🌊 | ♥ |
+| 11 | Mesoamerica 🇲🇽 | — |
+| 12 | Xochiquetzal 🦋 | ♥ |
 
-| hex | spoke | name | people/km² |
-| --- | --- | --- | --- |
-| 1 | green spoke | Stockholm | 5,261.53 |
-| 2 | between | Vilnius | 1,515 |
-| 3 | between | Riga | 2,339 |
-| 4 | green spoke | København | 7,411.38 |
-| 5 | between | Tallinn | 2,864.3 |
-| 6 | between | Tampere | Tammerfors | 501.7 |
-| 7 | green spoke | Helsinki | 3,238.47 |
-| 8 | between | Malmö | 4,049 |
-| 9 | between | Aarhus | 2,975 |
-| 10 | green spoke | Oslo | 1,708.99 |
-| 11 | between | Kaunas | 1,903 |
-| 12 | between | Turku | Åbo | 853.45 |
-| 13 | green spoke | Göteborg | 1,367.3 |
-| 14 | between | Bergen | 660.75 |
-| 15 | between | Trondheim | 672.81 |
-| 16 | green spoke | Reykjavík | 556 |
-| 17 | between | Vyborg | 519 |
-| 18 | between | Billund | 870 |
+### Ring 3 — the ancient cities and the great love gods
 
-## The city roster — 315 great cities
+| Hex | Name | Density |
+|---|---|---|
+| 1 | Freyja 🐈 | ♥ |
+| 2 | Diyarbakır 🇹🇷 | — |
+| 3 | Aleppo 🇸🇾 | — |
+| 4 | Aphrodite 🐚 | ♥ |
+| 5 | Athens 🇬🇷 | — |
+| 6 | Jerusalem 🇮🇱 | — |
+| 7 | Ishtar ✴ | ♥ |
+| 8 | Babylon 🇮🇶 | — |
+| 9 | Carthago 🇹🇳 | — |
+| 10 | Venus ♀ | ♥ |
+| 11 | Rome 🇮🇹 | — |
+| 12 | Aksum 🇪🇹 | — |
+| 13 | Eros 💘 | ♥ |
+| 14 | Byzantium 🇹🇷 | — |
+| 15 | Mecca 🇸🇦 | — |
+| 16 | Kama 🪷 | ♥ |
+| 17 | Tenochtitlan 🇲🇽 | — |
+| 18 | — | — |
 
-### Europe (95)
+### Ring 4 — Norden
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Aberdeen | the United Kingdom | ≈ 220,000 | ≈ urban area | ≈ 85 |
-| Amsterdam | the Netherlands | ≈ 2.5M | ≈ urban area | ≈ 93 |
-| Andorra la Vella | Andorra | ≈ 25,000 | ≈ town | ≈ 82 |
-| Antwerp | Belgium | ≈ 1.1M | ≈ urban area | ≈ 85 |
-| Athens | Greece | ≈ 3.2M | ≈ urban area | ≈ 86 |
-| Barcelona | Spain | 5.5M | urban area 2025 | ≈ 91 |
-| Basel | Switzerland | ≈ 550,000 | ≈ urban area | ≈ 90 |
-| Belfast | the United Kingdom | ≈ 600,000 | ≈ urban area | ≈ 82 |
-| Belgrade | Serbia | ≈ 1.4M | ≈ urban area | ≈ 78 |
-| Berlin | Germany | ≈ 4.4M | ≈ urban area | ≈ 92.5 |
-| Bern | Switzerland | ≈ 420,000 | ≈ urban area (agglomeration) | ≈ 91 |
-| Birmingham | the United Kingdom | ≈ 2.3M | ≈ urban area (conurbation) | ≈ 84 |
-| Bologna | Italy | ≈ 800,000 | ≈ urban area | ≈ 86 |
-| Bordeaux | France | ≈ 1M | ≈ agglomeration | ≈ 89 |
-| Bratislava | Slovakia | ≈ 700,000 | ≈ urban area | ≈ 85 |
-| Bristol | the United Kingdom | ≈ 620,000 | ≈ urban area | ≈ 82 |
-| Bruges | Belgium | ≈ 120,000 | ≈ city | ≈ 87 |
-| Brussels | Belgium | ≈ 2.1M | ≈ urban area | ≈ 91.5 |
-| Bucharest | Romania | ≈ 1.9M | ≈ urban area | ≈ 79 |
-| Budapest | Hungary | ≈ 1.8M | ≈ city | ≈ 88 |
-| Cambridge | the United Kingdom | ≈ 160,000 | ≈ urban area | ≈ 89 |
-| Cardiff | the United Kingdom | ≈ 480,000 | ≈ urban area | ≈ 85 |
-| Chisinau | Moldova | ≈ 700,000 | ≈ urban area | ≈ 66 |
-| Cork | Ireland | ≈ 210,000 | ≈ urban area | ≈ 86 |
-| Dublin | Ireland | ≈ 1.3M | ≈ urban area | ≈ 91 |
-| Edinburgh | the United Kingdom | ≈ 520,000 | ≈ urban area | ≈ 91 |
-| Florence | Italy | ≈ 850,000 | ≈ urban area | ≈ 90 |
-| Frankfurt | Germany | ≈ 2.7M | ≈ urban area (Rhine–Main) | ≈ 90 |
-| Geneva | Switzerland | ≈ 1M | ≈ urban area (Grand Genève) | ≈ 91 |
-| Genoa | Italy | ≈ 850,000 | ≈ urban area | ≈ 82 |
-| Ghent | Belgium | ≈ 500,000 | ≈ urban area | ≈ 87 |
-| Glasgow | the United Kingdom | ≈ 1.7M | ≈ urban area | ≈ 87 |
-| Hamburg | Germany | ≈ 3.2M | ≈ urban area | ≈ 93 |
-| Kraków | Poland | ≈ 800,000 | ≈ urban area | ≈ 84 |
-| Kyiv | Ukraine | ≈ 3M | ≈ city proper (pre-war est.) | ≈ 71 |
-| Lausanne | Switzerland | ≈ 420,000 | ≈ urban area | ≈ 90 |
-| Leeds | the United Kingdom | ≈ 1.8M | ≈ urban area (conurbation) | ≈ 84 |
-| Lille | France | ≈ 1.1M | ≈ urban area | ≈ 84 |
-| Lisbon | Portugal | ≈ 2.9M | ≈ urban area | ≈ 92 |
-| Liverpool | the United Kingdom | ≈ 860,000 | ≈ urban area | ≈ 80 |
-| Ljubljana | Slovenia | ≈ 300,000 | ≈ urban area | ≈ 86 |
-| London | the United Kingdom | 11.4M | urban area 2025 | ≈ 92.5 |
-| Lucerne | Switzerland | ≈ 230,000 | ≈ urban area | ≈ 90 |
-| Lugano | Switzerland | ≈ 150,000 | ≈ urban area | ≈ 90 |
-| Luxembourg | Luxembourg | ≈ 200,000 | ≈ urban area | ≈ 90 |
-| Lviv | Ukraine | ≈ 900,000 | ≈ city proper | ≈ 70 |
-| Lyon | France | ≈ 1.8M | ≈ urban area | ≈ 87 |
-| Madrid | Spain | 7M | urban area 2025 | ≈ 91.7 |
-| Manchester | the United Kingdom | ≈ 2.8M | ≈ urban area | ≈ 88 |
-| Marseille | France | ≈ 1.9M | ≈ metropolitan area (Aix–Marseille) | ≈ 82 |
-| Milan | Italy | 5.6M | urban area 2025 | ≈ 91 |
-| Minsk | Belarus | ≈ 2M | ≈ urban area | ≈ 62 |
-| Monaco | Monaco | ≈ 39,000 | ≈ city-state | ≈ 92 |
-| Moscow | Russia | 19.1M | urban area 2025 | ≈ 76 |
-| Munich | Germany | ≈ 2.9M | ≈ urban area | ≈ 93 |
-| Nantes | France | ≈ 975,000 | ≈ urban area | ≈ 88 |
-| Naples | Italy | ≈ 3.1M | ≈ metropolitan area | ≈ 80 |
-| Newcastle upon Tyne | the United Kingdom | ≈ 880,000 | ≈ urban area | ≈ 83 |
-| Nice | France | ≈ 1M | ≈ urban area | ≈ 86 |
-| Nicosia | Cyprus | ≈ 330,000 | ≈ urban area | ≈ 80 |
-| Odesa | Ukraine | ≈ 1.1M | ≈ city proper | ≈ 60 |
-| Oxford | the United Kingdom | ≈ 165,000 | ≈ urban area | ≈ 89 |
-| Palermo | Italy | ≈ 850,000 | ≈ urban area | ≈ 75 |
-| Paris | France | 11.3M | urban area 2025 | ≈ 92 |
-| Podgorica | Montenegro | ≈ 190,000 | ≈ urban area | ≈ 70 |
-| Porto | Portugal | ≈ 1.3M | ≈ agglomeration | ≈ 87 |
-| Prague | Czechia | ≈ 1.3M | ≈ city | ≈ 90 |
-| Pristina | Kosovo | ≈ 200,000 | ≈ urban area | ≈ 66 |
-| Rome | Italy | ≈ 4.3M | ≈ urban area | ≈ 89 |
-| Rotterdam | the Netherlands | ≈ 1.4M | ≈ urban area | ≈ 86 |
-| Saint Petersburg | Russia | 5.9M | urban area 2025 | ≈ 72 |
-| Salzburg | Austria | ≈ 270,000 | ≈ urban area | ≈ 89 |
-| San Marino | San Marino | ≈ 4,000 | ≈ town | ≈ 85 |
-| Sarajevo | Bosnia and Herzegovina | ≈ 420,000 | ≈ urban area | ≈ 78 |
-| Sevastopol | Ukraine | ≈ 550,000 | ≈ city proper | ≈ 55 |
-| Seville | Spain | ≈ 1.5M | ≈ metropolitan area | ≈ 84 |
-| Skopje | North Macedonia | ≈ 590,000 | ≈ urban area | ≈ 68 |
-| Sofia | Bulgaria | ≈ 1.2M | ≈ urban area | ≈ 80 |
-| St. Gallen | Switzerland | ≈ 120,000 | ≈ urban area | ≈ 89 |
-| Strasbourg | France | ≈ 860,000 | ≈ urban area | ≈ 86 |
-| The Hague | the Netherlands | ≈ 1.1M | ≈ urban area | ≈ 88 |
-| Thessaloniki | Greece | ≈ 1M | ≈ urban area | ≈ 80 |
-| Tirana | Albania | ≈ 860,000 | ≈ urban area | ≈ 68 |
-| Toulouse | France | ≈ 1M | ≈ urban area | ≈ 85 |
-| Turin | Italy | ≈ 1.7M | ≈ urban area | ≈ 84 |
-| Utrecht | the Netherlands | ≈ 375,000 | ≈ city | ≈ 91 |
-| Vaduz | Liechtenstein | ≈ 5,700 | ≈ town | ≈ 90 |
-| Valletta | Malta | ≈ 6,000 | ≈ city | ≈ 80 |
-| Vatican City | Vatican City | ≈ 800 | ≈ city-state | — |
-| Venice | Italy | ≈ 260,000 | ≈ city | ≈ 89 |
-| Verona | Italy | ≈ 425,000 | ≈ urban area | ≈ 85 |
-| Vienna | Austria | ≈ 2M | city 2024 ≈ | 97.1 |
-| Warsaw | Poland | ≈ 3.1M | ≈ urban area | ≈ 85 |
-| Zagreb | Croatia | ≈ 800,000 | ≈ urban area | ≈ 81 |
-| Zurich | Switzerland | ≈ 1.4M | ≈ urban area | ≈ 93 |
+| Hex | Name | Density |
+|---|---|---|
+| 1 | Stockholm 🇸🇪 | 5261.53 |
+| 2 | Vilnius 🇱🇹 | 1515 |
+| 3 | Riga 🇱🇻 | 2339 |
+| 4 | Tallinn 🇪🇪 | 2864.3 |
+| 5 | København 🇩🇰 | 7411.38 |
+| 6 | Tampere | Tammerfors 🇫🇮 | 501.7 |
+| 7 | Malmö 🇸🇪 | 4049 |
+| 8 | Aarhus 🇩🇰 | 2975 |
+| 9 | Helsinki 🇫🇮 | 3238.47 |
+| 10 | Kaunas 🇱🇹 | 1903 |
+| 11 | Turku | Åbo 🇫🇮 | 853.45 |
+| 12 | Bergen 🇳🇴 | 660.75 |
+| 13 | Oslo 🇳🇴 | 1708.99 |
+| 14 | Trondheim 🇳🇴 | 672.81 |
+| 15 | Vyborg 🇷🇺 | 519 |
+| 16 | Billund 🇩🇰 | 870 |
+| 17 | Göteborg 🇸🇪 | 1367.3 |
+| 18 | — | — |
+| 19 | — | — |
+| 20 | — | — |
+| 21 | Reykjavík 🇮🇸 | 556 |
+| 22 | — | — |
+| 23 | — | — |
+| 24 | — | — |
 
-### Middle East & Caucasus (28)
+## Geographic mode
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Abu Dhabi | the United Arab Emirates | ≈ 1.5M | ≈ urban area | ≈ 81 |
-| Aleppo | Syria | ≈ 1.8M | ≈ pre-war urban area | ≈ 32 |
-| Amman | Jordan | ≈ 2.2M | ≈ urban area | ≈ 74 |
-| Ankara | Türkiye | ≈ 5.7M | ≈ urban area | ≈ 75 |
-| Babylon | Iraq | ≈ 850,000 | Hillah, modern site ≈ | — |
-| Baghdad | Iraq | 7.2M | urban area 2025 | ≈ 38 |
-| Baku | Azerbaijan | ≈ 2.4M | ≈ urban area | ≈ 74 |
-| Beirut | Lebanon | ≈ 2.4M | ≈ urban area | ≈ 55 |
-| Constantinople | Türkiye | 14.7M | Istanbul urban area 2025 | ≈ 76 |
-| Damascus | Syria | ≈ 2M | ≈ urban area | ≈ 30 |
-| Doha | Qatar | ≈ 2.4M | ≈ urban area | ≈ 79 |
-| Dubai | the United Arab Emirates | 5.1M | urban area 2025 | ≈ 84 |
-| Gaza | Palestine | ≈ 600,000 | ≈ city | ≈ 35 |
-| Homoia | Türkiye | ≈ 8,000 | ≈ ancient peak c. 7000 BC (Çatalhöyük) | — |
-| Isfahan | Iran | ≈ 2.2M | ≈ urban area | ≈ 60 |
-| Jeddah | Saudi Arabia | ≈ 4.7M | ≈ urban area | ≈ 76 |
-| Jericho | Palestine | ≈ 28,000 | ≈ urban area (the oasis town) | — |
-| Jerusalem | Israel | ≈ 980,000 | ≈ urban area | — |
-| Kuwait City | Kuwait | ≈ 3.1M | ≈ urban area (metro) | ≈ 76 |
-| Mecca | Saudi Arabia | ≈ 2.4M | ≈ urban area | ≈ 74 |
-| Medina | Saudi Arabia | ≈ 1.6M | ≈ city | ≈ 73 |
-| Riyadh | Saudi Arabia | 8.6M | urban area 2025 | ≈ 57 |
-| Samarkand | Uzbekistan | ≈ 600,000 | ≈ city | ≈ 62 |
-| Tbilisi | Georgia | ≈ 1.2M | ≈ urban area | ≈ 77 |
-| Tehran | Iran | 14.1M | urban area 2025 | ≈ 44 |
-| Tel Aviv | Israel | ≈ 4.2M | ≈ urban area | ≈ 84 |
-| Ur | Iraq | ≈ 650,000 | Nasiriyah, modern site ≈ | — |
-| Yerevan | Armenia | ≈ 1.1M | ≈ urban area | ≈ 78 |
+Mondiala sits at 42.993440°N, 23.442127°E — 🇧🇬 Bulgaria (the western Stara Planina — the Balkan ridge above the Iskar Gorge, the pass road from Sofia to the Danube plain).
 
-### Africa (62)
+### Ring 5
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Abidjan | Côte d'Ivoire | ≈ 5.6M | ≈ urban area | ≈ 59 |
-| Abuja | Nigeria | ≈ 3.8M | ≈ urban area | ≈ 57 |
-| Accra | Ghana | ≈ 2.6M | ≈ urban area | ≈ 61 |
-| Addis Ababa | Ethiopia | ≈ 5.7M | ≈ urban area | ≈ 60 |
-| Alexandria | Egypt | 5.9M | urban area 2025 | ≈ 52 |
-| Algiers | Algeria | ≈ 2.8M | ≈ urban area | ≈ 69 |
-| Antananarivo | Madagascar | ≈ 3.6M | ≈ urban area | ≈ 54 |
-| Asmara | Eritrea | ≈ 1M | ≈ urban area | ≈ 40 |
-| Bamako | Mali | ≈ 2.8M | ≈ urban area | ≈ 48 |
-| Bangui | the Central African Republic | ≈ 950,000 | ≈ urban area | ≈ 35 |
-| Banjul | the Gambia | ≈ 440,000 | ≈ urban area | ≈ 50 |
-| Bissau | Guinea-Bissau | ≈ 500,000 | ≈ urban area | ≈ 42 |
-| Brazzaville | the Congo | ≈ 2.4M | ≈ urban area | ≈ 48 |
-| Cairo | Egypt | 22.7M | urban area 2025 | ≈ 71 |
-| Cape Town | South Africa | ≈ 4.8M | ≈ urban area | ≈ 74 |
-| Carthago | Tunisia | ≈ 2.4M | Tunis agglomeration ≈ | ≈ 59 |
-| Casablanca | Morocco | ≈ 4.4M | ≈ urban area | ≈ 68 |
-| Conakry | Guinea | ≈ 2.1M | ≈ urban area | ≈ 42 |
-| Dakar | Senegal | ≈ 3.3M | ≈ urban area | ≈ 62 |
-| Dar es Salaam | Tanzania | 8.9M | urban area 2025 | ≈ 45 |
-| Djibouti City | Djibouti | ≈ 600,000 | ≈ urban area | ≈ 45 |
-| Dodoma | Tanzania | ≈ 770,000 | ≈ urban area | ≈ 50 |
-| Durban | South Africa | ≈ 3.4M | ≈ urban area | ≈ 77 |
-| Freetown | Sierra Leone | ≈ 1.2M | ≈ urban area | ≈ 45 |
-| Gaborone | Botswana | ≈ 270,000 | ≈ urban area | ≈ 65 |
-| Gitega | Burundi | ≈ 135,000 | ≈ city proper | ≈ 38 |
-| Harare | Zimbabwe | ≈ 1.6M | ≈ urban area | ≈ 45 |
-| Johannesburg | South Africa | 15M | Johannesburg–Pretoria 2025 | ≈ 61 |
-| Juba | South Sudan | ≈ 500,000 | ≈ urban area | ≈ 35 |
-| Kampala | Uganda | ≈ 3.7M | ≈ urban area | ≈ 58 |
-| Khartoum | Sudan | 7.7M | urban area 2025 | ≈ 40 |
-| Kigali | Rwanda | ≈ 1.2M | ≈ urban area | ≈ 62 |
-| Kinshasa | DR Congo | 13.1M | urban area 2025 | ≈ 45 |
-| Lagos | Nigeria | 15.3M | urban area 2025 | ≈ 38 |
-| Libreville | Gabon | ≈ 1M | ≈ urban area | ≈ 56 |
-| Lilongwe | Malawi | ≈ 1.1M | ≈ urban area | ≈ 45 |
-| Lomé | Togo | ≈ 1.8M | ≈ urban area | ≈ 50 |
-| Luanda | Angola | 11.9M | urban area 2025 | ≈ 50 |
-| Lusaka | Zambia | ≈ 3M | ≈ urban area | ≈ 48 |
-| Luxor | Egypt | ≈ 500,000 | ≈ city | ≈ 55 |
-| Malabo | Equatorial Guinea | ≈ 300,000 | ≈ urban area | ≈ 54 |
-| Maputo | Mozambique | ≈ 1.3M | ≈ urban area | ≈ 57 |
-| Marrakesh | Morocco | ≈ 1.1M | ≈ urban area | ≈ 68 |
-| Maseru | Lesotho | ≈ 330,000 | ≈ urban area | ≈ 50 |
-| Mbabane | Eswatini | ≈ 95,000 | ≈ urban area | ≈ 52 |
-| Mogadishu | Somalia | ≈ 2.6M | ≈ urban area | ≈ 30 |
-| Monrovia | Liberia | ≈ 1.5M | ≈ urban area | ≈ 55 |
-| N'Djamena | Chad | ≈ 1.6M | ≈ urban area | ≈ 38 |
-| Nairobi | Kenya | ≈ 5.5M | ≈ urban area | ≈ 60 |
-| Niamey | Niger | ≈ 1.3M | ≈ urban area | ≈ 45 |
-| Nouakchott | Mauritania | ≈ 1.4M | ≈ urban area | ≈ 46 |
-| Ouagadougou | Burkina Faso | ≈ 2.7M | ≈ urban area | ≈ 50 |
-| Port Louis | Mauritius | ≈ 150,000 | ≈ urban area | ≈ 68 |
-| Porto-Novo | Benin | ≈ 300,000 | ≈ urban area | ≈ 52 |
-| Pretoria | South Africa | ≈ 2.9M | ≈ urban area (Tshwane) | ≈ 74 |
-| Rabat | Morocco | ≈ 1.9M | ≈ urban area | ≈ 66 |
-| Timbuktu | Mali | ≈ 55,000 | town ≈ | ≈ 40 |
-| Tripoli | Libya | ≈ 1.2M | ≈ urban area | ≈ 40 |
-| Tunis | Tunisia | ≈ 2.7M | ≈ metropolitan area (Grand Tunis) | ≈ 62 |
-| Windhoek | Namibia | ≈ 450,000 | ≈ urban area | ≈ 62 |
-| Yamoussoukro | Côte d'Ivoire | ≈ 360,000 | ≈ urban area | ≈ 50 |
-| Yaoundé | Cameroon | ≈ 4.3M | ≈ urban area | ≈ 57 |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Bratislava | district |
+| 2 | Budapest | district |
+| 3 | Lada | ♥ |
+| 4 | Lviv | district |
+| 5 | Astghik | ♥ |
+| 6 | Chisinau | district |
+| 7 | Bucharest | district |
+| 8 | Astarte | ♥ |
+| 9 | Odesa | district |
+| 10 | Qetesh | ♥ |
+| 11 | Constantinople | district |
+| 12 | Thessaloniki | district |
+| 13 | Adonis | ♥ |
+| 14 | Sofia | district |
+| 15 | Anteros | ♥ |
+| 16 | Skopje | district |
+| 17 | Pothos | ♥ |
+| 18 | Tirana | district |
+| 19 | Oshun | ♥ |
+| 20 | Naples | district |
+| 21 | Pristina | district |
+| 22 | Prende | ♥ |
+| 23 | Podgorica | district |
+| 24 | Cupid | ♥ |
+| 25 | Sarajevo | district |
+| 26 | Ljubljana | district |
+| 27 | Turan | ♥ |
+| 28 | Zagreb | district |
+| 29 | Sjöfn | ♥ |
+| 30 | Belgrade | district |
 
-### Asia (62)
+### Ring 6
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Agra | India | ≈ 1.9M | ≈ urban area | ≈ 56 |
-| Ahmedabad | India | 8M | urban area 2025 | ≈ 55 |
-| Almaty | Kazakhstan | ≈ 2.2M | ≈ urban area | ≈ 74 |
-| Ashgabat | Turkmenistan | ≈ 1M | ≈ urban area | ≈ 55 |
-| Astana | Kazakhstan | ≈ 1.4M | ≈ urban area | ≈ 74 |
-| Bandung | Indonesia | 7.5M | urban area 2025 | ≈ 60 |
-| Bangkok | Thailand | 20.3M | urban area 2025 | ≈ 79 |
-| Beijing | China | 22.4M | urban area 2025 | ≈ 74 |
-| Bengaluru | India | ≈ 14M | ≈ urban area | ≈ 55 |
-| Bishkek | Kyrgyzstan | ≈ 1.3M | ≈ urban area | ≈ 58 |
-| Chengdu | China | 8M | urban area 2025 | ≈ 70 |
-| Chennai | India | 12M | urban area 2025 | ≈ 54 |
-| Chiang Mai | Thailand | ≈ 1.2M | ≈ metropolitan area | ≈ 72 |
-| Colombo | Sri Lanka | ≈ 800,000 | ≈ urban area | ≈ 66 |
-| Delhi | India | 33.2M | urban area 2025 | ≈ 73 |
-| Dhaka | Bangladesh | 25.3M | urban area 2025 | ≈ 38 |
-| Dili | Timor-Leste | ≈ 280,000 | ≈ urban area | ≈ 50 |
-| Dushanbe | Tajikistan | ≈ 1M | ≈ urban area | ≈ 55 |
-| Fukuoka | Japan | ≈ 5.6M | ≈ urban area | ≈ 90 |
-| Guangzhou | China | ≈ 26.9M | ≈ urban area (Guangzhou–Foshan) | ≈ 68 |
-| Hangzhou | China | 12.4M | Hangzhou–Shaoxing 2025 | ≈ 72 |
-| Hanoi | Vietnam | ≈ 8.7M | ≈ urban area | ≈ 70 |
-| Hiroshima | Japan | ≈ 2.2M | ≈ metropolitan area | ≈ 92 |
-| Ho Chi Minh City | Vietnam | 16M | urban area 2025 | ≈ 53 |
-| Hong Kong | Hong Kong | 7.1M | urban area 2025 | ≈ 90 |
-| Hyderabad | India | 10.1M | urban area 2025 | ≈ 55 |
-| Islamabad | Pakistan | ≈ 1.2M | ≈ city proper | ≈ 55 |
-| Jakarta | Indonesia | 36.9M | urban area 2025 | ≈ 53 |
-| Kabul | Afghanistan | ≈ 4.6M | ≈ urban area | ≈ 35 |
-| Karachi | Pakistan | 21.3M | urban area 2025 | ≈ 40 |
-| Kathmandu | Nepal | ≈ 1.6M | ≈ urban area | ≈ 64 |
-| Kolkata | India | 20.3M | urban area 2025 | ≈ 54 |
-| Kuala Lumpur | Malaysia | 9.9M | urban area 2025 | ≈ 70 |
-| Kyoto | Japan | ≈ 1.5M | ≈ city | ≈ 94 |
-| Lahore | Pakistan | 14.3M | urban area 2025 | ≈ 50 |
-| Macau | Macau | 700,000 | territory est. 2024 | ≈ 74 |
-| Manama | Bahrain | ≈ 660,000 | ≈ urban area | ≈ 68 |
-| Manila | the Philippines | 25.5M | urban area 2025 | ≈ 57 |
-| Mumbai | India | 26.2M | urban area 2025 | ≈ 48 |
-| Muscat | Oman | ≈ 1.7M | ≈ urban area | ≈ 70 |
-| Nagoya | Japan | 9.6M | urban area 2025 | ≈ 90 |
-| Nanjing | China | 8.9M | urban area 2025 | ≈ 70 |
-| Naypyidaw | Myanmar | ≈ 1.2M | ≈ urban area | ≈ 42 |
-| Osaka | Japan | 15M | Osaka–Kobe–Kyoto 2025 | 96 |
-| Phnom Penh | Cambodia | ≈ 2.3M | ≈ urban area | ≈ 58 |
-| Pyongyang | North Korea | ≈ 3M | ≈ urban area | ≈ 38 |
-| Sana'a | Yemen | ≈ 3.9M | ≈ urban area | ≈ 32 |
-| Seoul | South Korea | 23.8M | capital urban area 2025 | ≈ 90 |
-| Shanghai | China | ≈ 29.9M | ≈ urban area | ≈ 85 |
-| Shenzhen | China | ≈ 17.9M | ≈ urban area (Shenzhen–Dongguan) | ≈ 68 |
-| Singapore | Singapore | 6.1M | urban area 2025 | ≈ 92 |
-| Suzhou | China | ≈ 7M | ≈ urban area | ≈ 70 |
-| Taipei | Taiwan | 9.9M | Taipei urban area 2025 | ≈ 86 |
-| Tashkent | Uzbekistan | ≈ 2.9M | ≈ urban area | ≈ 71 |
-| Tianjin | China | 12.1M | urban area 2025 | ≈ 70 |
-| Tokyo | Japan | 37.3M | urban area 2025 | 95.7 |
-| Ulaanbaatar | Mongolia | ≈ 1.6M | ≈ urban area | ≈ 58 |
-| Varanasi | India | ≈ 1.6M | ≈ urban area | ≈ 58 |
-| Vientiane | Laos | ≈ 950,000 | ≈ urban area | ≈ 55 |
-| Wuhan | China | 10M | urban area 2025 | ≈ 70 |
-| Xi'an | China | 8.3M | urban area 2025 | ≈ 70 |
-| Yangon | Myanmar | 6.8M | urban area 2025 | ≈ 45 |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Munich | district |
+| 2 | Salzburg | district |
+| 3 | Frankfurt | district |
+| 4 | Vienna | district |
+| 5 | Prague | district |
+| 6 | Berlin | district |
+| 7 | Kraków | district |
+| 8 | Warsaw | district |
+| 9 | Minsk | district |
+| 10 | Kyiv | district |
+| 11 | Sevastopol | district |
+| 12 | Ankara | district |
+| 13 | Homoia | district |
+| 14 | Nicosia | district |
+| 15 | Valletta | district |
+| 16 | Palermo | district |
+| 17 | Tunis | district |
+| 18 | Vatican City | district |
+| 19 | Nice | district |
+| 20 | Monaco | district |
+| 21 | Florence | district |
+| 22 | San Marino | district |
+| 23 | Genoa | district |
+| 24 | Bologna | district |
+| 25 | Turin | district |
+| 26 | Milan | district |
+| 27 | Verona | district |
+| 28 | Venice | district |
+| 29 | Lugano | district |
+| 30 | Bern | district |
+| 31 | Lucerne | district |
+| 32 | Vaduz | district |
+| 33 | Basel | district |
+| 34 | Zurich | district |
+| 35 | St. Gallen | district |
+| 36 | Strasbourg | district |
 
-### Oceania (8)
+### Ring 7
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Auckland | New Zealand | ≈ 1.7M | ≈ urban area | ≈ 93 |
-| Brisbane | Australia | ≈ 2.6M | ≈ urban area | ≈ 92 |
-| Canberra | Australia | ≈ 470,000 | ≈ urban area | ≈ 90 |
-| Melbourne | Australia | 5.2M | urban area 2025 | 97 |
-| Perth | Australia | ≈ 2.1M | ≈ urban area | ≈ 93 |
-| Port Moresby | Papua New Guinea | ≈ 400,000 | ≈ urban area | ≈ 45 |
-| Sydney | Australia | 5M | urban area 2025 | 96.6 |
-| Wellington | New Zealand | ≈ 420,000 | ≈ urban area | ≈ 90 |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Antwerp | district |
+| 2 | Milda | ♥ |
+| 3 | Rotterdam | district |
+| 4 | The Hague | district |
+| 5 | Utrecht | district |
+| 6 | Amsterdam | district |
+| 7 | Aizen-Myōō | ♥ |
+| 8 | Hamburg | district |
+| 9 | Anahita | ♥ |
+| 10 | Tbilisi | district |
+| 11 | Yerevan | district |
+| 12 | Damascus | district |
+| 13 | Beirut | district |
+| 14 | Nanaya | ♥ |
+| 15 | Amman | district |
+| 16 | Cybele | ♥ |
+| 17 | Jericho | district |
+| 18 | Tel Aviv | district |
+| 19 | Gaza | district |
+| 20 | Cairo | district |
+| 21 | Bastet | ♥ |
+| 22 | Alexandria | district |
+| 23 | Bes | ♥ |
+| 24 | Tripoli | district |
+| 25 | Algiers | district |
+| 26 | Andorra la Vella | district |
+| 27 | Marseille | district |
+| 28 | Himeros | ♥ |
+| 29 | Toulouse | district |
+| 30 | Peitho | ♥ |
+| 31 | Bordeaux | district |
+| 32 | Lyon | district |
+| 33 | Geneva | district |
+| 34 | Lausanne | district |
+| 35 | Dionysus | ♥ |
+| 36 | Luxembourg | district |
+| 37 | Zhiva | ♥ |
+| 38 | Lille | district |
+| 39 | Brussels | district |
+| 40 | Ghent | district |
+| 41 | Bruges | district |
+| 42 | Freyr | ♥ |
 
-### The Americas (60)
+### Ring 8
 
-| city | country | population | pop basis | livability |
-| --- | --- | --- | --- | --- |
-| Asunción | Paraguay | ≈ 1.2M | ≈ urban area | ≈ 66 |
-| Atlanta | the United States | 5.5M | urban area 2025 | ≈ 83 |
-| Bloemfontein | South Africa | ≈ 520,000 | ≈ urban area | ≈ 68 |
-| Bogotá | Colombia | 10.7M | urban area 2025 | ≈ 73 |
-| Boston | the United States | 7.4M | Boston–Providence 2025 | ≈ 84 |
-| Brasília | Brazil | ≈ 3.3M | ≈ urban area | ≈ 77 |
-| Buenos Aires | Argentina | 15.9M | urban area 2025 | ≈ 77 |
-| Cancún | Mexico | ≈ 1.1M | ≈ urban area | ≈ 70 |
-| Cap-Haïtien | Haiti | ≈ 190,000 | ≈ urban area | ≈ 45 |
-| Caracas | Venezuela | ≈ 2.9M | ≈ urban area | ≈ 54 |
-| Cartagena | Colombia | ≈ 1.1M | ≈ urban area | ≈ 67 |
-| Chicago | the United States | 8.8M | urban area 2025 | ≈ 83 |
-| Cusco | Peru | ≈ 470,000 | ≈ urban area | ≈ 66 |
-| Dallas | the United States | 7M | Dallas–Fort Worth 2025 | ≈ 83 |
-| Guadalajara | Mexico | ≈ 5.4M | ≈ urban area | ≈ 75 |
-| Guatemala City | Guatemala | ≈ 3M | ≈ urban area | ≈ 66 |
-| Havana | Cuba | ≈ 2.1M | ≈ urban area | ≈ 62 |
-| Honolulu | the United States | ≈ 1M | ≈ urban area | ≈ 87 |
-| Houston | the United States | 6.8M | urban area 2025 | ≈ 83 |
-| Jacmel | Haiti | ≈ 35,000 | town ≈ | — |
-| Kingston | Jamaica | ≈ 1.3M | ≈ urban area | ≈ 69 |
-| La Paz | Bolivia | ≈ 1.9M | ≈ urban area (incl. El Alto) | ≈ 67 |
-| Las Vegas | the United States | ≈ 3.2M | ≈ urban area | ≈ 83 |
-| Lima | Peru | ≈ 11M | ≈ urban area | ≈ 73 |
-| Los Angeles | the United States | 12.2M | urban area 2025 | ≈ 82 |
-| Managua | Nicaragua | ≈ 1.1M | ≈ urban area | ≈ 50 |
-| Manaus | Brazil | ≈ 2.3M | ≈ urban area | ≈ 66 |
-| Medellín | Colombia | ≈ 4.1M | ≈ urban area (valley) | ≈ 74 |
-| Mexico City | Mexico | 23.1M | urban area 2025 | ≈ 72 |
-| Miami | the United States | 6.1M | urban area 2025 | ≈ 83 |
-| Monterrey | Mexico | ≈ 5.2M | ≈ urban area | ≈ 73 |
-| Montevideo | Uruguay | ≈ 1.8M | ≈ urban area | ≈ 82 |
-| Montreal | Canada | ≈ 4.3M | ≈ urban area | ≈ 95 |
-| New Orleans | the United States | ≈ 1M | ≈ urban area | ≈ 78 |
-| New York | the United States | 19.4M | urban area 2025 | ≈ 85 |
-| Ottawa | Canada | ≈ 1.5M | ≈ urban area (National Capital Region) | ≈ 89 |
-| Panama City | Panama | ≈ 1.9M | ≈ urban area | ≈ 77 |
-| Philadelphia | the United States | 5.7M | urban area 2025 | ≈ 83 |
-| Port of Spain | Trinidad and Tobago | ≈ 300,000 | ≈ urban area | ≈ 65 |
-| Port-au-Prince | Haiti | ≈ 1.1M | ≈ urban area | ≈ 38 |
-| Portland | the United States | ≈ 2.5M | ≈ urban area | ≈ 83 |
-| Quebec City | Canada | ≈ 840,000 | ≈ metropolitan area | ≈ 90 |
-| Quito | Ecuador | ≈ 2M | ≈ urban area | ≈ 71 |
-| Rio de Janeiro | Brazil | 12.5M | urban area 2025 | ≈ 77 |
-| Salvador | Brazil | ≈ 3.9M | ≈ urban area | ≈ 70 |
-| San Diego | the United States | ≈ 3.2M | ≈ urban area | ≈ 83 |
-| San Francisco | the United States | 6.4M | urban area 2025 | ≈ 84 |
-| San José | Costa Rica | ≈ 1.5M | ≈ urban area | ≈ 73 |
-| San Juan | Puerto Rico (USA) | ≈ 2.5M | ≈ urban area | ≈ 76 |
-| San Salvador | El Salvador | ≈ 1.1M | ≈ urban area | ≈ 55 |
-| Santiago | Chile | 7.2M | urban area 2025 | ≈ 77 |
-| Santo Domingo | the Dominican Republic | ≈ 3.2M | ≈ urban area | ≈ 62 |
-| São Paulo | Brazil | 21.7M | urban area 2025 | ≈ 61 |
-| Seattle | the United States | ≈ 3.8M | ≈ urban area | ≈ 85 |
-| Tegucigalpa | Honduras | ≈ 1M | ≈ urban area | ≈ 48 |
-| Tikal | Guatemala | ≈ 65,000 | ≈ ancient peak c. 700 AD (Maya) | — |
-| Toronto | Canada | 6.4M | urban area 2025 | ≈ 95.5 |
-| Valparaíso | Chile | ≈ 1M | ≈ urban area (Greater Valpo) | ≈ 74 |
-| Vancouver | Canada | ≈ 2.6M | ≈ urban area | 95.8 |
-| Washington D.C. | the United States | 7.6M | Washington–Baltimore 2025 | ≈ 83 |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Leeds | district |
+| 2 | Newcastle upon Tyne | district |
+| 3 | Glasgow | district |
+| 4 | Edinburgh | district |
+| 5 | Yue Lao | ♥ |
+| 6 | Aberdeen | district |
+| 7 | Saint Petersburg | district |
+| 8 | Baku | district |
+| 9 | Ashgabat | district |
+| 10 | Tehran | district |
+| 11 | Isfahan | district |
+| 12 | Baghdad | district |
+| 13 | Parvati | ♥ |
+| 14 | Dubai | district |
+| 15 | Abu Dhabi | district |
+| 16 | Ur | district |
+| 17 | Kuwait City | district |
+| 18 | Manama | district |
+| 19 | Doha | district |
+| 20 | Riyadh | district |
+| 21 | Mami Wata | ♥ |
+| 22 | Medina | district |
+| 23 | Jeddah | district |
+| 24 | Asmara | district |
+| 25 | Luxor | district |
+| 26 | Khartoum | district |
+| 27 | Marrakesh | district |
+| 28 | Casablanca | district |
+| 29 | Erzulie Freda | ♥ |
+| 30 | Rabat | district |
+| 31 | Seville | district |
+| 32 | Lisbon | district |
+| 33 | Madrid | district |
+| 34 | Porto | district |
+| 35 | Nantes | district |
+| 36 | Cork | district |
+| 37 | Áine | ♥ |
+| 38 | Cardiff | district |
+| 39 | Bristol | district |
+| 40 | London | district |
+| 41 | Oxford | district |
+| 42 | Birmingham | district |
+| 43 | Dublin | district |
+| 44 | Cambridge | district |
+| 45 | Tlazolteotl | ♥ |
+| 46 | Liverpool | district |
+| 47 | Manchester | district |
+| 48 | Belfast | district |
 
-## The love gods — the pink free-use lattice
+### The pool (188 cities beyond the horizon)
 
-Ring 2's six goddesses are authored beside their civilisations. The outer rings carry a reserved, mirror-symmetric slot lattice (ring 5: 12 slots · ring 7: 12 · ring 8: 6); each outer god settles onto it by compass, facing their homeland from Mondiala's centre.
+Tokyo, Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Mexico City, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Rio de Janeiro, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Hong Kong, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Sydney, Cape Town, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Tashkent, Pretoria, Caracas, Bamako, Ouagadougou, Accra, Mogadishu, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Monrovia, Ottawa, Kyoto, San José, Astana, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Lilongwe, Port-au-Prince, Cartagena, Cancún, San Salvador, Managua, Dushanbe, Libreville, New Orleans, Tegucigalpa, Valparaíso, Honolulu, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Samarkand, Djibouti City, Bloemfontein, Juba, Bissau, Cusco, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Tikal, Timbuktu, Jacmel
 
-### The cradle six (ring 2)
+## Population-weighted mode
 
-| goddess | sits beside | homeland [lat, lon] |
-| --- | --- | --- |
-| Zhinü | Chang'an | 34.62, 112.45 |
-| Rati | Mohenjo-daro | 23.18, 75.78 |
-| Inanna | Uruk | 31.32, 45.64 |
-| Hathor | Memphis | 26.14, 32.33 |
-| Cavillaca | Qosqo | -12.07, -76.31 |
-| Xochiquetzal | Tenochtitlan | 19.43, -99.13 |
+Mondiala sits at 42.124469°N, 67.729487°E — 🇰🇿 Kazakhstan (the Shardara steppe — between the Karatau mountains and the Syr Darya reservoir, Turkistan region).
 
-### The outer gods and their homelands
+### Ring 5
 
-| god | waiting for ring | homeland [lat, lon] |
-| --- | --- | --- |
-| Venus | 5 | 41.90, 12.50 |
-| Cupid | 5 | 41.90, 12.50 |
-| Adonis | 5 | 34.12, 35.65 |
-| Aphrodite | 5 | 34.75, 32.41 |
-| Oshun | 5 | 7.90, 4.55 |
-| Kama | 5 | 23.18, 75.78 |
-| Astarte | 5 | 35.60, 35.77 |
-| Sjöfn | 5 | 59.86, 17.64 |
-| Prende | 5 | 42.06, 19.49 |
-| Lada | 5 | 52.23, 21.01 |
-| Qetesh | 5 | 34.73, 36.72 |
-| Turan | 5 | 43.47, 11.03 |
-| Nanaya | 7 | 32.13, 45.23 |
-| Anahita | 7 | 32.65, 51.67 |
-| Cybele | 7 | 39.32, 31.58 |
-| Dionysus | 7 | 38.33, 23.32 |
-| Himeros | 7 | 37.98, 23.73 |
-| Peitho | 7 | 37.98, 23.73 |
-| Bastet | 7 | 30.58, 31.51 |
-| Bes | 7 | 26.14, 32.33 |
-| Freyr | 7 | 59.86, 17.64 |
-| Freyja | 7 | 59.86, 17.64 |
-| Milda | 7 | 54.69, 25.28 |
-| Zhiva | 7 | 52.52, 13.40 |
-| Áine | 8 | 52.48, -8.61 |
-| Parvati | 8 | 25.32, 83.01 |
-| Yue Lao | 8 | 39.90, 116.41 |
-| Mami Wata | 8 | 4.05, 9.70 |
-| Tlazolteotl | 8 | 19.43, -99.13 |
-| Erzulie Freda | 8 | 18.54, -72.34 |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Astana | district |
+| 2 | Almaty | district |
+| 3 | Turan | ♥ |
+| 4 | Bishkek | district |
+| 5 | Lada | ♥ |
+| 6 | Tashkent | district |
+| 7 | Delhi | district |
+| 8 | Sjöfn | ♥ |
+| 9 | Agra | district |
+| 10 | Oshun | ♥ |
+| 11 | Lahore | district |
+| 12 | Islamabad | district |
+| 13 | Adonis | ♥ |
+| 14 | Dushanbe | district |
+| 15 | Qetesh | ♥ |
+| 16 | Kabul | district |
+| 17 | Astarte | ♥ |
+| 18 | Karachi | district |
+| 19 | Astghik | ♥ |
+| 20 | Samarkand | district |
+| 21 | Isfahan | district |
+| 22 | Anteros | ♥ |
+| 23 | Ashgabat | district |
+| 24 | Pothos | ♥ |
+| 25 | Tehran | district |
+| 26 | Baku | district |
+| 27 | Prende | ♥ |
+| 28 | Yerevan | district |
+| 29 | Cupid | ♥ |
+| 30 | Tbilisi | district |
 
-### The reserved slot lattice (hex numbers per ring)
+### Ring 6
 
-- ring 5: 3, 5, 8, 10, 13, 15, 17, 19, 22, 24, 27, 29
-- ring 7: 2, 7, 9, 14, 16, 21, 23, 28, 30, 35, 37, 42
-- ring 8: 5, 13, 21, 29, 37, 45
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Constantinople | district |
+| 2 | Sevastopol | district |
+| 3 | Odesa | district |
+| 4 | Chisinau | district |
+| 5 | Kyiv | district |
+| 6 | Minsk | district |
+| 7 | Saint Petersburg | district |
+| 8 | Ulaanbaatar | district |
+| 9 | Dhaka | district |
+| 10 | Kathmandu | district |
+| 11 | Kolkata | district |
+| 12 | Varanasi | district |
+| 13 | Hyderabad | district |
+| 14 | Pune | district |
+| 15 | Ahmedabad | district |
+| 16 | Surat | district |
+| 17 | Mumbai | district |
+| 18 | Muscat | district |
+| 19 | Dubai | district |
+| 20 | Abu Dhabi | district |
+| 21 | Doha | district |
+| 22 | Manama | district |
+| 23 | Riyadh | district |
+| 24 | Kuwait City | district |
+| 25 | Medina | district |
+| 26 | Ur | district |
+| 27 | Baghdad | district |
+| 28 | Amman | district |
+| 29 | Jericho | district |
+| 30 | Gaza | district |
+| 31 | Tel Aviv | district |
+| 32 | Damascus | district |
+| 33 | Beirut | district |
+| 34 | Nicosia | district |
+| 35 | Homoia | district |
+| 36 | Ankara | district |
 
-## The map flow (geographic centre) — rings 4–8
+### Ring 7
 
-| ring | cities by hex number |
-| --- | --- |
-| 4 (24 hexes) | #1 Vienna · #2 Bratislava · #3 Budapest · #4 Belgrade · #5 Bucharest · #6 Pristina · #7 Sofia · #8 Constantinople · #9 Skopje · #10 Thessaloniki · #11 Athens · #12 Tirana · #13 Palermo · #14 Naples · #15 Rome · #16 Vatican City · #17 Podgorica · #18 Florence · #19 San Marino · #20 Bologna · #21 Venice · #22 Ljubljana · #23 Zagreb · #24 Sarajevo |
-| 5 (30 hexes) | #1 Munich · #2 Salzburg · #3 Lada · #4 Prague · #5 Kama · #6 Kraków · #7 Lviv · #8 Astarte · #9 Chisinau · #10 Qetesh · #11 Odesa · #12 Valletta · #13 Adonis · #14 Carthago · #15 Aphrodite · #16 Tunis · #17 Oshun · #18 Monaco · #19 Prende · #20 Genoa · #21 Turin · #22 Venus · #23 Milan · #24 Cupid · #25 Verona · #26 Lugano · #27 Turan · #28 Vaduz · #29 Sjöfn · #30 St. Gallen |
-| 6 (36 hexes) | #1 Rotterdam · #2 The Hague · #3 Frankfurt · #4 Utrecht · #5 Amsterdam · #6 Hamburg · #7 Berlin · #8 Warsaw · #9 Minsk · #10 Kyiv · #11 Sevastopol · #12 Ankara · #13 Homoia · #14 Nicosia · #15 Alexandria · #16 Tripoli · #17 Algiers · #18 Barcelona · #19 Andorra la Vella · #20 Marseille · #21 Toulouse · #22 Nice · #23 Lyon · #24 Geneva · #25 Lausanne · #26 Bern · #27 Lucerne · #28 Paris · #29 Basel · #30 Zurich · #31 Strasbourg · #32 Lille · #33 Luxembourg · #34 Ghent · #35 Brussels · #36 Antwerp |
-| 7 (42 hexes) | #1 Newcastle upon Tyne · #2 Milda · #3 Edinburgh · #4 Aberdeen · #5 Saint Petersburg · #6 Moscow · #7 Anahita · #8 Tbilisi · #9 Cybele · #10 Yerevan · #11 Aleppo · #12 Damascus · #13 Beirut · #14 Nanaya · #15 Amman · #16 Bastet · #17 Jericho · #18 Jerusalem · #19 Tel Aviv · #20 Gaza · #21 Bes · #22 Cairo · #23 Himeros · #24 Luxor · #25 Madrid · #26 Bordeaux · #27 Nantes · #28 Peitho · #29 Cardiff · #30 Dionysus · #31 Bristol · #32 Oxford · #33 London · #34 Birmingham · #35 Zhiva · #36 Cambridge · #37 Freyr · #38 Bruges · #39 Liverpool · #40 Manchester · #41 Leeds · #42 Freyja |
-| 8 (48 hexes) | #1 Dushanbe · #2 Baku · #3 Ashgabat · #4 Tehran · #5 Yue Lao · #6 Isfahan · #7 Baghdad · #8 Muscat · #9 Babylon · #10 Dubai · #11 Ur · #12 Kuwait City · #13 Parvati · #14 Abu Dhabi · #15 Manama · #16 Doha · #17 Riyadh · #18 Medina · #19 Sana'a · #20 Mecca · #21 Mami Wata · #22 Jeddah · #23 Djibouti City · #24 Asmara · #25 Addis Ababa · #26 Khartoum · #27 Bangui · #28 N'Djamena · #29 Erzulie Freda · #30 Abuja · #31 Niamey · #32 Ouagadougou · #33 Timbuktu · #34 Marrakesh · #35 Casablanca · #36 Rabat · #37 Tlazolteotl · #38 Seville · #39 Lisbon · #40 Porto · #41 Cork · #42 Dublin · #43 Belfast · #44 Glasgow · #45 Áine · #46 Astana · #47 Tashkent · #48 Samarkand |
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Budapest | district |
+| 2 | Milda | ♥ |
+| 3 | Bratislava | district |
+| 4 | Vienna | district |
+| 5 | Lviv | district |
+| 6 | Kraków | district |
+| 7 | Freyr | ♥ |
+| 8 | Warsaw | district |
+| 9 | Aizen-Myōō | ♥ |
+| 10 | Beijing | district |
+| 11 | Xi'an | district |
+| 12 | Chongqing | district |
+| 13 | Chengdu | district |
+| 14 | Anahita | ♥ |
+| 15 | Chiang Mai | district |
+| 16 | Nanaya | ♥ |
+| 17 | Naypyidaw | district |
+| 18 | Yangon | district |
+| 19 | Chennai | district |
+| 20 | Bengaluru | district |
+| 21 | Bes | ♥ |
+| 22 | Sana'a | district |
+| 23 | Bastet | ♥ |
+| 24 | Asmara | district |
+| 25 | Jeddah | district |
+| 26 | Luxor | district |
+| 27 | Cairo | district |
+| 28 | Cybele | ♥ |
+| 29 | Alexandria | district |
+| 30 | Himeros | ♥ |
+| 31 | Thessaloniki | district |
+| 32 | Tirana | district |
+| 33 | Skopje | district |
+| 34 | Sofia | district |
+| 35 | Peitho | ♥ |
+| 36 | Pristina | district |
+| 37 | Dionysus | ♥ |
+| 38 | Podgorica | district |
+| 39 | Bucharest | district |
+| 40 | Sarajevo | district |
+| 41 | Belgrade | district |
+| 42 | Zhiva | ♥ |
 
-## The pool — 165 cities beyond the horizon
+### Ring 8
 
-Sorted by population, biggest first — megacities and the far side of the map; they settle onto the rings as the city grows (+ Add ring) or new cities re-centre it.
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Basel | district |
+| 2 | Strasbourg | district |
+| 3 | Prague | district |
+| 4 | Frankfurt | district |
+| 5 | Tlazolteotl | ♥ |
+| 6 | Berlin | district |
+| 7 | Hamburg | district |
+| 8 | Harbin | district |
+| 9 | Shenyang | district |
+| 10 | Dalian | district |
+| 11 | Tianjin | district |
+| 12 | Qingdao | district |
+| 13 | Yue Lao | ♥ |
+| 14 | Jinan | district |
+| 15 | Nanjing | district |
+| 16 | Wuhan | district |
+| 17 | Foshan | district |
+| 18 | Hanoi | district |
+| 19 | Vientiane | district |
+| 20 | Bangkok | district |
+| 21 | Parvati | ♥ |
+| 22 | Colombo | district |
+| 23 | Djibouti City | district |
+| 24 | Addis Ababa | district |
+| 25 | Khartoum | district |
+| 26 | Valletta | district |
+| 27 | Palermo | district |
+| 28 | Naples | district |
+| 29 | Mami Wata | ♥ |
+| 30 | Vatican City | district |
+| 31 | San Marino | district |
+| 32 | Florence | district |
+| 33 | Bologna | district |
+| 34 | Zagreb | district |
+| 35 | Genoa | district |
+| 36 | Venice | district |
+| 37 | Áine | ♥ |
+| 38 | Ljubljana | district |
+| 39 | Verona | district |
+| 40 | Milan | district |
+| 41 | Lugano | district |
+| 42 | Vaduz | district |
+| 43 | Salzburg | district |
+| 44 | Lucerne | district |
+| 45 | Erzulie Freda | ♥ |
+| 46 | St. Gallen | district |
+| 47 | Zurich | district |
+| 48 | Munich | district |
 
-Tokyo · Jakarta · Delhi · Shanghai · Guangzhou · Mumbai · Manila · Dhaka · Seoul · Mexico City · Beijing · São Paulo · Karachi · Kolkata · Bangkok · New York · Shenzhen · Ho Chi Minh City · Buenos Aires · Lagos · Johannesburg · Osaka · Lahore · Bengaluru · Kinshasa · Rio de Janeiro · Hangzhou · Los Angeles · Tianjin · Chennai · Luanda · Lima · Bogotá · Hyderabad · Wuhan · Kuala Lumpur · Taipei · Nagoya · Nanjing · Dar es Salaam · Chicago · Hanoi · Xi'an · Chengdu · Ahmedabad · Washington D.C. · Bandung · Boston · Santiago · Hong Kong · Suzhou · Dallas · Yangon · Houston · Toronto · San Francisco · Miami · Singapore · Philadelphia · Abidjan · Fukuoka · Nairobi · Atlanta · Guadalajara · Monterrey · Melbourne · Sydney · Cape Town · Kabul · Yaoundé · Montreal · Medellín · Salvador · Seattle · Kampala · Antananarivo · Durban · Dakar · Brasília · San Diego · Santo Domingo · Las Vegas · Lusaka · Pyongyang · Guatemala City · Pretoria · Caracas · Bamako · Accra · Mogadishu · Vancouver · Brisbane · Portland · San Juan · Brazzaville · Phnom Penh · Manaus · Almaty · Hiroshima · Conakry · Havana · Perth · Quito · Agra · Panama City · La Paz · Lomé · Montevideo · Auckland · Varanasi · Kathmandu · Ulaanbaatar · Harare · Monrovia · Ottawa · Kyoto · San José · Nouakchott · Maputo · Kingston · Bishkek · Islamabad · Freetown · Kigali · Naypyidaw · Chiang Mai · Asunción · Lilongwe · Port-au-Prince · Cartagena · Cancún · San Salvador · Managua · Libreville · New Orleans · Tegucigalpa · Valparaíso · Honolulu · Vientiane · Quebec City · Colombo · Dodoma · Macau · Bloemfontein · Juba · Bissau · Cusco · Canberra · Windhoek · Banjul · Wellington · Port Moresby · Yamoussoukro · Maseru · Porto-Novo · Malabo · Port of Spain · Dili · Gaborone · Cap-Haïtien · Port Louis · Gitega · Mbabane · Tikal · Jacmel
+### The pool (188 cities beyond the horizon)
+
+Tokyo, Jakarta, Shanghai, Guangzhou, Manila, Seoul, Mexico City, São Paulo, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Kinshasa, Rio de Janeiro, Hangzhou, Los Angeles, Luanda, London, Lima, Bogotá, Kuala Lumpur, Taipei, Nagoya, Dar es Salaam, Chicago, Washington D.C., Bandung, Boston, Dongguan, Santiago, Hong Kong, Suzhou, Dallas, Madrid, Surabaya, Houston, Toronto, San Francisco, Miami, Belo Horizonte, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Monterrey, Melbourne, Sydney, Cape Town, Casablanca, Yaoundé, Montreal, Medellín, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Las Vegas, Santo Domingo, Pyongyang, Lusaka, Guatemala City, Lisbon, Pretoria, Caracas, Manchester, Algiers, Bamako, Tunis, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, Amsterdam, San Juan, Brazzaville, Phnom Penh, Birmingham, Manaus, Hiroshima, Brussels, Conakry, Perth, Havana, Quito, Marseille, Rabat, Panama City, La Paz, Lyon, Leeds, Lomé, Montevideo, Turin, Glasgow, Auckland, N'Djamena, Harare, Kyoto, Seville, Monrovia, Ottawa, San José, Rotterdam, Nouakchott, Porto, Niamey, Maputo, Kingston, Dublin, Tripoli, Kigali, Freetown, Asunción, The Hague, Antwerp, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Lille, Managua, Geneva, Nice, Toulouse, Bordeaux, Libreville, Honolulu, New Orleans, Tegucigalpa, Valparaíso, Nantes, Bangui, Newcastle upon Tyne, Liverpool, Quebec City, Dodoma, Macau, Bristol, Belfast, Edinburgh, Bloemfontein, Ghent, Juba, Bissau, Cardiff, Canberra, Cusco, Windhoek, Banjul, Bern, Lausanne, Wellington, Port Moresby, Utrecht, Yamoussoukro, Maseru, Malabo, Porto-Novo, Port of Spain, Dili, Gaborone, Aberdeen, Cork, Luxembourg, Cap-Haïtien, Oxford, Cambridge, Port Louis, Gitega, Bruges, Mbabane, Tikal, Timbuktu, Monaco, Jacmel, Andorra la Vella
+
+## Greatness-weighted mode
+
+Mondiala sits at 46.114263°N, 27.459871°E — 🇲🇩 Moldova (the Tigheci hills — oak woodland and steppe between the Prut and the Ialpug, southern Moldova).
+
+### Ring 5
+
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Kraków | district |
+| 2 | Lviv | district |
+| 3 | Sjöfn | ♥ |
+| 4 | Kyiv | district |
+| 5 | Astghik | ♥ |
+| 6 | Chisinau | district |
+| 7 | Odesa | district |
+| 8 | Qetesh | ♥ |
+| 9 | Sevastopol | district |
+| 10 | Astarte | ♥ |
+| 11 | Constantinople | district |
+| 12 | Bucharest | district |
+| 13 | Adonis | ♥ |
+| 14 | Thessaloniki | district |
+| 15 | Anteros | ♥ |
+| 16 | Sofia | district |
+| 17 | Pothos | ♥ |
+| 18 | Skopje | district |
+| 19 | Oshun | ♥ |
+| 20 | Tirana | district |
+| 21 | Pristina | district |
+| 22 | Prende | ♥ |
+| 23 | Podgorica | district |
+| 24 | Cupid | ♥ |
+| 25 | Sarajevo | district |
+| 26 | Belgrade | district |
+| 27 | Turan | ♥ |
+| 28 | Budapest | district |
+| 29 | Lada | ♥ |
+| 30 | Bratislava | district |
+
+### Ring 6
+
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Salzburg | district |
+| 2 | Munich | district |
+| 3 | Strasbourg | district |
+| 4 | Vienna | district |
+| 5 | Frankfurt | district |
+| 6 | Prague | district |
+| 7 | Hamburg | district |
+| 8 | Berlin | district |
+| 9 | Warsaw | district |
+| 10 | Minsk | district |
+| 11 | Tbilisi | district |
+| 12 | Yerevan | district |
+| 13 | Ankara | district |
+| 14 | Beirut | district |
+| 15 | Homoia | district |
+| 16 | Nicosia | district |
+| 17 | Palermo | district |
+| 18 | Naples | district |
+| 19 | Vatican City | district |
+| 20 | San Marino | district |
+| 21 | Florence | district |
+| 22 | Bologna | district |
+| 23 | Genoa | district |
+| 24 | Venice | district |
+| 25 | Zagreb | district |
+| 26 | Verona | district |
+| 27 | Turin | district |
+| 28 | Milan | district |
+| 29 | Ljubljana | district |
+| 30 | Lugano | district |
+| 31 | Bern | district |
+| 32 | Lucerne | district |
+| 33 | Vaduz | district |
+| 34 | Zurich | district |
+| 35 | St. Gallen | district |
+| 36 | Basel | district |
+
+### Ring 7
+
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Bruges | district |
+| 2 | Milda | ♥ |
+| 3 | Antwerp | district |
+| 4 | Rotterdam | district |
+| 5 | The Hague | district |
+| 6 | Utrecht | district |
+| 7 | Aizen-Myōō | ♥ |
+| 8 | Amsterdam | district |
+| 9 | Anahita | ♥ |
+| 10 | Saint Petersburg | district |
+| 11 | Baku | district |
+| 12 | Baghdad | district |
+| 13 | Damascus | district |
+| 14 | Nanaya | ♥ |
+| 15 | Amman | district |
+| 16 | Cybele | ♥ |
+| 17 | Jericho | district |
+| 18 | Tel Aviv | district |
+| 19 | Gaza | district |
+| 20 | Cairo | district |
+| 21 | Bastet | ♥ |
+| 22 | Alexandria | district |
+| 23 | Bes | ♥ |
+| 24 | Tripoli | district |
+| 25 | Valletta | district |
+| 26 | Tunis | district |
+| 27 | Nice | district |
+| 28 | Himeros | ♥ |
+| 29 | Monaco | district |
+| 30 | Peitho | ♥ |
+| 31 | Marseille | district |
+| 32 | Toulouse | district |
+| 33 | Lyon | district |
+| 34 | Geneva | district |
+| 35 | Dionysus | ♥ |
+| 36 | Lausanne | district |
+| 37 | Zhiva | ♥ |
+| 38 | Luxembourg | district |
+| 39 | Lille | district |
+| 40 | Brussels | district |
+| 41 | Ghent | district |
+| 42 | Freyr | ♥ |
+
+### Ring 8
+
+| Hex | Name | Type |
+|---|---|---|
+| 1 | Manchester | district |
+| 2 | Leeds | district |
+| 3 | Belfast | district |
+| 4 | Newcastle upon Tyne | district |
+| 5 | Tlazolteotl | ♥ |
+| 6 | Glasgow | district |
+| 7 | Edinburgh | district |
+| 8 | Aberdeen | district |
+| 9 | Astana | district |
+| 10 | Tashkent | district |
+| 11 | Samarkand | district |
+| 12 | Ashgabat | district |
+| 13 | Yue Lao | ♥ |
+| 14 | Tehran | district |
+| 15 | Isfahan | district |
+| 16 | Dubai | district |
+| 17 | Abu Dhabi | district |
+| 18 | Doha | district |
+| 19 | Kuwait City | district |
+| 20 | Manama | district |
+| 21 | Parvati | ♥ |
+| 22 | Ur | district |
+| 23 | Riyadh | district |
+| 24 | Medina | district |
+| 25 | Jeddah | district |
+| 26 | Luxor | district |
+| 27 | Algiers | district |
+| 28 | Casablanca | district |
+| 29 | Mami Wata | ♥ |
+| 30 | Rabat | district |
+| 31 | Seville | district |
+| 32 | Madrid | district |
+| 33 | Lisbon | district |
+| 34 | Andorra la Vella | district |
+| 35 | Porto | district |
+| 36 | Bordeaux | district |
+| 37 | Erzulie Freda | ♥ |
+| 38 | Nantes | district |
+| 39 | Bristol | district |
+| 40 | Cardiff | district |
+| 41 | London | district |
+| 42 | Cork | district |
+| 43 | Oxford | district |
+| 44 | Cambridge | district |
+| 45 | Áine | ♥ |
+| 46 | Birmingham | district |
+| 47 | Dublin | district |
+| 48 | Liverpool | district |
+
+### The pool (188 cities beyond the horizon)
+
+Tokyo, Jakarta, Delhi, Shanghai, Guangzhou, Mumbai, Manila, Dhaka, Seoul, Mexico City, Beijing, São Paulo, Karachi, Kolkata, Bangkok, Shenzhen, Ho Chi Minh City, Buenos Aires, Lagos, Johannesburg, Osaka, Lahore, Bengaluru, Kinshasa, Rio de Janeiro, Hangzhou, Los Angeles, Tianjin, Chennai, Luanda, Lima, Bogotá, Hyderabad, Wuhan, Kuala Lumpur, Taipei, Nagoya, Nanjing, Dar es Salaam, Chicago, Hanoi, Xi'an, Chengdu, Ahmedabad, Khartoum, Washington D.C., Bandung, Boston, Dongguan, Foshan, Santiago, Hong Kong, Chongqing, Suzhou, Dallas, Shenyang, Surat, Surabaya, Yangon, Pune, Houston, Toronto, San Francisco, Miami, Harbin, Belo Horizonte, Addis Ababa, Philadelphia, Abidjan, Fukuoka, Nairobi, Atlanta, Guadalajara, Qingdao, Dalian, Monterrey, Melbourne, Jinan, Sydney, Cape Town, Kabul, Yaoundé, Montreal, Medellín, Sana'a, Salvador, Abuja, Seattle, Kampala, Antananarivo, Durban, Dakar, Brasília, San Diego, Santo Domingo, Las Vegas, Lusaka, Pyongyang, Guatemala City, Pretoria, Caracas, Bamako, Ouagadougou, Mogadishu, Accra, Brisbane, Portland, San Juan, Brazzaville, Phnom Penh, Manaus, Almaty, Hiroshima, Conakry, Havana, Perth, Quito, Agra, Panama City, La Paz, Lomé, Montevideo, Muscat, Auckland, N'Djamena, Varanasi, Kathmandu, Ulaanbaatar, Harare, Monrovia, Ottawa, Kyoto, San José, Nouakchott, Niamey, Maputo, Kingston, Bishkek, Islamabad, Kigali, Freetown, Naypyidaw, Chiang Mai, Asunción, Marrakesh, Lilongwe, Port-au-Prince, Cancún, Cartagena, San Salvador, Managua, Dushanbe, Asmara, Libreville, New Orleans, Tegucigalpa, Honolulu, Valparaíso, Bangui, Vientiane, Quebec City, Colombo, Dodoma, Macau, Djibouti City, Bloemfontein, Juba, Bissau, Cusco, Canberra, Windhoek, Banjul, Wellington, Port Moresby, Yamoussoukro, Maseru, Porto-Novo, Malabo, Port of Spain, Dili, Gaborone, Cap-Haïtien, Port Louis, Gitega, Mbabane, Tikal, Timbuktu, Jacmel
+

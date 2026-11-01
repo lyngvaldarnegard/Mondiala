@@ -100,7 +100,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Ring 3 (Norden) sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand — ring 1 the inspiration cities, ring 2 the cradle civilisations with their goddesses, ring 3 the ancient cities with the great love gods, ring 4 Norden by population. Rings 5–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
     </div>
     <div class="card">
       <h2>World placement</h2>
@@ -159,6 +159,10 @@ const TYPES = {
 </script>
 <script src="mondiala-data.js"></script>
 <script>
+function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
+function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
+function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
+function fmtPop(p) { return p >= 1e6 ? (Math.round(p / 1e5) / 10) + "M" : p.toLocaleString("en-US"); }
 
 // ---------- Hex math (axial coords, flat-top: flat side up, so the spoke through Metropol runs straight north–south) ----------
 const SQ3 = Math.sqrt(3);
@@ -216,7 +220,7 @@ function buildCity() {
   for (let c = 1; c <= maxCircle; c++) {
     const positions = ringPositions(c).sort((a, b) => a.num - b.num); // slot 1 = topmost hex of the ring, then clockwise
     const rows = byCircle[c] || [];
-    if (c <= 2) { // rings 1–2 keep the authored civilisation heart (by Hexagon number)
+    if (c <= 3) { // rings 1–3 keep the authored heart (by Hexagon number)
       const slots = {}; positions.forEach(p => slots[p.num] = p);
       const filled = new Set();
       // pass 1: explicit numbers (first row wins on duplicates)
@@ -237,11 +241,11 @@ function buildCity() {
         if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
       });
       rows.forEach(r => delete r._placed);
-    } else if (c === 3) { // ring 3: Norden, two-tier population sort (capitals + Göteborg hold the green spokes)
+    } else if (c === 4) { // ring 4: Norden, two-tier population sort (capitals + Göteborg hold the green spokes)
       const placed = placeSortedRing(c, positions, rows);
       rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
-    } else { // rings 4–8: coordinate-driven placement — the gods take the pink slots facing their homelands, cities slot by bearing from Mondiala
+    } else { // rings 5–8: coordinate-driven placement — the gods take the pink slots facing their homelands, cities slot by bearing from Mondiala
       const slots = {}; positions.forEach(p => slots[p.num] = p);
       pinkPlan(c, worldPlan.center).forEach(pair => { if (slots[pair[0]]) placeRow(slots[pair[0]], [c, pair[0], pair[1], null]); });
       (worldPlan.plan[c] || []).forEach(pair => { const p = slots[pair[0]]; if (p && !hexes[p.q + "," + p.r]) placeRow(p, [c, pair[0], pair[1], null]); });
@@ -250,8 +254,8 @@ function buildCity() {
   }
   worldPlan.leftover.forEach(n => pool.push({ name: n, density: null })); // candidates beyond the map's current horizon wait here
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
-  // ring 2: all six non-spoke hexes are pink free-use districts; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
-  Object.values(hexes).forEach(h => { if ((h.circle === 2 && !onSpoke(h)) || SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
+  // every hex named for a god of love is a pink free-use district; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
+  Object.values(hexes).forEach(h => { if (SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
     if (h.name === "Freeuse") h.type = "park";
@@ -279,7 +283,7 @@ function placeSortedRing(c, positions, rows) { // ring 3: Norden — Nordic capi
 // ---------- Coordinate-driven world placement ----------
 // Mondiala sits at the centre of the world's great cities; each city's real bearing from
 // that centre picks its hexagon, its real distance picks its ring (near = inner), and
-// population breaks distance ties. Rings 0–3 (Metropol, the cradle heart, Norden) are fixed.
+// population breaks distance ties. Rings 0–4 (Metropol, the inspiration cities, the cradle civilisations, the ancient cities, Norden) are fixed.
 const GEO_RAD = Math.PI / 180, GEO_R = 6371; // km
 function coordOf(name) { return CITY_COORDS[name.trim().toLowerCase()] || null; }
 function factLiv(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : 70; }
@@ -371,7 +375,7 @@ function computeWorldPlan() { // the full rings 4..maxCircle city assignment + t
     .map(n => Object.assign({ n }, bearingDist(center, n)))
     .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance decides, population breaks ties
   const plan = {}; let idx = 0;
-  for (let c = 4; c <= maxCircle; c++) {
+  for (let c = 5; c <= maxCircle; c++) {
     const slots = worldSlots(c);
     const take = ranked.slice(idx, idx + slots.length); idx += slots.length;
     if (!take.length) { plan[c] = []; continue; }

@@ -1,41 +1,38 @@
-// mondiala-data.js — source data for the Mondiala city designer.
-// Auto-generated from the design canvas; edit the canvas, not this file.
-// Structures: WORLD_CITIES, CITY_COORDS, CITY_COUNTRY, CENTER_SPOTS,
-//             PINK_SLOTS, PINK_GODS, GOD_ORIGINS, CITY_INFO, CITY_FACTS, NORDIC_GREEN, SEX_GODS, TYPES.
 // ---------- Source data from Notion “Hexagons of Mondiala” ----------
 // [circle, hexagonNumber|null, name, density|null]
 const RAW = [
 [0,0,"Metropol",4355.39],
-[1,1,"Ancient China",null],[1,2,"Indus Valley",null],[1,3,"Mesopotamia",null],[1,4,"Ancient Egypt",null],[1,5,"Ancient Andes",null],[1,6,"Mesoamerica",null], // ring 1: the six cradle civilisations, each on the spoke its homeland bears to from Mondiala
-[2,1,"Chang'an",null],[2,3,"Mohenjo-daro",null],[2,5,"Uruk",null],[2,7,"Memphis",null],[2,9,"Qosqo",null],[2,11,"Tenochtitlan",null],[2,2,"Zhinü",null],[2,4,"Rati",null],[2,6,"Inanna",null],[2,8,"Hathor",null],[2,10,"Cavillaca",null],[2,12,"Xochiquetzal",null], // ring 2 spokes: each civilisation's first great city, directly outside its cradle hex; the pink hexes between carry that civilisation's goddess of love
-[3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
+[1,1,"Paris",19430],[1,2,"Barcelona",16630],[1,3,"Moscow",5080],[1,4,"Singapore",8188.27],[1,5,"Vancouver",5749.9],[1,6,"New York",11313.8], // ring 1: the six inspiration cities, by authored Hexagon number, with their authored densities
+[2,1,"Ancient China",null],[2,3,"Indus Valley",null],[2,5,"Mesopotamia",null],[2,7,"Ancient Egypt",null],[2,9,"Ancient Andes",null],[2,11,"Mesoamerica",null], // ring 2 spokes: the six cradle civilisations, each facing the homeland it bears to from Mondiala
+[2,2,"Zhinü",null],[2,4,"Rati",null],[2,6,"Inanna",null],[2,8,"Hathor",null],[2,10,"Cavillaca",null],[2,12,"Xochiquetzal",null], // ring 2 pink hexes: each cradle's goddess of love between the spokes
+[3,1,"Freyja",null],[3,2,"Diyarbakır",null],[3,3,"Aleppo",null],[3,4,"Aphrodite",null],[3,5,"Athens",null],[3,6,"Jerusalem",null],[3,7,"Ishtar",null],[3,8,"Babylon",null],[3,9,"Carthago",null],[3,10,"Venus",null],[3,11,"Rome",null],[3,12,"Aksum",null],[3,13,"Eros",null],[3,14,"Byzantium",null],[3,15,"Mecca",null],[3,16,"Kama",null],[3,17,"Tenochtitlan",null], // ring 3: the ancient cities in authored order between the spokes, the six great love gods holding the spokes so no district ever touches another — Aphrodite beside Athens, Ishtar beside Babylon, Venus beside Rome, Eros beside Byzantium, Freyja at the north point just inside Norden; hexagon 18 rests unnamed
+[4,1,"Stockholm",5261.53],[4,2,"København",7411.38],[4,3,"Oslo",1708.99],[4,4,"Helsinki",3238.47],[4,5,"Reykjavík",556],[4,6,"Tallinn",2864.3],[4,7,"Riga",2339],[4,8,"Vilnius",1515],[4,9,"Malmö",4049],[4,10,"Aarhus",2975],[4,11,"Kaunas",1903],[4,12,"Göteborg",1367.3],[4,13,"Billund",870],[4,14,"Turku | Åbo",853.45],[4,15,"Trondheim",672.81],[4,16,"Bergen",660.75],[4,17,"Tampere | Tammerfors",501.7],[4,18,"Vyborg",519], // ring 4: Norden — the five Nordic capitals + Göteborg hold the green spokes, the smaller Nordic cities between
 ];
 // ---------- The great cities of the world — placed by their real coordinates ----------
-// Rings 4–8 are no longer authored by hand. Every candidate city carries its real-world
+// Rings 5–8 are no longer authored by hand. Every candidate city carries its real-world
 // coordinates; the app computes where Mondiala sits on Earth — the centre of these cities —
 // and slots each city into the hexagon matching its bearing from Mondiala. Real distance
 // decides the ring (near cities innermost), population breaks ties, and adding a city or
 // switching centre mode re-centres the map and re-flows the whole placement.
-// The roster also carries the classical ancient cities — Rome, Athens, Jerusalem, Babylon,
-// Ur, Carthago, Tikal — so they flow onto the outer rings by the same compass rule and
-// settle near their civilisations.
+// The roster also carries classical ancient cities — Ur, Jericho, Constantinople, Tikal —
+// so they flow onto the outer rings by the same compass rule and settle near their kin.
 const WORLD_CITIES = [
   // Europe
-  "London","Amsterdam","Vienna","Prague","Dublin","Berlin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Bratislava","Ljubljana","Sarajevo","Kraków","Lisbon","Madrid","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Paris","Barcelona","Rome","Athens","Moscow","Zurich","Geneva","Naples","Seville","Marseille",
+  "London","Amsterdam","Vienna","Prague","Dublin","Berlin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Bratislava","Ljubljana","Sarajevo","Kraków","Lisbon","Madrid","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Zurich","Geneva","Naples","Seville","Marseille",
   "Bern","Luxembourg","Valletta","Nicosia","Chisinau","Minsk","Tirana","Skopje","Podgorica","Pristina","Vaduz","San Marino","Vatican City","Monaco","Andorra la Vella","Salzburg","Basel","Lausanne","Lucerne","Lugano","St. Gallen","Lyon","Toulouse","Strasbourg","Lille","Nice","Nantes","Rotterdam","The Hague","Antwerp","Ghent","Bruges","Cambridge","Oxford","Birmingham","Leeds","Aberdeen","Cork","Belfast","Cardiff","Newcastle upon Tyne","Lviv","Odesa","Sevastopol","Thessaloniki","Turin","Bologna","Genoa","Palermo","Verona",
   // Middle East & Caucasus
-  "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan","Constantinople","Jerusalem","Jericho","Homoia","Babylon","Ur","Gaza","Medina","Mecca","Jeddah","Beirut","Damascus","Aleppo","Abu Dhabi","Isfahan","Samarkand",
+  "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan","Constantinople","Jericho","Homoia","Ur","Gaza","Medina","Jeddah","Beirut","Damascus","Abu Dhabi","Isfahan","Samarkand",
   // Africa
-  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Carthago","Luxor","Timbuktu","Marrakesh","Tunis","Mogadishu",
+  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Luxor","Timbuktu","Marrakesh","Tunis","Mogadishu",
   "Rabat","Tripoli","Yamoussoukro","Porto-Novo","Ouagadougou","Bamako","Niamey","Lomé","Conakry","Freetown","Banjul","Bissau","Juba","Gitega","Brazzaville","Bangui","N'Djamena","Windhoek","Gaborone","Harare","Lusaka","Lilongwe","Maseru","Mbabane","Asmara","Djibouti City","Dodoma","Port Louis","Nouakchott","Libreville","Malabo",
   // Asia
-  "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Bandung","Singapore","Kyoto","Hiroshima","Varanasi","Agra","Chiang Mai",
+  "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Pune","Surat","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Jinan","Dalian","Qingdao","Harbin","Shenyang","Chongqing","Foshan","Dongguan","Bandung","Surabaya","Kyoto","Hiroshima","Varanasi","Agra","Chiang Mai",
   "Dili","Pyongyang","Ulaanbaatar","Vientiane","Phnom Penh","Naypyidaw","Islamabad","Kabul","Muscat","Sana'a","Manama","Dushanbe","Ashgabat","Bishkek",
   // Oceania
   "Melbourne","Sydney","Perth","Auckland","Brisbane",
   "Canberra","Wellington","Port Moresby",
   // The Americas
-  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Vancouver","New York","Tikal","Quebec City","New Orleans","Honolulu","San Salvador","Tegucigalpa","Managua","Asunción","Port-au-Prince","Cap-Haïtien","Jacmel",
+  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Belo Horizonte","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston","Tikal","Quebec City","New Orleans","Honolulu","San Salvador","Tegucigalpa","Managua","Asunción","Port-au-Prince","Cap-Haïtien","Jacmel",
   "Santo Domingo","Port of Spain","Bloemfontein",
 ]; // big (megacities), livable (EIU-style), walkable (Walk Score), ancient (the OG cities) and simply famous — one roster for the whole outer city; every European capital and every capital of a country with more than a million people is aboard
 
@@ -53,7 +50,8 @@ const CITY_COORDS = {
 "auckland":[-36.85,174.76],"brisbane":[-27.47,153.03],
 "quebec city":[46.81,-71.21],"new orleans":[29.95,-90.07],"honolulu":[21.31,-157.86],
 "mogadishu":[2.04,45.34],"san salvador":[13.69,-89.19],"tegucigalpa":[14.07,-87.19],"managua":[12.11,-86.24],"asunción":[-25.28,-57.63],"port-au-prince":[18.54,-72.34],"cap-haïtien":[19.76,-72.20],"jacmel":[18.23,-72.53],
-"bern":[46.95,7.45],"luxembourg":[49.61,6.13],"valletta":[35.90,14.51],"nicosia":[35.17,33.36],"chisinau":[47.01,28.86],"minsk":[53.90,27.57],"tirana":[41.33,19.82],"skopje":[41.99,21.43],"podgorica":[42.44,19.26],"pristina":[42.67,21.17],"vaduz":[47.14,9.52],"san marino":[43.94,12.45],"vatican city":[41.90,12.45],"monaco":[43.74,7.42],"andorra la vella":[42.51,1.52],"salzburg":[47.81,13.05],"basel":[47.56,7.59],"lausanne":[46.52,6.63],"lucerne":[47.07,8.30],"lugano":[46.00,8.95],"st. gallen":[47.42,9.37],"lyon":[45.76,4.84],"toulouse":[43.60,1.44],"strasbourg":[48.57,7.75],"lille":[50.63,3.07],"nice":[43.70,7.27],"nantes":[47.22,-1.55],"rotterdam":[51.92,4.48],"the hague":[52.08,4.30],"antwerp":[51.22,4.40],"ghent":[51.05,3.72],"bruges":[51.21,3.22],"cambridge":[52.21,0.12],"oxford":[51.75,-1.26],"birmingham":[52.49,-1.89],"leeds":[53.80,-1.55],"aberdeen":[57.15,-2.09],"cork":[51.90,-8.47],"belfast":[54.60,-5.93],"cardiff":[51.48,-3.18],"newcastle upon tyne":[54.98,-1.61],"lviv":[49.84,24.03],"odesa":[46.48,30.72],"sevastopol":[44.62,33.53],"thessaloniki":[40.64,22.94],"turin":[45.07,7.69],"bologna":[44.49,11.34],"genoa":[44.41,8.93],"palermo":[38.12,13.36],"verona":[45.44,10.99],"rabat":[34.02,-6.84],"tripoli":[32.89,13.19],"yamoussoukro":[6.82,-5.28],"porto-novo":[6.50,2.62],"ouagadougou":[12.37,-1.53],"bamako":[12.64,-8.00],"niamey":[13.51,2.11],"lomé":[6.13,1.22],"conakry":[9.51,-13.71],"freetown":[8.48,-13.23],"banjul":[13.45,-16.58],"bissau":[11.86,-15.60],"juba":[4.85,31.58],"gitega":[-3.43,29.93],"brazzaville":[-4.27,15.28],"bangui":[4.36,18.56],"n'djamena":[12.11,15.04],"windhoek":[-22.56,17.08],"gaborone":[-24.65,25.91],"harare":[-17.83,31.05],"lusaka":[-15.42,28.28],"lilongwe":[-13.96,33.79],"maseru":[-29.31,27.48],"mbabane":[-26.31,31.14],"asmara":[15.34,38.93],"djibouti city":[11.59,43.15],"dodoma":[-6.16,35.75],"port louis":[-20.16,57.50],"dili":[-8.56,125.56],"pyongyang":[39.02,125.75],"ulaanbaatar":[47.89,106.91],"vientiane":[17.97,102.60],"phnom penh":[11.56,104.92],"naypyidaw":[19.75,96.13],"islamabad":[33.68,73.05],"kabul":[34.53,69.17],"muscat":[23.59,58.41],"sana'a":[15.37,44.19],"manama":[26.23,50.59],"dushanbe":[38.56,68.79],"ashgabat":[37.96,58.33],"bishkek":[42.87,74.59],"canberra":[-35.28,149.13],"wellington":[-41.29,174.78],"port moresby":[-9.44,147.18],"santo domingo":[18.49,-69.93],"port of spain":[10.65,-61.51],"bloemfontein":[-29.09,26.16],"nouakchott":[18.07,-15.96],"libreville":[0.42,9.47],"malabo":[3.75,8.78]
+"bern":[46.95,7.45],"luxembourg":[49.61,6.13],"valletta":[35.90,14.51],"nicosia":[35.17,33.36],"chisinau":[47.01,28.86],"minsk":[53.90,27.57],"tirana":[41.33,19.82],"skopje":[41.99,21.43],"podgorica":[42.44,19.26],"pristina":[42.67,21.17],"vaduz":[47.14,9.52],"san marino":[43.94,12.45],"vatican city":[41.90,12.45],"monaco":[43.74,7.42],"andorra la vella":[42.51,1.52],"salzburg":[47.81,13.05],"basel":[47.56,7.59],"lausanne":[46.52,6.63],"lucerne":[47.07,8.30],"lugano":[46.00,8.95],"st. gallen":[47.42,9.37],"lyon":[45.76,4.84],"toulouse":[43.60,1.44],"strasbourg":[48.57,7.75],"lille":[50.63,3.07],"nice":[43.70,7.27],"nantes":[47.22,-1.55],"rotterdam":[51.92,4.48],"the hague":[52.08,4.30],"antwerp":[51.22,4.40],"ghent":[51.05,3.72],"bruges":[51.21,3.22],"cambridge":[52.21,0.12],"oxford":[51.75,-1.26],"birmingham":[52.49,-1.89],"leeds":[53.80,-1.55],"aberdeen":[57.15,-2.09],"cork":[51.90,-8.47],"belfast":[54.60,-5.93],"cardiff":[51.48,-3.18],"newcastle upon tyne":[54.98,-1.61],"lviv":[49.84,24.03],"odesa":[46.48,30.72],"sevastopol":[44.62,33.53],"thessaloniki":[40.64,22.94],"turin":[45.07,7.69],"bologna":[44.49,11.34],"genoa":[44.41,8.93],"palermo":[38.12,13.36],"verona":[45.44,10.99],"rabat":[34.02,-6.84],"tripoli":[32.89,13.19],"yamoussoukro":[6.82,-5.28],"porto-novo":[6.50,2.62],"ouagadougou":[12.37,-1.53],"bamako":[12.64,-8.00],"niamey":[13.51,2.11],"lomé":[6.13,1.22],"conakry":[9.51,-13.71],"freetown":[8.48,-13.23],"banjul":[13.45,-16.58],"bissau":[11.86,-15.60],"juba":[4.85,31.58],"gitega":[-3.43,29.93],"brazzaville":[-4.27,15.28],"bangui":[4.36,18.56],"n'djamena":[12.11,15.04],"windhoek":[-22.56,17.08],"gaborone":[-24.65,25.91],"harare":[-17.83,31.05],"lusaka":[-15.42,28.28],"lilongwe":[-13.96,33.79],"maseru":[-29.31,27.48],"mbabane":[-26.31,31.14],"asmara":[15.34,38.93],"djibouti city":[11.59,43.15],"dodoma":[-6.16,35.75],"port louis":[-20.16,57.50],"dili":[-8.56,125.56],"pyongyang":[39.02,125.75],"ulaanbaatar":[47.89,106.91],"vientiane":[17.97,102.60],"phnom penh":[11.56,104.92],"naypyidaw":[19.75,96.13],"islamabad":[33.68,73.05],"kabul":[34.53,69.17],"muscat":[23.59,58.41],"sana'a":[15.37,44.19],"manama":[26.23,50.59],"dushanbe":[38.56,68.79],"ashgabat":[37.96,58.33],"bishkek":[42.87,74.59],"canberra":[-35.28,149.13],"wellington":[-41.29,174.78],"port moresby":[-9.44,147.18],"santo domingo":[18.49,-69.93],"port of spain":[10.65,-61.51],"bloemfontein":[-29.09,26.16],"nouakchott":[18.07,-15.96],"libreville":[0.42,9.47],"malabo":[3.75,8.78],
+"jinan":[36.65,117.12],"dalian":[38.91,121.60],"qingdao":[36.07,120.38],"belo horizonte":[-19.92,-43.94],"harbin":[45.80,126.53],"pune":[18.52,73.86],"surabaya":[-7.25,112.75],"surat":[21.17,72.83],"shenyang":[41.80,123.43],"chongqing":[29.56,106.55],"foshan":[23.02,113.12],"dongguan":[23.02,113.75]
 };
 
 // which country each roster city belongs to — names the country Mondiala sits in once the centre moves off the known spots
@@ -75,15 +73,16 @@ const CITY_COUNTRY = {
 "auckland":"New Zealand","brisbane":"Australia",
 "quebec city":"Canada","new orleans":"the United States","honolulu":"the United States",
 "mogadishu":"Somalia","san salvador":"El Salvador","tegucigalpa":"Honduras","managua":"Nicaragua","asunción":"Paraguay","port-au-prince":"Haiti","cap-haïtien":"Haiti","jacmel":"Haiti",
-"bern":"Switzerland","luxembourg":"Luxembourg","valletta":"Malta","nicosia":"Cyprus","chisinau":"Moldova","minsk":"Belarus","tirana":"Albania","skopje":"North Macedonia","podgorica":"Montenegro","pristina":"Kosovo","vaduz":"Liechtenstein","san marino":"San Marino","vatican city":"Vatican City","monaco":"Monaco","andorra la vella":"Andorra","salzburg":"Austria","basel":"Switzerland","lausanne":"Switzerland","lucerne":"Switzerland","lugano":"Switzerland","st. gallen":"Switzerland","lyon":"France","toulouse":"France","strasbourg":"France","lille":"France","nice":"France","nantes":"France","rotterdam":"the Netherlands","the hague":"the Netherlands","antwerp":"Belgium","ghent":"Belgium","bruges":"Belgium","cambridge":"the United Kingdom","oxford":"the United Kingdom","birmingham":"the United Kingdom","leeds":"the United Kingdom","aberdeen":"the United Kingdom","cork":"Ireland","belfast":"the United Kingdom","cardiff":"the United Kingdom","newcastle upon tyne":"the United Kingdom","lviv":"Ukraine","odesa":"Ukraine","sevastopol":"Ukraine","thessaloniki":"Greece","turin":"Italy","bologna":"Italy","genoa":"Italy","palermo":"Italy","verona":"Italy","rabat":"Morocco","tripoli":"Libya","yamoussoukro":"Côte d'Ivoire","porto-novo":"Benin","ouagadougou":"Burkina Faso","bamako":"Mali","niamey":"Niger","lomé":"Togo","conakry":"Guinea","freetown":"Sierra Leone","banjul":"the Gambia","bissau":"Guinea-Bissau","juba":"South Sudan","gitega":"Burundi","brazzaville":"the Congo","bangui":"the Central African Republic","n'djamena":"Chad","windhoek":"Namibia","gaborone":"Botswana","harare":"Zimbabwe","lusaka":"Zambia","lilongwe":"Malawi","maseru":"Lesotho","mbabane":"Eswatini","asmara":"Eritrea","djibouti city":"Djibouti","dodoma":"Tanzania","port louis":"Mauritius","dili":"Timor-Leste","pyongyang":"North Korea","ulaanbaatar":"Mongolia","vientiane":"Laos","phnom penh":"Cambodia","naypyidaw":"Myanmar","islamabad":"Pakistan","kabul":"Afghanistan","muscat":"Oman","sana'a":"Yemen","manama":"Bahrain","dushanbe":"Tajikistan","ashgabat":"Turkmenistan","bishkek":"Kyrgyzstan","canberra":"Australia","wellington":"New Zealand","port moresby":"Papua New Guinea","santo domingo":"the Dominican Republic","port of spain":"Trinidad and Tobago","bloemfontein":"South Africa","nouakchott":"Mauritania","libreville":"Gabon","malabo":"Equatorial Guinea"
+"bern":"Switzerland","luxembourg":"Luxembourg","valletta":"Malta","nicosia":"Cyprus","chisinau":"Moldova","minsk":"Belarus","tirana":"Albania","skopje":"North Macedonia","podgorica":"Montenegro","pristina":"Kosovo","vaduz":"Liechtenstein","san marino":"San Marino","vatican city":"Vatican City","monaco":"Monaco","andorra la vella":"Andorra","salzburg":"Austria","basel":"Switzerland","lausanne":"Switzerland","lucerne":"Switzerland","lugano":"Switzerland","st. gallen":"Switzerland","lyon":"France","toulouse":"France","strasbourg":"France","lille":"France","nice":"France","nantes":"France","rotterdam":"the Netherlands","the hague":"the Netherlands","antwerp":"Belgium","ghent":"Belgium","bruges":"Belgium","cambridge":"the United Kingdom","oxford":"the United Kingdom","birmingham":"the United Kingdom","leeds":"the United Kingdom","aberdeen":"the United Kingdom","cork":"Ireland","belfast":"the United Kingdom","cardiff":"the United Kingdom","newcastle upon tyne":"the United Kingdom","lviv":"Ukraine","odesa":"Ukraine","sevastopol":"Ukraine","thessaloniki":"Greece","turin":"Italy","bologna":"Italy","genoa":"Italy","palermo":"Italy","verona":"Italy","rabat":"Morocco","tripoli":"Libya","yamoussoukro":"Côte d'Ivoire","porto-novo":"Benin","ouagadougou":"Burkina Faso","bamako":"Mali","niamey":"Niger","lomé":"Togo","conakry":"Guinea","freetown":"Sierra Leone","banjul":"the Gambia","bissau":"Guinea-Bissau","juba":"South Sudan","gitega":"Burundi","brazzaville":"the Congo","bangui":"the Central African Republic","n'djamena":"Chad","windhoek":"Namibia","gaborone":"Botswana","harare":"Zimbabwe","lusaka":"Zambia","lilongwe":"Malawi","maseru":"Lesotho","mbabane":"Eswatini","asmara":"Eritrea","djibouti city":"Djibouti","dodoma":"Tanzania","port louis":"Mauritius","dili":"Timor-Leste","pyongyang":"North Korea","ulaanbaatar":"Mongolia","vientiane":"Laos","phnom penh":"Cambodia","naypyidaw":"Myanmar","islamabad":"Pakistan","kabul":"Afghanistan","muscat":"Oman","sana'a":"Yemen","manama":"Bahrain","dushanbe":"Tajikistan","ashgabat":"Turkmenistan","bishkek":"Kyrgyzstan","canberra":"Australia","wellington":"New Zealand","port moresby":"Papua New Guinea","santo domingo":"the Dominican Republic","port of spain":"Trinidad and Tobago","bloemfontein":"South Africa","nouakchott":"Mauritania","libreville":"Gabon","malabo":"Equatorial Guinea",
+"jinan":"China","dalian":"China","qingdao":"China","belo horizonte":"Brazil","harbin":"China","pune":"India","surabaya":"Indonesia","surat":"India","shenyang":"China","chongqing":"China","foshan":"China","dongguan":"China"
 };
 
 // the three default centre spots — where Mondiala sits before any city is added, with the real country each one lands in
 // (geo: the spring country of Istog (Burim) at the foot of the Accursed Mountains, western Kosovo · pop: the Aralkum — the dried bed of the Aral Sea's eastern basin, southern Kazakhstan · great: the Mureș valley at Simeria, east of Deva, between the Apuseni and the Retezat, Romania)
 const CENTER_SPOTS = [
-  { lat: 42.36686891, lon: 20.10760660, flag: "🇦🇱", country: "Albania", near: "the Gjakova Highlands — the Accursed Mountains above Bajram Curri, gateway to the Valbona valley" },
-  { lat: 44.78695429, lon: 60.59397881, flag: "🇰🇿", country: "Kazakhstan", near: "the Aralkum — the desert floor of the Aral Sea's dried eastern basin" },
-  { lat: 45.48037398, lon: 22.64265250, flag: "🇷🇴", country: "Romania", near: "the Bistra valley in the Banat, between the Țarcu and Poiana Ruscă mountains, above Oțelu Roșu" }
+  { lat: 42.99344039, lon: 23.44212681, flag: "🇧🇬", country: "Bulgaria", near: "the western Stara Planina — the Balkan ridge above the Iskar Gorge, the pass road from Sofia to the Danube plain" },
+  { lat: 42.12446940, lon: 67.72948666, flag: "🇰🇿", country: "Kazakhstan", near: "the Shardara steppe — between the Karatau mountains and the Syr Darya reservoir, Turkistan region" },
+  { lat: 46.11426323, lon: 27.45987150, flag: "🇲🇩", country: "Moldova", near: "the Tigheci hills — oak woodland and steppe between the Prut and the Ialpug, southern Moldova" }
 ];
 
 // the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
@@ -95,21 +94,22 @@ const PINK_SLOTS = {
   8: [5,13,21,29,37,45]
 };
 // the love gods waiting around each ring — they settle onto that ring's pink slots by compass
-// ring 2's six are authored in RAW beside their civilisations; the outer rings swap by compass
+// rings 2–3's twelve are authored in RAW (the cradle goddesses and the great six); the outer rings swap by compass
 const PINK_GODS = {
-  5: ["Venus","Cupid","Adonis","Aphrodite","Oshun","Kama","Astarte","Sjöfn","Prende","Lada","Qetesh","Turan"],
-  7: ["Nanaya","Anahita","Cybele","Dionysus","Himeros","Peitho","Bastet","Bes","Freyr","Freyja","Milda","Zhiva"],
+  5: ["Cupid","Adonis","Oshun","Astarte","Sjöfn","Prende","Lada","Qetesh","Turan","Anteros","Pothos","Astghik"],
+  7: ["Nanaya","Anahita","Cybele","Dionysus","Himeros","Peitho","Bastet","Bes","Freyr","Milda","Zhiva","Aizen-Myōō"],
   8: ["Áine","Parvati","Yue Lao","Mami Wata","Tlazolteotl","Erzulie Freda"]
 };
 // where each god of love comes from [lat, lon] — the bearing from Mondiala to this spot decides
 // which pink hex an OUTER god takes: eastern gods sit with the eastern cities, western with western,
 // African to the south, and the Norse/Baltic ones to the north.
-// ring 2's six goddesses are authored beside their civilisations; their origins are kept here for the record
+// rings 2–3's twelve gods are authored in the heart beside their civilisations and cities; the rest settle by compass
 const GOD_ORIGINS = {
 "zhinü":[34.62,112.45],"cavillaca":[-12.07,-76.31], // ring 2: the Weaver Girl of China, and the Inca goddess of the Huarochirí myth
-"venus":[41.90,12.50],"aphrodite":[34.75,32.41],"eros":[37.98,23.73],"ishtar":[31.32,45.64],"kama":[23.18,75.78],"freyja":[59.86,17.64], // the former authored six — Eros and Ishtar rest dormant (Cupid and Inanna carry their torches); Venus, Aphrodite, Kama and Freyja now settle by compass on the outer rings
+"venus":[41.90,12.50],"aphrodite":[34.75,32.41],"eros":[37.98,23.73],"ishtar":[31.32,45.64],"kama":[23.18,75.78],"freyja":[59.86,17.64], // ring 3: the great six, restored to the heart — Ishtar beside Babylon, Venus beside Rome, Freyja just inside Norden
 "inanna":[31.32,45.64],"cupid":[41.90,12.50],"adonis":[34.12,35.65],"hathor":[26.14,32.33],"oshun":[7.90,4.55],"rati":[23.18,75.78],"astarte":[35.60,35.77],"sjöfn":[59.86,17.64],"prende":[42.06,19.49],"lada":[52.23,21.01],"qetesh":[34.73,36.72],"turan":[43.47,11.03],
 "nanaya":[32.13,45.23],"anahita":[32.65,51.67],"cybele":[39.32,31.58],"dionysus":[38.33,23.32],"himeros":[37.98,23.73],"peitho":[37.98,23.73],"bastet":[30.58,31.51],"bes":[26.14,32.33],"freyr":[59.86,17.64],"milda":[54.69,25.28],"zhiva":[52.52,13.40],"xochiquetzal":[19.43,-99.13],
+"anteros":[37.97,23.73],"pothos":[37.97,23.73],"astghik":[40.18,44.51],"aizen-myōō":[34.21,135.58], // the backfill four — Eros's brothers Anteros and Pothos, the Armenian Aphrodite Astghik, and Japan's king of desire
 "áine":[52.48,-8.61],"parvati":[25.32,83.01],"yue lao":[39.90,116.41],"mami wata":[4.05,9.70],"tlazolteotl":[19.43,-99.13],"erzulie freda":[18.54,-72.34]
 };
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
@@ -178,12 +178,16 @@ const CITY_INFO = {
 "babylon":["🇮🇶","Babylon — the gate of the gods: the blue-glazed Ishtar Gate, the Processional Way of lions, the ziggurat Etemenanki."],
 "ur":["🇮🇶","Ur — Sumer's moon city: the Great Ziggurat of Nanna, the Royal Tombs' gold, Abraham's traditional home."],
 "tikal":["🇬🇹","Tikal — the Maya capital in the Petén jungle: limestone step-temples over the canopy, stelae of the jaguar lords."],
-"venus":["♀","Venus — Roman goddess of love and desire; her quarter settles wherever the compass faces Rome."],
-"aphrodite":["🐚","Aphrodite — Greek goddess of love, born of sea-foam; her quarter faces Cyprus, her island of birth."],
-"eros":["💘","Eros — the god of desire; he rests dormant while his Roman self, Cupid, walks the outer districts."],
-"ishtar":["✴","Ishtar — Mesopotamian goddess of love and war, the Evening Star; she rests dormant while her Sumerian self, Inanna, holds the cradle."],
-"kama":["🪷","Kama — the Hindu god of desire; his quarter practises the Kama Sutra's arts of pleasure."],
-"freyja":["🐈","Freyja — the Norse goddess of love, sex and fertility; her quarter keeps to the north, beside her brother Freyr's."],
+"venus":["♀","Venus — Roman goddess of love and desire; her spoke stands beside Rome's, facing Carthago across the way."],
+"aphrodite":["🐚","Aphrodite — Greek goddess of love, born of sea-foam; her spoke stands beside Athens and Jerusalem."],
+"eros":["💘","Eros — the god of desire; his spoke stands beside Byzantium, the Greek city that outlived Greece."],
+"ishtar":["✴","Ishtar — Mesopotamian goddess of love and war, the Evening Star; her spoke stands beside Babylon's gate."],
+"kama":["🪷","Kama — the Hindu god of desire; his spoke practises the Kama Sutra's arts of pleasure, between Mecca and Tenochtitlan."],
+"freyja":["🐈","Freyja — the Norse goddess of love, sex and fertility; her spoke holds the north point of the ancient ring, just inside Norden, beside her brother Freyr's districts."],
+"anteros":["➹","Anteros — god of requited love, avenger of the scorned; Eros's brother, his arrows answer his brother's."],
+"pothos":["🌾","Pothos — the god of yearning and longing, Eros's brother; his district aches beautifully toward what it cannot reach."],
+"astghik":["💧","Astghik — Armenian goddess of love and beauty, bride of the flood; doves and roses float on her waters."],
+"aizen-myōō":["🔥","Aizen-Myōō — Japan's wrathful king of desire; the third eye sees lust itself, transmuted to enlightenment."],
 "zhinü":["🧵","Zhinü — the Weaver Girl of Chinese myth, weaver of the cloud-roads; each summer the magpies bridge the Milky Way so she and the Cowherd may meet."],
 "cavillaca":["🌊","Cavillaca — the Inca goddess of the Huarochirí myth, whose heartbreak fled into the sea as stone; desire and grief on the Pacific shore."],
 "inanna":["⭐","Inanna — Sumerian queen of heaven, goddess of love and war, Ishtar's forerunner; the eight-pointed star hangs over her quarter."],
@@ -511,6 +515,18 @@ const CITY_INFO = {
 "nouakchott":["🇲🇷","Capital at the desert's edge — sand-floored quarters, the Saudi mosque's twin minarets, Atlantic fishing beaches, a city still half-nomad at heart."],
 "libreville":["🇬🇦","Estuary capital — waterfront boulevards, glass towers among the mangroves, Fang masks in the forest galleries."],
 "malabo":["🇬🇶","Volcanic island capital — Spanish colonial balconies under Pico Basilé, oil money on an equatorial bay."],
+"jinan":["🇨🇳","City of springs — the Black Spring's emerald pools, lake-gardens of Daming Hu, Confucian heartland nearby."],
+"dalian":["🇨🇳","Harbour modernism — star-shaped squares, coastal promenades, Russian-Japanese-era blocks on the Liaodong peninsula."],
+"qingdao":["🇨🇳","German brewery town — red-tiled roofs and the Zhanqiao pier, Tsingtao malt, beaches below Laoshan."],
+"belo horizonte":["🇧🇷","Planned Minas capital — Avenida Amazonas grid, Niemeyer curves at Pampulha, a mountain ring on the horizon."],
+"harbin":["🇨🇳","Ice city — Russian domes of Saint Sophia, the frozen Songhua, Art Nouveau Zhongshan Street, snow-festival lanterns."],
+"pune":["🇮🇳","Peshwa capital — Deccan wadas and Shaniwar fort, ashrams and colleges, IT gardens on the Mula."],
+"surabaya":["🇮🇩","Hero city — Javanese harbour on the Kalimas canals, the Arab quarter, battleship monuments and jamu stalls."],
+"surat":["🇮🇳","Diamond city on the Tapi — Mughal port walls, textile bazaars, the old English and Dutch factories."],
+"shenyang":["🇨🇳","Manchu capital — the Mukden palace's twin-roof halls, imperial tombs in pine woods, heavy-industry boulevards."],
+"chongqing":["🇨🇳","Mountain city — stilted blocks stacked above the Yangtze gorge, hotpot steam, cable cars through the fog."],
+"foshan":["🇨🇳","Kung-fu city — the Ancestral Temple's stage and lions, Lingnan gardens, ceramics kilns at Shiwan."],
+"dongguan":["🇨🇳","Workshop frontier — the factory sprawl between Guangzhou and Shenzhen, opium-war history at Humen."],
 "freeuse":["♥","Free-use district — consent-permissioned pink quarter with threshold architecture at its six edges."]
 };
 
@@ -870,13 +886,21 @@ const CITY_FACTS = {
 "bloemfontein":[520000,"≈ urban area",68,"EIU-style est."],
 "nouakchott":[1400000,"≈ urban area",46,"EIU-style est."],
 "libreville":[1000000,"≈ urban area",56,"EIU-style est."],
-"malabo":[300000,"≈ urban area",54,"EIU-style est."]
+"malabo":[300000,"≈ urban area",54,"EIU-style est."],
+"jinan":[5052000,"urban area 2025",72,"EIU-style est."],
+"dalian":[5300000,"urban area 2025",74,"EIU-style est."],
+"qingdao":[5381000,"urban area 2025",76,"EIU-style est."],
+"belo horizonte":[5972000,"urban area 2025",69,"EIU-style est."],
+"harbin":[6115000,"urban area 2025",70,"EIU-style est."],
+"pune":[6817951,"urban area 2025",66,"EIU-style est."],
+"surabaya":[6843503,"urban area 2025",65,"EIU-style est."],
+"surat":[6908925,"urban area 2025",64,"EIU-style est."],
+"shenyang":[6921000,"urban area 2025",71,"EIU-style est."],
+"chongqing":[7071073,"urban area 2025",72,"EIU-style est."],
+"foshan":[7236000,"urban area 2025",75,"EIU-style est."],
+"dongguan":[7360000,"urban area 2025",74,"EIU-style est."]
 };
 
 
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
-const SEX_GODS = new Set(["venus","aphrodite","kama","freyja","zhinü","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","cavillaca","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes; the core six sit beside their cradle civilisations, the slot lattice is the mirror-symmetric proven minimum, and the outer gods settle onto it by compass, facing their homelands
-function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
-function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
-function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
-function fmtPop(p) { return p >= 1e6 ? (Math.round(p / 1e5) / 10) + "M" : p.toLocaleString("en-US"); }
+const SEX_GODS = new Set(["venus","aphrodite","kama","freyja","zhinü","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","cavillaca","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda","eros","ishtar","anteros","pothos","astghik","aizen-myōō"]); // gods of love and sexuality — the pink free-use district hexes; the cradle goddesses sit beside their civilisations on ring 2, the great six hold ring 3 beside the ancient cities, the slot lattice is the mirror-symmetric proven minimum, and the outer gods settle onto it by compass, facing their homelands

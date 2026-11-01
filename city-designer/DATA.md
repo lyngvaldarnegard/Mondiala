@@ -1,26 +1,24 @@
-# Mondiala — city designer data
+# Mondiala — city data
 
-This file documents every city, civilisation and deity on the Mondiala map. The map itself is `mondiala.html`; the data lives in `mondiala-data.js`.
+_Generated from the design canvas — do not edit by hand; regenerate after any roster, facts or centre-spot change._
 
-**The rule of placement:** Mondiala sits at the centre of the world's great cities. Each city's real bearing from that centre picks its hexagon, its real distance picks its ring (near cities innermost), and population breaks distance ties. Rings 0–2 are the authored cradle heart; the outer pink districts are reserved lattice slots whose gods settle by the same compass rule, each facing their homeland.
+**Roster: 315 great cities** — every European capital and every capital of a country with more than a million people, plus the megacities, the livable, the walkable, the ancient and the simply famous. 150 of them flow onto the map (rings 4–8); 165 wait in the pool beyond the horizon.
 
-## Mondiala's centre spots
+## Where Mondiala sits — the three default centre spots
 
-Where Mondiala sits on Earth under each centre mode, before any extra city is added:
+| centre mode | latitude | longitude | where |
+| --- | --- | --- | --- |
+| geographic | 42.3669°N | 20.1076°E | 🇦🇱 Albania — the Gjakova Highlands — the Accursed Mountains above Bajram Curri, gateway to the Valbona valley |
+| population-weighted | 44.7870°N | 60.5940°E | 🇰🇿 Kazakhstan — the Aralkum — the desert floor of the Aral Sea's dried eastern basin |
+| greatness-weighted | 45.4804°N | 22.6427°E | 🇷🇴 Romania — the Bistra valley in the Banat, between the Țarcu and Poiana Ruscă mountains, above Oțelu Roșu |
 
-| Mode | Flag | Country | Where | Coordinates |
-|---|---|---|---|---|
-| geo | 🇸🇰 | Slovakia | the granite main ridge of the Low Tatras, the mountain spine of central Slovakia | 48.9560, 19.7897 |
-| pop | 🇰🇿 | Kazakhstan | the Kyzylkum steppe north of the Syr Darya, near Kyzylorda | 45.2851, 65.3626 |
-| great | 🇺🇦 | Ukraine | the wooded country of northwest Volhynia, near Turiisk | 51.1893, 24.2740 |
+Distance decides the ring (near = inner), population breaks ties, and each city settles in the hexagon matching its real bearing from the centre. Adding a city or switching centre mode re-flows the whole placement.
 
-## The authored core — the cradle heart (rings 0–2)
+## The cradle heart (rings 0–2) — authored by hand
 
-Ring 1 carries the six cradle civilisations, each on the spoke its homeland bears to. Ring 2 carries each civilisation's first great city on the spokes, and its goddess of love on the pink hexes between. Ring 3 is the Nordic ring.
-
-| Ring | Hex | Name | Density (people/km²) |
-|---|---|---|---|
-| 0 | 0 | Metropol | 4355.39 |
+| ring | hex | name | people/km² |
+| --- | --- | --- | --- |
+| 0 | 0 | Metropol | 4,355.39 |
 | 1 | 1 | Ancient China | — |
 | 1 | 2 | Indus Valley | — |
 | 1 | 3 | Mesopotamia | — |
@@ -39,330 +37,449 @@ Ring 1 carries the six cradle civilisations, each on the spoke its homeland bear
 | 2 | 8 | Hathor | — |
 | 2 | 10 | Cavillaca | — |
 | 2 | 12 | Xochiquetzal | — |
-| 3 | 1 | Stockholm | 5261.53 |
-| 3 | 2 | København | 7411.38 |
-| 3 | 3 | Oslo | 1708.99 |
-| 3 | 4 | Helsinki | 3238.47 |
-| 3 | 5 | Reykjavík | 556 |
-| 3 | 6 | Tallinn | 2864.3 |
-| 3 | 7 | Riga | 2339 |
-| 3 | 8 | Vilnius | 1515 |
-| 3 | 9 | Malmö | 4049 |
-| 3 | 10 | Aarhus | 2975 |
-| 3 | 11 | Kaunas | 1903 |
-| 3 | 12 | Göteborg | 1367.3 |
-| 3 | 13 | Billund | 870 |
-| 3 | 14 | Turku \| Åbo | 853.45 |
-| 3 | 15 | Trondheim | 672.81 |
-| 3 | 16 | Bergen | 660.75 |
-| 3 | 17 | Tampere \| Tammerfors | 501.7 |
-| 3 | 18 | Vyborg | 519 |
 
-## The city roster — 214 great cities
+The six non-spoke hexes of ring 2 are the pink free-use districts — a goddess of love beside each cradle civilisation.
 
-Big, livable, walkable — and ancient: the OG cities and the simply famous flow onto the outer rings by compass, settling near the civilisations they grew from.
+## Ring 3 — Norden, the green spokes
 
-### Europe (45)
+The five Nordic capitals + Göteborg hold the six green spokes; the smaller Nordic cities sit between them. Both tiers are sorted by population.
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| London | 🇬🇧 | the United Kingdom | 51.51°N, 0.13°W | 11,360,000 *urban area 2025* |
-| Amsterdam | 🇳🇱 | the Netherlands | 52.37°N, 4.90°E | 2,500,000 *≈ urban area* |
-| Vienna | 🇦🇹 | Austria | 48.21°N, 16.37°E | 2,000,000 *city 2024 ≈* |
-| Prague | 🇨🇿 | Czechia | 50.08°N, 14.44°E | 1,300,000 *≈ city* |
-| Dublin | 🇮🇪 | Ireland | 53.35°N, 6.26°W | 1,250,000 *≈ urban area* |
-| Berlin | 🇩🇪 | Germany | 52.52°N, 13.40°E | 4,400,000 *≈ urban area* |
-| Brussels | 🇧🇪 | Belgium | 50.85°N, 4.35°E | 2,100,000 *≈ urban area* |
-| Kyiv | 🇺🇦 | Ukraine | 50.45°N, 30.52°E | 3,000,000 *≈ city proper (pre-war est.)* |
-| Edinburgh | 🇬🇧 | the United Kingdom | 55.95°N, 3.19°W | 520,000 *≈ urban area* |
-| Manchester | 🇬🇧 | the United Kingdom | 53.48°N, 2.24°W | 2,800,000 *≈ urban area* |
-| Venice | 🇮🇹 | Italy | 45.44°N, 12.34°E | 260,000 *≈ city* |
-| Milan | 🇮🇹 | Italy | 45.46°N, 9.19°E | 5,631,000 *urban area 2025* |
-| Zagreb | 🇭🇷 | Croatia | 45.81°N, 15.98°E | 800,000 *≈ urban area* |
-| Saint Petersburg | 🇷🇺 | Russia | 59.94°N, 30.31°E | 5,869,000 *urban area 2025* |
-| Liverpool | 🇬🇧 | the United Kingdom | 53.41°N, 2.98°W | 860,000 *≈ urban area* |
-| Glasgow | 🇬🇧 | the United Kingdom | 55.86°N, 4.25°W | 1,700,000 *≈ urban area* |
-| Munich | 🇩🇪 | Germany | 48.14°N, 11.58°E | 2,900,000 *≈ urban area* |
-| Bratislava | 🇸🇰 | Slovakia | 48.15°N, 17.11°E | 700,000 *≈ urban area* |
-| Ljubljana | 🇸🇮 | Slovenia | 46.06°N, 14.51°E | 300,000 *≈ urban area* |
-| Sarajevo | 🇧🇦 | Bosnia and Herzegovina | 43.86°N, 18.41°E | 420,000 *≈ urban area* |
-| Kraków | 🇵🇱 | Poland | 50.06°N, 19.94°E | 800,000 *≈ urban area* |
-| Lisbon | 🇵🇹 | Portugal | 38.72°N, 9.14°W | 2,900,000 *≈ urban area* |
-| Madrid | 🇪🇸 | Spain | 40.42°N, 3.70°W | 6,966,000 *urban area 2025* |
-| Bordeaux | 🇫🇷 | France | 44.84°N, 0.58°W | 1,000,000 *≈ agglomeration* |
-| Florence | 🇮🇹 | Italy | 43.77°N, 11.26°E | 850,000 *≈ urban area* |
-| Utrecht | 🇳🇱 | the Netherlands | 52.09°N, 5.12°E | 375,000 *≈ city* |
-| Porto | 🇵🇹 | Portugal | 41.15°N, 8.61°W | 1,300,000 *≈ agglomeration* |
-| Bristol | 🇬🇧 | the United Kingdom | 51.45°N, 2.59°W | 620,000 *≈ urban area* |
-| Hamburg | 🇩🇪 | Germany | 53.55°N, 9.99°E | 3,200,000 *≈ urban area* |
-| Budapest | 🇭🇺 | Hungary | 47.50°N, 19.04°E | 1,750,000 *≈ city* |
-| Warsaw | 🇵🇱 | Poland | 52.23°N, 21.01°E | 3,100,000 *≈ urban area* |
-| Bucharest | 🇷🇴 | Romania | 44.43°N, 26.10°E | 1,900,000 *≈ urban area* |
-| Belgrade | 🇷🇸 | Serbia | 44.79°N, 20.45°E | 1,400,000 *≈ urban area* |
-| Sofia | 🇧🇬 | Bulgaria | 42.70°N, 23.32°E | 1,200,000 *≈ urban area* |
-| Frankfurt | 🇩🇪 | Germany | 50.11°N, 8.68°E | 2,700,000 *≈ urban area (Rhine–Main)* |
-| Paris | 🇫🇷 | France | 48.86°N, 2.35°E | 11,282,000 *urban area 2025* |
-| Barcelona | 🇪🇸 | Spain | 41.39°N, 2.17°E | 5,489,000 *urban area 2025* |
-| Rome | 🇮🇹 | Italy | 41.89°N, 12.48°E | 4,300,000 *≈ urban area* |
-| Athens | 🇬🇷 | Greece | 37.98°N, 23.73°E | 3,200,000 *≈ urban area* |
-| Moscow | 🇷🇺 | Russia | 55.75°N, 37.62°E | 19,100,000 *urban area 2025* |
-| Zurich | 🇨🇭 | Switzerland | 47.37°N, 8.54°E | 1,400,000 *≈ urban area* |
-| Geneva | 🇨🇭 | Switzerland | 46.20°N, 6.15°E | 1,000,000 *≈ urban area (Grand Genève)* |
-| Naples | 🇮🇹 | Italy | 40.85°N, 14.27°E | 3,100,000 *≈ metropolitan area* |
-| Seville | 🇪🇸 | Spain | 37.39°N, 5.99°W | 1,500,000 *≈ metropolitan area* |
-| Marseille | 🇫🇷 | France | 43.30°N, 5.37°E | 1,900,000 *≈ metropolitan area (Aix–Marseille)* |
+| hex | spoke | name | people/km² |
+| --- | --- | --- | --- |
+| 1 | green spoke | Stockholm | 5,261.53 |
+| 2 | between | Vilnius | 1,515 |
+| 3 | between | Riga | 2,339 |
+| 4 | green spoke | København | 7,411.38 |
+| 5 | between | Tallinn | 2,864.3 |
+| 6 | between | Tampere | Tammerfors | 501.7 |
+| 7 | green spoke | Helsinki | 3,238.47 |
+| 8 | between | Malmö | 4,049 |
+| 9 | between | Aarhus | 2,975 |
+| 10 | green spoke | Oslo | 1,708.99 |
+| 11 | between | Kaunas | 1,903 |
+| 12 | between | Turku | Åbo | 853.45 |
+| 13 | green spoke | Göteborg | 1,367.3 |
+| 14 | between | Bergen | 660.75 |
+| 15 | between | Trondheim | 672.81 |
+| 16 | green spoke | Reykjavík | 556 |
+| 17 | between | Vyborg | 519 |
+| 18 | between | Billund | 870 |
+
+## The city roster — 315 great cities
+
+### Europe (95)
+
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Aberdeen | the United Kingdom | ≈ 220,000 | ≈ urban area | ≈ 85 |
+| Amsterdam | the Netherlands | ≈ 2.5M | ≈ urban area | ≈ 93 |
+| Andorra la Vella | Andorra | ≈ 25,000 | ≈ town | ≈ 82 |
+| Antwerp | Belgium | ≈ 1.1M | ≈ urban area | ≈ 85 |
+| Athens | Greece | ≈ 3.2M | ≈ urban area | ≈ 86 |
+| Barcelona | Spain | 5.5M | urban area 2025 | ≈ 91 |
+| Basel | Switzerland | ≈ 550,000 | ≈ urban area | ≈ 90 |
+| Belfast | the United Kingdom | ≈ 600,000 | ≈ urban area | ≈ 82 |
+| Belgrade | Serbia | ≈ 1.4M | ≈ urban area | ≈ 78 |
+| Berlin | Germany | ≈ 4.4M | ≈ urban area | ≈ 92.5 |
+| Bern | Switzerland | ≈ 420,000 | ≈ urban area (agglomeration) | ≈ 91 |
+| Birmingham | the United Kingdom | ≈ 2.3M | ≈ urban area (conurbation) | ≈ 84 |
+| Bologna | Italy | ≈ 800,000 | ≈ urban area | ≈ 86 |
+| Bordeaux | France | ≈ 1M | ≈ agglomeration | ≈ 89 |
+| Bratislava | Slovakia | ≈ 700,000 | ≈ urban area | ≈ 85 |
+| Bristol | the United Kingdom | ≈ 620,000 | ≈ urban area | ≈ 82 |
+| Bruges | Belgium | ≈ 120,000 | ≈ city | ≈ 87 |
+| Brussels | Belgium | ≈ 2.1M | ≈ urban area | ≈ 91.5 |
+| Bucharest | Romania | ≈ 1.9M | ≈ urban area | ≈ 79 |
+| Budapest | Hungary | ≈ 1.8M | ≈ city | ≈ 88 |
+| Cambridge | the United Kingdom | ≈ 160,000 | ≈ urban area | ≈ 89 |
+| Cardiff | the United Kingdom | ≈ 480,000 | ≈ urban area | ≈ 85 |
+| Chisinau | Moldova | ≈ 700,000 | ≈ urban area | ≈ 66 |
+| Cork | Ireland | ≈ 210,000 | ≈ urban area | ≈ 86 |
+| Dublin | Ireland | ≈ 1.3M | ≈ urban area | ≈ 91 |
+| Edinburgh | the United Kingdom | ≈ 520,000 | ≈ urban area | ≈ 91 |
+| Florence | Italy | ≈ 850,000 | ≈ urban area | ≈ 90 |
+| Frankfurt | Germany | ≈ 2.7M | ≈ urban area (Rhine–Main) | ≈ 90 |
+| Geneva | Switzerland | ≈ 1M | ≈ urban area (Grand Genève) | ≈ 91 |
+| Genoa | Italy | ≈ 850,000 | ≈ urban area | ≈ 82 |
+| Ghent | Belgium | ≈ 500,000 | ≈ urban area | ≈ 87 |
+| Glasgow | the United Kingdom | ≈ 1.7M | ≈ urban area | ≈ 87 |
+| Hamburg | Germany | ≈ 3.2M | ≈ urban area | ≈ 93 |
+| Kraków | Poland | ≈ 800,000 | ≈ urban area | ≈ 84 |
+| Kyiv | Ukraine | ≈ 3M | ≈ city proper (pre-war est.) | ≈ 71 |
+| Lausanne | Switzerland | ≈ 420,000 | ≈ urban area | ≈ 90 |
+| Leeds | the United Kingdom | ≈ 1.8M | ≈ urban area (conurbation) | ≈ 84 |
+| Lille | France | ≈ 1.1M | ≈ urban area | ≈ 84 |
+| Lisbon | Portugal | ≈ 2.9M | ≈ urban area | ≈ 92 |
+| Liverpool | the United Kingdom | ≈ 860,000 | ≈ urban area | ≈ 80 |
+| Ljubljana | Slovenia | ≈ 300,000 | ≈ urban area | ≈ 86 |
+| London | the United Kingdom | 11.4M | urban area 2025 | ≈ 92.5 |
+| Lucerne | Switzerland | ≈ 230,000 | ≈ urban area | ≈ 90 |
+| Lugano | Switzerland | ≈ 150,000 | ≈ urban area | ≈ 90 |
+| Luxembourg | Luxembourg | ≈ 200,000 | ≈ urban area | ≈ 90 |
+| Lviv | Ukraine | ≈ 900,000 | ≈ city proper | ≈ 70 |
+| Lyon | France | ≈ 1.8M | ≈ urban area | ≈ 87 |
+| Madrid | Spain | 7M | urban area 2025 | ≈ 91.7 |
+| Manchester | the United Kingdom | ≈ 2.8M | ≈ urban area | ≈ 88 |
+| Marseille | France | ≈ 1.9M | ≈ metropolitan area (Aix–Marseille) | ≈ 82 |
+| Milan | Italy | 5.6M | urban area 2025 | ≈ 91 |
+| Minsk | Belarus | ≈ 2M | ≈ urban area | ≈ 62 |
+| Monaco | Monaco | ≈ 39,000 | ≈ city-state | ≈ 92 |
+| Moscow | Russia | 19.1M | urban area 2025 | ≈ 76 |
+| Munich | Germany | ≈ 2.9M | ≈ urban area | ≈ 93 |
+| Nantes | France | ≈ 975,000 | ≈ urban area | ≈ 88 |
+| Naples | Italy | ≈ 3.1M | ≈ metropolitan area | ≈ 80 |
+| Newcastle upon Tyne | the United Kingdom | ≈ 880,000 | ≈ urban area | ≈ 83 |
+| Nice | France | ≈ 1M | ≈ urban area | ≈ 86 |
+| Nicosia | Cyprus | ≈ 330,000 | ≈ urban area | ≈ 80 |
+| Odesa | Ukraine | ≈ 1.1M | ≈ city proper | ≈ 60 |
+| Oxford | the United Kingdom | ≈ 165,000 | ≈ urban area | ≈ 89 |
+| Palermo | Italy | ≈ 850,000 | ≈ urban area | ≈ 75 |
+| Paris | France | 11.3M | urban area 2025 | ≈ 92 |
+| Podgorica | Montenegro | ≈ 190,000 | ≈ urban area | ≈ 70 |
+| Porto | Portugal | ≈ 1.3M | ≈ agglomeration | ≈ 87 |
+| Prague | Czechia | ≈ 1.3M | ≈ city | ≈ 90 |
+| Pristina | Kosovo | ≈ 200,000 | ≈ urban area | ≈ 66 |
+| Rome | Italy | ≈ 4.3M | ≈ urban area | ≈ 89 |
+| Rotterdam | the Netherlands | ≈ 1.4M | ≈ urban area | ≈ 86 |
+| Saint Petersburg | Russia | 5.9M | urban area 2025 | ≈ 72 |
+| Salzburg | Austria | ≈ 270,000 | ≈ urban area | ≈ 89 |
+| San Marino | San Marino | ≈ 4,000 | ≈ town | ≈ 85 |
+| Sarajevo | Bosnia and Herzegovina | ≈ 420,000 | ≈ urban area | ≈ 78 |
+| Sevastopol | Ukraine | ≈ 550,000 | ≈ city proper | ≈ 55 |
+| Seville | Spain | ≈ 1.5M | ≈ metropolitan area | ≈ 84 |
+| Skopje | North Macedonia | ≈ 590,000 | ≈ urban area | ≈ 68 |
+| Sofia | Bulgaria | ≈ 1.2M | ≈ urban area | ≈ 80 |
+| St. Gallen | Switzerland | ≈ 120,000 | ≈ urban area | ≈ 89 |
+| Strasbourg | France | ≈ 860,000 | ≈ urban area | ≈ 86 |
+| The Hague | the Netherlands | ≈ 1.1M | ≈ urban area | ≈ 88 |
+| Thessaloniki | Greece | ≈ 1M | ≈ urban area | ≈ 80 |
+| Tirana | Albania | ≈ 860,000 | ≈ urban area | ≈ 68 |
+| Toulouse | France | ≈ 1M | ≈ urban area | ≈ 85 |
+| Turin | Italy | ≈ 1.7M | ≈ urban area | ≈ 84 |
+| Utrecht | the Netherlands | ≈ 375,000 | ≈ city | ≈ 91 |
+| Vaduz | Liechtenstein | ≈ 5,700 | ≈ town | ≈ 90 |
+| Valletta | Malta | ≈ 6,000 | ≈ city | ≈ 80 |
+| Vatican City | Vatican City | ≈ 800 | ≈ city-state | — |
+| Venice | Italy | ≈ 260,000 | ≈ city | ≈ 89 |
+| Verona | Italy | ≈ 425,000 | ≈ urban area | ≈ 85 |
+| Vienna | Austria | ≈ 2M | city 2024 ≈ | 97.1 |
+| Warsaw | Poland | ≈ 3.1M | ≈ urban area | ≈ 85 |
+| Zagreb | Croatia | ≈ 800,000 | ≈ urban area | ≈ 81 |
+| Zurich | Switzerland | ≈ 1.4M | ≈ urban area | ≈ 93 |
 
 ### Middle East & Caucasus (28)
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| Ankara | 🇹🇷 | Türkiye | 39.93°N, 32.86°E | 5,700,000 *≈ urban area* |
-| Dubai | 🇦🇪 | the United Arab Emirates | 25.20°N, 55.27°E | 5,097,000 *urban area 2025* |
-| Tel Aviv | 🇮🇱 | Israel | 32.08°N, 34.78°E | 4,200,000 *≈ urban area* |
-| Riyadh | 🇸🇦 | Saudi Arabia | 24.71°N, 46.68°E | 8,589,000 *urban area 2025* |
-| Tehran | 🇮🇷 | Iran | 35.69°N, 51.39°E | 14,137,000 *urban area 2025* |
-| Baku | 🇦🇿 | Azerbaijan | 40.41°N, 49.87°E | 2,400,000 *≈ urban area* |
-| Baghdad | 🇮🇶 | Iraq | 33.31°N, 44.36°E | 7,160,000 *urban area 2025* |
-| Amman | 🇯🇴 | Jordan | 31.95°N, 35.93°E | 2,200,000 *≈ urban area* |
-| Kuwait City | 🇰🇼 | Kuwait | 29.37°N, 47.98°E | 3,100,000 *≈ urban area (metro)* |
-| Doha | 🇶🇦 | Qatar | 25.29°N, 51.53°E | 2,400,000 *≈ urban area* |
-| Tbilisi | 🇬🇪 | Georgia | 41.72°N, 44.78°E | 1,200,000 *≈ urban area* |
-| Yerevan | 🇦🇲 | Armenia | 40.18°N, 44.51°E | 1,100,000 *≈ urban area* |
-| Constantinople | 🇹🇷 | Türkiye | 41.01°N, 28.98°E | 14,749,000 *Istanbul urban area 2025* |
-| Jerusalem | 🇮🇱 | Israel | 31.78°N, 35.22°E | 980,000 *≈ urban area* |
-| Jericho | 🇵🇸 | Palestine | 31.86°N, 35.44°E | 28,000 *≈ urban area (the oasis town)* |
-| Homoia | 🇹🇷 | Türkiye | 37.67°N, 32.83°E | 8,000 *≈ ancient peak c. 7000 BC (Çatalhöyük)* |
-| Babylon | 🇮🇶 | Iraq | 32.54°N, 44.42°E | 850,000 *Hillah, modern site ≈* |
-| Ur | 🇮🇶 | Iraq | 30.96°N, 46.10°E | 650,000 *Nasiriyah, modern site ≈* |
-| Gaza | 🇵🇸 | Palestine | 31.50°N, 34.47°E | 600,000 *≈ city* |
-| Medina | 🇸🇦 | Saudi Arabia | 24.47°N, 39.61°E | 1,600,000 *≈ city* |
-| Mecca | 🇸🇦 | Saudi Arabia | 21.42°N, 39.83°E | 2,400,000 *≈ urban area* |
-| Jeddah | 🇸🇦 | Saudi Arabia | 21.49°N, 39.19°E | 4,700,000 *≈ urban area* |
-| Beirut | 🇱🇧 | Lebanon | 33.89°N, 35.50°E | 2,400,000 *≈ urban area* |
-| Damascus | 🇸🇾 | Syria | 33.51°N, 36.29°E | 2,000,000 *≈ urban area* |
-| Aleppo | 🇸🇾 | Syria | 36.20°N, 37.13°E | 1,800,000 *≈ pre-war urban area* |
-| Abu Dhabi | 🇦🇪 | the United Arab Emirates | 24.45°N, 54.38°E | 1,500,000 *≈ urban area* |
-| Isfahan | 🇮🇷 | Iran | 32.65°N, 51.67°E | 2,200,000 *≈ urban area* |
-| Samarkand | 🇺🇿 | Uzbekistan | 39.65°N, 66.96°E | 600,000 *≈ city* |
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Abu Dhabi | the United Arab Emirates | ≈ 1.5M | ≈ urban area | ≈ 81 |
+| Aleppo | Syria | ≈ 1.8M | ≈ pre-war urban area | ≈ 32 |
+| Amman | Jordan | ≈ 2.2M | ≈ urban area | ≈ 74 |
+| Ankara | Türkiye | ≈ 5.7M | ≈ urban area | ≈ 75 |
+| Babylon | Iraq | ≈ 850,000 | Hillah, modern site ≈ | — |
+| Baghdad | Iraq | 7.2M | urban area 2025 | ≈ 38 |
+| Baku | Azerbaijan | ≈ 2.4M | ≈ urban area | ≈ 74 |
+| Beirut | Lebanon | ≈ 2.4M | ≈ urban area | ≈ 55 |
+| Constantinople | Türkiye | 14.7M | Istanbul urban area 2025 | ≈ 76 |
+| Damascus | Syria | ≈ 2M | ≈ urban area | ≈ 30 |
+| Doha | Qatar | ≈ 2.4M | ≈ urban area | ≈ 79 |
+| Dubai | the United Arab Emirates | 5.1M | urban area 2025 | ≈ 84 |
+| Gaza | Palestine | ≈ 600,000 | ≈ city | ≈ 35 |
+| Homoia | Türkiye | ≈ 8,000 | ≈ ancient peak c. 7000 BC (Çatalhöyük) | — |
+| Isfahan | Iran | ≈ 2.2M | ≈ urban area | ≈ 60 |
+| Jeddah | Saudi Arabia | ≈ 4.7M | ≈ urban area | ≈ 76 |
+| Jericho | Palestine | ≈ 28,000 | ≈ urban area (the oasis town) | — |
+| Jerusalem | Israel | ≈ 980,000 | ≈ urban area | — |
+| Kuwait City | Kuwait | ≈ 3.1M | ≈ urban area (metro) | ≈ 76 |
+| Mecca | Saudi Arabia | ≈ 2.4M | ≈ urban area | ≈ 74 |
+| Medina | Saudi Arabia | ≈ 1.6M | ≈ city | ≈ 73 |
+| Riyadh | Saudi Arabia | 8.6M | urban area 2025 | ≈ 57 |
+| Samarkand | Uzbekistan | ≈ 600,000 | ≈ city | ≈ 62 |
+| Tbilisi | Georgia | ≈ 1.2M | ≈ urban area | ≈ 77 |
+| Tehran | Iran | 14.1M | urban area 2025 | ≈ 44 |
+| Tel Aviv | Israel | ≈ 4.2M | ≈ urban area | ≈ 84 |
+| Ur | Iraq | ≈ 650,000 | Nasiriyah, modern site ≈ | — |
+| Yerevan | Armenia | ≈ 1.1M | ≈ urban area | ≈ 78 |
 
-### Africa (31)
+### Africa (62)
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| Cairo | 🇪🇬 | Egypt | 30.04°N, 31.24°E | 22,684,000 *urban area 2025* |
-| Alexandria | 🇪🇬 | Egypt | 31.20°N, 29.92°E | 5,916,000 *urban area 2025* |
-| Addis Ababa | 🇪🇹 | Ethiopia | 9.03°N, 38.74°E | 5,700,000 *≈ urban area* |
-| Cape Town | 🇿🇦 | South Africa | 33.92°S, 18.42°E | 4,800,000 *≈ urban area* |
-| Khartoum | 🇸🇩 | Sudan | 15.50°N, 32.56°E | 7,677,000 *urban area 2025* |
-| Luanda | 🇦🇴 | Angola | 8.84°S, 13.23°E | 11,892,000 *urban area 2025* |
-| Nairobi | 🇰🇪 | Kenya | 1.29°S, 36.82°E | 5,500,000 *≈ urban area* |
-| Kinshasa | 🇨🇩 | DR Congo | 4.32°S, 15.31°E | 13,060,000 *urban area 2025* |
-| Dar es Salaam | 🇹🇿 | Tanzania | 6.79°S, 39.21°E | 8,877,000 *urban area 2025* |
-| Abidjan | 🇨🇮 | Côte d'Ivoire | 5.35°N, 4.02°W | 5,600,000 *≈ urban area* |
-| Accra | 🇬🇭 | Ghana | 5.60°N, 0.19°W | 2,600,000 *≈ urban area* |
-| Dakar | 🇸🇳 | Senegal | 14.72°N, 17.47°W | 3,300,000 *≈ urban area* |
-| Casablanca | 🇲🇦 | Morocco | 33.57°N, 7.59°W | 4,400,000 *≈ urban area* |
-| Johannesburg | 🇿🇦 | South Africa | 26.20°S, 28.05°E | 15,026,000 *Johannesburg–Pretoria 2025* |
-| Kampala | 🇺🇬 | Uganda | 0.35°N, 32.58°E | 3,700,000 *≈ urban area* |
-| Durban | 🇿🇦 | South Africa | 29.86°S, 31.02°E | 3,400,000 *≈ urban area* |
-| Kigali | 🇷🇬 | Rwanda | 1.94°S, 30.06°E | 1,200,000 *≈ urban area* |
-| Algiers | 🇩🇿 | Algeria | 36.75°N, 3.06°E | 2,800,000 *≈ urban area* |
-| Antananarivo | 🇲🇬 | Madagascar | 18.88°S, 47.51°E | 3,600,000 *≈ urban area* |
-| Maputo | 🇲🇿 | Mozambique | 25.97°S, 32.57°E | 1,300,000 *≈ urban area* |
-| Pretoria | 🇿🇦 | South Africa | 25.75°S, 28.19°E | 2,900,000 *≈ urban area (Tshwane)* |
-| Yaoundé | 🇨🇲 | Cameroon | 3.87°N, 11.52°E | 4,300,000 *≈ urban area* |
-| Abuja | 🇳🇬 | Nigeria | 9.06°N, 7.49°E | 3,800,000 *≈ urban area* |
-| Monrovia | 🇱🇷 | Liberia | 6.30°N, 10.80°W | 1,500,000 *≈ urban area* |
-| Lagos | 🇳🇬 | Nigeria | 6.52°N, 3.38°E | 15,283,000 *urban area 2025* |
-| Carthago | 🇹🇳 | Tunisia | 36.85°N, 10.32°E | 2,400,000 *Tunis agglomeration ≈* |
-| Luxor | 🇪🇬 | Egypt | 25.70°N, 32.64°E | 500,000 *≈ city* |
-| Timbuktu | 🇲🇱 | Mali | 16.77°N, 3.01°W | 55,000 *town ≈* |
-| Marrakesh | 🇲🇦 | Morocco | 31.63°N, 7.99°W | 1,100,000 *≈ urban area* |
-| Tunis | 🇹🇳 | Tunisia | 36.81°N, 10.18°E | 2,700,000 *≈ metropolitan area (Grand Tunis)* |
-| Mogadishu | 🇸🇴 | Somalia | 2.04°N, 45.34°E | 2,600,000 *≈ urban area* |
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Abidjan | Côte d'Ivoire | ≈ 5.6M | ≈ urban area | ≈ 59 |
+| Abuja | Nigeria | ≈ 3.8M | ≈ urban area | ≈ 57 |
+| Accra | Ghana | ≈ 2.6M | ≈ urban area | ≈ 61 |
+| Addis Ababa | Ethiopia | ≈ 5.7M | ≈ urban area | ≈ 60 |
+| Alexandria | Egypt | 5.9M | urban area 2025 | ≈ 52 |
+| Algiers | Algeria | ≈ 2.8M | ≈ urban area | ≈ 69 |
+| Antananarivo | Madagascar | ≈ 3.6M | ≈ urban area | ≈ 54 |
+| Asmara | Eritrea | ≈ 1M | ≈ urban area | ≈ 40 |
+| Bamako | Mali | ≈ 2.8M | ≈ urban area | ≈ 48 |
+| Bangui | the Central African Republic | ≈ 950,000 | ≈ urban area | ≈ 35 |
+| Banjul | the Gambia | ≈ 440,000 | ≈ urban area | ≈ 50 |
+| Bissau | Guinea-Bissau | ≈ 500,000 | ≈ urban area | ≈ 42 |
+| Brazzaville | the Congo | ≈ 2.4M | ≈ urban area | ≈ 48 |
+| Cairo | Egypt | 22.7M | urban area 2025 | ≈ 71 |
+| Cape Town | South Africa | ≈ 4.8M | ≈ urban area | ≈ 74 |
+| Carthago | Tunisia | ≈ 2.4M | Tunis agglomeration ≈ | ≈ 59 |
+| Casablanca | Morocco | ≈ 4.4M | ≈ urban area | ≈ 68 |
+| Conakry | Guinea | ≈ 2.1M | ≈ urban area | ≈ 42 |
+| Dakar | Senegal | ≈ 3.3M | ≈ urban area | ≈ 62 |
+| Dar es Salaam | Tanzania | 8.9M | urban area 2025 | ≈ 45 |
+| Djibouti City | Djibouti | ≈ 600,000 | ≈ urban area | ≈ 45 |
+| Dodoma | Tanzania | ≈ 770,000 | ≈ urban area | ≈ 50 |
+| Durban | South Africa | ≈ 3.4M | ≈ urban area | ≈ 77 |
+| Freetown | Sierra Leone | ≈ 1.2M | ≈ urban area | ≈ 45 |
+| Gaborone | Botswana | ≈ 270,000 | ≈ urban area | ≈ 65 |
+| Gitega | Burundi | ≈ 135,000 | ≈ city proper | ≈ 38 |
+| Harare | Zimbabwe | ≈ 1.6M | ≈ urban area | ≈ 45 |
+| Johannesburg | South Africa | 15M | Johannesburg–Pretoria 2025 | ≈ 61 |
+| Juba | South Sudan | ≈ 500,000 | ≈ urban area | ≈ 35 |
+| Kampala | Uganda | ≈ 3.7M | ≈ urban area | ≈ 58 |
+| Khartoum | Sudan | 7.7M | urban area 2025 | ≈ 40 |
+| Kigali | Rwanda | ≈ 1.2M | ≈ urban area | ≈ 62 |
+| Kinshasa | DR Congo | 13.1M | urban area 2025 | ≈ 45 |
+| Lagos | Nigeria | 15.3M | urban area 2025 | ≈ 38 |
+| Libreville | Gabon | ≈ 1M | ≈ urban area | ≈ 56 |
+| Lilongwe | Malawi | ≈ 1.1M | ≈ urban area | ≈ 45 |
+| Lomé | Togo | ≈ 1.8M | ≈ urban area | ≈ 50 |
+| Luanda | Angola | 11.9M | urban area 2025 | ≈ 50 |
+| Lusaka | Zambia | ≈ 3M | ≈ urban area | ≈ 48 |
+| Luxor | Egypt | ≈ 500,000 | ≈ city | ≈ 55 |
+| Malabo | Equatorial Guinea | ≈ 300,000 | ≈ urban area | ≈ 54 |
+| Maputo | Mozambique | ≈ 1.3M | ≈ urban area | ≈ 57 |
+| Marrakesh | Morocco | ≈ 1.1M | ≈ urban area | ≈ 68 |
+| Maseru | Lesotho | ≈ 330,000 | ≈ urban area | ≈ 50 |
+| Mbabane | Eswatini | ≈ 95,000 | ≈ urban area | ≈ 52 |
+| Mogadishu | Somalia | ≈ 2.6M | ≈ urban area | ≈ 30 |
+| Monrovia | Liberia | ≈ 1.5M | ≈ urban area | ≈ 55 |
+| N'Djamena | Chad | ≈ 1.6M | ≈ urban area | ≈ 38 |
+| Nairobi | Kenya | ≈ 5.5M | ≈ urban area | ≈ 60 |
+| Niamey | Niger | ≈ 1.3M | ≈ urban area | ≈ 45 |
+| Nouakchott | Mauritania | ≈ 1.4M | ≈ urban area | ≈ 46 |
+| Ouagadougou | Burkina Faso | ≈ 2.7M | ≈ urban area | ≈ 50 |
+| Port Louis | Mauritius | ≈ 150,000 | ≈ urban area | ≈ 68 |
+| Porto-Novo | Benin | ≈ 300,000 | ≈ urban area | ≈ 52 |
+| Pretoria | South Africa | ≈ 2.9M | ≈ urban area (Tshwane) | ≈ 74 |
+| Rabat | Morocco | ≈ 1.9M | ≈ urban area | ≈ 66 |
+| Timbuktu | Mali | ≈ 55,000 | town ≈ | ≈ 40 |
+| Tripoli | Libya | ≈ 1.2M | ≈ urban area | ≈ 40 |
+| Tunis | Tunisia | ≈ 2.7M | ≈ metropolitan area (Grand Tunis) | ≈ 62 |
+| Windhoek | Namibia | ≈ 450,000 | ≈ urban area | ≈ 62 |
+| Yamoussoukro | Côte d'Ivoire | ≈ 360,000 | ≈ urban area | ≈ 50 |
+| Yaoundé | Cameroon | ≈ 4.3M | ≈ urban area | ≈ 57 |
 
-### Asia (48)
+### Asia (62)
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| Karachi | 🇵🇰 | Pakistan | 24.86°N, 67.01°E | 21,258,000 *urban area 2025* |
-| Delhi | 🇮🇳 | India | 28.61°N, 77.21°E | 33,224,000 *urban area 2025* |
-| Beijing | 🇨🇳 | China | 39.90°N, 116.41°E | 22,363,000 *urban area 2025* |
-| Tokyo | 🇯🇵 | Japan | 35.68°N, 139.69°E | 37,325,000 *urban area 2025* |
-| Osaka | 🇯🇵 | Japan | 34.69°N, 135.50°E | 14,998,000 *Osaka–Kobe–Kyoto 2025* |
-| Shanghai | 🇨🇳 | China | 31.23°N, 121.47°E | 29,900,000 *≈ urban area* |
-| Mumbai | 🇮🇳 | India | 19.08°N, 72.88°E | 26,237,000 *urban area 2025* |
-| Bangkok | 🇹🇭 | Thailand | 13.76°N, 100.50°E | 20,284,000 *urban area 2025* |
-| Tashkent | 🇺🇿 | Uzbekistan | 41.30°N, 69.24°E | 2,900,000 *≈ urban area* |
-| Lahore | 🇵🇰 | Pakistan | 31.55°N, 74.32°E | 14,256,000 *urban area 2025* |
-| Dhaka | 🇧🇩 | Bangladesh | 23.81°N, 90.41°E | 25,305,000 *urban area 2025* |
-| Bengaluru | 🇮🇳 | India | 12.97°N, 77.59°E | 14,000,000 *≈ urban area* |
-| Hong Kong | 🇭🇰 | Hong Kong | 22.32°N, 114.17°E | 7,117,000 *urban area 2025* |
-| Fukuoka | 🇯🇵 | Japan | 33.59°N, 130.40°E | 5,550,000 *≈ urban area* |
-| Nagoya | 🇯🇵 | Japan | 35.18°N, 136.91°E | 9,617,000 *urban area 2025* |
-| Taipei | 🇹🇼 | Taiwan | 25.03°N, 121.57°E | 9,866,000 *Taipei urban area 2025* |
-| Ho Chi Minh City | 🇻🇳 | Vietnam | 10.82°N, 106.63°E | 16,024,000 *urban area 2025* |
-| Manila | 🇵🇭 | the Philippines | 14.60°N, 120.98°E | 25,521,000 *urban area 2025* |
-| Kolkata | 🇮🇳 | India | 22.57°N, 88.36°E | 20,327,000 *urban area 2025* |
-| Chennai | 🇮🇳 | India | 13.08°N, 80.27°E | 11,950,000 *urban area 2025* |
-| Almaty | 🇰🇿 | Kazakhstan | 43.24°N, 76.89°E | 2,200,000 *≈ urban area* |
-| Astana | 🇰🇿 | Kazakhstan | 51.17°N, 71.43°E | 1,400,000 *≈ urban area* |
-| Hanoi | 🇻🇳 | Vietnam | 21.03°N, 105.85°E | 8,700,000 *≈ urban area* |
-| Yangon | 🇲🇲 | Myanmar | 16.87°N, 96.20°E | 6,820,000 *urban area 2025* |
-| Wuhan | 🇨🇳 | China | 30.59°N, 114.31°E | 10,041,000 *urban area 2025* |
-| Jakarta | 🇮🇩 | Indonesia | 6.21°S, 106.85°E | 36,877,000 *urban area 2025* |
-| Hyderabad | 🇮🇳 | India | 17.39°N, 78.49°E | 10,101,000 *urban area 2025* |
-| Ahmedabad | 🇮🇳 | India | 23.03°N, 72.58°E | 7,961,000 *urban area 2025* |
-| Colombo | 🇱🇰 | Sri Lanka | 6.93°N, 79.86°E | 800,000 *≈ urban area* |
-| Kathmandu | 🇳🇵 | Nepal | 27.72°N, 85.32°E | 1,600,000 *≈ urban area* |
-| Seoul | 🇰🇷 | South Korea | 37.57°N, 126.98°E | 23,825,000 *capital urban area 2025* |
-| Chengdu | 🇨🇳 | China | 30.57°N, 104.07°E | 8,040,000 *urban area 2025* |
-| Shenzhen | 🇨🇳 | China | 22.54°N, 114.06°E | 17,900,000 *≈ urban area (Shenzhen–Dongguan)* |
-| Guangzhou | 🇨🇳 | China | 23.13°N, 113.26°E | 26,900,000 *≈ urban area (Guangzhou–Foshan)* |
-| Hangzhou | 🇨🇳 | China | 30.27°N, 120.16°E | 12,422,000 *Hangzhou–Shaoxing 2025* |
-| Kuala Lumpur | 🇲🇾 | Malaysia | 3.14°N, 101.69°E | 9,899,000 *urban area 2025* |
-| Macau | 🇲🇴 | Macau | 22.20°N, 113.55°E | 700,000 *territory est. 2024* |
-| Xi'an | 🇨🇳 | China | 34.34°N, 108.94°E | 8,313,000 *urban area 2025* |
-| Suzhou | 🇨🇳 | China | 31.30°N, 120.62°E | 7,000,000 *≈ urban area* |
-| Nanjing | 🇨🇳 | China | 32.06°N, 118.80°E | 8,929,000 *urban area 2025* |
-| Tianjin | 🇨🇳 | China | 39.13°N, 117.20°E | 12,095,000 *urban area 2025* |
-| Bandung | 🇮🇩 | Indonesia | 6.92°S, 107.61°E | 7,490,000 *urban area 2025* |
-| Singapore | 🇸🇬 | Singapore | 1.35°N, 103.82°E | 6,056,000 *urban area 2025* |
-| Kyoto | 🇯🇵 | Japan | 35.01°N, 135.77°E | 1,500,000 *≈ city* |
-| Hiroshima | 🇯🇵 | Japan | 34.39°N, 132.46°E | 2,200,000 *≈ metropolitan area* |
-| Varanasi | 🇮🇳 | India | 25.32°N, 82.99°E | 1,600,000 *≈ urban area* |
-| Agra | 🇮🇳 | India | 27.18°N, 78.01°E | 1,900,000 *≈ urban area* |
-| Chiang Mai | 🇹🇭 | Thailand | 18.79°N, 98.98°E | 1,200,000 *≈ metropolitan area* |
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Agra | India | ≈ 1.9M | ≈ urban area | ≈ 56 |
+| Ahmedabad | India | 8M | urban area 2025 | ≈ 55 |
+| Almaty | Kazakhstan | ≈ 2.2M | ≈ urban area | ≈ 74 |
+| Ashgabat | Turkmenistan | ≈ 1M | ≈ urban area | ≈ 55 |
+| Astana | Kazakhstan | ≈ 1.4M | ≈ urban area | ≈ 74 |
+| Bandung | Indonesia | 7.5M | urban area 2025 | ≈ 60 |
+| Bangkok | Thailand | 20.3M | urban area 2025 | ≈ 79 |
+| Beijing | China | 22.4M | urban area 2025 | ≈ 74 |
+| Bengaluru | India | ≈ 14M | ≈ urban area | ≈ 55 |
+| Bishkek | Kyrgyzstan | ≈ 1.3M | ≈ urban area | ≈ 58 |
+| Chengdu | China | 8M | urban area 2025 | ≈ 70 |
+| Chennai | India | 12M | urban area 2025 | ≈ 54 |
+| Chiang Mai | Thailand | ≈ 1.2M | ≈ metropolitan area | ≈ 72 |
+| Colombo | Sri Lanka | ≈ 800,000 | ≈ urban area | ≈ 66 |
+| Delhi | India | 33.2M | urban area 2025 | ≈ 73 |
+| Dhaka | Bangladesh | 25.3M | urban area 2025 | ≈ 38 |
+| Dili | Timor-Leste | ≈ 280,000 | ≈ urban area | ≈ 50 |
+| Dushanbe | Tajikistan | ≈ 1M | ≈ urban area | ≈ 55 |
+| Fukuoka | Japan | ≈ 5.6M | ≈ urban area | ≈ 90 |
+| Guangzhou | China | ≈ 26.9M | ≈ urban area (Guangzhou–Foshan) | ≈ 68 |
+| Hangzhou | China | 12.4M | Hangzhou–Shaoxing 2025 | ≈ 72 |
+| Hanoi | Vietnam | ≈ 8.7M | ≈ urban area | ≈ 70 |
+| Hiroshima | Japan | ≈ 2.2M | ≈ metropolitan area | ≈ 92 |
+| Ho Chi Minh City | Vietnam | 16M | urban area 2025 | ≈ 53 |
+| Hong Kong | Hong Kong | 7.1M | urban area 2025 | ≈ 90 |
+| Hyderabad | India | 10.1M | urban area 2025 | ≈ 55 |
+| Islamabad | Pakistan | ≈ 1.2M | ≈ city proper | ≈ 55 |
+| Jakarta | Indonesia | 36.9M | urban area 2025 | ≈ 53 |
+| Kabul | Afghanistan | ≈ 4.6M | ≈ urban area | ≈ 35 |
+| Karachi | Pakistan | 21.3M | urban area 2025 | ≈ 40 |
+| Kathmandu | Nepal | ≈ 1.6M | ≈ urban area | ≈ 64 |
+| Kolkata | India | 20.3M | urban area 2025 | ≈ 54 |
+| Kuala Lumpur | Malaysia | 9.9M | urban area 2025 | ≈ 70 |
+| Kyoto | Japan | ≈ 1.5M | ≈ city | ≈ 94 |
+| Lahore | Pakistan | 14.3M | urban area 2025 | ≈ 50 |
+| Macau | Macau | 700,000 | territory est. 2024 | ≈ 74 |
+| Manama | Bahrain | ≈ 660,000 | ≈ urban area | ≈ 68 |
+| Manila | the Philippines | 25.5M | urban area 2025 | ≈ 57 |
+| Mumbai | India | 26.2M | urban area 2025 | ≈ 48 |
+| Muscat | Oman | ≈ 1.7M | ≈ urban area | ≈ 70 |
+| Nagoya | Japan | 9.6M | urban area 2025 | ≈ 90 |
+| Nanjing | China | 8.9M | urban area 2025 | ≈ 70 |
+| Naypyidaw | Myanmar | ≈ 1.2M | ≈ urban area | ≈ 42 |
+| Osaka | Japan | 15M | Osaka–Kobe–Kyoto 2025 | 96 |
+| Phnom Penh | Cambodia | ≈ 2.3M | ≈ urban area | ≈ 58 |
+| Pyongyang | North Korea | ≈ 3M | ≈ urban area | ≈ 38 |
+| Sana'a | Yemen | ≈ 3.9M | ≈ urban area | ≈ 32 |
+| Seoul | South Korea | 23.8M | capital urban area 2025 | ≈ 90 |
+| Shanghai | China | ≈ 29.9M | ≈ urban area | ≈ 85 |
+| Shenzhen | China | ≈ 17.9M | ≈ urban area (Shenzhen–Dongguan) | ≈ 68 |
+| Singapore | Singapore | 6.1M | urban area 2025 | ≈ 92 |
+| Suzhou | China | ≈ 7M | ≈ urban area | ≈ 70 |
+| Taipei | Taiwan | 9.9M | Taipei urban area 2025 | ≈ 86 |
+| Tashkent | Uzbekistan | ≈ 2.9M | ≈ urban area | ≈ 71 |
+| Tianjin | China | 12.1M | urban area 2025 | ≈ 70 |
+| Tokyo | Japan | 37.3M | urban area 2025 | 95.7 |
+| Ulaanbaatar | Mongolia | ≈ 1.6M | ≈ urban area | ≈ 58 |
+| Varanasi | India | ≈ 1.6M | ≈ urban area | ≈ 58 |
+| Vientiane | Laos | ≈ 950,000 | ≈ urban area | ≈ 55 |
+| Wuhan | China | 10M | urban area 2025 | ≈ 70 |
+| Xi'an | China | 8.3M | urban area 2025 | ≈ 70 |
+| Yangon | Myanmar | 6.8M | urban area 2025 | ≈ 45 |
 
-### Oceania (5)
+### Oceania (8)
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| Melbourne | 🇦🇺 | Australia | 37.81°S, 144.96°E | 5,185,000 *urban area 2025* |
-| Sydney | 🇦🇺 | Australia | 33.87°S, 151.21°E | 5,037,000 *urban area 2025* |
-| Perth | 🇦🇺 | Australia | 31.95°S, 115.86°E | 2,100,000 *≈ urban area* |
-| Auckland | 🇳🇿 | New Zealand | 36.85°S, 174.76°E | 1,700,000 *≈ urban area* |
-| Brisbane | 🇦🇺 | Australia | 27.47°S, 153.03°E | 2,600,000 *≈ urban area* |
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Auckland | New Zealand | ≈ 1.7M | ≈ urban area | ≈ 93 |
+| Brisbane | Australia | ≈ 2.6M | ≈ urban area | ≈ 92 |
+| Canberra | Australia | ≈ 470,000 | ≈ urban area | ≈ 90 |
+| Melbourne | Australia | 5.2M | urban area 2025 | 97 |
+| Perth | Australia | ≈ 2.1M | ≈ urban area | ≈ 93 |
+| Port Moresby | Papua New Guinea | ≈ 400,000 | ≈ urban area | ≈ 45 |
+| Sydney | Australia | 5M | urban area 2025 | 96.6 |
+| Wellington | New Zealand | ≈ 420,000 | ≈ urban area | ≈ 90 |
 
-### The Americas (57)
+### The Americas (60)
 
-| City | Flag | Country | Coordinates | Population |
-|---|---|---|---|---|
-| Buenos Aires | 🇦🇷 | Argentina | 34.60°S, 58.38°W | 15,933,000 *urban area 2025* |
-| Montevideo | 🇺🇾 | Uruguay | 34.90°S, 56.16°W | 1,800,000 *≈ urban area* |
-| Rio de Janeiro | 🇧🇷 | Brazil | 22.91°S, 43.17°W | 12,546,000 *urban area 2025* |
-| Caracas | 🇻🇪 | Venezuela | 10.49°N, 66.88°W | 2,900,000 *≈ urban area* |
-| Washington D.C. | 🇺🇸 | the United States | 38.91°N, 77.04°W | 7,636,000 *Washington–Baltimore 2025* |
-| Boston | 🇺🇸 | the United States | 42.36°N, 71.06°W | 7,375,000 *Boston–Providence 2025* |
-| Chicago | 🇺🇸 | the United States | 41.88°N, 87.63°W | 8,790,000 *urban area 2025* |
-| São Paulo | 🇧🇷 | Brazil | 23.55°S, 46.63°W | 21,747,000 *urban area 2025* |
-| Quito | 🇪🇨 | Ecuador | 0.18°S, 78.47°W | 2,000,000 *≈ urban area* |
-| Panama City | 🇵🇦 | Panama | 8.98°N, 79.52°W | 1,900,000 *≈ urban area* |
-| Toronto | 🇨🇦 | Canada | 43.65°N, 79.38°W | 6,400,000 *urban area 2025* |
-| Philadelphia | 🇺🇸 | the United States | 39.95°N, 75.17°W | 5,697,000 *urban area 2025* |
-| Lima | 🇵🇪 | Peru | 12.05°S, 77.04°W | 11,000,000 *≈ urban area* |
-| Brasília | 🇧🇷 | Brazil | 15.79°S, 47.88°W | 3,300,000 *≈ urban area* |
-| Medellín | 🇨🇴 | Colombia | 6.24°N, 75.58°W | 4,100,000 *≈ urban area (valley)* |
-| Guatemala City | 🇬🇹 | Guatemala | 14.63°N, 90.51°W | 3,000,000 *≈ urban area* |
-| Monterrey | 🇲🇽 | Mexico | 25.69°N, 100.32°W | 5,200,000 *≈ urban area* |
-| Guadalajara | 🇲🇽 | Mexico | 20.67°N, 103.35°W | 5,400,000 *≈ urban area* |
-| Mexico City | 🇲🇽 | Mexico | 19.43°N, 99.13°W | 23,146,802 *urban area 2025* |
-| Miami | 🇺🇸 | the United States | 25.76°N, 80.19°W | 6,129,000 *urban area 2025* |
-| Los Angeles | 🇺🇸 | the United States | 34.05°N, 118.24°W | 12,237,376 *urban area 2025* |
-| San Francisco | 🇺🇸 | the United States | 37.77°N, 122.42°W | 6,376,000 *urban area 2025* |
-| Seattle | 🇺🇸 | the United States | 47.61°N, 122.33°W | 3,800,000 *≈ urban area* |
-| Bogotá | 🇨🇴 | Colombia | 4.71°N, 74.07°W | 10,734,000 *urban area 2025* |
-| La Paz | 🇧🇴 | Bolivia | 16.50°S, 68.15°W | 1,900,000 *≈ urban area (incl. El Alto)* |
-| Cusco | 🇵🇪 | Peru | 13.53°S, 71.97°W | 470,000 *≈ urban area* |
-| Cartagena | 🇨🇴 | Colombia | 10.39°N, 75.51°W | 1,100,000 *≈ urban area* |
-| Kingston | 🇯🇲 | Jamaica | 17.97°N, 76.79°W | 1,300,000 *≈ urban area* |
-| Havana | 🇨🇺 | Cuba | 23.11°N, 82.37°W | 2,100,000 *≈ urban area* |
-| Atlanta | 🇺🇸 | the United States | 33.75°N, 84.39°W | 5,495,000 *urban area 2025* |
-| San Diego | 🇺🇸 | the United States | 32.72°N, 117.16°W | 3,240,000 *≈ urban area* |
-| Santiago | 🇨🇱 | Chile | 33.45°S, 70.66°W | 7,192,000 *urban area 2025* |
-| Valparaíso | 🇨🇱 | Chile | 33.05°S, 71.62°W | 1,000,000 *≈ urban area (Greater Valpo)* |
-| Salvador | 🇧🇷 | Brazil | 12.97°S, 38.50°W | 3,900,000 *≈ urban area* |
-| Manaus | 🇧🇷 | Brazil | 3.12°S, 60.02°W | 2,300,000 *≈ urban area* |
-| Cancún | 🇲🇽 | Mexico | 21.16°N, 86.85°W | 1,100,000 *≈ urban area* |
-| San José | 🇨🇷 | Costa Rica | 9.93°N, 84.08°W | 1,500,000 *≈ urban area* |
-| San Juan | 🇵🇷 | Puerto Rico (USA) | 18.47°N, 66.11°W | 2,500,000 *≈ urban area* |
-| Ottawa | 🇨🇦 | Canada | 45.42°N, 75.70°W | 1,500,000 *≈ urban area (National Capital Region)* |
-| Montreal | 🇨🇦 | Canada | 45.50°N, 73.57°W | 4,300,000 *≈ urban area* |
-| Las Vegas | 🇺🇸 | the United States | 36.17°N, 115.14°W | 3,200,000 *≈ urban area* |
-| Dallas | 🇺🇸 | the United States | 32.78°N, 96.80°W | 6,980,000 *Dallas–Fort Worth 2025* |
-| Portland | 🇺🇸 | the United States | 45.52°N, 122.68°W | 2,510,000 *≈ urban area* |
-| Houston | 🇺🇸 | the United States | 29.76°N, 95.37°W | 6,804,000 *urban area 2025* |
-| Vancouver | 🇨🇦 | Canada | 49.28°N, 123.12°W | 2,600,000 *≈ urban area* |
-| New York | 🇺🇸 | the United States | 40.71°N, 74.01°W | 19,426,449 *urban area 2025* |
-| Tikal | 🇬🇹 | Guatemala | 17.22°N, 89.62°W | 65,000 *≈ ancient peak c. 700 AD (Maya)* |
-| Quebec City | 🇨🇦 | Canada | 46.81°N, 71.21°W | 840,000 *≈ metropolitan area* |
-| New Orleans | 🇺🇸 | the United States | 29.95°N, 90.07°W | 1,000,000 *≈ urban area* |
-| Honolulu | 🇺🇸 | the United States | 21.31°N, 157.86°W | 1,000,000 *≈ urban area* |
-| San Salvador | 🇸🇻 | El Salvador | 13.69°N, 89.19°W | 1,100,000 *≈ urban area* |
-| Tegucigalpa | 🇭🇳 | Honduras | 14.07°N, 87.19°W | 1,000,000 *≈ urban area* |
-| Managua | 🇳🇮 | Nicaragua | 12.11°N, 86.24°W | 1,050,000 *≈ urban area* |
-| Asunción | 🇵🇾 | Paraguay | 25.28°S, 57.63°W | 1,200,000 *≈ urban area* |
-| Port-au-Prince | 🇭🇹 | Haiti | 18.54°N, 72.34°W | 1,100,000 *≈ urban area* |
-| Cap-Haïtien | 🇭🇹 | Haiti | 19.76°N, 72.20°W | 190,000 *≈ urban area* |
-| Jacmel | 🇭🇹 | Haiti | 18.23°N, 72.53°W | 35,000 *town ≈* |
+| city | country | population | pop basis | livability |
+| --- | --- | --- | --- | --- |
+| Asunción | Paraguay | ≈ 1.2M | ≈ urban area | ≈ 66 |
+| Atlanta | the United States | 5.5M | urban area 2025 | ≈ 83 |
+| Bloemfontein | South Africa | ≈ 520,000 | ≈ urban area | ≈ 68 |
+| Bogotá | Colombia | 10.7M | urban area 2025 | ≈ 73 |
+| Boston | the United States | 7.4M | Boston–Providence 2025 | ≈ 84 |
+| Brasília | Brazil | ≈ 3.3M | ≈ urban area | ≈ 77 |
+| Buenos Aires | Argentina | 15.9M | urban area 2025 | ≈ 77 |
+| Cancún | Mexico | ≈ 1.1M | ≈ urban area | ≈ 70 |
+| Cap-Haïtien | Haiti | ≈ 190,000 | ≈ urban area | ≈ 45 |
+| Caracas | Venezuela | ≈ 2.9M | ≈ urban area | ≈ 54 |
+| Cartagena | Colombia | ≈ 1.1M | ≈ urban area | ≈ 67 |
+| Chicago | the United States | 8.8M | urban area 2025 | ≈ 83 |
+| Cusco | Peru | ≈ 470,000 | ≈ urban area | ≈ 66 |
+| Dallas | the United States | 7M | Dallas–Fort Worth 2025 | ≈ 83 |
+| Guadalajara | Mexico | ≈ 5.4M | ≈ urban area | ≈ 75 |
+| Guatemala City | Guatemala | ≈ 3M | ≈ urban area | ≈ 66 |
+| Havana | Cuba | ≈ 2.1M | ≈ urban area | ≈ 62 |
+| Honolulu | the United States | ≈ 1M | ≈ urban area | ≈ 87 |
+| Houston | the United States | 6.8M | urban area 2025 | ≈ 83 |
+| Jacmel | Haiti | ≈ 35,000 | town ≈ | — |
+| Kingston | Jamaica | ≈ 1.3M | ≈ urban area | ≈ 69 |
+| La Paz | Bolivia | ≈ 1.9M | ≈ urban area (incl. El Alto) | ≈ 67 |
+| Las Vegas | the United States | ≈ 3.2M | ≈ urban area | ≈ 83 |
+| Lima | Peru | ≈ 11M | ≈ urban area | ≈ 73 |
+| Los Angeles | the United States | 12.2M | urban area 2025 | ≈ 82 |
+| Managua | Nicaragua | ≈ 1.1M | ≈ urban area | ≈ 50 |
+| Manaus | Brazil | ≈ 2.3M | ≈ urban area | ≈ 66 |
+| Medellín | Colombia | ≈ 4.1M | ≈ urban area (valley) | ≈ 74 |
+| Mexico City | Mexico | 23.1M | urban area 2025 | ≈ 72 |
+| Miami | the United States | 6.1M | urban area 2025 | ≈ 83 |
+| Monterrey | Mexico | ≈ 5.2M | ≈ urban area | ≈ 73 |
+| Montevideo | Uruguay | ≈ 1.8M | ≈ urban area | ≈ 82 |
+| Montreal | Canada | ≈ 4.3M | ≈ urban area | ≈ 95 |
+| New Orleans | the United States | ≈ 1M | ≈ urban area | ≈ 78 |
+| New York | the United States | 19.4M | urban area 2025 | ≈ 85 |
+| Ottawa | Canada | ≈ 1.5M | ≈ urban area (National Capital Region) | ≈ 89 |
+| Panama City | Panama | ≈ 1.9M | ≈ urban area | ≈ 77 |
+| Philadelphia | the United States | 5.7M | urban area 2025 | ≈ 83 |
+| Port of Spain | Trinidad and Tobago | ≈ 300,000 | ≈ urban area | ≈ 65 |
+| Port-au-Prince | Haiti | ≈ 1.1M | ≈ urban area | ≈ 38 |
+| Portland | the United States | ≈ 2.5M | ≈ urban area | ≈ 83 |
+| Quebec City | Canada | ≈ 840,000 | ≈ metropolitan area | ≈ 90 |
+| Quito | Ecuador | ≈ 2M | ≈ urban area | ≈ 71 |
+| Rio de Janeiro | Brazil | 12.5M | urban area 2025 | ≈ 77 |
+| Salvador | Brazil | ≈ 3.9M | ≈ urban area | ≈ 70 |
+| San Diego | the United States | ≈ 3.2M | ≈ urban area | ≈ 83 |
+| San Francisco | the United States | 6.4M | urban area 2025 | ≈ 84 |
+| San José | Costa Rica | ≈ 1.5M | ≈ urban area | ≈ 73 |
+| San Juan | Puerto Rico (USA) | ≈ 2.5M | ≈ urban area | ≈ 76 |
+| San Salvador | El Salvador | ≈ 1.1M | ≈ urban area | ≈ 55 |
+| Santiago | Chile | 7.2M | urban area 2025 | ≈ 77 |
+| Santo Domingo | the Dominican Republic | ≈ 3.2M | ≈ urban area | ≈ 62 |
+| São Paulo | Brazil | 21.7M | urban area 2025 | ≈ 61 |
+| Seattle | the United States | ≈ 3.8M | ≈ urban area | ≈ 85 |
+| Tegucigalpa | Honduras | ≈ 1M | ≈ urban area | ≈ 48 |
+| Tikal | Guatemala | ≈ 65,000 | ≈ ancient peak c. 700 AD (Maya) | — |
+| Toronto | Canada | 6.4M | urban area 2025 | ≈ 95.5 |
+| Valparaíso | Chile | ≈ 1M | ≈ urban area (Greater Valpo) | ≈ 74 |
+| Vancouver | Canada | ≈ 2.6M | ≈ urban area | 95.8 |
+| Washington D.C. | the United States | 7.6M | Washington–Baltimore 2025 | ≈ 83 |
 
-## The pink districts — gods of love and sex
+## The love gods — the pink free-use lattice
 
-The pink hexes form a free-use district lattice: reserved, minimal and mirror-symmetric. The core six sit beside their cradle civilisations in the heart:
+Ring 2's six goddesses are authored beside their civilisations. The outer rings carry a reserved, mirror-symmetric slot lattice (ring 5: 12 slots · ring 7: 12 · ring 8: 6); each outer god settles onto it by compass, facing their homeland from Mondiala's centre.
 
-| Hex | Goddess | Homeland |
-|---|---|---|
-| 2 | Zhinü | 34.62°N, 112.45°E |
-| 4 | Rati | 23.18°N, 75.78°E |
-| 6 | Inanna | 31.32°N, 45.64°E |
-| 8 | Hathor | 26.14°N, 32.33°E |
-| 10 | Cavillaca | 12.07°S, 76.31°W |
-| 12 | Xochiquetzal | 19.43°N, 99.13°W |
+### The cradle six (ring 2)
 
-The outer districts (rings 5, 7 and 8) hold thirty more gods. The slot lattice never moves; which god takes which slot follows the compass — each god faces their homeland, by bearing from Mondiala's centre, exactly like the cities. They re-flow when the centre moves and always keep the reserved slots:
+| goddess | sits beside | homeland [lat, lon] |
+| --- | --- | --- |
+| Zhinü | Chang'an | 34.62, 112.45 |
+| Rati | Mohenjo-daro | 23.18, 75.78 |
+| Inanna | Uruk | 31.32, 45.64 |
+| Hathor | Memphis | 26.14, 32.33 |
+| Cavillaca | Qosqo | -12.07, -76.31 |
+| Xochiquetzal | Tenochtitlan | 19.43, -99.13 |
 
-| Ring | God | Homeland |
-|---|---|---|
-| 5 | Venus | 41.90°N, 12.50°E |
-| 5 | Cupid | 41.90°N, 12.50°E |
-| 5 | Adonis | 34.12°N, 35.65°E |
-| 5 | Aphrodite | 34.75°N, 32.41°E |
-| 5 | Oshun | 7.90°N, 4.55°E |
-| 5 | Kama | 23.18°N, 75.78°E |
-| 5 | Astarte | 35.60°N, 35.77°E |
-| 5 | Sjöfn | 59.86°N, 17.64°E |
-| 5 | Prende | 42.06°N, 19.49°E |
-| 5 | Lada | 52.23°N, 21.01°E |
-| 5 | Qetesh | 34.73°N, 36.72°E |
-| 5 | Turan | 43.47°N, 11.03°E |
-| 7 | Nanaya | 32.13°N, 45.23°E |
-| 7 | Anahita | 32.65°N, 51.67°E |
-| 7 | Cybele | 39.32°N, 31.58°E |
-| 7 | Dionysus | 38.33°N, 23.32°E |
-| 7 | Himeros | 37.98°N, 23.73°E |
-| 7 | Peitho | 37.98°N, 23.73°E |
-| 7 | Bastet | 30.58°N, 31.51°E |
-| 7 | Bes | 26.14°N, 32.33°E |
-| 7 | Freyr | 59.86°N, 17.64°E |
-| 7 | Freyja | 59.86°N, 17.64°E |
-| 7 | Milda | 54.69°N, 25.28°E |
-| 7 | Zhiva | 52.52°N, 13.40°E |
-| 8 | Áine | 52.48°N, 8.61°W |
-| 8 | Parvati | 25.32°N, 83.01°E |
-| 8 | Yue Lao | 39.90°N, 116.41°E |
-| 8 | Mami Wata | 4.05°N, 9.70°E |
-| 8 | Tlazolteotl | 19.43°N, 99.13°W |
-| 8 | Erzulie Freda | 18.54°N, 72.34°W |
+### The outer gods and their homelands
 
-## The green spokes
+| god | waiting for ring | homeland [lat, lon] |
+| --- | --- | --- |
+| Venus | 5 | 41.90, 12.50 |
+| Cupid | 5 | 41.90, 12.50 |
+| Adonis | 5 | 34.12, 35.65 |
+| Aphrodite | 5 | 34.75, 32.41 |
+| Oshun | 5 | 7.90, 4.55 |
+| Kama | 5 | 23.18, 75.78 |
+| Astarte | 5 | 35.60, 35.77 |
+| Sjöfn | 5 | 59.86, 17.64 |
+| Prende | 5 | 42.06, 19.49 |
+| Lada | 5 | 52.23, 21.01 |
+| Qetesh | 5 | 34.73, 36.72 |
+| Turan | 5 | 43.47, 11.03 |
+| Nanaya | 7 | 32.13, 45.23 |
+| Anahita | 7 | 32.65, 51.67 |
+| Cybele | 7 | 39.32, 31.58 |
+| Dionysus | 7 | 38.33, 23.32 |
+| Himeros | 7 | 37.98, 23.73 |
+| Peitho | 7 | 37.98, 23.73 |
+| Bastet | 7 | 30.58, 31.51 |
+| Bes | 7 | 26.14, 32.33 |
+| Freyr | 7 | 59.86, 17.64 |
+| Freyja | 7 | 59.86, 17.64 |
+| Milda | 7 | 54.69, 25.28 |
+| Zhiva | 7 | 52.52, 13.40 |
+| Áine | 8 | 52.48, -8.61 |
+| Parvati | 8 | 25.32, 83.01 |
+| Yue Lao | 8 | 39.90, 116.41 |
+| Mami Wata | 8 | 4.05, 9.70 |
+| Tlazolteotl | 8 | 19.43, -99.13 |
+| Erzulie Freda | 8 | 18.54, -72.34 |
 
-The six spokes reaching out from the heart belong to the Nordic capitals — the world Mondiala's founders came from — with Göteborg as the sixth. The Nordic ring (ring 3) fills in around them by population.
+### The reserved slot lattice (hex numbers per ring)
 
-| Spoke | Flag | Country | Coordinates |
-|---|---|---|---|
-| stockholm | 🇸🇪 |  | — |
-| københavn | 🇩🇰 |  | — |
-| oslo | 🇳🇴 |  | — |
-| helsinki | 🇫🇮 |  | — |
-| reykjavík | 🇮🇸 |  | — |
-| göteborg | 🇸🇪 |  | — |
+- ring 5: 3, 5, 8, 10, 13, 15, 17, 19, 22, 24, 27, 29
+- ring 7: 2, 7, 9, 14, 16, 21, 23, 28, 30, 35, 37, 42
+- ring 8: 5, 13, 21, 29, 37, 45
+
+## The map flow (geographic centre) — rings 4–8
+
+| ring | cities by hex number |
+| --- | --- |
+| 4 (24 hexes) | #1 Vienna · #2 Bratislava · #3 Budapest · #4 Belgrade · #5 Bucharest · #6 Pristina · #7 Sofia · #8 Constantinople · #9 Skopje · #10 Thessaloniki · #11 Athens · #12 Tirana · #13 Palermo · #14 Naples · #15 Rome · #16 Vatican City · #17 Podgorica · #18 Florence · #19 San Marino · #20 Bologna · #21 Venice · #22 Ljubljana · #23 Zagreb · #24 Sarajevo |
+| 5 (30 hexes) | #1 Munich · #2 Salzburg · #3 Lada · #4 Prague · #5 Kama · #6 Kraków · #7 Lviv · #8 Astarte · #9 Chisinau · #10 Qetesh · #11 Odesa · #12 Valletta · #13 Adonis · #14 Carthago · #15 Aphrodite · #16 Tunis · #17 Oshun · #18 Monaco · #19 Prende · #20 Genoa · #21 Turin · #22 Venus · #23 Milan · #24 Cupid · #25 Verona · #26 Lugano · #27 Turan · #28 Vaduz · #29 Sjöfn · #30 St. Gallen |
+| 6 (36 hexes) | #1 Rotterdam · #2 The Hague · #3 Frankfurt · #4 Utrecht · #5 Amsterdam · #6 Hamburg · #7 Berlin · #8 Warsaw · #9 Minsk · #10 Kyiv · #11 Sevastopol · #12 Ankara · #13 Homoia · #14 Nicosia · #15 Alexandria · #16 Tripoli · #17 Algiers · #18 Barcelona · #19 Andorra la Vella · #20 Marseille · #21 Toulouse · #22 Nice · #23 Lyon · #24 Geneva · #25 Lausanne · #26 Bern · #27 Lucerne · #28 Paris · #29 Basel · #30 Zurich · #31 Strasbourg · #32 Lille · #33 Luxembourg · #34 Ghent · #35 Brussels · #36 Antwerp |
+| 7 (42 hexes) | #1 Newcastle upon Tyne · #2 Milda · #3 Edinburgh · #4 Aberdeen · #5 Saint Petersburg · #6 Moscow · #7 Anahita · #8 Tbilisi · #9 Cybele · #10 Yerevan · #11 Aleppo · #12 Damascus · #13 Beirut · #14 Nanaya · #15 Amman · #16 Bastet · #17 Jericho · #18 Jerusalem · #19 Tel Aviv · #20 Gaza · #21 Bes · #22 Cairo · #23 Himeros · #24 Luxor · #25 Madrid · #26 Bordeaux · #27 Nantes · #28 Peitho · #29 Cardiff · #30 Dionysus · #31 Bristol · #32 Oxford · #33 London · #34 Birmingham · #35 Zhiva · #36 Cambridge · #37 Freyr · #38 Bruges · #39 Liverpool · #40 Manchester · #41 Leeds · #42 Freyja |
+| 8 (48 hexes) | #1 Dushanbe · #2 Baku · #3 Ashgabat · #4 Tehran · #5 Yue Lao · #6 Isfahan · #7 Baghdad · #8 Muscat · #9 Babylon · #10 Dubai · #11 Ur · #12 Kuwait City · #13 Parvati · #14 Abu Dhabi · #15 Manama · #16 Doha · #17 Riyadh · #18 Medina · #19 Sana'a · #20 Mecca · #21 Mami Wata · #22 Jeddah · #23 Djibouti City · #24 Asmara · #25 Addis Ababa · #26 Khartoum · #27 Bangui · #28 N'Djamena · #29 Erzulie Freda · #30 Abuja · #31 Niamey · #32 Ouagadougou · #33 Timbuktu · #34 Marrakesh · #35 Casablanca · #36 Rabat · #37 Tlazolteotl · #38 Seville · #39 Lisbon · #40 Porto · #41 Cork · #42 Dublin · #43 Belfast · #44 Glasgow · #45 Áine · #46 Astana · #47 Tashkent · #48 Samarkand |
+
+## The pool — 165 cities beyond the horizon
+
+Sorted by population, biggest first — megacities and the far side of the map; they settle onto the rings as the city grows (+ Add ring) or new cities re-centre it.
+
+Tokyo · Jakarta · Delhi · Shanghai · Guangzhou · Mumbai · Manila · Dhaka · Seoul · Mexico City · Beijing · São Paulo · Karachi · Kolkata · Bangkok · New York · Shenzhen · Ho Chi Minh City · Buenos Aires · Lagos · Johannesburg · Osaka · Lahore · Bengaluru · Kinshasa · Rio de Janeiro · Hangzhou · Los Angeles · Tianjin · Chennai · Luanda · Lima · Bogotá · Hyderabad · Wuhan · Kuala Lumpur · Taipei · Nagoya · Nanjing · Dar es Salaam · Chicago · Hanoi · Xi'an · Chengdu · Ahmedabad · Washington D.C. · Bandung · Boston · Santiago · Hong Kong · Suzhou · Dallas · Yangon · Houston · Toronto · San Francisco · Miami · Singapore · Philadelphia · Abidjan · Fukuoka · Nairobi · Atlanta · Guadalajara · Monterrey · Melbourne · Sydney · Cape Town · Kabul · Yaoundé · Montreal · Medellín · Salvador · Seattle · Kampala · Antananarivo · Durban · Dakar · Brasília · San Diego · Santo Domingo · Las Vegas · Lusaka · Pyongyang · Guatemala City · Pretoria · Caracas · Bamako · Accra · Mogadishu · Vancouver · Brisbane · Portland · San Juan · Brazzaville · Phnom Penh · Manaus · Almaty · Hiroshima · Conakry · Havana · Perth · Quito · Agra · Panama City · La Paz · Lomé · Montevideo · Auckland · Varanasi · Kathmandu · Ulaanbaatar · Harare · Monrovia · Ottawa · Kyoto · San José · Nouakchott · Maputo · Kingston · Bishkek · Islamabad · Freetown · Kigali · Naypyidaw · Chiang Mai · Asunción · Lilongwe · Port-au-Prince · Cartagena · Cancún · San Salvador · Managua · Libreville · New Orleans · Tegucigalpa · Valparaíso · Honolulu · Vientiane · Quebec City · Colombo · Dodoma · Macau · Bloemfontein · Juba · Bissau · Cusco · Canberra · Windhoek · Banjul · Wellington · Port Moresby · Yamoussoukro · Maseru · Porto-Novo · Malabo · Port of Spain · Dili · Gaborone · Cap-Haïtien · Port Louis · Gitega · Mbabane · Tikal · Jacmel

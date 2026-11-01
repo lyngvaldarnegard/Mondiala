@@ -9,11 +9,13 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - **Flat-top hexes**: the green radial spoke runs straight north–south through Metropol
 - **Orientation numbers**: hexagon 1 is the topmost hex of every ring; numbers run clockwise, so the numbers help you read the compass
 - Rings 0–6: 127 hexagons built from the Notion database, every one named
-- **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homoia (the proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital) — all kept off the green spokes, which are reserved for the metro main lines
+- **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homoia (the proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital)
+- **18 pink free-use districts** in total (6 in ring 2, 12 in ring 5), all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines
 - **Sorted rings**:
   - Ring 3 (Norden) — two population tiers: the five Nordic capitals + Göteborg hold the green spokes (Stockholm first, at the top), smaller cities sorted by population between them
-  - Rings 4–5 — sorted by livability (EIU Global Liveability-style), best city at the top of the ring
-  - Ring 6 — sorted by population, biggest city (Jakarta) at the top; the eight smallest overflow cities (Dallas, Yangon, Alexandria, Fukuoka, Atlanta, Guadalajara, San Diego, Portland) sit in the unplaced-names pool
+  - Ring 4 — sorted by livability (EIU Global Liveability-style), the best city (Vienna) at the top of the ring
+  - Ring 5 — the six most livable cities hold the green spokes (Osaka at the top); the next twelve sit between pink free-use buffers, so no city in ring 5 touches the green metro line; the twelve least livable moved to ring 6
+  - Ring 6 — sorted by population, biggest city (Jakarta) at the top, now including the displaced ring-5 megacities (Delhi, Cairo, Beijing, Bangkok, Buenos Aires, Rio de Janeiro, Bogotá, Lima); the twenty smallest overflow cities sit in the unplaced-names pool
 - **Ring view**: alternating red and blue rings, with Metropol and the six radial spoke hexes green — toggle with "View"
 - **Type view**: paint hexes as District, Free-use district, Water, Plaza, Civic, Industrial (free-use hexes are pink, Kondomeriet-style)
 - **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style — plus the real city's population, livability score and (where published) Walk Score

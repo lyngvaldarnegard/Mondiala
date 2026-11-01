@@ -8,8 +8,25 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.1 — the corrected heart** | `41645f0` | current `main` · bookmark branch `archive/v1.1-the-corrected-heart` |
+| **v1.1.1 — the test toolchain joins the repo** | `main` (this push) | current · no app changes; the 453-check headless suite versioned in `city-designer/test/` |
+| **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.1.1 — the test toolchain joins the repo
+
+No app changes — the city is exactly as v1.1 shipped it. What's new is where the tests live:
+
+- The headless test suite now lives in the repository itself, under **`city-designer/test/`**:
+  the DOM stubs, the loader (which loads the *shipped* `mondiala.html` + `mondiala-data.js`
+  the way a browser would), the `DATA.md` generator, the 453 assertions, `run.sh` and the
+  canvas splitter. Rebuilt from scratch and expanded — every outer ring of all three centre
+  modes is now checked cell by cell against `DATA.md`, not just the heart
+- **453 checks, all green**: roster integrity, the authored heart (rings 0–4, hex by hex),
+  the three lattice rules and the validator, the fill-later god flow (hand-placing all
+  twelve gods, auto-pinking, survival across mode switches, imports, resets and ring 9),
+  the three centres at 0.000 km, pools, the capital audit, save/load, arm-and-place, paint,
+  inspector, pan/zoom and the full `DATA.md` consistency pass
+- Run it with `sh city-designer/test/run.sh` (Node ≥ 18, no dependencies)
 
 ## v1.1 — the corrected heart (`41645f0`)
 
@@ -32,7 +49,7 @@ The heart rebuilt to the corrected design:
   in the heart instead of the roster)
 - **New centres**: the upper Tundzha valley by Kalofer, Bulgaria (geo) · the Turkistan steppe
   south-east of the Shardara reservoir, Kazakhstan (pop) · the western Budjak, Moldova (great)
-- Headless test suite: 203 checks green
+- Headless test suite: 203 checks green (at the time; expanded to 453 in v1.1.1)
 
 Browse this version: <https://github.com/lyngvaldarnegard/Mondiala/tree/41645f0cc6def91f6dbcb23bb795576c46d1dc50>
 

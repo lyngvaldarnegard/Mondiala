@@ -67,7 +67,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag), add cities
 - **Lattice checker** enforcing the three lattice rules — green spokes stay sacred, symmetry stays whole, no ordinary hex gets left without a god
 - Save to browser storage, JSON export/import (carries the centre mode, your added cities and your hand-placed gods), add rings beyond circle 8
-- **Headless test suite**: 203 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the hand-god fill-later flow (placement, auto-pinking, survival across switches, imports, resets, ring 9), the compass placements and pool of all three centre modes, the capital audit, add/remove and import/export round-trips, zoom and pan behaviour, and that `DATA.md` matches the live city
+- **Headless test suite**: 453 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the hand-god fill-later flow (placement, auto-pinking, survival across switches, imports, resets, ring 9), the compass placements and pool of all three centre modes, the capital audit, add/remove and import/export round-trips, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
 
 ## Usage
 
@@ -82,6 +82,20 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 - Click a hexagon to inspect and edit it
 - Paint mode applies an armed type to every hex you click
 - "Check lattice" flags violations of the three lattice rules on the map — and counts the heart hexes still waiting for their gods
+
+## Tests — `test/`
+
+The headless suite that keeps every claim in this README honest lives in
+**[`test/`](test/)** and is part of the repository — so it survives everything and anyone
+can re-run it. It loads the *shipped* files (`mondiala.html` + `mondiala-data.js`) the same
+way a browser would, rebuilds the city, and runs **453 checks**: roster integrity, the
+authored heart, the lattice rules and validator, the fill-later god flow, all three centre
+modes' placements, pools and centres, the capital audit, save/load, pool arm-and-place,
+paint, inspector, pan/zoom, and a full `DATA.md` consistency pass.
+
+Run it from the `city-designer` folder with `sh test/run.sh` — needs Node ≥ 18 and nothing
+else. `test/split_push.py` rebuilds `mondiala-data.js` and `mondiala.html` from the source
+canvas; `test/gen_data_md.js` regenerates `DATA.md` from the live city.
 
 ## Data
 

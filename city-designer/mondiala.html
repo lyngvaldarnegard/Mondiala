@@ -213,7 +213,7 @@ function buildCity() {
   for (let c = 1; c <= maxCircle; c++) {
     const positions = ringPositions(c).sort((a, b) => a.num - b.num); // slot 1 = topmost hex of the ring, then clockwise
     const rows = byCircle[c] || [];
-    if (c <= 2) { // rings 1–2 keep the authored Notion order (by Hexagon number)
+    if (c <= 2) { // rings 1–2 keep the authored civilisation heart (by Hexagon number)
       const slots = {}; positions.forEach(p => slots[p.num] = p);
       const filled = new Set();
       // pass 1: explicit numbers (first row wins on duplicates)
@@ -276,7 +276,7 @@ function placeSortedRing(c, positions, rows) { // ring 3: Norden — Nordic capi
 // ---------- Coordinate-driven world placement ----------
 // Mondiala sits at the centre of the world's great cities; each city's real bearing from
 // that centre picks its hexagon, its real distance picks its ring (near = inner), and
-// population breaks distance ties. Rings 0–3 (Metropol, the ancient six, Norden) are fixed.
+// population breaks distance ties. Rings 0–3 (Metropol, the cradle heart, Norden) are fixed.
 const GEO_RAD = Math.PI / 180, GEO_R = 6371; // km
 function coordOf(name) { return CITY_COORDS[name.trim().toLowerCase()] || null; }
 function factLiv(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : 70; }

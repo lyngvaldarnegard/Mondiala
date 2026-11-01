@@ -13,34 +13,36 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 ## The fixed heart (rings 0–3)
 
 - **Metropol** — the capital hexagon at the centre
-- **Ring 1** — the six largest inspirations: Paris, Barcelona, Moscow, Singapore, Vancouver, New York
-- **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homoia (the proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital)
+- **Ring 1 — the cradle civilisations**: the six civilisations that invented the city — Ancient China, the Indus Valley, Mesopotamia, Ancient Egypt, the Ancient Andes and Mesoamerica — each settled on the spoke its homeland bears to from Mondiala
+- **Ring 2 — the cradle heart**: the six green spokes carry each civilisation's first great city — Chang'an, Mohenjo-daro, Uruk, Memphis, Qosqo and Tenochtitlan — each directly outside its cradle hex; the six pink hexes between carry each civilisation's goddess of love — Zhinü (beside Ancient China), Rati (the Indus Valley), Inanna (Mesopotamia), Hathor (Ancient Egypt), Cavillaca (the Ancient Andes) and Xochiquetzal (Mesoamerica) — each adjacent to her own civilisation
 - **Ring 3 (Norden)** — the Nordic world: two population tiers, the five Nordic capitals + Göteborg hold the green spokes, smaller cities sorted by population between them
 
 ## The coordinate-driven world (rings 4–8)
 
 Outside the fixed heart, the city is **placed by real geography** instead of by hand:
 
-- One roster of **161 great cities** — the big ones, the livable ones and the walkable ones — each carrying its real latitude and longitude
+- One roster of **177 great cities** — the big ones, the livable ones, the walkable ones and the ancient ones (the OG cities) — each carrying its real latitude and longitude
 - **Mondiala sits at the centre of that roster**: wherever the roster's centre falls on Earth, that is where Mondiala "is", and the rings read like a compass around it — a city's bearing from the centre picks its hexagon, its real distance picks its ring (near = inner), and population breaks ties
+- **The classical ancient cities flow by compass onto the outer rings** — Rome, Athens, Alexandria, Jerusalem, Jericho, Constantinople, Carthage, Babylon, Ur and Tikal settle near the civilisations they grew from, alongside the modern giants
 - **Three switchable centre modes** (the panel shows the coordinates *and the country, with its flag*, wherever Mondiala ends up):
-  - **Geographic** — the plain midpoint of all 161 cities: ≈ 49.0°N 20.7°E, in northern Slovakia just off the Polish border (🇸🇰)
-  - **Population-weighted** — weighted by urban-area population: ≈ 42.4°N 71.8°E, in the Talas valley of Kyrgyzstan's Tian Shan (🇰🇬)
-  - **Greatness-weighted** — size + livability + walkability: ≈ 51.5°N 24.9°E, in Volyn, Ukraine, near Kovel (🇺🇦)
-- The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇵🇱 Poland (nearest: Warsaw, 305 km)")
+  - **Geographic** — the plain midpoint of all 177 cities: ≈ 49.0°N 20.6°E, in northern Slovakia just off the Polish border (🇸🇰)
+  - **Population-weighted** — weighted by urban-area population (ancient cities at their ancient peaks): ≈ 45.3°N 66.9°E, in the Kyzylkum steppe of southern Kazakhstan, north of the Syr Darya (🇰🇿)
+  - **Greatness-weighted** — size + livability + walkability: ≈ 51.4°N 24.1°E, in northern Volyn, Ukraine, just south of the Shatsk lakes (🇺🇦)
+- The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇵🇱 Poland (nearest: Kraków, 133 km)")
 - **Add a city and the map re-flows**: type a name, latitude, longitude and population, and Mondiala's centre moves — every ring re-settles around the new middle
-- **The pool = cities beyond the horizon**: the 11 cities too far from the centre to fit before ring 8 ends (in geographic mode the Andes and Australia: Quito, La Paz, Cusco, Lima, Montevideo, Buenos Aires, Santiago, Valparaíso, Perth, Melbourne, Sydney). Press **+ Add ring** and they settle onto the new rim by the same compass rule
+- **The pool = cities beyond the horizon**: the 27 cities too far from the centre to fit before ring 8 ends (in geographic mode the far side of the world — Jakarta, Mexico City, São Paulo, Buenos Aires, Rio, the Andes cities, Australia, and ancient Tikal). Press **+ Add ring** and they settle onto the new rim by the same compass rule
 
 ## The pink free-use districts
 
 - **36 pink free-use districts** in total — 6 in ring 2, 12 in ring 5, 12 in ring 7, 6 in ring 8 — all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines
-- The lattice is a **proven minimum**: with the six ring-2 hexes fixed, no arrangement covers every non-green hexagon with fewer districts
+- **The cradle six are authored**: Zhinü, Rati, Inanna, Hathor, Cavillaca and Xochiquetzal sit in ring 2, each beside her own civilisation — they never move
+- The outer lattice is a **proven minimum**: with the six ring-2 hexes fixed, no arrangement covers every non-green hexagon with fewer districts
 - **Mirror-symmetric about the north–south axis**: the left half of the city mirrors the right half
 - **The lattice rule**: every hexagon that is not green borders at least one pink free-use district — the green hexes (Metropol and the six metro spokes) are the only exemption — and no two districts touch each other
 - The district hexes are **reserved**: wherever the city flow settles, the gods keep the lattice — the slot lattice itself never moves
-- **The outer gods (rings 5, 7, 8) sit by compass**: each god takes the reserved pink hex that faces their homeland, by bearing from Mondiala's centre — the same rule as the cities. Eastern gods (Inanna, Nanaya, Anahita, Rati, Parvati, Yue Lao) sit with the eastern cities; African gods (Hathor, Bastet, Bes, Oshun, Mami Wata) to the south; the Norse and Baltic ones (Sjöfn, Freyr, Milda, Zhiva) to the north; and Áine, Xochiquetzal, Tlazolteotl and Erzulie Freda to the west. Each god's homeland coordinates are part of the data
-- **The gods re-shuffle with the centre**: switch centre mode or add a city, and the gods re-settle onto the same lattice to face their homelands from the new spot — they never give up their reserved slots, and the ring-2 six keep their authored hexes
-- Six deities (Shaushka, Attis, Pothos, Min, Lofn, Xochipilli) are dormant for now — their info cards remain, waiting for a future ring
+- **The outer gods (rings 5, 7, 8) sit by compass**: each god takes the reserved pink hex that faces their homeland, by bearing from Mondiala's centre — the same rule as the cities. Eastern gods (Nanaya, Anahita, Rati, Kama, Parvati, Yue Lao) sit with the eastern cities; African gods (Oshun, Bastet, Bes, Mami Wata) to the south; the Norse and Baltic ones (Sjöfn, Freyr, Freyja, Milda, Zhiva) to the north; the Mediterranean love gods (Venus, Aphrodite, Cupid, Adonis, Astarte, Qetesh, Turan, Prende, Lada, Cybele, Dionysus, Himeros, Peitho) with the classical world; and Áine, Tlazolteotl and Erzulie Freda to the west. Each god's homeland coordinates are part of the data
+- **The gods re-shuffle with the centre**: switch centre mode or add a city, and the gods re-settle onto the same lattice to face their homelands from the new spot — they never give up their reserved slots, and the cradle six keep their authored hexes
+- Eight deities (Shaushka, Attis, Pothos, Min, Lofn, Xochipilli, Eros, Ishtar) are dormant for now — Eros and Ishtar rest while their Roman and Sumerian selves (Cupid, Inanna) walk the city — their info cards remain, waiting for a future ring
 
 ## The tools
 
@@ -70,27 +72,28 @@ its world data from `mondiala-data.js` in the same folder, so keep the two files
 ## Data
 
 The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
-fixed rings 0–3, the 161-city world roster with real coordinates, each city's country,
-the info cards, the real-city facts, the reserved god lattice and each god's homeland
+fixed cradle heart (rings 0–3), the 177-city world roster with real coordinates, each city's
+country, the info cards, the real-city facts, the reserved god lattice and each god's homeland
 coordinates. Edit it directly on GitHub — the map reads it as-is, no regeneration needed.
 **[`DATA.md`](DATA.md)** is a human-readable copy of the same data (tables you can copy
 into Notion), generated from the `.js` file.
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion; the city roster extends the database
-with the world's great cities.
+with the world's great cities and the classical ancient ones.
 
 Real-city data in the info cards:
 
 - **Population** — urban area (the physical settlement), not administrative city limits:
   Nordic cities from the national statistics agencies (Statistics Sweden *tätort* 2023,
   Statistics Denmark *byområde* 2026, SSB *tettsted* 2025, Statistics Finland urban areas 2024);
-  megacities from Demographia World Urban Areas (2025). Estimates are marked with "≈".
+  megacities from Demographia World Urban Areas (2025); ancient cities at their ancient peaks
+  (marked "≈ ancient peak"). Estimates are marked with "≈".
 - **Livability** — EIU Global Liveability Index scale. Values tagged "EIU GLI 2026" are verified
   from the published 2026 ranking (Copenhagen 98.0, Vienna 97.1, Melbourne 97.0, Sydney 96.6,
   Osaka 96.0, Tokyo 95.7, Vancouver 95.8); everything else is an editorial estimate calibrated
   to that index and marked with "≈".
 - **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).
 - **Coordinates** — city-centre latitude/longitude in decimal degrees.
-- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Slovakia, Kyrgyzstan, Ukraine).
+- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Slovakia, Kazakhstan, Ukraine).
 - **God homelands** — each love god's origin coordinates decide which reserved pink hex they face; the outer gods re-settle by compass whenever Mondiala's centre moves.

@@ -6,15 +6,20 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 ## Features
 
 - Hexagonal ring grid following the `L(n) = n × 6` circle system, with **Metropol** at the centre (1 km hex sides, 100 m boulevards)
-- Rings 0–6: 156 named hexagons from the Notion database, pre-placed with real names and densities
+- **Flat-top hexes**: the green radial spoke runs straight north–south through Metropol
+- **Orientation numbers**: hexagon 1 is the topmost hex of every ring; numbers run clockwise, so the numbers help you read the compass
+- Rings 0–6: 156 named hexagons from the Notion database
+- **Sorted rings**:
+  - Ring 3 (Norden) — two population tiers: the five Nordic capitals + Göteborg hold the green spokes (Stockholm first, at the top), smaller cities sorted by population between them
+  - Rings 4–5 — sorted by livability (EIU Global Liveability-style), best city at the top of the ring
+  - Ring 6 — sorted by population, biggest city (Jakarta) at the top; the eight smallest overflow cities (Dallas, Yangon, Alexandria, Fukuoka, Atlanta, Guadalajara, San Diego, Portland) sit in the unplaced-names pool
 - **Ring view**: alternating red and blue rings, with Metropol and the six radial spoke hexes green — toggle with "View"
 - **Type view**: paint hexes as District, Free-use park, Water, Plaza, Civic, Industrial (free-use hexes are pink, Kondomeriet-style)
-- **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style, density and estimated population
-- Every hexagon shows its flag and name on the map
+- **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style — plus the real city's population, livability score and (where published) Walk Score
+- Every hexagon shows its flag and name on the map; tooltips show the data too
 - Postal-code labels in the `Circle · Name · Hexagon number` system
 - Editable name, type, density, style and notes per hex
 - **Lattice checker** validating the free-use park rule (each park surrounded by six non-park hexes; every non-park hex touches a park)
-- Unplaced-names pool for cities awaiting a hexagon slot
 - Save to browser storage, JSON export/import, add rings beyond circle 6
 
 ## Usage
@@ -30,3 +35,15 @@ Open `index.html` in any browser — fully self-contained, no build step, no dep
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion.
+
+Real-city data in the info cards:
+
+- **Population** — urban area (the physical settlement), not administrative city limits:
+  Nordic cities from the national statistics agencies (Statistics Sweden *tätort* 2023,
+  Statistics Denmark *byområde* 2026, SSB *tettsted* 2025, Statistics Finland urban areas 2024);
+  megacities from Demographia World Urban Areas (2025). Estimates are marked with "≈".
+- **Livability** — EIU Global Liveability Index scale. Values tagged "EIU GLI 2026" are verified
+  from the published 2026 ranking (Copenhagen 98.0, Vienna 97.1, Melbourne 97.0, Sydney 96.6,
+  Osaka 96.0, Tokyo 95.7, Vancouver 95.8); everything else is an editorial estimate calibrated
+  to that index and marked with "≈".
+- **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).

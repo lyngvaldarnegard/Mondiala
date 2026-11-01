@@ -64,6 +64,11 @@
   .icsub { font-size: 11px; color: #7d8b9d; margin: 3px 0 7px; }
   .icstyle { font-size: 12px; line-height: 1.5; color: #c4cfdd; }
   .icstyle.none { color: #7d8b9d; font-style: italic; }
+  .icfacts { margin: 7px 0; border: 1px solid #22303f; border-radius: 6px; background: #0b121b; padding: 6px 8px; display: flex; flex-direction: column; gap: 4px; }
+  .factline { display: flex; align-items: baseline; gap: 7px; font-size: 11px; }
+  .factline .fk { color: #7d8b9d; width: 84px; flex: none; }
+  .factline .fv { color: #e8b04b; font-weight: 700; font-size: 12.5px; }
+  .factline .fs { color: #6c7a8d; font-size: 10px; font-style: italic; }
 </style>
 </head>
 <body>
@@ -95,7 +100,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Ring sorts: 3 &amp; 6 by real-city population, 4–5 by livability. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south.</div>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
@@ -282,24 +287,171 @@ const CITY_INFO = {
 "freeuse":["🌿","Free-use park — consent-permissioned public space with threshold architecture at its six edges."]
 };
 
-// ---------- Hex math (axial coords, pointy-top) ----------
+// ---------- Real-city facts: [population, population source, livability score, livability source, Walk Score?] ----------
+// Population = urban area (the physical settlement), not administrative city limits. "≈" = editorial estimate.
+// Livability follows the EIU Global Liveability Index; values tagged "EIU GLI 2026" are verified from the published
+// ranking, values tagged "EIU-style est." are editorial estimates calibrated to it. Walk Score only where published.
+const CITY_FACTS = {
+"metropol":[null,"",null,""],
+"paris":[11282000,"urban area 2025",92,"EIU-style est."],
+"barcelona":[5489000,"urban area 2025",91,"EIU-style est."],
+"moscow":[19100000,"urban area 2025",76,"EIU-style est."],
+"singapore":[6056000,"urban area 2025",92,"EIU-style est."],
+"vancouver":[2600000,"≈ urban area",95.8,"EIU GLI 2026"],
+"new york":[19426449,"urban area 2025",85,"EIU-style est.",88],
+"diyarbakır":[1100000,"≈ urban area",null,""],
+"aleppo":[1800000,"≈ pre-war urban area",null,""],
+"athens":[3200000,"≈ urban area",86,"EIU-style est."],
+"jerusalem":[980000,"≈ urban area",null,""],
+"babylon":[850000,"Hillah, modern site ≈",null,""],
+"carthago":[2400000,"Tunis agglomeration ≈",59,"EIU-style est."],
+"rome":[4300000,"≈ urban area",89,"EIU-style est."],
+"aksum":[70000,"town ≈",null,""],
+"byzantium":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
+"mecca":[2400000,"≈ urban area",null,""],
+"tenochtitlan":[23146802,"Mexico City urban area 2025",72,"EIU-style est."],
+"stockholm":[1652895,"tätort 2023",95,"EIU-style est."],
+"københavn":[1408439,"byområde 2026",98.0,"EIU GLI 2026"],
+"oslo":[1082575,"tettsted 2025",94,"EIU-style est."],
+"helsinki":[1305893,"urban area 2024",94,"EIU-style est."],
+"reykjavík":[216000,"≈ capital-region urban area",89,"EIU-style est."],
+"tallinn":[460000,"city 2025 ≈",87,"EIU-style est."],
+"riga":[601000,"city 2025 ≈",86,"EIU-style est."],
+"vilnius":[622000,"city 2025 ≈",88,"EIU-style est."],
+"malmö":[339316,"tätort 2023",91,"EIU-style est."],
+"aarhus":[305175,"byområde 2026",91,"EIU-style est."],
+"kaunas":[289000,"city 2024 ≈",86,"EIU-style est."],
+"göteborg":[674529,"tätort 2023",91,"EIU-style est."],
+"billund":[7446,"town 2026",null,""],
+"turku | åbo":[277677,"urban area 2024",89,"EIU-style est."],
+"trondheim":[196948,"tettsted 2025",90,"EIU-style est."],
+"bergen":[269548,"tettsted 2025",89,"EIU-style est."],
+"tampere | tammerfors":[341696,"urban area 2024",90,"EIU-style est."],
+"vyborg":[64000,"≈ city",null,""],
+"vienna":[2000000,"city 2024 ≈",97.1,"EIU GLI 2026"],
+"lisbon":[2900000,"≈ urban area",92,"EIU-style est."],
+"amsterdam":[2500000,"≈ urban area",93,"EIU-style est."],
+"florence":[850000,"≈ urban area",90,"EIU-style est."],
+"venice":[260000,"≈ city",89,"EIU-style est."],
+"madrid":[6966000,"urban area 2025",91.7,"EIU-style est."],
+"porto":[1300000,"≈ agglomeration",87,"EIU-style est."],
+"hamburg":[3200000,"≈ urban area",93,"EIU-style est."],
+"sydney":[5037000,"urban area 2025",96.6,"EIU GLI 2026"],
+"seoul":[23825000,"capital urban area 2025",90,"EIU-style est."],
+"bordeaux":[1000000,"≈ agglomeration",89,"EIU-style est."],
+"istanbul":[14749000,"urban area 2025",76,"EIU-style est."],
+"melbourne":[5185000,"urban area 2025",97.0,"EIU GLI 2026"],
+"prague":[1300000,"≈ city",90,"EIU-style est."],
+"budapest":[1750000,"≈ city",88,"EIU-style est."],
+"dublin":[1250000,"≈ urban area",91,"EIU-style est."],
+"london":[11360000,"urban area 2025",92.5,"EIU-style est."],
+"buenos aires":[15933000,"urban area 2025",77,"EIU-style est."],
+"mexico city":[23146802,"urban area 2025",72,"EIU-style est."],
+"san francisco":[6376000,"urban area 2025",84,"EIU-style est.",89],
+"tokyo":[37325000,"urban area 2025",95.7,"EIU GLI 2026"],
+"tel aviv":[4200000,"≈ urban area",84,"EIU-style est."],
+"hong kong":[7117000,"urban area 2025",90,"EIU-style est."],
+"saint petersburg":[5869000,"urban area 2025",72,"EIU-style est."],
+"milan":[5631000,"urban area 2025",91,"EIU-style est."],
+"berlin":[4400000,"≈ urban area",92.5,"EIU-style est."],
+"osaka":[14998000,"Osaka–Kobe–Kyoto 2025",96.0,"EIU GLI 2026"],
+"edinburgh":[520000,"≈ urban area",91,"EIU-style est."],
+"toronto":[6400000,"urban area 2025",95.5,"EIU-style est."],
+"montreal":[4300000,"≈ urban area",95,"EIU-style est."],
+"rio de janeiro":[12546000,"urban area 2025",77,"EIU-style est."],
+"taipai":[9866000,"Taipei urban area 2025",86,"EIU-style est."],
+"shanghai":[29900000,"≈ urban area",85,"EIU-style est."],
+"brussels":[2100000,"≈ urban area",91.5,"EIU-style est."],
+"cape town":[4800000,"≈ urban area",74,"EIU-style est."],
+"utrecht":[375000,"≈ city",91,"EIU-style est."],
+"bangkok":[20284000,"urban area 2025",79,"EIU-style est."],
+"cairo":[22684000,"urban area 2025",71,"EIU-style est."],
+"munich":[2900000,"≈ urban area",93,"EIU-style est."],
+"delhi":[33224000,"urban area 2025",73,"EIU-style est."],
+"lima":[11000000,"≈ urban area",73,"EIU-style est."],
+"dubai":[5097000,"urban area 2025",84,"EIU-style est."],
+"bogotá":[10734000,"urban area 2025",73,"EIU-style est."],
+"beijing":[22363000,"urban area 2025",74,"EIU-style est."],
+"washington d.c.":[7636000,"Washington–Baltimore 2025",83,"EIU-style est.",77],
+"chicago":[8790000,"urban area 2025",83,"EIU-style est.",77],
+"boston":[7375000,"Boston–Providence 2025",84,"EIU-style est.",82],
+"philadelphia":[5697000,"urban area 2025",83,"EIU-style est.",79],
+"liverpool":[860000,"≈ urban area",80,"EIU-style est."],
+"bristol":[620000,"≈ urban area",82,"EIU-style est."],
+"houston":[6804000,"urban area 2025",83,"EIU-style est.",47],
+"las vegas":[3200000,"≈ urban area",83,"EIU-style est.",42],
+"miami":[6129000,"urban area 2025",83,"EIU-style est.",56],
+"alexandria":[5916000,"urban area 2025",52,"EIU-style est."],
+"johannesburg":[15026000,"Johannesburg–Pretoria 2025",61,"EIU-style est."],
+"wuhan":[10041000,"urban area 2025",70,"EIU-style est."],
+"fukuoka":[5550000,"≈ urban area",90,"EIU-style est."],
+"kinshasa":[13060000,"urban area 2025",45,"EIU-style est."],
+"mumbai":[26237000,"urban area 2025",48,"EIU-style est."],
+"dallas":[6980000,"Dallas–Fort Worth 2025",83,"EIU-style est.",47],
+"baghdad":[7160000,"urban area 2025",38,"EIU-style est."],
+"são paulo":[21747000,"urban area 2025",61,"EIU-style est."],
+"kuala lumpur":[9899000,"urban area 2025",70,"EIU-style est."],
+"hyderabad":[10101000,"urban area 2025",55,"EIU-style est."],
+"lagos":[15283000,"urban area 2025",38,"EIU-style est."],
+"ho chi minh city":[16024000,"urban area 2025",53,"EIU-style est."],
+"santiago":[7192000,"urban area 2025",77,"EIU-style est."],
+"chengdu":[8040000,"urban area 2025",70,"EIU-style est."],
+"los angeles":[12237376,"urban area 2025",82,"EIU-style est.",44],
+"kolkata":[20327000,"urban area 2025",54,"EIU-style est."],
+"tianjin":[12095000,"urban area 2025",70,"EIU-style est."],
+"riyadh":[8589000,"urban area 2025",57,"EIU-style est."],
+"luanda":[11892000,"urban area 2025",50,"EIU-style est."],
+"jakarta":[36877000,"urban area 2025",53,"EIU-style est."],
+"tehran":[14137000,"urban area 2025",44,"EIU-style est."],
+"ahmedabad":[7961000,"urban area 2025",55,"EIU-style est."],
+"bandung":[7490000,"urban area 2025",60,"EIU-style est."],
+"yangon":[6820000,"urban area 2025",45,"EIU-style est."],
+"karachi":[21258000,"urban area 2025",40,"EIU-style est."],
+"suzhou":[7000000,"≈ urban area",70,"EIU-style est."],
+"khartoum":[7677000,"urban area 2025",40,"EIU-style est."],
+"lahore":[14256000,"urban area 2025",50,"EIU-style est."],
+"nagoya":[9617000,"urban area 2025",90,"EIU-style est."],
+"nanjing":[8929000,"urban area 2025",70,"EIU-style est."],
+"chennai":[11950000,"urban area 2025",54,"EIU-style est."],
+"shenzhen":[17900000,"≈ urban area (Shenzhen–Dongguan)",68,"EIU-style est."],
+"manila":[25521000,"urban area 2025",57,"EIU-style est."],
+"xi'an":[8313000,"urban area 2025",70,"EIU-style est."],
+"hangzhou":[12422000,"Hangzhou–Shaoxing 2025",72,"EIU-style est."],
+"bengaluru":[14000000,"≈ urban area",55,"EIU-style est."],
+"dar es salaam":[8877000,"urban area 2025",45,"EIU-style est."],
+"guadalajara":[5400000,"≈ urban area",75,"EIU-style est."],
+"dhaka":[25305000,"urban area 2025",38,"EIU-style est."],
+"guangzhou":[26900000,"≈ urban area (Guangzhou–Foshan)",68,"EIU-style est."],
+"atlanta":[5495000,"urban area 2025",83,"EIU-style est.",48],
+"san diego":[3240000,"≈ urban area",83,"EIU-style est.",53],
+"portland":[2510000,"≈ urban area",83,"EIU-style est.",67]
+};
+
+const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
+function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
+function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
+function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
+function fmtPop(p) { return p >= 1e6 ? (Math.round(p / 1e5) / 10) + "M" : p.toLocaleString("en-US"); }
+
+// ---------- Hex math (axial coords, flat-top: flat side up, so the spoke through Metropol runs straight north–south) ----------
 const SQ3 = Math.sqrt(3);
 const SIZE = 36; // px per 1 km side
 const HEX_AREA = 3 * Math.sqrt(3) / 2; // km²
 const DIRS = [[1,-1,0],[1,0,-1],[0,1,-1],[-1,1,0],[-1,0,1],[0,-1,1]]; // cube dirs
-function axialToPixel(q, r) { return { x: SIZE * SQ3 * (q + r / 2), y: SIZE * 1.5 * r }; }
+function axialToPixel(q, r) { return { x: SIZE * 1.5 * q, y: SIZE * SQ3 * (r + q / 2) }; } // flat-top: the q=0 spoke is a straight vertical line
 function hexCorners(cx, cy, s) {
   const pts = [];
   for (let i = 0; i < 6; i++) {
-    const a = Math.PI / 180 * (60 * i - 30);
+    const a = Math.PI / 180 * (60 * i); // flat-top: flat side up, points to the left and right
     pts.push((cx + s * Math.cos(a)).toFixed(2) + "," + (cy + s * Math.sin(a)).toFixed(2));
   }
   return pts.join(" ");
 }
-function ringPositions(n) { // returns array of {q,r,num} for ring n (n>=1), numbered 1..6n
+function ringPositions(n) { // {q,r,num} for ring n (n>=1), numbered 1..6n with 1 at the top, running clockwise
   const out = [];
-  let x = -n, y = 0, z = n; // cube; start at dir[4] * n so the walk stays on the ring
-  for (let i = 0; i < 6; i++) {
+  let x = 0, y = n, z = -n; // cube; the topmost hex of the ring (axial 0,-n — straight above Metropol)
+  const walk = [0, 5, 4, 3, 2, 1]; // clockwise on screen (flat-top): upper-right, right, lower-right, lower-left, left, upper-left
+  for (const i of walk) {
     for (let j = 0; j < n; j++) {
       out.push({ q: x, r: z, num: out.length + 1 });
       const d = DIRS[i];
@@ -332,31 +484,36 @@ function buildCity() {
   const c0 = (byCircle[0] || [])[0];
   if (c0) { hexes["0,0"].name = c0[2]; hexes["0,0"].density = c0[3]; }
   for (let c = 1; c <= maxCircle; c++) {
-    const positions = ringPositions(c);
-    const slots = {}; positions.forEach(p => slots[p.num] = p);
-    const filled = new Set();
+    const positions = ringPositions(c).sort((a, b) => a.num - b.num); // slot 1 = topmost hex of the ring, then clockwise
     const rows = byCircle[c] || [];
-    // pass 1: explicit numbers (first row wins on duplicates)
-    rows.forEach(row => {
-      const n = row[1];
-      if (n != null && slots[n] && !filled.has(n)) { placeRow(slots[n], row); filled.add(n); row._placed = true; }
-    });
-    // pass 2: fill remaining slots with unnumbered rows, in order
-    let si = 1;
-    rows.forEach(row => {
-      if (row._placed) return;
-      while (si <= positions.length && filled.has(si)) si++;
-      if (si <= positions.length) { placeRow(slots[si], row); filled.add(si); si++; row._placed = true; }
-    });
-    // leftovers -> pool
-    rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); });
-    // empty slots stay unnamed districts
-    positions.forEach(p => {
-      if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
-    });
-    rows.forEach(r => delete r._placed);
+    if (c <= 2) { // rings 1–2 keep the authored Notion order (by Hexagon number)
+      const slots = {}; positions.forEach(p => slots[p.num] = p);
+      const filled = new Set();
+      // pass 1: explicit numbers (first row wins on duplicates)
+      rows.forEach(row => {
+        const n = row[1];
+        if (n != null && slots[n] && !filled.has(n)) { placeRow(slots[n], row); filled.add(n); row._placed = true; }
+      });
+      // pass 2: fill remaining slots with unnumbered rows, in order
+      let si = 1;
+      rows.forEach(row => {
+        if (row._placed) return;
+        while (si <= positions.length && filled.has(si)) si++;
+        if (si <= positions.length) { placeRow(slots[si], row); filled.add(si); si++; row._placed = true; }
+      });
+      rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); });
+      // empty slots stay unnamed districts
+      positions.forEach(p => {
+        if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
+      });
+      rows.forEach(r => delete r._placed);
+    } else { // ring 3+: data-sorted rings
+      const placed = placeSortedRing(c, positions, rows);
+      rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
+      positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
+    }
   }
-  reorderNordicRing();
+  pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
     if (h.name === "Freeuse") h.type = "park";
@@ -367,33 +524,39 @@ function placeRow(pos, row) {
   const key = pos.q + "," + pos.r;
   hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
 }
+function placeSortedRing(c, positions, rows) { // rings 3+: sorted by real-city data, starting at the top and running clockwise
+  const placed = [];
+  const byName = (a, b) => a[2].localeCompare(b[2]);
+  const byPop = (a, b) => (factPop(b[2]) - factPop(a[2])) || byName(a, b);
+  const byLive = (a, b) => (factLive(b[2]) - factLive(a[2])) || byName(a, b);
+  if (c === 3) { // Nordic ring, two tiers: capitals + Göteborg hold the green spokes, smaller cities between them — both tiers sorted by population
+    const isSpoke = p => p.q === 0 || p.r === 0 || (p.q + p.r) === 0;
+    const spokePos = positions.filter(isSpoke), midPos = positions.filter(p => !isSpoke(p));
+    const nordic = rows.filter(r => NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+    const rest = rows.filter(r => !NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+    nordic.sort(byPop); rest.sort(byPop);
+    spokePos.forEach((p, i) => { if (nordic[i]) { placeRow(p, nordic[i]); placed.push(nordic[i]); } });
+    midPos.forEach((p, i) => { if (rest[i]) { placeRow(p, rest[i]); placed.push(rest[i]); } });
+  } else if (c === 4 || c === 5) { // livability rings: the best city to live in at the top, descending clockwise
+    const sorted = rows.slice().sort(byLive);
+    positions.forEach((p, i) => { if (sorted[i]) { placeRow(p, sorted[i]); placed.push(sorted[i]); } });
+  } else { // outer rings: population, the biggest city at the top, descending clockwise; overflow (smallest) goes to the pool
+    const sorted = rows.slice().sort(byPop);
+    positions.forEach((p, i) => { if (sorted[i]) { placeRow(p, sorted[i]); placed.push(sorted[i]); } });
+  }
+  return placed;
+}
 
 // ---------- SVG rendering ----------
 const svg = document.getElementById("map");
 const NS = "http://www.w3.org/2000/svg";
-let viewBox = { x: -330, y: -330, w: 660, h: 660 };
+let viewBox = { x: -400, y: -415, w: 800, h: 830 }; // flat-top extents: ring 6 spans ±324 px wide, ±374 px tall
 let gHexes, gLabels;
 
-const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // Nordic capitals + Göteborg
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
 function ringFill(h) {
-  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes
+  if (h.circle === 0 || onSpoke(h)) return "#2f9e63"; // Metropol + the six radial spokes — green hexes; the q=0 spoke runs straight north–south
   return h.circle % 2 === 1 ? "#a04a4a" : "#3d6ea8"; // remaining rings alternate red and blue
-}
-function reorderNordicRing() { // place the Nordic capitals + Göteborg on the spoke slots of ring 3
-  const ring = Object.values(hexes).filter(h => h.circle === 3);
-  if (ring.length !== 18) return;
-  const byNum = {}; ring.forEach(h => byNum[h.num] = h);
-  const spokeSlots = [], otherSlots = [], nordic = [], rest = [];
-  ring.forEach(h => {
-    (onSpoke(h) ? spokeSlots : otherSlots).push(h.num);
-    const e = { name: h.name, density: h.density };
-    (NORDIC_GREEN.has((h.name || "").trim().toLowerCase()) ? nordic : rest).push(e);
-  });
-  if (nordic.length !== spokeSlots.length) return; // only reorder if it fits the pattern
-  spokeSlots.sort((a, b) => a - b); otherSlots.sort((a, b) => a - b);
-  spokeSlots.forEach((slot, i) => { const h = byNum[slot]; h.name = nordic[i].name; h.density = nordic[i].density; });
-  otherSlots.forEach((slot, i) => { const h = byNum[slot]; h.name = rest[i].name; h.density = rest[i].density; });
 }
 function render() {
   svg.innerHTML = "";
@@ -413,7 +576,15 @@ function render() {
     poly.setAttribute("fill", viewMode === "rings" ? (h.type === "park" ? TYPES.park.fill : ringFill(h)) : TYPES[h.type].fill);
     poly.dataset.key = key;
     const ttl = document.createElementNS(NS, "title");
-    ttl.textContent = h.circle + " · " + (h.name || "Unnamed") + " · " + h.num + (h.style ? "\n" + h.style : "");
+    let tip = h.circle + " · " + (h.name || "Unnamed") + " · " + h.num;
+    const fct = h.name ? CITY_FACTS[h.name.trim().toLowerCase()] : null;
+    if (fct) {
+      if (fct[0] != null) tip += "\nPop " + fmtPop(fct[0]) + (fct[1] ? " — " + fct[1] : "");
+      if (fct[2] != null) tip += "\nLivability " + (fct[3].indexOf("est.") !== -1 ? "≈" : "") + fct[2] + " (" + fct[3] + ")";
+      if (fct[4] != null) tip += "\nWalk Score " + fct[4];
+    }
+    if (h.style) tip += "\n" + h.style;
+    ttl.textContent = tip;
     poly.appendChild(ttl);
     gHexes.appendChild(poly);
     if (h.name) {
@@ -434,7 +605,7 @@ function render() {
       gLabels.appendChild(t);
     }
     const n = document.createElementNS(NS, "text");
-    n.setAttribute("x", x); n.setAttribute("y", y + SIZE * 0.52);
+    n.setAttribute("x", x); n.setAttribute("y", y + SIZE * 0.72);
     n.setAttribute("class", "nlabel"); n.setAttribute("font-size", 6.4);
     n.textContent = h.circle + "·" + h.num;
     gLabels.appendChild(n);
@@ -499,6 +670,7 @@ function showInspector() {
     '<div class="infocard">' +
       '<div class="ictitle"><span class="icflag">' + (ci ? ci[0] : "⬡") + '</span>' + esc(h.name || "Unnamed hex") + '</div>' +
       '<div class="icsub">Circle ' + h.circle + ' · Hexagon ' + h.num + ringLen + '</div>' +
+      factsBlock(h.name) +
       (ci || h.style ? '<div class="icstyle">' + esc(h.style || ci[1]) + '</div>' : '<div class="icstyle none">No style set — type a name (e.g. Paris) to auto-fill.</div>') +
     '</div>';
   inspector.innerHTML =
@@ -530,6 +702,15 @@ function showInspector() {
     refresh(); showInspector();
   });
   document.getElementById("iClearName").addEventListener("click", () => { h.name = ""; refresh(); showInspector(); });
+}
+function factsBlock(name) { // real-world data for the city this hex copies
+  const f = name ? CITY_FACTS[name.trim().toLowerCase()] : null;
+  if (!f || (f[0] == null && f[2] == null && f[4] == null)) return "";
+  let out = '<div class="icfacts">';
+  if (f[0] != null) out += '<div class="factline"><span class="fk">Real-city pop</span><span class="fv">' + (String(f[1]).indexOf("≈") !== -1 ? "≈" : "") + fmtPop(f[0]) + '</span><span class="fs">' + esc(f[1]) + '</span></div>';
+  if (f[2] != null) out += '<div class="factline"><span class="fk">Livability</span><span class="fv">' + (f[3].indexOf("est.") !== -1 ? "≈" : "") + f[2] + '</span><span class="fs">' + esc(f[3]) + '</span></div>';
+  if (f[4] != null) out += '<div class="factline"><span class="fk">Walk Score</span><span class="fv">' + f[4] + '</span><span class="fs">walkscore.com</span></div>';
+  return out + '</div>';
 }
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
 

@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -99,7 +100,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Ring sorts: 3 &amp; 6 by real-city population, 4–5 by livability. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 are the world map — Europe north, Asia &amp; Oceania east, Africa south, the Americas west; green spokes hold capitals and largest cities. Ring 3 sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south.</div>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
@@ -143,9 +144,12 @@ const RAW = [
 [1,1,"Paris",19430],[1,2,"Barcelona",16630],[1,3,"Moscow",5080],[1,4,"Singapore",8188.27],[1,5,"Vancouver",5749.9],[1,6,"New York",11313.8],
 [2,1,"Rome",null],[2,3,"Athens",null],[2,5,"Constantinople",null],[2,7,"Mesopotamia",null],[2,9,"Jerusalem",null],[2,11,"Homoia",null],[2,2,"Venus",null],[2,4,"Aphrodite",null],[2,6,"Eros",null],[2,8,"Ishtar",null],[2,10,"Kama",null],[2,12,"Freyja",null], // green spokes: the famous ancient cities; the pink hexes between them are free-use districts named after gods of sexuality
 [3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
-[4,1,"Vienna",null],[4,2,"Lisbon",null],[4,3,"Amsterdam",null],[4,4,"Florence",null],[4,5,"Venice",null],[4,6,"Madrid",null],[4,7,"Porto",null],[4,8,"Hamburg",null],[4,9,"Sydney",null],[4,10,"Seoul",null],[4,11,"Bordeaux",null],[4,12,"Istanbul",null],[4,13,"Melbourne",null],[4,14,"Prague",null],[4,15,"Budapest",null],[4,16,"Dublin",null],[4,17,"London",5782],[4,18,"Buenos Aires",null],[4,19,"Mexico City",null],[4,20,"San Francisco",null],[4,21,"Tokyo",null],[4,22,"Tel Aviv",null],[4,23,"Hong Kong",6801],[4,24,"Saint Petersburg",null],
-[5,null,"Osaka",null],[5,null,"Toronto",null],[5,null,"Montreal",null],[5,null,"Munich",null],[5,null,"Berlin",null],[5,null,"Brussels",null],[5,null,"Edinburgh",null],[5,null,"Milan",null],[5,null,"Utrecht",null],[5,null,"Taipei",null],[5,null,"Shanghai",null],[5,null,"Boston",null],[5,null,"Dubai",null],[5,null,"Chicago",null],[5,null,"Houston",null],[5,null,"Las Vegas",null],[5,null,"Miami",null],[5,null,"Philadelphia",null],[5,2,"Inanna",null],[5,5,"Cupid",null],[5,7,"Adonis",null],[5,10,"Hathor",null],[5,12,"Oshun",null],[5,15,"Rati",null],[5,17,"Astarte",null],[5,20,"Sjöfn",null],[5,22,"Prende",null],[5,25,"Lada",null],[5,27,"Qetesh",null],[5,30,"Turan",null], // livability ring: best six on the green spokes, next twelve between pink free-use buffers (slots 2,5,7,10,12,15,17,20,22,25,27,30 — named after gods of sexuality, off the metro spokes); the twelve least livable moved to ring 6
-[6,null,"Alexandria",null],[6,null,"Johannesburg",null],[6,null,"Wuhan",null],[6,null,"Fukuoka",null],[6,null,"Kinshasa",null],[6,null,"Mumbai",null],[6,null,"Dallas",null],[6,null,"Baghdad",null],[6,null,"São Paulo",null],[6,null,"Kuala Lumpur",null],[6,null,"Hyderabad",null],[6,null,"Lagos",null],[6,null,"Ho Chi Minh City",null],[6,null,"Santiago",null],[6,null,"Chengdu",null],[6,null,"Los Angeles",null],[6,null,"Kolkata",null],[6,null,"Tianjin",null],[6,null,"Riyadh",null],[6,null,"Luanda",null],[6,null,"Jakarta",null],[6,null,"Tehran",null],[6,null,"Ahmedabad",null],[6,null,"Bandung",null],[6,null,"Yangon",null],[6,null,"Karachi",null],[6,null,"Suzhou",null],[6,null,"Khartoum",null],[6,null,"Lahore",null],[6,null,"Nagoya",null],[6,null,"Nanjing",null],[6,null,"Chennai",null],[6,null,"Shenzhen",null],[6,null,"Manila",null],[6,null,"Xi'an",null],[6,null,"Hangzhou",null],[6,null,"Bengaluru",null],[6,null,"Dar es Salaam",null],[6,null,"Guadalajara",null],[6,null,"Dhaka",null],[6,null,"Guangzhou",null],[6,1,"Atlanta",null],[6,2,"San Diego",null],[6,3,"Portland",null],[6,null,"Washington D.C.",null],[6,null,"Bristol",null],[6,null,"Liverpool",null],[6,null,"Bangkok",null],[6,null,"Buenos Aires",null],[6,null,"Rio de Janeiro",null],[6,null,"Beijing",null],[6,null,"Cape Town",null],[6,null,"Bogotá",null],[6,null,"Delhi",null],[6,null,"Lima",null],[6,null,"Cairo",null] // displaced from ring 5 — the megacity tier is their home
+[4,1,"London",null],[4,2,"Amsterdam",null],[4,3,"Vienna",null],[4,4,"Prague",null],[4,5,"Ankara",null],[4,6,"Dubai",null],[4,7,"Karachi",null],[4,8,"Delhi",null],[4,9,"Beijing",null],[4,10,"Tokyo",null],[4,11,"Osaka",null],[4,12,"Melbourne",null],[4,13,"Cairo",null],[4,14,"Alexandria",null],[4,15,"Addis Ababa",null],[4,16,"Cape Town",null],[4,17,"Buenos Aires",null],[4,18,"Montevideo",null],[4,19,"Rio de Janeiro",null],[4,20,"Caracas",null],[4,21,"Washington D.C.",null],[4,22,"Boston",null],[4,23,"Chicago",null],[4,24,"Dublin",null], // the Grand Tour — the world's iconic cities laid out like a map: Europe north, Asia east, Africa south, the Americas west; green spokes hold capitals and largest cities
+[5,1,"Berlin",null],[5,2,"Inanna",null],[5,3,"Brussels",null],[5,4,"Kyiv",null],[5,5,"Cupid",null],[5,6,"Tehran",null],[5,7,"Adonis",null],[5,8,"Baku",null],[5,9,"Mumbai",null],[5,10,"Hathor",null],[5,11,"Shanghai",null],[5,12,"Oshun",null],[5,13,"Bangkok",null],[5,14,"Sydney",null],[5,15,"Rati",null],[5,16,"Lagos",null],[5,17,"Astarte",null],[5,18,"Khartoum",null],[5,19,"Luanda",null],[5,20,"Sjöfn",null],[5,21,"São Paulo",null],[5,22,"Prende",null],[5,23,"Quito",null],[5,24,"Panama City",null],[5,25,"Lada",null],[5,26,"Toronto",null],[5,27,"Qetesh",null],[5,28,"Philadelphia",null],[5,29,"Edinburgh",null],[5,30,"Turan",null], // the capitals ring — pink free-use buffers flank every green spoke, named after gods of sexuality, always off the metro lines
+[6,1,"Hamburg",null],[6,2,"Budapest",null],[6,3,"Warsaw",null],[6,4,"Bucharest",null],[6,5,"Belgrade",null],[6,6,"Sofia",null],[6,7,"Riyadh",null],[6,8,"Tel Aviv",null],[6,9,"Tashkent",null],[6,10,"Lahore",null],[6,11,"Dhaka",null],[6,12,"Bengaluru",null],[6,13,"Hong Kong",null],[6,14,"Fukuoka",null],[6,15,"Nagoya",null],[6,16,"Taipei",null],[6,17,"Ho Chi Minh City",null],[6,18,"Manila",null],[6,19,"Kinshasa",null],[6,20,"Dar es Salaam",null],[6,21,"Abidjan",null],[6,22,"Accra",null],[6,23,"Dakar",null],[6,24,"Casablanca",null],[6,25,"Lima",null],[6,26,"Brasília",null],[6,27,"Medellín",null],[6,28,"Guatemala City",null],[6,29,"Monterrey",null],[6,30,"Guadalajara",null],[6,31,"Mexico City",null],[6,32,"Miami",null],[6,33,"Los Angeles",null],[6,34,"San Francisco",null],[6,35,"Seattle",null],[6,36,"Manchester",null], // the dense world belt — a full circuit of the map with no buffers
+[7,1,"Frankfurt",null],[7,2,"Nanaya",null],[7,3,"Venice",null],[7,4,"Milan",null],[7,5,"Shaushka",null],[7,6,"Saint Petersburg",null],[7,7,"Anahita",null],[7,8,"Baghdad",null],[7,9,"Cybele",null],[7,10,"Doha",null],[7,11,"Almaty",null],[7,12,"Attis",null],[7,13,"Chennai",null],[7,14,"Dionysus",null],[7,15,"Macau",null],[7,16,"Himeros",null],[7,17,"Hanoi",null],[7,18,"Yangon",null],[7,19,"Pothos",null],[7,20,"Jakarta",null],[7,21,"Peitho",null],[7,22,"Johannesburg",null],[7,23,"Bastet",null],[7,24,"Kampala",null],[7,25,"Durban",null],[7,26,"Min",null],[7,27,"Algiers",null],[7,28,"Bes",null],[7,29,"Bogotá",null],[7,30,"Freyr",null],[7,31,"La Paz",null],[7,32,"Cusco",null],[7,33,"Lofn",null],[7,34,"Kingston",null],[7,35,"Milda",null],[7,36,"Havana",null],[7,37,"Zhiva",null],[7,38,"Atlanta",null],[7,39,"San Diego",null],[7,40,"Xochipilli",null],[7,41,"Glasgow",null],[7,42,"Xochiquetzal",null], // the second capitals ring — pink buffers flank the spokes and anchor the middle of each side
+[8,1,"Munich",null],[8,2,"Bratislava",null],[8,3,"Ljubljana",null],[8,4,"Sarajevo",null],[8,5,"Zagreb",null],[8,6,"Kraków",null],[8,7,"Tbilisi",null],[8,8,"Yerevan",null],[8,9,"Astana",null],[8,10,"Amman",null],[8,11,"Kuwait City",null],[8,12,"Kathmandu",null],[8,13,"Kolkata",null],[8,14,"Hyderabad",null],[8,15,"Ahmedabad",null],[8,16,"Colombo",null],[8,17,"Seoul",null],[8,18,"Chengdu",null],[8,19,"Shenzhen",null],[8,20,"Guangzhou",null],[8,21,"Wuhan",null],[8,22,"Hangzhou",null],[8,23,"Kuala Lumpur",null],[8,24,"Perth",null],[8,25,"Nairobi",null],[8,26,"Antananarivo",null],[8,27,"Maputo",null],[8,28,"Pretoria",null],[8,29,"Kigali",null],[8,30,"Yaoundé",null],[8,31,"Abuja",null],[8,32,"Monrovia",null],[8,33,"Santiago",null],[8,34,"Valparaíso",null],[8,35,"Salvador",null],[8,36,"Manaus",null],[8,37,"Cartagena",null],[8,38,"Cancún",null],[8,39,"San José",null],[8,40,"San Juan",null],[8,41,"Ottawa",null],[8,42,"Montreal",null],[8,43,"Las Vegas",null],[8,44,"Dallas",null],[8,45,"Liverpool",null],[8,46,"Lisbon",null],[8,47,"Madrid",null],[8,48,"Bordeaux",null], // the outer world — completing every continent
+[6,null,"Florence",null],[6,null,"Utrecht",null],[6,null,"Porto",null],[6,null,"Bristol",null],[6,null,"Portland",null],[6,null,"Houston",null],[6,null,"Xi'an",null],[6,null,"Suzhou",null],[6,null,"Nanjing",null],[6,null,"Tianjin",null],[6,null,"Bandung",null] // the pool: famous names still waiting for a hexagon
 ];
 
 // ---------- What each hex copies: [flag, style description] ----------
@@ -303,6 +307,89 @@ const CITY_INFO = {
 "atlanta":["🇺🇸","Peachtree ridge city — civil-rights memory, a forest metro."],
 "san diego":["🇺🇸","Balboa Park Spanish revival — border-city light."],
 "portland":["🇺🇸","Bridge-city urbanism — craft cores, eco density."],
+"nanaya":["🌙","Nanaya — Babylonian goddess of love and the starlit night; her quarter keeps votive lamps burning till dawn."],
+"shaushka":["🦚","Shaushka — Hurrian goddess of love and war, peacock-crowned forerunner of Ishtar."],
+"anahita":["🌊","Anahita — Persian goddess of the waters, purifying and fertility-bringing; her quarter is built around fountains."],
+"cybele":["⛰","Cybele — the Phrygian Mountain Mother, riding her lion-drawn chariot; drum-beat processions at her district's edges."],
+"attis":["🌲","Attis — Cybele's beloved, the god who dies with winter and returns with the spring green."],
+"dionysus":["🍇","Dionysus — Greek god of wine, ecstasy and theatre; the district of masks and vines, where boundaries dissolve."],
+"himeros":["🔥","Himeros — twin of Eros, the god of desire's first spark."],
+"pothos":["⚱","Pothos — the god of yearning, always reaching for what is just out of reach."],
+"peitho":["🪶","Peitho — Greek goddess of persuasion and seduction, whose soft words open every door."],
+"bastet":["🐈‍⬛","Bastet — Egyptian cat-goddess of pleasure, music and protection; her quarter purrs."],
+"min":["🌾","Min — Egyptian god of fertility and the harvest, phallic and prolific."],
+"bes":["🛡","Bes — the dwarf guardian of the bedchamber, warding sleepers and blessing the pleasures of the house."],
+"freyr":["🐗","Freyr — Norse god of fertility, peace and good harvest, Freyja's twin, riding the golden boar."],
+"lofn":["🌸","Lofn — Norse goddess so gentle she is permitted to unite lovers no one else may bless."],
+"milda":["🎻","Milda — Baltic goddess of love and courtship, her district tuned to zither strings."],
+"zhiva":["🍃","Zhiva — Slavic goddess of life, love and fertility, green as new leaves."],
+"xochipilli":["🎨","Xochipilli — the Aztec Flower Prince, patron of art, dance and sacred pleasure."],
+"xochiquetzal":["🦋","Xochiquetzal — Aztec goddess of love, beauty and flowers, attended by butterflies."],
+"kyiv":["🇺🇦","Golden-domed city on the Dnipro — St Sophia's mosaics, chestnut boulevards, modernist blocks."],
+"warsaw":["🇵🇱","The rebuilt capital — the Old Town raised again brick by brick, a riverfront of new promenades."],
+"kraków":["🇵🇱","Medieval royal core — the cloth hall, Wawel hill, a green ring where the city walls stood."],
+"bucharest":["🇷🇴","Belle-époque boulevards and a colossal palace of the people — grand civic scale, oak-lined streets."],
+"belgrade":["🇷🇸","Fortress city where two rivers meet — kafana culture, quay-side markets, layered history."],
+"sofia":["🇧🇬","Roman ruins under yellow paving — thermal springs, Mount Vitosha at the southern edge."],
+"bratislava":["🇸🇰","Little coronation city on the Danube — castle-view terraces, a bridge with a restaurant on top."],
+"ljubljana":["🇸🇮","Plečnik's human-scale capital — the triple bridge, riverside markets, dragon-topped pylons."],
+"sarajevo":["🇧🇦","Meeting-point city — Ottoman bazaar lanes, secession facades, minarets against steep green hills."],
+"zagreb":["🇭🇷","Habsburg lower town — green horseshoe squares, tiled cathedral spires, café promenades."],
+"tbilisi":["🇬🇪","Old Tbilisi — carved wooden balconies over sulphur-bath steam, courtyards of vines."],
+"yerevan":["🇦🇲","Pink-tuff capital — soviet-modernist axes, a cascade stairway, Mount Ararat on the horizon."],
+"baku":["🇦🇿","Flame towers over a walled old city — caravanserais and the Caspian light."],
+"frankfurt":["🇩🇪","Bankfurt on the Main — a sandstone-gothic core beneath glass towers, a museum embankment along the river."],
+"manchester":["🇬🇧","Cotton-capital warehouses — red-brick streets of trade turned to culture."],
+"glasgow":["🇬🇧","Toffee-sandstone city — Mackintosh art nouveau, a confident grid, the Clyde's shipyard pride."],
+"ankara":["🇹🇷","Anatolian capital — the citadel above, mausoleum axes and ministries below."],
+"doha":["🇶🇦","Museum city on the Gulf — desert light in I.M. Pei's ivory arcades, a crescent corniche."],
+"almaty":["🇰🇿","Apple city at the mountains' foot — soviet avenues, snow peaks at every street's end."],
+"tashkent":["🇺🇿","Silk-road capital — tiled medressas, plane-tree boulevards, post-quake modernism."],
+"astana":["🇰🇿","Steppe capital of the future — the Bayterek tower, glass palaces on the Ishim, extreme winter light."],
+"amman":["🇯🇴","White-stone city of seven hills — a Roman theatre, levantine stair-streets, café culture."],
+"kuwait city":["🇰🇼","Gulf harbour capital — mushroom water towers, a souk under glass, a dhow corniche."],
+"kathmandu":["🇳🇵","Valley of pagodas — brick-and-timber squares, prayer flags, Himalayan haze."],
+"macau":["🇲🇴","Portuguese-Chinese port — baroque church facades, wave-patterned mosaic streets, casino neon."],
+"hanoi":["🇻🇳","Old quarter of thirty-six trades — tube houses, lake pagodas, motorbike tides."],
+"nairobi":["🇰🇪","Green city in the sun — jacaranda season, matatu colour, a national park at the city fence."],
+"addis ababa":["🇪🇹","The new flower capital — eucalyptus hills, art-deco lanes, Africa's diplomatic seat."],
+"kampala":["🇺🇬","City of seven hills — the Kabaka's palace, boda-boda energy, red-clay roads and lake breeze."],
+"algiers":["🇩🇿","The white amphitheatre city — white terraces falling to the Mediterranean, casbah steps above the harbour."],
+"durban":["🇿🇦","Golden-mile port — art-deco hotels, curry-house heritage, Indian Ocean warmth."],
+"antananarivo":["🇲🇬","City of a thousand — royal hilltop rova ruins, red-brick stairs, rice-paddy valleys."],
+"maputo":["🇲🇿","Acacia-lined capital — pan-African modernism, a waterfront of catembe and baobabs."],
+"kigali":["🇷🇬","Imigongo-patterned capital — terraced hills, spotless avenues, the calmest motorbikes in Africa."],
+"yaoundé":["🇨🇲","Seven-hill capital — red-earth streets, francophone markets, forest-cold nights."],
+"abuja":["🇳🇬","Purpose-built capital — Aso Rock over crescent boulevards, jacaranda and embassy avenues."],
+"pretoria":["🇿🇦","Jacaranda capital — union buildings on the hill, boer-church spires, purple October."],
+"monrovia":["🇱🇷","The founded city of return — Providence Island, palm-lined Broad Street, Atlantic rains."],
+"abidjan":["🇨🇮","Lagoon megacity — Plateau towers, bridges over the Ébrié, West African modernism."],
+"accra":["🇬🇭","Independence-arch capital — Makola market energy, surf-side forts, red laterite roads."],
+"dakar":["🇸🇳","The old world's westernmost city — Gorée memory, terrace cafés, mbalax rhythm."],
+"casablanca":["🇲🇦","Atlantic art-deco casbah — Mauresque downtown and the great mosque standing in the sea."],
+"montevideo":["🇺🇾","Rambla city — art-nouveau facades, asado Sundays, the widest estuary on earth."],
+"caracas":["🇻🇪","Valley city under the Ávila — Bolívar's birthplace, cable cars over the barrios."],
+"quito":["🇪🇨","The highest official capital — Spanish-baroque old town on the equator line, volcano horizon."],
+"panama city":["🇵🇦","Canal capital — casco viejo domes behind a wall of glass towers."],
+"brasília":["🇧🇷","Niemeyer's capital drawn from the air — a bird of curves, the congress dish and dome."],
+"medellín":["🇨🇴","City of eternal spring — metrocables over the valley, Botero plazas, flower-festival colour."],
+"guatemala city":["🇬🇹","Highland capital — volcano horizon, maya-roots museums, coffee-era arcades."],
+"monterrey":["🇲🇽","Mountain industrial capital — the saddle peak, macroplaza monumentalism."],
+"la paz":["🇧🇴","The city that touches the sky — cable-car lines over canyon streets, bowler hats and brick."],
+"cusco":["🇵🇪","Navel of the Inca world — inca masonry under colonial arcades, fortress stairs."],
+"kingston":["🇯🇲","Reggae capital — the harbour, lawns of the great house, sound-system corners."],
+"havana":["🇨🇺","The frozen-in-time capital — malecón waves, pastel colonials, 1950s chrome."],
+"valparaíso":["🇨🇱","Jewel of the Pacific — painted hills, funiculars, a poet's stairways."],
+"salvador":["🇧🇷","Afro-Brazilian first capital — pelourinho pastel, drum-procession streets."],
+"manaus":["🇧🇷","An opera house in the rainforest — rubber-boom dome at the meeting of the waters."],
+"cartagena":["🇨🇴","Walled Caribbean gem — balconies of flowers, fortress sunsets."],
+"cancún":["🇲🇽","Lagoon-and-dune resort city — the hotel zone's comma of white sand."],
+"san josé":["🇨🇷","Coffee-capital valley — tile-roofed barrio Amón, volcano views."],
+"san juan":["🇵🇷","El Morro capital — pastel old-town, fortress walls over the Atlantic."],
+"seattle":["🇺🇸","Emerald city — glasshouses over Pike Place, ferries in the sound, coffee on every corner."],
+"colombo":["🇱🇰","Port city of the east — colonial arcades, temple bells, cinnamon-scented streets."],
+"perth":["🇦🇺","Indian-ocean isolation city — endless white beaches, miners' money, Fremantle sunsets."],
+"ottawa":["🇨🇦","Bytown on three rivers — parliament gothic over the Ottawa, canal skaters in winter."],
 "freeuse":["♥","Free-use district — consent-permissioned pink quarter with threshold architecture at its six edges."]
 };
 
@@ -445,11 +532,76 @@ const CITY_FACTS = {
 "guangzhou":[26900000,"≈ urban area (Guangzhou–Foshan)",68,"EIU-style est."],
 "atlanta":[5495000,"urban area 2025",83,"EIU-style est.",48],
 "san diego":[3240000,"≈ urban area",83,"EIU-style est.",53],
-"portland":[2510000,"≈ urban area",83,"EIU-style est.",67]
+"portland":[2510000,"≈ urban area",83,"EIU-style est.",67],
+"kyiv":[3000000,"≈ city proper (pre-war est.)",71,"EIU-style est."],
+"warsaw":[3100000,"≈ urban area",85,"EIU-style est."],
+"kraków":[800000,"≈ urban area",84,"EIU-style est."],
+"bucharest":[1900000,"≈ urban area",79,"EIU-style est."],
+"belgrade":[1400000,"≈ urban area",78,"EIU-style est."],
+"sofia":[1200000,"≈ urban area",80,"EIU-style est."],
+"bratislava":[700000,"≈ urban area",85,"EIU-style est."],
+"ljubljana":[300000,"≈ urban area",86,"EIU-style est."],
+"sarajevo":[420000,"≈ urban area",78,"EIU-style est."],
+"zagreb":[800000,"≈ urban area",81,"EIU-style est."],
+"tbilisi":[1200000,"≈ urban area",77,"EIU-style est."],
+"yerevan":[1100000,"≈ urban area",78,"EIU-style est."],
+"baku":[2400000,"≈ urban area",74,"EIU-style est."],
+"frankfurt":[2700000,"≈ urban area (Rhine–Main)",90,"EIU-style est."],
+"manchester":[2800000,"≈ urban area",88,"EIU-style est."],
+"glasgow":[1700000,"≈ urban area",87,"EIU-style est."],
+"ankara":[5700000,"≈ urban area",75,"EIU-style est."],
+"doha":[2400000,"≈ urban area",79,"EIU-style est."],
+"almaty":[2200000,"≈ urban area",74,"EIU-style est."],
+"tashkent":[2900000,"≈ urban area",71,"EIU-style est."],
+"astana":[1400000,"≈ urban area",74,"EIU-style est."],
+"amman":[2200000,"≈ urban area",74,"EIU-style est."],
+"kuwait city":[3100000,"≈ urban area (metro)",76,"EIU-style est."],
+"kathmandu":[1600000,"≈ urban area",64,"EIU-style est."],
+"macau":[700000,"territory est. 2024",74,"EIU-style est."],
+"hanoi":[8700000,"≈ urban area",70,"EIU-style est."],
+"nairobi":[5500000,"≈ urban area",60,"EIU-style est."],
+"addis ababa":[5700000,"≈ urban area",60,"EIU-style est."],
+"kampala":[3700000,"≈ urban area",58,"EIU-style est."],
+"algiers":[2800000,"≈ urban area",69,"EIU-style est."],
+"durban":[3400000,"≈ urban area",77,"EIU-style est."],
+"antananarivo":[3600000,"≈ urban area",54,"EIU-style est."],
+"maputo":[1300000,"≈ urban area",57,"EIU-style est."],
+"kigali":[1200000,"≈ urban area",62,"EIU-style est."],
+"yaoundé":[4300000,"≈ urban area",57,"EIU-style est."],
+"abuja":[3800000,"≈ urban area",57,"EIU-style est."],
+"pretoria":[2900000,"≈ urban area (Tshwane)",74,"EIU-style est."],
+"monrovia":[1500000,"≈ urban area",55,"EIU-style est."],
+"abidjan":[5600000,"≈ urban area",59,"EIU-style est."],
+"accra":[2600000,"≈ urban area",61,"EIU-style est."],
+"dakar":[3300000,"≈ urban area",62,"EIU-style est."],
+"casablanca":[4400000,"≈ urban area",68,"EIU-style est."],
+"montevideo":[1800000,"≈ urban area",82,"EIU-style est."],
+"caracas":[2900000,"≈ urban area",54,"EIU-style est."],
+"quito":[2000000,"≈ urban area",71,"EIU-style est."],
+"panama city":[1900000,"≈ urban area",77,"EIU-style est."],
+"brasília":[3300000,"≈ urban area",77,"EIU-style est."],
+"medellín":[4100000,"≈ urban area (valley)",74,"EIU-style est."],
+"guatemala city":[3000000,"≈ urban area",66,"EIU-style est."],
+"monterrey":[5200000,"≈ urban area",73,"EIU-style est."],
+"la paz":[1900000,"≈ urban area (incl. El Alto)",67,"EIU-style est."],
+"cusco":[470000,"≈ urban area",66,"EIU-style est."],
+"kingston":[1300000,"≈ urban area",69,"EIU-style est."],
+"havana":[2100000,"≈ urban area",62,"EIU-style est."],
+"valparaíso":[1000000,"≈ urban area (Greater Valpo)",74,"EIU-style est."],
+"salvador":[3900000,"≈ urban area",70,"EIU-style est."],
+"manaus":[2300000,"≈ urban area",66,"EIU-style est."],
+"cartagena":[1100000,"≈ urban area",67,"EIU-style est."],
+"cancún":[1100000,"≈ urban area",70,"EIU-style est."],
+"san josé":[1500000,"≈ urban area",73,"EIU-style est."],
+"san juan":[2500000,"≈ urban area",76,"EIU-style est."],
+"seattle":[3800000,"≈ urban area",85,"EIU-style est.",74],
+"colombo":[800000,"≈ urban area",66,"EIU-style est."],
+"perth":[2100000,"≈ urban area",93,"EIU-style est."],
+"ottawa":[1500000,"≈ urban area (National Capital Region)",89,"EIU-style est."]
 };
 
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
-const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan"]); // gods of love and sexuality — the pink free-use district hexes
+const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","shaushka","anahita","cybele","attis","dionysus","himeros","pothos","peitho","bastet","min","bes","freyr","lofn","milda","zhiva","xochipilli","xochiquetzal"]); // gods of love and sexuality — the pink free-use district hexes
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
 function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
 function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
@@ -487,7 +639,7 @@ function neighborKeys(q, r) {
 }
 
 // ---------- City model ----------
-let maxCircle = 6;
+let maxCircle = 8;
 let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
 let pool = [];         // unplaced names
 let selected = null;  // key
@@ -529,9 +681,17 @@ function buildCity() {
         if (!filled.has(p.num)) placeRow(p, [c, p.num, "", null]);
       });
       rows.forEach(r => delete r._placed);
-    } else { // ring 3+: data-sorted rings
+    } else if (c === 3) { // ring 3: Norden, two-tier population sort (capitals + Göteborg hold the green spokes)
       const placed = placeSortedRing(c, positions, rows);
       rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
+      positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
+    } else { // rings 4–8: the authored world map — every row names its hexagon; unnumbered rows wait in the pool
+      const slots = {}; positions.forEach(p => slots[p.num] = p);
+      rows.forEach(row => {
+        const n = row[1];
+        if (n != null && slots[n] && !hexes[slots[n].q + "," + slots[n].r]) { placeRow(slots[n], row); row._placed = true; }
+      });
+      rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); delete row._placed; });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
     }
   }
@@ -548,42 +708,24 @@ function placeRow(pos, row) {
   const key = pos.q + "," + pos.r;
   hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
 }
-function placeSortedRing(c, positions, rows) { // rings 3+: sorted by real-city data, starting at the top and running clockwise
+function placeSortedRing(c, positions, rows) { // ring 3: Norden — Nordic capitals + Göteborg hold the green spokes, the smaller cities between them; both tiers sorted by population
   const placed = [];
   const byName = (a, b) => a[2].localeCompare(b[2]);
   const byPop = (a, b) => (factPop(b[2]) - factPop(a[2])) || byName(a, b);
-  const byLive = (a, b) => (factLive(b[2]) - factLive(a[2])) || byName(a, b);
-  if (c === 3) { // Nordic ring, two tiers: capitals + Göteborg hold the green spokes, smaller cities between them — both tiers sorted by population
-    const isSpoke = p => p.q === 0 || p.r === 0 || (p.q + p.r) === 0;
-    const spokePos = positions.filter(isSpoke), midPos = positions.filter(p => !isSpoke(p));
-    const nordic = rows.filter(r => NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
-    const rest = rows.filter(r => !NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
-    nordic.sort(byPop); rest.sort(byPop);
-    spokePos.forEach((p, i) => { if (nordic[i]) { placeRow(p, nordic[i]); placed.push(nordic[i]); } });
-    midPos.forEach((p, i) => { if (rest[i]) { placeRow(p, rest[i]); placed.push(rest[i]); } });
-  } else if (c === 4) { // livability ring: the best city to live in at the top, descending clockwise
-    const sorted = rows.slice().sort(byLive);
-    positions.forEach((p, i) => { if (sorted[i]) { placeRow(p, sorted[i]); placed.push(sorted[i]); } });
-  } else if (c === 5) { // livability ring with pink free-use buffers flanking the green spokes: pinned god-hexes by slot number, best six cities on the spokes, next twelve in the mid slots; the rest overflow to the pool
-    const pinned = rows.filter(r => r[1] != null);
-    const cities = rows.filter(r => r[1] == null).sort(byLive);
-    pinned.forEach(row => { const p = positions.find(x => x.num === row[1]); if (p) { placeRow(p, row); placed.push(row); } });
-    const isSpoke = p => p.q === 0 || p.r === 0 || (p.q + p.r) === 0;
-    const spokePos = positions.filter(p => isSpoke(p));
-    const midPos = positions.filter(p => !isSpoke(p) && !hexes[p.q + "," + p.r]);
-    spokePos.forEach((p, i) => { if (cities[i]) { placeRow(p, cities[i]); placed.push(cities[i]); } });
-    midPos.forEach((p, i) => { const s = cities[6 + i]; if (s) { placeRow(p, s); placed.push(s); } });
-  } else { // outer rings: population, the biggest city at the top, descending clockwise; overflow (smallest) goes to the pool
-    const sorted = rows.slice().sort(byPop);
-    positions.forEach((p, i) => { if (sorted[i]) { placeRow(p, sorted[i]); placed.push(sorted[i]); } });
-  }
+  const isSpoke = p => p.q === 0 || p.r === 0 || (p.q + p.r) === 0;
+  const spokePos = positions.filter(isSpoke), midPos = positions.filter(p => !isSpoke(p));
+  const nordic = rows.filter(r => NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+  const rest = rows.filter(r => !NORDIC_GREEN.has((r[2] || "").trim().toLowerCase()));
+  nordic.sort(byPop); rest.sort(byPop);
+  spokePos.forEach((p, i) => { if (nordic[i]) { placeRow(p, nordic[i]); placed.push(nordic[i]); } });
+  midPos.forEach((p, i) => { if (rest[i]) { placeRow(p, rest[i]); placed.push(rest[i]); } });
   return placed;
 }
 
 // ---------- SVG rendering ----------
 const svg = document.getElementById("map");
 const NS = "http://www.w3.org/2000/svg";
-let viewBox = { x: -400, y: -415, w: 800, h: 830 }; // flat-top extents: ring 6 spans ±324 px wide, ±374 px tall
+let viewBox = { x: -480, y: -552, w: 960, h: 1104 }; // flat-top extents: ring 8 spans ±432 px wide, ±499 px tall (plus hex margin)
 let gHexes, gLabels;
 
 function onSpoke(h) { return h.q === 0 || h.r === 0 || (h.q + h.r) === 0; }
@@ -862,7 +1004,7 @@ function exportJSON() {
 function importJSON(text) {
   const data = JSON.parse(text);
   if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
-  maxCircle = data.maxCircle || 6;
+  maxCircle = data.maxCircle || 8;
   buildCity();
   data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
   selected = null; refresh();
@@ -895,7 +1037,7 @@ document.getElementById("btnLoadLocal").addEventListener("click", () => {
   } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
 });
 document.getElementById("btnReset").addEventListener("click", () => {
-  maxCircle = 6; selected = null; buildCity(); refresh(); renderPool();
+  maxCircle = 8; selected = null; buildCity(); refresh(); renderPool();
 });
 
 // ---------- Init ----------

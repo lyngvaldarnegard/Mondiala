@@ -8,14 +8,16 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - Hexagonal ring grid following the `L(n) = n × 6` circle system, with **Metropol** at the centre (1 km hex sides, 100 m boulevards)
 - **Flat-top hexes**: the green radial spoke runs straight north–south through Metropol
 - **Orientation numbers**: hexagon 1 is the topmost hex of every ring; numbers run clockwise, so the numbers help you read the compass
-- Rings 0–6: 127 hexagons built from the Notion database, every one named
+- Rings 0–8: 217 hexagons, every one named
 - **Ring 2 — the ancient inspirations**: the six green spokes carry the famous ancient cities — Rome, Athens, Constantinople, Mesopotamia (Babylon, Ur and Uruk combined), Jerusalem and Homoia (the proto-city, after Çatalhöyük in Anatolia); the six hexes between them are pink free-use districts named after gods of love and sexuality — Venus (beside Rome), Aphrodite (beside Athens), Eros, Ishtar (beside Mesopotamia), Kama and Freyja (the Norse one, fitting for the Nordic world capital)
-- **18 pink free-use districts** in total (6 in ring 2, 12 in ring 5), all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines
-- **Sorted rings**:
-  - Ring 3 (Norden) — two population tiers: the five Nordic capitals + Göteborg hold the green spokes (Stockholm first, at the top), smaller cities sorted by population between them
-  - Ring 4 — sorted by livability (EIU Global Liveability-style), the best city (Vienna) at the top of the ring
-  - Ring 5 — the six most livable cities hold the green spokes (Osaka at the top); the next twelve sit between pink free-use buffers, so no city in ring 5 touches the green metro line; the twelve least livable moved to ring 6
-  - Ring 6 — sorted by population, biggest city (Jakarta) at the top, now including the displaced ring-5 megacities (Delhi, Cairo, Beijing, Bangkok, Buenos Aires, Rio de Janeiro, Bogotá, Lima); the twenty smallest overflow cities sit in the unplaced-names pool
+- **36 pink free-use districts** in total (6 in ring 2, 12 in ring 5, 18 in ring 7), all named after gods of love and sexuality and all kept off the green spokes, which are reserved for the metro main lines
+- **The world map (rings 4–8)**: laid out like a map of Earth, with Metropol imagined in the Mediterranean — Europe in the north, Asia and Oceania in the east, Africa in the south, the Americas in the west. Every green spoke outside Norden carries a national capital or the country's largest city, plus the approved exceptions (Berlin, Hamburg, Munich and Frankfurt; Beijing, Shanghai, Hong Kong and Macau):
+  - Ring 4 — the Grand Tour of iconic cities (London holds the top spoke; Ankara, Beijing, Cairo, Buenos Aires and Washington D.C. the others)
+  - Ring 5 — the capitals ring, with pink free-use buffers flanking every green spoke so no city touches the metro line (Berlin, Tehran, Shanghai, Lagos, São Paulo, Toronto hold the spokes)
+  - Ring 6 — the dense world belt: 36 cities in one full circuit with no buffers (Hamburg, Riyadh, Hong Kong, Kinshasa, Lima and Mexico City on the spokes)
+  - Ring 7 — the second capitals ring, with pink buffers flanking the spokes and anchoring the middle of each side (Frankfurt, Baghdad, Macau, Johannesburg, Bogotá and Havana hold the spokes)
+  - Ring 8 — the outer world, completing every continent (Munich, Astana, Seoul, Nairobi, Santiago and Ottawa on the spokes)
+  - Ring 3 (Norden) — unchanged: two population tiers, the five Nordic capitals + Göteborg hold the green spokes, smaller cities sorted by population between them
 - **Ring view**: alternating red and blue rings, with Metropol and the six radial spoke hexes green — toggle with "View"
 - **Type view**: paint hexes as District, Free-use district, Water, Plaza, Civic, Industrial (free-use hexes are pink, Kondomeriet-style)
 - **Click any hexagon** for an info card: the real-world city it copies, its flag, architectural style — plus the real city's population, livability score and (where published) Walk Score
@@ -23,7 +25,8 @@ Built from the "Hexagons of Mondiala" worldbuilding database (Notion).
 - Postal-code labels in the `Circle · Name · Hexagon number` system
 - Editable name, type, density, style and notes per hex
 - **Lattice checker** validating the free-use district lattice (no two districts touch; every other interior hex touches one)
-- Save to browser storage, JSON export/import, add rings beyond circle 6
+- Save to browser storage, JSON export/import, add rings beyond circle 8
+- **Unplaced-names pool**: famous cities still waiting for a hexagon (Florence, Utrecht, Porto, Bristol, Houston, Portland, Xi'an, Suzhou, Nanjing, Tianjin, Bandung) — click to arm, click a hex to place
 
 ## Usage
 
@@ -37,7 +40,8 @@ Open `index.html` in any browser — fully self-contained, no build step, no dep
 ## Data
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
-*Hexagons of Mondiala* database in Notion.
+*Hexagons of Mondiala* database in Notion; the world-map rings extend the
+database with cities that make geographic sense.
 
 Real-city data in the info cards:
 

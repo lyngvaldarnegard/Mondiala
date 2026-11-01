@@ -99,11 +99,30 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 are the world map — Europe north, Asia &amp; Oceania east, Africa south, the Americas west; green spokes hold capitals and largest cities. Ring 3 sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. Rings 4–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Ring 3 (Norden) sorts by population. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Every non-green hexagon touches a pink free-use district.</div>
+    </div>
+    <div class="card">
+      <h2>World placement</h2>
+      <label class="field">Where Mondiala sits — the centre of the great cities</label>
+      <select id="centerMode">
+        <option value="geo">Geographic midpoint — every city weighs the same</option>
+        <option value="pop">Population-weighted — big cities pull the centre</option>
+        <option value="great">Greatness-weighted — size + livability + walkability</option>
+      </select>
+      <div id="centerOut" class="hint" style="margin-top:6px"></div>
+      <label class="field" style="margin-top:8px">Add a city — the centre moves and the map re-flows</label>
+      <input type="text" id="addName" placeholder="Name (e.g. Auckland)">
+      <div class="rowbtns" style="margin-top:6px">
+        <input type="number" id="addLat" placeholder="Lat" step="any">
+        <input type="number" id="addLon" placeholder="Lon" step="any">
+        <input type="number" id="addPop" placeholder="Population" step="any">
+      </div>
+      <div class="rowbtns" style="margin-top:6px"><button id="btnAddCity">+ Add city</button></div>
+      <div id="extraList" class="hint" style="margin-top:6px"></div>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
-      <div class="hint" style="margin-bottom:6px">Click to arm, then click a hex (Select mode) to assign the name.</div>
+      <div class="hint" style="margin-bottom:6px">Cities beyond the map's current horizon — add a ring or more cities to reach them. Click to arm, then click a hex (Select mode) to place a name by hand.</div>
       <div class="poolbox" id="pool"></div>
     </div>
     <div class="card">
@@ -143,13 +162,42 @@ const RAW = [
 [1,1,"Paris",19430],[1,2,"Barcelona",16630],[1,3,"Moscow",5080],[1,4,"Singapore",8188.27],[1,5,"Vancouver",5749.9],[1,6,"New York",11313.8],
 [2,1,"Rome",null],[2,3,"Athens",null],[2,5,"Constantinople",null],[2,7,"Mesopotamia",null],[2,9,"Jerusalem",null],[2,11,"Homoia",null],[2,2,"Venus",null],[2,4,"Aphrodite",null],[2,6,"Eros",null],[2,8,"Ishtar",null],[2,10,"Kama",null],[2,12,"Freyja",null], // green spokes: the famous ancient cities; the pink hexes between them are free-use districts named after gods of sexuality
 [3,1,"Stockholm",5261.53],[3,2,"København",7411.38],[3,3,"Oslo",1708.99],[3,4,"Helsinki",3238.47],[3,5,"Reykjavík",556],[3,6,"Tallinn",2864.3],[3,7,"Riga",2339],[3,8,"Vilnius",1515],[3,9,"Malmö",4049],[3,10,"Aarhus",2975],[3,11,"Kaunas",1903],[3,12,"Göteborg",1367.3],[3,13,"Billund",870],[3,14,"Turku | Åbo",853.45],[3,15,"Trondheim",672.81],[3,16,"Bergen",660.75],[3,17,"Tampere | Tammerfors",501.7],[3,18,"Vyborg",519],
-[4,1,"London",null],[4,2,"Amsterdam",null],[4,3,"Vienna",null],[4,4,"Prague",null],[4,5,"Ankara",null],[4,6,"Dubai",null],[4,7,"Karachi",null],[4,8,"Delhi",null],[4,9,"Beijing",null],[4,10,"Tokyo",null],[4,11,"Osaka",null],[4,12,"Melbourne",null],[4,13,"Cairo",null],[4,14,"Alexandria",null],[4,15,"Addis Ababa",null],[4,16,"Cape Town",null],[4,17,"Buenos Aires",null],[4,18,"Montevideo",null],[4,19,"Rio de Janeiro",null],[4,20,"Caracas",null],[4,21,"Washington D.C.",null],[4,22,"Boston",null],[4,23,"Chicago",null],[4,24,"Dublin",null], // the Grand Tour — the world's iconic cities laid out like a map: Europe north, Asia east, Africa south, the Americas west; green spokes hold capitals and largest cities
-[5,1,"Berlin",null],[5,2,"Brussels",null],[5,3,"Inanna",null],[5,4,"Kyiv",null],[5,5,"Cupid",null],[5,6,"Tehran",null],[5,7,"Baku",null],[5,8,"Adonis",null],[5,9,"Mumbai",null],[5,10,"Hathor",null],[5,11,"Shanghai",null],[5,12,"Bangkok",null],[5,13,"Oshun",null],[5,14,"Sydney",null],[5,15,"Rati",null],[5,16,"Lagos",null],[5,17,"Khartoum",null],[5,18,"Astarte",null],[5,19,"Luanda",null],[5,20,"Sjöfn",null],[5,21,"São Paulo",null],[5,22,"Quito",null],[5,23,"Prende",null],[5,24,"Panama City",null],[5,25,"Lada",null],[5,26,"Toronto",null],[5,27,"Philadelphia",null],[5,28,"Qetesh",null],[5,29,"Edinburgh",null],[5,30,"Turan",null], // the capitals ring — pink free-use buffers flank each spoke and hold each side's middle, so every non-green hex of ring 4 touches a district; named after gods of sexuality, always off the metro lines
-[6,1,"Hamburg",null],[6,2,"Budapest",null],[6,3,"Warsaw",null],[6,4,"Bucharest",null],[6,5,"Belgrade",null],[6,6,"Sofia",null],[6,7,"Riyadh",null],[6,8,"Tel Aviv",null],[6,9,"Tashkent",null],[6,10,"Lahore",null],[6,11,"Dhaka",null],[6,12,"Bengaluru",null],[6,13,"Hong Kong",null],[6,14,"Fukuoka",null],[6,15,"Nagoya",null],[6,16,"Taipei",null],[6,17,"Ho Chi Minh City",null],[6,18,"Manila",null],[6,19,"Kinshasa",null],[6,20,"Dar es Salaam",null],[6,21,"Abidjan",null],[6,22,"Accra",null],[6,23,"Dakar",null],[6,24,"Casablanca",null],[6,25,"Lima",null],[6,26,"Brasília",null],[6,27,"Medellín",null],[6,28,"Guatemala City",null],[6,29,"Monterrey",null],[6,30,"Guadalajara",null],[6,31,"Mexico City",null],[6,32,"Miami",null],[6,33,"Los Angeles",null],[6,34,"San Francisco",null],[6,35,"Seattle",null],[6,36,"Manchester",null], // the dense world belt — a full circuit of the map with no buffers
-[7,1,"Frankfurt",null],[7,2,"Nanaya",null],[7,3,"Venice",null],[7,4,"Milan",null],[7,5,"Shaushka",null],[7,6,"Saint Petersburg",null],[7,7,"Anahita",null],[7,8,"Baghdad",null],[7,9,"Cybele",null],[7,10,"Doha",null],[7,11,"Almaty",null],[7,12,"Attis",null],[7,13,"Chennai",null],[7,14,"Dionysus",null],[7,15,"Macau",null],[7,16,"Himeros",null],[7,17,"Hanoi",null],[7,18,"Yangon",null],[7,19,"Pothos",null],[7,20,"Jakarta",null],[7,21,"Peitho",null],[7,22,"Johannesburg",null],[7,23,"Bastet",null],[7,24,"Kampala",null],[7,25,"Durban",null],[7,26,"Min",null],[7,27,"Algiers",null],[7,28,"Bes",null],[7,29,"Bogotá",null],[7,30,"Freyr",null],[7,31,"La Paz",null],[7,32,"Cusco",null],[7,33,"Lofn",null],[7,34,"Kingston",null],[7,35,"Milda",null],[7,36,"Havana",null],[7,37,"Zhiva",null],[7,38,"Atlanta",null],[7,39,"San Diego",null],[7,40,"Xochipilli",null],[7,41,"Glasgow",null],[7,42,"Xochiquetzal",null], // the second capitals ring — pink buffers flank the spokes and anchor the middle of each side
-[8,1,"Munich",null],[8,2,"Bratislava",null],[8,3,"Ljubljana",null],[8,4,"Áine",null],[8,5,"Zagreb",null],[8,6,"Kraków",null],[8,7,"Tbilisi",null],[8,8,"Yerevan",null],[8,9,"Astana",null],[8,10,"Amman",null],[8,11,"Kuwait City",null],[8,12,"Parvati",null],[8,13,"Kolkata",null],[8,14,"Hyderabad",null],[8,15,"Ahmedabad",null],[8,16,"Colombo",null],[8,17,"Seoul",null],[8,18,"Chengdu",null],[8,19,"Shenzhen",null],[8,20,"Yue Lao",null],[8,21,"Wuhan",null],[8,22,"Hangzhou",null],[8,23,"Kuala Lumpur",null],[8,24,"Perth",null],[8,25,"Nairobi",null],[8,26,"Antananarivo",null],[8,27,"Maputo",null],[8,28,"Mami Wata",null],[8,29,"Kigali",null],[8,30,"Yaoundé",null],[8,31,"Abuja",null],[8,32,"Monrovia",null],[8,33,"Santiago",null],[8,34,"Valparaíso",null],[8,35,"Salvador",null],[8,36,"Tlazolteotl",null],[8,37,"Cartagena",null],[8,38,"Cancún",null],[8,39,"San José",null],[8,40,"San Juan",null],[8,41,"Ottawa",null],[8,42,"Montreal",null],[8,43,"Las Vegas",null],[8,44,"Erzulie Freda",null],[8,45,"Liverpool",null],[8,46,"Lisbon",null],[8,47,"Madrid",null],[8,48,"Bordeaux",null], // the outer world — completing every continent, with pink free-use districts anchoring the middle of each side so the rim's non-green hexes touch a district too
-[6,null,"Florence",null],[6,null,"Utrecht",null],[6,null,"Porto",null],[6,null,"Bristol",null],[6,null,"Portland",null],[6,null,"Houston",null],[6,null,"Xi'an",null],[6,null,"Suzhou",null],[6,null,"Nanjing",null],[6,null,"Tianjin",null],[6,null,"Bandung",null],[8,null,"Sarajevo",null],[8,null,"Kathmandu",null],[8,null,"Guangzhou",null],[8,null,"Pretoria",null],[8,null,"Manaus",null],[8,null,"Dallas",null] // the pool: famous names still waiting for a hexagon (the six rim cities yielded their mid-side hexes to the new pink districts)
 ];
+// ---------- The great cities of the world — placed by their real coordinates ----------
+// Rings 4–8 are no longer authored by hand. Every candidate city carries its real-world
+// coordinates; the app computes where Mondiala sits on Earth — the centre of these cities —
+// and slots each city into the hexagon matching its bearing from Mondiala. Real distance
+// decides the ring (near cities innermost), population breaks ties, and adding a city or
+// switching centre mode re-centres the map and re-flows the whole placement.
+const WORLD_CITIES = [
+  // Europe
+  "London","Amsterdam","Vienna","Prague","Dublin","Berlin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Bratislava","Ljubljana","Sarajevo","Kraków","Lisbon","Madrid","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt",
+  // Middle East & Caucasus
+  "Ankara","Dubai","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Tbilisi","Yerevan",
+  // Africa
+  "Cairo","Alexandria","Addis Ababa","Cape Town","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos",
+  // Asia
+  "Karachi","Delhi","Beijing","Tokyo","Osaka","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Hong Kong","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Colombo","Kathmandu","Seoul","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Macau","Xi'an","Suzhou","Nanjing","Tianjin","Bandung",
+  // Oceania
+  "Melbourne","Sydney","Perth",
+  // The Americas
+  "Buenos Aires","Montevideo","Rio de Janeiro","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Toronto","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Mexico City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cusco","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Las Vegas","Dallas","Portland","Houston",
+]; // big (megacities), livable (EIU-style) and walkable (Walk Score) — one roster for the whole outer city
+
+// real-world coordinates [latitude, longitude] for every candidate city
+const CITY_COORDS = {
+"london":[51.51,-0.13],"amsterdam":[52.37,4.9],"vienna":[48.21,16.37],"prague":[50.08,14.44],"ankara":[39.93,32.86],"dubai":[25.2,55.27],"karachi":[24.86,67.01],"delhi":[28.61,77.21],"beijing":[39.9,116.41],"tokyo":[35.68,139.69],"osaka":[34.69,135.5],"melbourne":[-37.81,144.96],"cairo":[30.04,31.24],"alexandria":[31.2,29.92],"addis ababa":[9.03,38.74],"cape town":[-33.92,18.42],"buenos aires":[-34.6,-58.38],"montevideo":[-34.9,-56.16],"rio de janeiro":[-22.91,-43.17],"caracas":[10.49,-66.88],"washington d.c.":[38.91,-77.04],"boston":[42.36,-71.06],"chicago":[41.88,-87.63],"dublin":[53.35,-6.26],"berlin":[52.52,13.4],"brussels":[50.85,4.35],"kyiv":[50.45,30.52],"tehran":[35.69,51.39],"baku":[40.41,49.87],"mumbai":[19.08,72.88],"shanghai":[31.23,121.47],"bangkok":[13.76,100.5],"sydney":[-33.87,151.21],"lagos":[6.52,3.38],"khartoum":[15.5,32.56],"luanda":[-8.84,13.23],"são paulo":[-23.55,-46.63],"quito":[-0.18,-78.47],"panama city":[8.98,-79.52],"toronto":[43.65,-79.38],"philadelphia":[39.95,-75.17],"edinburgh":[55.95,-3.19],"hamburg":[53.55,9.99],"budapest":[47.5,19.04],"warsaw":[52.23,21.01],"bucharest":[44.43,26.1],"belgrade":[44.79,20.45],"sofia":[42.7,23.32],"riyadh":[24.71,46.68],"tel aviv":[32.08,34.78],"tashkent":[41.3,69.24],"lahore":[31.55,74.32],"dhaka":[23.81,90.41],"bengaluru":[12.97,77.59],"hong kong":[22.32,114.17],"fukuoka":[33.59,130.4],"nagoya":[35.18,136.91],"taipei":[25.03,121.57],"ho chi minh city":[10.82,106.63],"manila":[14.6,120.98],"kinshasa":[-4.32,15.31],"dar es salaam":[-6.79,39.21],"abidjan":[5.35,-4.02],"accra":[5.6,-0.19],"dakar":[14.72,-17.47],"casablanca":[33.57,-7.59],"lima":[-12.05,-77.04],"brasília":[-15.79,-47.88],"medellín":[6.24,-75.58],"guatemala city":[14.63,-90.51],"monterrey":[25.69,-100.32],"guadalajara":[20.67,-103.35],"mexico city":[19.43,-99.13],"miami":[25.76,-80.19],"los angeles":[34.05,-118.24],"san francisco":[37.77,-122.42],"seattle":[47.61,-122.33],"manchester":[53.48,-2.24],"frankfurt":[50.11,8.68],"venice":[45.44,12.34],"milan":[45.46,9.19],"zagreb":[45.81,15.98],"saint petersburg":[59.94,30.31],"baghdad":[33.31,44.36],"doha":[25.29,51.53],"almaty":[43.24,76.89],"kolkata":[22.57,88.36],"chennai":[13.08,80.27],"macau":[22.2,113.55],"hanoi":[21.03,105.85],"yangon":[16.87,96.2],"wuhan":[30.59,114.31],"jakarta":[-6.21,106.85],"johannesburg":[-26.2,28.05],"kampala":[0.35,32.58],"durban":[-29.86,31.02],"kigali":[-1.94,30.06],"algiers":[36.75,3.06],"bogotá":[4.71,-74.07],"la paz":[-16.5,-68.15],"cusco":[-13.53,-71.97],"cartagena":[10.39,-75.51],"kingston":[17.97,-76.79],"havana":[23.11,-82.37],"atlanta":[33.75,-84.39],"san diego":[32.72,-117.16],"liverpool":[53.41,-2.98],"glasgow":[55.86,-4.25],"munich":[48.14,11.58],"bratislava":[48.15,17.11],"ljubljana":[46.06,14.51],"sarajevo":[43.86,18.41],"kraków":[50.06,19.94],"tbilisi":[41.72,44.78],"yerevan":[40.18,44.51],"astana":[51.17,71.43],"amman":[31.95,35.93],"kuwait city":[29.37,47.98],"kathmandu":[27.72,85.32],"hyderabad":[17.39,78.49],"ahmedabad":[23.03,72.58],"colombo":[6.93,79.86],"seoul":[37.57,126.98],"chengdu":[30.57,104.07],"shenzhen":[22.54,114.06],"guangzhou":[23.13,113.26],"hangzhou":[30.27,120.16],"kuala lumpur":[3.14,101.69],"perth":[-31.95,115.86],"nairobi":[-1.29,36.82],"antananarivo":[-18.88,47.51],"maputo":[-25.97,32.57],"pretoria":[-25.75,28.19],"yaoundé":[3.87,11.52],"abuja":[9.06,7.49],"monrovia":[6.3,-10.8],"santiago":[-33.45,-70.66],"valparaíso":[-33.05,-71.62],"salvador":[-12.97,-38.5],"manaus":[-3.12,-60.02],"cancún":[21.16,-86.85],"san josé":[9.93,-84.08],"san juan":[18.47,-66.11],"ottawa":[45.42,-75.7],"montreal":[45.5,-73.57],"las vegas":[36.17,-115.14],"dallas":[32.78,-96.8],"lisbon":[38.72,-9.14],"madrid":[40.42,-3.7],"bordeaux":[44.84,-0.58],"florence":[43.77,11.26],"utrecht":[52.09,5.12],"porto":[41.15,-8.61],"bristol":[51.45,-2.59],"portland":[45.52,-122.68],"houston":[29.76,-95.37],"xi'an":[34.34,108.94],"suzhou":[31.3,120.62],"nanjing":[32.06,118.8],"tianjin":[39.13,117.2],"bandung":[-6.92,107.61]
+};
+
+// the pink free-use district lattice — reserved, minimal and mirror-symmetric about the north–south axis;
+// the gods of love and sexuality keep their hexes no matter where the city flow settles
+const PINK_SLOTS = {
+  5: [[3,"Inanna"],[5,"Cupid"],[8,"Adonis"],[10,"Hathor"],[13,"Oshun"],[15,"Rati"],[17,"Astarte"],[19,"Sjöfn"],[22,"Prende"],[24,"Lada"],[27,"Qetesh"],[29,"Turan"]],
+  7: [[2,"Nanaya"],[7,"Anahita"],[9,"Cybele"],[14,"Dionysus"],[16,"Himeros"],[21,"Peitho"],[23,"Bastet"],[28,"Bes"],[30,"Freyr"],[35,"Milda"],[37,"Zhiva"],[42,"Xochiquetzal"]],
+  8: [[5,"Áine"],[13,"Parvati"],[21,"Yue Lao"],[29,"Mami Wata"],[37,"Tlazolteotl"],[45,"Erzulie Freda"]]
+};
+let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
+let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 // ---------- What each hex copies: [flag, style description] ----------
 const CITY_INFO = {
@@ -605,8 +653,9 @@ const CITY_FACTS = {
 "ottawa":[1500000,"≈ urban area (National Capital Region)",89,"EIU-style est."]
 };
 
+
 const NORDIC_GREEN = new Set(["stockholm", "københavn", "oslo", "helsinki", "reykjavík", "göteborg"]); // the five Nordic capitals + Göteborg — they hold the green spokes
-const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","shaushka","anahita","cybele","attis","dionysus","himeros","pothos","peitho","bastet","min","bes","freyr","lofn","milda","zhiva","xochipilli","xochiquetzal","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes, positioned so every non-green hexagon touches one
+const SEX_GODS = new Set(["venus","aphrodite","eros","ishtar","kama","freyja","inanna","cupid","adonis","hathor","oshun","rati","astarte","sjöfn","prende","lada","qetesh","turan","nanaya","anahita","cybele","dionysus","himeros","peitho","bastet","bes","freyr","milda","zhiva","xochiquetzal","áine","parvati","yue lao","mami wata","tlazolteotl","erzulie freda"]); // gods of love and sexuality — the pink free-use district hexes, placed mirror-symmetrically about the north–south axis so every non-green hexagon touches one with as few districts as possible
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
 function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[0] : -Infinity; }
 function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
@@ -646,7 +695,8 @@ function neighborKeys(q, r) {
 // ---------- City model ----------
 let maxCircle = 8;
 let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
-let pool = [];         // unplaced names
+let pool = [];         // unplaced names — cities beyond the map's current horizon
+let worldCenter = null; // where Mondiala sits on Earth under the active centre mode
 let selected = null;  // key
 let armedType = "district";
 let armedPoolName = null;
@@ -655,6 +705,8 @@ let viewMode = "rings"; // "rings" (alternating red/blue rings + green spokes) o
 
 function buildCity() {
   hexes = {}; pool = [];
+  const worldPlan = computeWorldPlan(); // where Mondiala sits on Earth + which city lands in which hexagon
+  worldCenter = worldPlan.center;
   // group RAW by circle
   const byCircle = {};
   RAW.forEach(row => { (byCircle[row[0]] = byCircle[row[0]] || []).push(row); });
@@ -690,18 +742,16 @@ function buildCity() {
       const placed = placeSortedRing(c, positions, rows);
       rows.forEach(row => { if (placed.indexOf(row) === -1) pool.push({ name: row[2], density: row[3] }); });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
-    } else { // rings 4–8: the authored world map — every row names its hexagon; unnumbered rows wait in the pool
+    } else { // rings 4–8: coordinate-driven placement — the gods keep their reserved lattice hexes, cities slot by bearing from Mondiala
       const slots = {}; positions.forEach(p => slots[p.num] = p);
-      rows.forEach(row => {
-        const n = row[1];
-        if (n != null && slots[n] && !hexes[slots[n].q + "," + slots[n].r]) { placeRow(slots[n], row); row._placed = true; }
-      });
-      rows.forEach(row => { if (!row._placed) pool.push({ name: row[2], density: row[3] }); delete row._placed; });
+      (PINK_SLOTS[c] || []).forEach(pair => { if (slots[pair[0]]) placeRow(slots[pair[0]], [c, pair[0], pair[1], null]); });
+      (worldPlan.plan[c] || []).forEach(pair => { const p = slots[pair[0]]; if (p && !hexes[p.q + "," + p.r]) placeRow(p, [c, pair[0], pair[1], null]); });
       positions.forEach(p => { if (!hexes[p.q + "," + p.r]) placeRow(p, [c, p.num, "", null]); });
     }
   }
+  worldPlan.leftover.forEach(n => pool.push({ name: n, density: null })); // candidates beyond the map's current horizon wait here
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
-  // ring 2: all six non-spoke hexes are pink free-use districts; ring 5: the spoke-flanking buffers — both rings named after gods of sexuality, always off the green metro spokes
+  // ring 2: all six non-spoke hexes are pink free-use districts; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
   Object.values(hexes).forEach(h => { if ((h.circle === 2 && !onSpoke(h)) || SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
   // "Freeuse" hex starts as a free-use park; fill curated style descriptions
   Object.values(hexes).forEach(h => {
@@ -725,6 +775,86 @@ function placeSortedRing(c, positions, rows) { // ring 3: Norden — Nordic capi
   spokePos.forEach((p, i) => { if (nordic[i]) { placeRow(p, nordic[i]); placed.push(nordic[i]); } });
   midPos.forEach((p, i) => { if (rest[i]) { placeRow(p, rest[i]); placed.push(rest[i]); } });
   return placed;
+}
+
+// ---------- Coordinate-driven world placement ----------
+// Mondiala sits at the centre of the world's great cities; each city's real bearing from
+// that centre picks its hexagon, its real distance picks its ring (near = inner), and
+// population breaks distance ties. Rings 0–3 (Metropol, the ancient six, Norden) are fixed.
+const GEO_RAD = Math.PI / 180, GEO_R = 6371; // km
+function coordOf(name) { return CITY_COORDS[name.trim().toLowerCase()] || null; }
+function factLiv(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : 70; }
+function factWalk(name) { const f = factsFor(name); return f && f[4] != null ? f[4] : 50; }
+function factPopPos(name) { const p = factPop(name); return isFinite(p) && p > 0 ? p : 500000; } // a centre weight must stay positive
+function geoWeight(name) { // how hard a city pulls the centre under the active mode
+  if (centerMode === "pop") return factPopPos(name);
+  if (centerMode === "great") { // size + livability + walkability
+    const p = Math.min(1, Math.log(factPopPos(name) / 100000) / Math.log(350)); // 100k..35M → 0..1
+    return 0.5 * p + 0.3 * (factLiv(name) / 100) + 0.2 * (factWalk(name) / 100);
+  }
+  return 1; // geo: every great city weighs the same
+}
+function computeCenter(names) { // the (weighted) midpoint of the great cities — Mondiala's spot on Earth
+  const acc = [0, 0, 0];
+  names.forEach(n => {
+    const co = coordOf(n); if (!co) return;
+    const [lat, lon] = co, w = geoWeight(n);
+    acc[0] += w * Math.cos(lat * GEO_RAD) * Math.cos(lon * GEO_RAD);
+    acc[1] += w * Math.cos(lat * GEO_RAD) * Math.sin(lon * GEO_RAD);
+    acc[2] += w * Math.sin(lat * GEO_RAD);
+  });
+  const len = Math.hypot(acc[0], acc[1], acc[2]);
+  return { lat: Math.asin(acc[2] / len) / GEO_RAD, lon: Math.atan2(acc[1], acc[0]) / GEO_RAD };
+}
+function bearingDist(center, name) { // bearing (0° = north, clockwise) and great-circle km from Mondiala
+  const [lat, lon] = coordOf(name), clat = center.lat, clon = center.lon;
+  const y = Math.sin((lon - clon) * GEO_RAD) * Math.cos(lat * GEO_RAD);
+  const x = Math.cos(clat * GEO_RAD) * Math.sin(lat * GEO_RAD) - Math.sin(clat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - clon) * GEO_RAD);
+  let b = Math.atan2(y, x) / GEO_RAD; if (b < 0) b += 360;
+  const dot = Math.sin(clat * GEO_RAD) * Math.sin(lat * GEO_RAD) + Math.cos(clat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - clon) * GEO_RAD);
+  return { bearing: b, dist: GEO_R * Math.acos(Math.max(-1, Math.min(1, dot))) };
+}
+function worldSlots(c) { // this ring's placeable slots with their true compass bearing; the gods' reserved hexes are skipped
+  const reserved = new Set((PINK_SLOTS[c] || []).map(p => p[0]));
+  return ringPositions(c)
+    .filter(p => !reserved.has(p.num))
+    .map(p => { const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num: p.num, a }; })
+    .sort((u, v) => u.a - v.a);
+}
+function computeWorldPlan() { // the full rings 4..maxCircle city assignment + the centre + the leftovers
+  const cands = [];
+  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => { if (coordOf(n) && cands.indexOf(n) === -1) cands.push(n); });
+  const center = computeCenter(cands);
+  const ranked = cands
+    .map(n => Object.assign({ n }, bearingDist(center, n)))
+    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance decides, population breaks ties
+  const plan = {}; let idx = 0;
+  for (let c = 4; c <= maxCircle; c++) {
+    const slots = worldSlots(c);
+    const take = ranked.slice(idx, idx + slots.length); idx += slots.length;
+    if (!take.length) { plan[c] = []; continue; }
+    if (take.length < slots.length) { // not enough cities yet: nearest-free-slot greedy
+      const free = slots.slice(); plan[c] = [];
+      take.slice().sort((a, b) => a.bearing - b.bearing).forEach(city => {
+        let bi = 0, bd = 1e9;
+        free.forEach((sl, i) => { const d = Math.abs(sl.a - city.bearing); const dd = Math.min(d, 360 - d); if (dd < bd) { bd = dd; bi = i; } });
+        plan[c].push([free[bi].num, city.n]); free.splice(bi, 1);
+      });
+      continue;
+    }
+    const cities = take.slice().sort((a, b) => a.bearing - b.bearing); // circular order matching: try every rotation, keep the truest to the compass
+    let rot = 0, best = 1e18;
+    for (let r = 0; r < cities.length; r++) {
+      let cost = 0;
+      for (let i = 0; i < cities.length; i++) {
+        const city = cities[(i + r) % cities.length];
+        const d = Math.abs(slots[i].a - city.bearing); cost += Math.min(d, 360 - d);
+      }
+      if (cost < best) { best = cost; rot = r; }
+    }
+    plan[c] = slots.map((sl, i) => [sl.num, cities[(i + rot) % cities.length].n]);
+  }
+  return { plan, center, leftover: ranked.slice(idx).map(x => x.n) };
 }
 
 // ---------- SVG rendering ----------
@@ -924,6 +1054,114 @@ function renderPool() {
   });
 }
 
+// ---------- World placement controls ----------
+function fmtLatLon(c) {
+  return Math.abs(c.lat).toFixed(1) + "°" + (c.lat >= 0 ? "N" : "S") + ", " + Math.abs(c.lon).toFixed(1) + "°" + (c.lon >= 0 ? "E" : "W");
+}
+function renderCenterOut() {
+  const el = document.getElementById("centerOut");
+  if (!worldCenter) { el.textContent = ""; return; }
+  const modeName = centerMode === "pop" ? "population-weighted" : centerMode === "great" ? "greatness-weighted" : "geographic";
+  el.textContent = "Mondiala sits at ≈ " + fmtLatLon(worldCenter) + " — the " + modeName +
+    " centre of the great cities. The nearest cities fill the inner rings; the pool holds the ones beyond the horizon.";
+}
+document.getElementById("centerMode").addEventListener("change", () => {
+  centerMode = document.getElementById("centerMode").value;
+  recenter();
+});
+function snapshotEdits() { // manual edits worth keeping when the placement re-flows
+  const byName = {}, byKey = {};
+  const computed = new Set(WORLD_CITIES.map(w => w.trim().toLowerCase()).concat(extraCities.map(c => c.name.trim().toLowerCase())));
+  Object.values(hexes).forEach(h => {
+    const key = h.q + "," + h.r, name = (h.name || "").trim().toLowerCase();
+    if (h.name && !SEX_GODS.has(name) && (computed.has(name) || h.circle <= 3)) {
+      const e = { type: h.type, notes: h.notes, style: h.style, density: h.density };
+      const autoStyle = (CITY_INFO[name] || [])[1];
+      if (e.type !== "district" || e.notes || (e.style && e.style !== autoStyle) || e.density != null) byName[h.name.trim()] = e;
+    } else if (h.name && !SEX_GODS.has(name) && h.circle >= 4) {
+      byKey[key] = { manual: true, name: h.name, type: h.type, notes: h.notes, style: h.style, density: h.density };
+    } else if (!h.name) {
+      if (h.notes || (h.type !== "district" && h.type !== "park")) byKey[key] = { manual: false, type: h.type, notes: h.notes };
+    }
+  });
+  return { byName, byKey };
+}
+function reapplyEdits(snap) {
+  Object.values(hexes).forEach(h => {
+    const e = h.name && snap.byName[h.name.trim()];
+    if (!e || SEX_GODS.has(h.name.trim().toLowerCase())) return; // the gods keep their hexes no matter what
+    if (e.type && e.type !== "district") h.type = e.type;
+    if (e.notes) h.notes = e.notes;
+    if (e.style) h.style = e.style;
+    if (e.density != null) h.density = e.density;
+  });
+  Object.keys(snap.byKey).forEach(key => {
+    const e = snap.byKey[key], h = hexes[key];
+    if (!h) return;
+    if (e.manual) {
+      if (SEX_GODS.has((h.name || "").trim().toLowerCase())) return; // never evict a god
+      if (h.name && h.name !== e.name) pool.push({ name: h.name, density: null }); // the computed city yields its hexagon and waits in the pool
+      h.name = e.name; h.type = e.type; h.notes = e.notes; h.style = e.style; h.density = e.density;
+    } else if (!h.name) {
+      if (e.type !== "district" && e.type !== "park") h.type = e.type;
+      if (e.notes) h.notes = e.notes;
+    }
+  });
+  pool.sort((a, b) => factPop(b.name) - factPop(a.name));
+}
+function recenter() { // recompute the coordinate placement, keeping manual edits
+  const snap = snapshotEdits();
+  buildCity();
+  reapplyEdits(snap);
+  selected = null; refresh(); renderPool(); renderCenterOut();
+}
+function saveExtraCities() { try { localStorage.setItem("mondiala-extra-cities", JSON.stringify(extraCities)); } catch (e) { /* preview: no storage */ } }
+function injectExtra(city) { // make a user-added city fully native: coordinates, flag, facts
+  const key = city.name.trim().toLowerCase();
+  CITY_COORDS[key] = [city.lat, city.lon];
+  if (!CITY_INFO[key]) CITY_INFO[key] = ["🌐", "A newly added world city — its districts will take shape as Mondiala grows."];
+  if (!CITY_FACTS[key] && city.pop) CITY_FACTS[key] = [city.pop, "user-provided", null, "", null];
+}
+function setExtraCities(list) {
+  extraCities = [];
+  (list || []).forEach(c => {
+    if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lon) || Math.abs(c.lat) > 90 || Math.abs(c.lon) > 180) return;
+    const city = { name: String(c.name).trim(), lat: +c.lat, lon: +c.lon, pop: isFinite(c.pop) ? +c.pop : null };
+    const key = city.name.toLowerCase();
+    if (extraCities.some(x => x.name.toLowerCase() === key)) return;
+    if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key)) return; // already on the roster
+    injectExtra(city);
+    extraCities.push(city);
+  });
+  saveExtraCities();
+}
+function loadExtraCities() { try { setExtraCities(JSON.parse(localStorage.getItem("mondiala-extra-cities") || "[]")); } catch (e) { setExtraCities([]); } }
+function renderExtraList() {
+  const el = document.getElementById("extraList");
+  el.innerHTML = extraCities.length ? "" : "No cities added yet.";
+  extraCities.forEach((c, i) => {
+    const row = document.createElement("div");
+    row.className = "poolname";
+    row.textContent = "🌐 " + c.name + " (" + fmtLatLon(c) + ")  ✕ remove";
+    row.addEventListener("click", () => { extraCities.splice(i, 1); saveExtraCities(); recenter(); renderExtraList(); });
+    el.appendChild(row);
+  });
+}
+document.getElementById("btnAddCity").addEventListener("click", () => {
+  const name = document.getElementById("addName").value.trim();
+  const lat = parseFloat(document.getElementById("addLat").value);
+  const lon = parseFloat(document.getElementById("addLon").value);
+  const pop = parseFloat(document.getElementById("addPop").value);
+  const out = document.getElementById("validatorOut");
+  if (!name || !isFinite(lat) || !isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) { out.textContent = "Add city: give it a name and valid coordinates."; return; }
+  const key = name.toLowerCase();
+  if (WORLD_CITIES.some(w => w.trim().toLowerCase() === key) || extraCities.some(c => c.name.trim().toLowerCase() === key)) { out.textContent = "Add city: " + name + " is already on the map."; return; }
+  setExtraCities(extraCities.concat([{ name, lat, lon, pop: isFinite(pop) ? pop : null }]));
+  recenter();
+  renderExtraList();
+  out.textContent = name + " added — the centre moved and the map re-flowed ✓";
+});
+
 // ---------- Stats ----------
 function renderStats() {
   const all = Object.values(hexes);
@@ -989,13 +1227,11 @@ function setPaint(on) {
 
 // ---------- Rings ----------
 document.getElementById("btnAddRing").addEventListener("click", () => {
-  const old = JSON.parse(exportJSON());
+  const snap = snapshotEdits();
   maxCircle++;
   buildCity();
-  // re-apply saved edits
-  const imported = JSON.parse(old);
-  imported.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
-  refresh();
+  reapplyEdits(snap);
+  refresh(); renderPool(); renderCenterOut(); // a new ring reaches further out — pool cities settle onto it
 });
 
 // ---------- Save / Load / Export ----------
@@ -1003,6 +1239,8 @@ function exportJSON() {
   return JSON.stringify({
     format: "mondiala-city-designer",
     maxCircle,
+    centerMode,
+    extraCities,
     hexes: Object.values(hexes).map(h => ({ q: h.q, r: h.r, circle: h.circle, num: h.num, name: h.name, density: h.density, type: h.type, style: h.style || "", notes: h.notes }))
   });
 }
@@ -1010,9 +1248,12 @@ function importJSON(text) {
   const data = JSON.parse(text);
   if (data.format !== "mondiala-city-designer" || !Array.isArray(data.hexes)) throw new Error("Not a Mondiala City Designer file.");
   maxCircle = data.maxCircle || 8;
+  if (data.centerMode) centerMode = data.centerMode;
+  if (Array.isArray(data.extraCities)) setExtraCities(data.extraCities);
   buildCity();
   data.hexes.forEach(s => { const k = s.q + "," + s.r; if (hexes[k]) hexes[k] = Object.assign(hexes[k], s); });
-  selected = null; refresh();
+  document.getElementById("centerMode").value = centerMode;
+  selected = null; refresh(); renderPool(); renderCenterOut();
 }
 document.getElementById("btnExport").addEventListener("click", () => {
   const ta = document.getElementById("jsonio");
@@ -1042,14 +1283,18 @@ document.getElementById("btnLoadLocal").addEventListener("click", () => {
   } catch (e) { document.getElementById("validatorOut").textContent = "No save available."; }
 });
 document.getElementById("btnReset").addEventListener("click", () => {
-  maxCircle = 8; selected = null; buildCity(); refresh(); renderPool();
+  maxCircle = 8; selected = null; buildCity(); refresh(); renderPool(); renderCenterOut();
 });
 
 // ---------- Init ----------
+loadExtraCities();
+document.getElementById("centerMode").value = centerMode;
 buildCity();
 renderTypes();
 renderPool();
+renderExtraList();
 refresh();
+renderCenterOut();
 </script>
 </body>
 </html>

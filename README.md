@@ -31,3 +31,6 @@ Full documentation: [city-designer/README.md](city-designer/README.md)
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion; the city roster extends the database
 with the world's great cities.
+
+**Version history**: every push is a saved snapshot — [VERSIONS.md](VERSIONS.md) indexes
+the shipped versions, what changed in each, and how to browse or restore any of them.

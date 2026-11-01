@@ -23,10 +23,11 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 
 - One roster of **161 great cities** — the big ones, the livable ones and the walkable ones — each carrying its real latitude and longitude
 - **Mondiala sits at the centre of that roster**: wherever the roster's centre falls on Earth, that is where Mondiala "is", and the rings read like a compass around it — a city's bearing from the centre picks its hexagon, its real distance picks its ring (near = inner), and population breaks ties
-- **Three switchable centre modes**:
-  - **Geographic** — the plain midpoint of all 161 cities: ≈ 49.0°N 20.7°E, on the Poland–Slovakia border
-  - **Population-weighted** — weighted by urban-area population: ≈ 42.4°N 71.8°E, in the Tian Shan mountains
-  - **Greatness-weighted** — size + livability + walkability: ≈ 51.5°N 24.9°E, in the Ukrainian–Polish borderlands
+- **Three switchable centre modes** (the panel shows the coordinates *and the country, with its flag*, wherever Mondiala ends up):
+  - **Geographic** — the plain midpoint of all 161 cities: ≈ 49.0°N 20.7°E, in northern Slovakia just off the Polish border (🇸🇰)
+  - **Population-weighted** — weighted by urban-area population: ≈ 42.4°N 71.8°E, in the Talas valley of Kyrgyzstan's Tian Shan (🇰🇬)
+  - **Greatness-weighted** — size + livability + walkability: ≈ 51.5°N 24.9°E, in Volyn, Ukraine, near Kovel (🇺🇦)
+- The three default spots were reverse-checked against real maps. If you add a city and move the centre off them, the panel honestly falls back to the country of the nearest roster city (e.g. "🇵🇱 Poland (nearest: Warsaw, 305 km)")
 - **Add a city and the map re-flows**: type a name, latitude, longitude and population, and Mondiala's centre moves — every ring re-settles around the new middle
 - **The pool = cities beyond the horizon**: the 11 cities too far from the centre to fit before ring 8 ends (in geographic mode the Andes and Australia: Quito, La Paz, Cusco, Lima, Montevideo, Buenos Aires, Santiago, Valparaíso, Perth, Melbourne, Sydney). Press **+ Add ring** and they settle onto the new rim by the same compass rule
 
@@ -46,7 +47,7 @@ Outside the fixed heart, the city is **placed by real geography** instead of by 
 - Every hexagon shows its flag and name on the map; tooltips show the data too
 - Postal-code labels in the `Circle · Name · Hexagon number` system
 - Editable name, type, density, style and notes per hex — manual edits survive re-flows
-- **World placement panel**: switch centre mode, see where Mondiala sits, add cities
+- **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag), add cities
 - **Lattice checker** validating the free-use district lattice (no two districts touch; every non-green hexagon touches one)
 - Save to browser storage, JSON export/import (carries the centre mode and your added cities), add rings beyond circle 8
 
@@ -56,7 +57,7 @@ Open `mondiala-map.html` in any browser — no build step, no dependencies. The 
 its world data from `mondiala-data.js` in the same folder, so keep the two files together
 (downloading the whole `city-designer` folder gets you everything).
 
-- Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step
+- Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only form fields and the JSON box stay selectable
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
 - Adding a ring (or resetting) re-fits the view the same way, so the new rim's edges touch the screen
 - Click a hexagon to inspect and edit it
@@ -66,10 +67,11 @@ its world data from `mondiala-data.js` in the same folder, so keep the two files
 ## Data
 
 The worldbuilding data lives in its own file, **[`mondiala-data.js`](mondiala-data.js)**: the
-fixed rings 0–3, the 161-city world roster with real coordinates, the info cards, the
-real-city facts and the reserved god lattice. Edit it directly on GitHub — the map reads
-it as-is, no regeneration needed. **[`DATA.md`](DATA.md)** is a human-readable copy of the
-same data (tables you can copy into Notion), generated from the `.js` file.
+fixed rings 0–3, the 161-city world roster with real coordinates, each city's country,
+the info cards, the real-city facts and the reserved god lattice. Edit it directly on
+GitHub — the map reads it as-is, no regeneration needed. **[`DATA.md`](DATA.md)** is a
+human-readable copy of the same data (tables you can copy into Notion), generated from
+the `.js` file.
 
 Hexagon data (names, circles, hexagon numbers, densities) is sourced from the
 *Hexagons of Mondiala* database in Notion; the city roster extends the database
@@ -87,3 +89,4 @@ Real-city data in the info cards:
   to that index and marked with "≈".
 - **Walk Score** — published Walk Score city rankings, shown where available (mostly US cities).
 - **Coordinates** — city-centre latitude/longitude in decimal degrees.
+- **Countries** — the roster carries each city's country; the world-placement panel uses it to name the country at Mondiala's coordinates, and the three default centre spots are stored with their verified countries (Slovakia, Kyrgyzstan, Ukraine).

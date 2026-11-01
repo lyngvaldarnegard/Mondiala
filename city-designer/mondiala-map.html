@@ -7,7 +7,8 @@
 <style>
   :root { font-family: Inter, system-ui, sans-serif; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0d1117; color: #dce3ec; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  body { background: #0d1117; color: #dce3ec; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; -webkit-user-select: none; }
+  input, textarea, select { user-select: text; -webkit-user-select: text; }
   header { display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: #121a24; border-bottom: 1px solid #24303f; flex-wrap: wrap; }
   header h1 { font-size: 17px; letter-spacing: .5px; }
   header h1 span { color: #e8b04b; }
@@ -309,6 +310,23 @@ function bearingDist(center, name) { // bearing (0° = north, clockwise) and gre
   const dot = Math.sin(clat * GEO_RAD) * Math.sin(lat * GEO_RAD) + Math.cos(clat * GEO_RAD) * Math.cos(lat * GEO_RAD) * Math.cos((lon - clon) * GEO_RAD);
   return { bearing: b, dist: GEO_R * Math.acos(Math.max(-1, Math.min(1, dot))) };
 }
+function greatCircleKm(a, b) { // km between two {lat, lon} points on Earth
+  const dot = Math.sin(a.lat * GEO_RAD) * Math.sin(b.lat * GEO_RAD) + Math.cos(a.lat * GEO_RAD) * Math.cos(b.lat * GEO_RAD) * Math.cos((b.lon - a.lon) * GEO_RAD);
+  return GEO_R * Math.acos(Math.max(-1, Math.min(1, dot)));
+}
+function centerCountry(center) { // the country Mondiala sits in — a verified spot if the centre is on one, else the nearest known city's country
+  for (const s of CENTER_SPOTS) if (greatCircleKm(center, s) < 15) return s.flag + " " + s.country + " (" + s.near + ")";
+  let best = null, bd = Infinity;
+  WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => {
+    const key = n.trim().toLowerCase();
+    if (!CITY_COUNTRY[key]) return; // we can only name the countries we know
+    const d = bearingDist(center, n).dist;
+    if (d < bd) { bd = d; best = n; }
+  });
+  if (!best) return null;
+  const key = best.trim().toLowerCase();
+  return ((CITY_INFO[key] || ["📍"])[0]) + " " + CITY_COUNTRY[key] + " (nearest: " + best + ", " + Math.round(bd) + " km)";
+}
 function worldSlots(c) { // this ring's placeable slots with their true compass bearing; the gods' reserved hexes are skipped
   const reserved = new Set((PINK_SLOTS[c] || []).map(p => p[0]));
   return ringPositions(c)
@@ -565,7 +583,8 @@ function renderCenterOut() {
   const el = document.getElementById("centerOut");
   if (!worldCenter) { el.textContent = ""; return; }
   const modeName = centerMode === "pop" ? "population-weighted" : centerMode === "great" ? "greatness-weighted" : "geographic";
-  el.textContent = "Mondiala sits at ≈ " + fmtLatLon(worldCenter) + " — the " + modeName +
+  const where = centerCountry(worldCenter);
+  el.textContent = "Mondiala sits at ≈ " + fmtLatLon(worldCenter) + (where ? " · " + where : "") + " — the " + modeName +
     " centre of the great cities. The nearest cities fill the inner rings; the pool holds the ones beyond the horizon.";
 }
 document.getElementById("centerMode").addEventListener("change", () => {
@@ -802,3 +821,4 @@ renderCenterOut();
 </script>
 </body>
 </html>
+

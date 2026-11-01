@@ -5,7 +5,7 @@
 # This script carves the data into five THEMED files, so a change means editing one small
 # file instead of a monolith:
 #   mondiala-heart.js  — the hand-authored rings 0–4 (RAW)
-#   mondiala-cities.js — the 318-city roster, real coordinates, countries, centre spots
+#   mondiala-cities.js — the 305-city roster, real coordinates, countries, centre spots
 #   mondiala-info.js   — the info cards ([flag, style description] per hex)
 #   mondiala-facts.js  — the real-city facts (population, livability, Walk Score)
 #   mondiala-gods.js  — the gods of love (pink slot lattice, waiting gods, homelands, name set)

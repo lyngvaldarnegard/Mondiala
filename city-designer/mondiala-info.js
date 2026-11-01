@@ -17,6 +17,7 @@ const CITY_INFO = {
 "mesoamerica":["🇲🇽","Mesoamerica — the Olmec, Maya and Aztec: stepped pyramids, ball courts, obsidian and jade, jungle-clear causeways."],
 "greece":["🇬🇷","Greece — the Hellenic cradle: marble colonnades and agoras, theatres cut into hillsides, the acropolis shining over olive groves and the Aegean."],
 "phoenicia":["🇱🇧","Phoenicia — the purple coast of the Levant: Tyre's dye works, cedar ships riding the whole Mediterranean, the alphabet carried to every harbour."],
+"tyre":["🇱🇧","Phoenician Tyre — Hiram's island fortress joined to the mainland by Alexander's mole, the murex purple dye works, the temple of Melqart, sailors' quarter stacked with cedar."],
 "chang'an":["🇨🇳","Chang'an — the eternal capital of a dozen dynasties: Tang grid boulevards, the Wild Goose Pagoda, a million souls at its peak."],
 "mohenjo-daro":["🇵🇰","Mohenjo-daro — the Indus metropolis: perfect brick grids, the Great Bath, covered sewers, standard weights and seals."],
 "uruk":["🇮🇶","Uruk — the world's first true city, Gilgamesh's walls, the White Temple on its ziggurat, the birthplace of writing."],

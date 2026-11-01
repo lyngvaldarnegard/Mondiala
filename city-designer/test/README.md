@@ -5,13 +5,13 @@ Headless checks for the city designer — no browser, no dependencies beyond Nod
 (`../mondiala.html` + the five themed data files it references, in browser
 script order), given a minimal fake DOM, and exercised end to end:
 
-1. **Roster integrity** — 318 cities, 372 fact entries, 418 info cards, 42 gods, no city placed twice, no heart name on the roster
-2. **The authored heart** — rings 0–4 exactly as designed, including densities
-3. **Lattice rules** — no god on the green, mirror symmetry, exactly the 18 empty heart mids waiting for the twelve hand-placed gods
+1. **Roster integrity** — 305 cities, 373 fact entries, 419 info cards, 42 gods, no city placed twice, no heart name on the roster
+2. **The authored heart** — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden (18), ring 4 the inspiration cities (24) — every hexagon filled
+3. **Lattice rules** — no god on the green, mirror symmetry, the whole authored heart exempt from the pink-touch rule (no gods ship in the heart)
 4. **Capitals aboard** — every European and >1M-country capital on the map or in the pool
-5. **The validator** — 18 orange in the fresh state, the guide message, clear flags
-6. **The fill-later flow** — placing all twelve gods by hand (inspector → auto-pink), 0/0/0, survival across mode switches, export/import, add-ring, reset; removing a god breaks symmetry; a god on a green spoke is flagged
-7. **Centres** — all three modes land on their verified spots (Bulgaria / Kazakhstan / Moldova), pool 192 each
+5. **The validator** — 0/0/0 in the fresh state, the valid message, clear flags
+6. **The hand-placement flow** — naming all twelve gods onto heart hexes by hand (inspector → auto-pink, the displaced cities return to the pool), 0/0/0, survival across mode switches, export/import, add-ring, reset; removing a god breaks symmetry; a god on a green spoke is flagged
+7. **Centres** — all three modes land on their verified spots (Bulgaria / Tajikistan / Romania), pool 191 with the twelve gods placed (fresh: 179)
 8. **Save / load / export / import / add-remove city** — byte-identical round-trips, removing an added city restores the exact map
 9. **Pool, paint, inspector** — arming pool cities, painting types, inspector edits, PCODE labels
 10. **Pan / zoom** — the moved-guard and the zoom-out floor at the full-city view

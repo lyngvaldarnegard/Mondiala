@@ -1,4 +1,4 @@
-// asserts.js — 453 checks over the live app. Runs after loader.js + gen_data_md.js.
+// asserts.js — the full regression suite over the live app. Runs after loader.js + gen_data_md.js.
 // The whole file is wrapped in an IIFE so its helpers don't collide with the
 // consts from gen_data_md.js (this file is concatenated into the same scope).
 (async () => {
@@ -19,12 +19,12 @@ const parkCount = () => Object.values(X.hexes).filter(h => h.type === "park").le
 // ---------- 1 · roster integrity ----------
 section("1 · roster integrity");
 eq("hex count", Object.keys(X.hexes).length, 217);
-eq("roster", X.WORLD_CITIES.length, 318);
-eq("facts", Object.keys(X.CITY_FACTS).length, 372);
-eq("info cards", Object.keys(X.CITY_INFO).length, 418);
+eq("roster", X.WORLD_CITIES.length, 305);
+eq("facts", Object.keys(X.CITY_FACTS).length, 373);
+eq("info cards", Object.keys(X.CITY_INFO).length, 419);
 eq("gods", X.SEX_GODS.size, 42);
-eq("RAW rows", X.RAW.length, 49);
-eq("pool (geo fresh)", X.pool.length, 192);
+eq("RAW rows", X.RAW.length, 61);
+eq("pool (geo fresh)", X.pool.length, 179);
 eq("no double-placed roster city", (() => { const seen = new Set(); for (const h of Object.values(X.hexes)) { if (!h.name) continue; const n = h.name.trim().toLowerCase(); if (X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n)) { if (seen.has(n)) return false; seen.add(n); } } return true; })(), true);
 ok("every roster city has coordinates", X.WORLD_CITIES.every(w => X.CITY_COORDS[w.trim().toLowerCase()]));
 ok("every heart name off the roster", [...HEART_NAMES].every(n => !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n.trim().toLowerCase())));
@@ -32,17 +32,17 @@ ok("every heart name off the roster", [...HEART_NAMES].every(n => !X.WORLD_CITIE
 // ---------- 2 · the authored heart ----------
 section("2 · the authored heart");
 eq("Metropol", X.hexes["0,0"].name, "Metropol");
-eq("ring 1", HEX_NAMES(1), ["Paris", "Barcelona", "Moscow", "Singapore", "Vancouver", "New York"]);
-eq("ring 2", HEX_NAMES(2), ["China", "—", "Indus Valley", "Greece", "Mesopotamia", "—", "Egypt", "—", "Andes", "Phoenicia", "Mesoamerica", "—"]);
-eq("ring 3", HEX_NAMES(3), ["Chang'an", "—", "—", "Mohenjo-daro", "Athens", "—", "Uruk", "Constantinople", "—", "Memphis", "—", "Rome", "Cusco", "—", "Carthage", "Tenochtitlan", "—", "—"]);
-eq("ring 4", HEX_NAMES(4), ["Stockholm", "Vilnius", "Riga", "Tallinn", "København", "Tampere | Tammerfors", "Malmö", "Aarhus", "Helsinki", "Kaunas", "Turku | Åbo", "Bergen", "Oslo", "Trondheim", "Vyborg", "Billund", "Göteborg", "Stavanger", "Kristiansand", "Narva", "Reykjavík", "Tórshavn", "Nuuk", "Mariehamn"]);
-eq("ring 1 densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [19430, 16630, 5080, 8188.27, 5749.9, 11313.8]);
+eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Mesopotamia", "Egypt", "Andes", "Mesoamerica"]);
+eq("ring 2", HEX_NAMES(2), ["Chang'an", "Constantinople", "Mohenjo-daro", "Athens", "Uruk", "Babylon", "Memphis", "Rome", "Cusco", "Tyre", "Tenochtitlan", "Carthage"]);
+eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Tampere | Tammerfors", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
+eq("ring 4", HEX_NAMES(4), ["Paris", "London", "Amsterdam", "Madrid", "Barcelona", "Berlin", "Vienna", "Prague", "Moscow", "Seoul", "Tokyo", "Hong Kong", "Singapore", "Dubai", "Sydney", "San Francisco", "Vancouver", "Toronto", "Chicago", "Mexico City", "New York", "Rio de Janeiro", "Cape Town", "Lisbon"]);
+eq("ring 1 has no densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [null, null, null, null, null, null]);
 eq("Metropol density", X.hexes["0,0"].density, 4355.39);
-eq("new Nordic densities", [18, 19, 20, 22, 23, 24].map(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n).density), [3016, 2787, 754.66, 129.73, 29.15, 1068.4]);
-eq("all 8 civilisation spellings", true, HEX_NAMES(2).filter(n => n !== "—").join(",") === "China,Indus Valley,Greece,Mesopotamia,Egypt,Andes,Phoenicia,Mesoamerica");
+eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
+eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Mesopotamia,Egypt,Andes,Mesoamerica");
 
 // ---------- 3 · lattice rules (shipped state: empty heart) ----------
-section("3 · lattice rules (shipped state: empty heart)");
+section("3 · lattice rules (shipped state: no gods in the heart)");
 const onSpokePark = Object.values(X.hexes).filter(h => h.type === "park" && (h.circle === 0 || X.onSpoke(h)));
 eq("no god on the green (fresh)", onSpokePark.length, 0);
 const mirror = (h) => X.hexes[(-h.q) + "," + (h.q + h.r)];
@@ -50,12 +50,12 @@ const asym = Object.values(X.hexes).filter(h => h.type === "park" && (!mirror(h)
 eq("mirror symmetry (fresh)", asym.length, 0);
 const uncovered = [];
 for (const h of Object.values(X.hexes)) {
-  if (h.type === "park" || h.circle === 0 || h.circle === 4 || X.onSpoke(h)) continue;
+  if (h.type === "park" || h.circle <= 4 || X.onSpoke(h)) continue;
   const neigh = X.neighborKeys(h.q, h.r).map(k => X.hexes[k]).filter(Boolean);
   if (!neigh.some(n => n.type === "park")) uncovered.push(h.circle + "#" + h.num);
 }
 uncovered.sort((a, b) => { const [c1, n1] = a.split("#"), [c2, n2] = b.split("#"); return (+c1 - +c2) || (+n1 - +n2); });
-eq("only the 18 empty heart mids wait for gods", uncovered, ["2#2", "2#4", "2#6", "2#8", "2#10", "2#12", "3#2", "3#3", "3#5", "3#6", "3#8", "3#9", "3#11", "3#12", "3#14", "3#15", "3#17", "3#18"]);
+eq("whole heart exempt, nothing uncovered (fresh)", uncovered, []);
 eq("outer parks (fresh)", parkCount(), 30);
 
 // ---------- 4 · capitals aboard ----------
@@ -65,23 +65,25 @@ const CAPS = ["Washington D.C.", "Mexico City", "Ottawa", "Havana", "Kingston", 
 for (const cap of CAPS) {
   ok("capital aboard: " + cap, X.WORLD_CITIES.includes(cap) || HEART_NAMES.has(cap) || NORDIC.has(cap) || X.WORLD_CITIES.some(w => w.trim().toLowerCase() === cap.toLowerCase()));
 }
-eq("heart cities count", HEART_NAMES.size, 48);
+eq("heart cities count", HEART_NAMES.size, 60);
 
 // ---------- 5 · validator (fresh state → the three rules) ----------
 section("5 · validator (fresh state → the three rules)");
 __fire($("btnValidate"), "click", {});
 ok("no flag-invalid (fresh)", document.querySelectorAll(".flag-invalid").length === 0);
-eq("flag-nopark = 18 (fresh)", document.querySelectorAll(".flag-nopark").length, 18);
-ok("validator mentions filling the heart", $("validatorOut").innerHTML.includes("gods of love"));
+eq("flag-nopark = 0 (fresh)", document.querySelectorAll(".flag-nopark").length, 0);
+ok("validator says lattice valid (fresh)", $("validatorOut").innerHTML.includes("Lattice valid"));
 __fire($("btnClearFlags"), "click", {});
 ok("clear flags works", document.querySelectorAll(".flag-nopark").length === 0);
 
 // ---------- 6 · hand-placing the twelve heart gods (the fill-later flow) ----------
 section("6 · hand-placing the twelve heart gods (the fill-later flow)");
-// a verified symmetric fill: ring 2 mids 2, 6, 8, 12 and ring 3 mids 2, 3, 6, 9, 11, 14, 17, 18
-const GODS = [["Zhinü", 2, 2], ["Inanna", 2, 6], ["Hathor", 2, 8], ["Xochiquetzal", 2, 12],
-             ["Kama", 3, 2], ["Rati", 3, 3], ["Aphrodite", 3, 6], ["Ishtar", 3, 9],
-             ["Venus", 3, 11], ["Cavillaca", 3, 14], ["Eros", 3, 17], ["Freyja", 3, 18]];
+// a verified symmetric fill — the gods are named onto ordinary heart hexes (over the cities;
+// btnReset below restores the shipped heart): ring 2 mids pair (2,12)(4,10)(6,8), ring 4 mids pair (2,24)(3,23)(6,20)
+const GODS = [["Zhinü", 2, 2], ["Xochiquetzal", 2, 12], ["Aphrodite", 2, 4], ["Ishtar", 2, 10],
+             ["Inanna", 2, 6], ["Hathor", 2, 8],
+             ["Venus", 4, 2], ["Freyja", 4, 24], ["Kama", 4, 3], ["Eros", 4, 23],
+             ["Rati", 4, 6], ["Cavillaca", 4, 20]];
 for (const [g, c, n] of GODS) {
   X.selected = keyOf(c, n);
   X.showInspector();
@@ -109,14 +111,14 @@ eq("ring 9 exists", Object.values(X.hexes).some(h => h.circle === 9), true);
 __fire($("btnReset"), "click", {});
 eq("reset back to 217", Object.keys(X.hexes).length, 217);
 ok("gods survive reset", GODS.every(([g, c, n]) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h.name === g; }));
-// removing a god breaks symmetry (Venus at 3#11 loses her mirror Eros at 3#17)…
-X.selected = keyOf(3, 17);
+// removing a god breaks symmetry (Eros at 4#23 loses his mirror Kama at 4#3)…
+X.selected = keyOf(4, 23);
 X.showInspector();
 __fire($("iClearName"), "click", {});
 __fire($("btnValidate"), "click", {});
-ok("removing Eros breaks symmetry (Venus unmirrored)", document.querySelectorAll(".flag-invalid").length >= 1);
+ok("removing Eros breaks symmetry (Kama unmirrored)", document.querySelectorAll(".flag-invalid").length >= 1);
 // …and restoring him heals it
-X.selected = keyOf(3, 17);
+X.selected = keyOf(4, 23);
 X.showInspector();
 $("iName").value = "Eros";
 $("iType").value = "district";
@@ -139,14 +141,14 @@ eq("clean again", [document.querySelectorAll(".flag-invalid").length, document.q
 
 // ---------- 7 · centres ----------
 section("7 · centres");
-const spots = { geo: ["42.62820792", "24.42301785", "Bulgaria"], pop: ["41.92044112", "68.20666049", "Kazakhstan"], great: ["45.72164500", "28.22077805", "Moldova"] };
+const spots = { geo: ["42.14872240", "24.79302491", "Bulgaria"], pop: ["36.93213238", "67.00017894", "Tajikistan"], great: ["44.48894929", "28.97183031", "Romania"] };
 for (const m of Object.keys(spots)) {
   setMode(m);
   const [lat, lon, country] = spots[m];
   eq(m + " centre lat", X.worldCenter.lat.toFixed(8), lat);
   eq(m + " centre lon", X.worldCenter.lon.toFixed(8), lon);
   ok(m + " country is " + country, X.centerCountry(X.worldCenter).includes(country));
-  eq(m + " pool", X.pool.length, 192);
+  eq(m + " pool (gods displaced 12 heart cities back)", X.pool.length, 191);
   eq(m + " parks (gods placed)", parkCount(), 42);
 }
 setMode("geo");
@@ -162,7 +164,7 @@ eq("textarea import round-trip", X.exportJSON(), baseExport);
 $("addName").value = "Anchorage"; $("addLat").value = "61.218"; $("addLon").value = "-149.903"; $("addPop").value = "291247";
 __fire($("btnAddCity"), "click", {});
 ok("Anchorage added", X.extraCities.length === 1 && (Object.values(X.hexes).some(h => h.name === "Anchorage") || X.pool.some(p => p.name === "Anchorage")));
-ok("centre moved (pop-weighted)", Math.abs(X.worldCenter.lat - 42.62820792) > 0.00001);
+ok("centre moved (weighted)", Math.abs(X.worldCenter.lat - 42.14872240) > 0.00001);
 const anchChip = [...document.querySelectorAll(".poolname")].find(el => (el.textContent || "").includes("Anchorage") && el.textContent.includes("remove"));
 ok("Anchorage listed for removal", !!anchChip);
 __fire(anchChip, "click", {}); // remove it
@@ -176,15 +178,15 @@ eq("load from browser restores baseline", X.exportJSON(), baseExport);
 // ---------- 9 · pool, paint, inspector ----------
 section("9 · pool, paint, inspector");
 X.importJSON(baselineExport); // clean slate for this section
-eq("pool chips rendered", document.querySelectorAll(".poolname").length, 192);
-const tokyoEl = [...document.querySelectorAll(".poolname")].find(el => el.textContent === "Tokyo");
-ok("Tokyo in the pool", !!tokyoEl);
+eq("pool chips rendered", document.querySelectorAll(".poolname").length, 179);
+const tokyoEl = [...document.querySelectorAll(".poolname")].find(el => el.textContent === "Jakarta");
+ok("Jakarta in the pool", !!tokyoEl);
 __fire(tokyoEl, "click", {}); // arm
-eq("Tokyo armed", X.armedPoolName, "Tokyo");
+eq("Jakarta armed", X.armedPoolName, "Jakarta");
 const spoke6 = keyOf(6, 3); // spoke hexes accept armed placement — there is no spoke guard on placing
 __fire($("map"), "click", { target: document.querySelector('[data-key="' + spoke6 + '"]') });
-eq("Tokyo placed on 6#3", X.hexes[spoke6].name, "Tokyo");
-eq("Tokyo left the pool", X.pool.some(p => p.name === "Tokyo"), false);
+eq("Jakarta placed on 6#3", X.hexes[spoke6].name, "Jakarta");
+eq("Jakarta left the pool", X.pool.some(p => p.name === "Jakarta"), false);
 eq("unarmed after placing", X.armedPoolName, null);
 X.selected = spoke6;
 X.showInspector();
@@ -204,7 +206,7 @@ __fire($("modeSelect"), "click", {});
 eq("select mode back", X.paintMode, false);
 X.selected = keyOf(1, 1);
 X.showInspector();
-ok("PCODE label", $("inspector").innerHTML.includes("1 Paris 1"));
+ok("PCODE label", $("inspector").innerHTML.includes("1 China 1"));
 
 // ---------- 10 · pan / zoom / click-guard ----------
 section("10 · pan / zoom / click-guard");

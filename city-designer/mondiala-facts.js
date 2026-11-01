@@ -28,6 +28,7 @@ const CITY_FACTS = {
 "homoia":[8000,"≈ ancient peak c. 7000 BC (Çatalhöyük)",null,""],
 "jericho":[28000,"≈ urban area (the oasis town)",null,""],
 "babylon":[850000,"Hillah, modern site ≈",null,""],
+"tyre":[200000,"Tyre, modern site ≈",null,""],
 "ur":[650000,"Nasiriyah, modern site ≈",null,""],
 "tikal":[65000,"≈ ancient peak c. 700 AD (Maya)",null,""],
 "uruk":[40000,"≈ ancient peak c. 2900 BC",null,""],

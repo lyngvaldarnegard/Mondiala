@@ -8,10 +8,42 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.1.2 — the data splits into five themed files** | `main` (this push) | current · no app changes; one monolith → heart, cities, info, facts, gods |
+| **v1.2 — the civilisation heart** | `main` (this push) | current · the heart refilled: cradle civilisations, ancient cities, Norden, inspiration cities — no gods, every hexagon named |
+| **v1.1.2 — the data splits into five themed files** | `0484b199` | bookmark branch `archive/v1.1.2-split-data` |
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.2 — the civilisation heart
+
+The heart rebuilt to the new design — every hexagon named, no gods shipping inside it:
+
+- **Ring 1 — the six cradle civilisations** on the spokes, in founding order: China, the
+  Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica. Greece and Phoenicia step
+  down to the info cards
+- **Ring 2 — the twelve ancient cities**: each cradle's first great city behind its
+  civilisation (Chang'an, Mohenjo-daro, Uruk, Memphis, Cusco, Tenochtitlan) with
+  Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them. Babylon moves
+  into the heart off the roster; Tyre joins the data
+- **Ring 3 — Norden, 18 hexes**, every Nordic country and autonomous land represented
+  (Tórshavn, Nuuk, Mariehamn aboard; Göteborg and Kaunas keeping their priority seats) —
+  Stavanger, Turku, Kristiansand, Narva, Vyborg and Billund step off the heart and onto
+  the roster
+- **Ring 4 — the inspiration cities, 24 hexes**: the six originals on the spokes
+  (Paris, Barcelona, Moscow, Singapore, Vancouver, New York) with a world tour of
+  eighteen between them: London, Amsterdam, Madrid, Berlin, Vienna, Prague, Seoul,
+  Tokyo, Hong Kong, Dubai, Sydney, San Francisco, Toronto, Chicago, Mexico City,
+  Rio de Janeiro, Cape Town, Lisbon
+- **No gods in the heart** — the twelve gods of love stay unplaced, to be hand-named
+  onto any hexagon; naming a hex for a god turns it pink, and the city it carried
+  returns to the pool
+- **Lattice rule 3 re-scoped**: every ordinary hexagon *of the outer city* (rings 5+)
+  touches a pink district — the authored heart stands on its own, so the fresh build
+  reads 0 / 0 / 0
+- **New centres**: the Thracian plain at Plovdiv's eastern edge, Bulgaria (geo) · the
+  Babatag range, Tajikistan (pop) · the Dobruja steppe, Romania (great)
+- Roster 305, pool 179, facts 373, info cards 419 — and the 453-check suite updated to
+  match, all green
 
 ## v1.1.2 — the data splits into five themed files
 

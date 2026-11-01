@@ -4,7 +4,7 @@ const fs = require("fs");
 const X = globalThis.__X;
 const $ = id => document.getElementById(id);
 const escCell = s => String(s).replace(/\|/g, "\\|");
-const SUB = { 0: "Metropol", 1: "the inspiration cities", 2: "the cradle civilisations", 3: "the cradle cities and the classics", 4: "Norden" };
+const SUB = { 0: "Metropol", 1: "the cradle civilisations", 2: "the ancient cities", 3: "Norden", 4: "the inspiration cities" };
 const MODENAME = { geo: "geographic midpoint", pop: "population-weighted", great: "greatness-weighted" };
 function hexOf(c, n) { return Object.values(X.hexes).find(h => h.circle === c && h.num === n); }
 function ringTable(c, withDensity) {
@@ -23,14 +23,14 @@ const named = hexes.filter(h => h.name).length;
 const parks = hexes.filter(h => h.type === "park").length;
 out.push("# Mondiala — the city, hexagon by hexagon");
 out.push("");
-out.push("Mondiala in numbers: **" + hexes.length + " hexagons** across rings 0–" + X.maxCircle + " · **" + named + " named hexes** · **" + parks + " pink free-use districts** (the twelve heart gods wait unplaced, to be filled in by hand) · **" + X.WORLD_CITIES.length + " world cities** on the roster, **" + X.pool.length + "** of them waiting in the pool.");
+out.push("Mondiala in numbers: **" + hexes.length + " hexagons** across rings 0–" + X.maxCircle + " · **" + named + " named hexes** · **" + parks + " pink free-use districts** (the twelve heart gods wait unplaced — name any hexagon for a god and it turns pink) · **" + X.WORLD_CITIES.length + " world cities** on the roster, **" + X.pool.length + "** of them waiting in the pool.");
 out.push("");
-out.push("The heart is authored by hand — ring 1 the inspiration cities, ring 2 the cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica, Greece, Phoenicia), ring 3 each cradle's first city plus Athens, Constantinople, Rome and Carthage, ring 4 Norden with every Nordic country represented. The empty heart hexes — ring 2: 2, 6, 8, 12; ring 3: 2, 3, 6, 9, 11, 14, 17, 18 — wait for the twelve gods of love to be placed by hand.");
+out.push("The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, with Constantinople, Athens, Babylon, Rome, Tyre and Carthage between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. The twelve gods of love stay unplaced — name any hexagon for one of them and it turns pink.");
 out.push("");
 out.push("## The heart — rings 0–4 (authored; identical in every centre mode)");
 out.push("");
 for (const c of [0, 1, 2, 3, 4]) {
-  const dens = (c === 1 || c === 0 || c === 4);
+  const dens = (c === 0 || c === 3 || c === 4);
   out.push("### Ring " + c + " — " + SUB[c]);
   out.push("");
   if (c === 0) { out.push("| Hex | Name | Density |"); out.push("|---|---|---|"); out.push("| 0 | " + escCell(hexOf(0, 0).name) + " | " + hexOf(0, 0).density + " |"); }

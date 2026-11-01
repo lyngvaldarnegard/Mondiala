@@ -100,7 +100,7 @@
     <div class="card">
       <h2>City stats</h2>
       <div class="stats" id="stats"></div>
-      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand — ring 1 the inspiration cities, ring 2 the cradle civilisations, ring 3 each cradle's first city plus Athens, Constantinople, Rome and Carthage, ring 4 Norden with every Nordic country represented. The empty heart hexes wait to be filled with gods of love. Rings 5–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon outside Norden touches a pink district.</div>
+      <div class="hint" style="margin-top:8px">Hex side = 1 km → each hex ≈ 2.598 km². Population = density × area. Boulevards are 100 m wide. The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations, ring 2 the twelve ancient cities, ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Rings 5–8 place the world's great cities by their real coordinates — distance from Mondiala picks the ring, bearing picks the hexagon. Hexagon 1 is the top of each ring; numbers run clockwise and the green spoke runs straight north–south. Name any hexagon for a god of love and it turns pink. Gods of love never sit on the green spokes, the pink districts stay mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink district.</div>
     </div>
     <div class="card">
       <h2>World placement</h2>
@@ -754,18 +754,18 @@ document.getElementById("btnValidate").addEventListener("click", () => {
     if (!mirror || mirror.type !== "park") { asym++; flag(h, "flag-invalid"); } // rule 2: the pink set is mirror-symmetric about the axis
   });
   Object.values(hexes).forEach(h => {
-    if (h.type === "park" || h.circle === 0 || h.circle === 4 || onSpoke(h)) return; // rule 3: every ordinary hexagon outside Norden touches a pink free-use district — the green spokes and ring 4 are exempt
+    if (h.type === "park" || h.circle <= 4 || onSpoke(h)) return; // rule 3: every ordinary hexagon of the outer city (rings 5 and beyond) touches a pink free-use district — the authored heart and the green spokes are exempt
     const neigh = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean);
     if (!neigh.some(n => n.type === "park")) { noPark++; flag(h, "flag-nopark"); }
   });
   const el = document.getElementById("validatorOut");
   if (onGreen === 0 && asym === 0 && noPark === 0) {
-    el.innerHTML = '<span class="ok">✓ Lattice valid: no god sits on the green, the pink districts are mirror-symmetric about the north–south axis, and every ordinary hexagon outside Norden touches a pink free-use district.</span>';
+    el.innerHTML = '<span class="ok">✓ Lattice valid: no god sits on the green, the pink districts are mirror-symmetric about the north–south axis, and every ordinary hexagon of the outer city touches a pink free-use district.</span>';
   } else {
     el.innerHTML =
       (onGreen ? '<span class="bad">' + onGreen + ' god hex(es) sit on the green spokes (red dashed) — gods of love never sit on the metro lines.</span><br>' : '<span class="ok">No god on the green spokes.</span><br>') +
       (asym ? '<span class="bad">' + asym + ' pink hex(es) are not mirrored across the north–south axis (red dashed).</span><br>' : '<span class="ok">The pink set is mirror-symmetric.</span><br>') +
-      (noPark ? '<span class="warn2">' + noPark + ' ordinary hex(es) outside Norden lack a god neighbour (orange dashed) — fill the empty heart hexes with gods of love until none remain.</span>' : '<span class="ok">Every ordinary hexagon outside Norden touches a pink district.</span>');
+      (noPark ? '<span class="warn2">' + noPark + ' ordinary hex(es) of the outer city lack a god neighbour (orange dashed) — restore the pink districts (or place gods of love) until none remain.</span>' : '<span class="ok">Every ordinary hexagon of the outer city touches a pink district.</span>');
   }
 });
 document.getElementById("btnClearFlags").addEventListener("click", () => {

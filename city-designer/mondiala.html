@@ -424,18 +424,39 @@ function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: the deit
   for (let pos = 0; pos < seated.length; pos++) if (!seated[pos]) seated[pos] = rest[ci++] || null;
   return slots.map((sl, pos) => [sl.num, seated[pos]]);
 }
-function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band": all free hexes of rings 5+ form one continuous compass band, ordered by angle with the inner ring first within an angle; the cities ride the band in bearing order (distance breaks bearing ties, so near = inner within a direction) in one monotone pass — each direction stays contiguous across ALL rings (Africa south, the Americas west, Asia and Oceania east), green spokes are ordinary tiles, and unseated cities wait in the pool
+function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band": enough cities → all free hexes of rings 5+ form one continuous compass band and the nearest batch rides it in bearing order (directions contiguous across ALL rings); the frontier (fewer cities than slots) fills ring by ring inner to outer so only the outmost ring can run empty, each ring still bearing-anchored
   const ranked = cands
     .map(n => Object.assign({ n }, bearingDist(center, n)))
-    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance ranks who gets seated at all (near = inner batch), population breaks ties
+    .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance ranks who gets seated, population breaks ties
   const slots = [];
   for (let c = 5; c <= maxCircle; c++) worldSlots(c).forEach(sl => slots.push({ c, num: sl.num, a: sl.a }));
-  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
-  const take = ranked.slice(0, slots.length).sort((a, b) => a.bearing - b.bearing || a.dist - b.dist); // the nearest batch rides the band, bearing-ordered
-  const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), slots.map(sl => sl.a));
+  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c));
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
-  pairs.forEach(pair => plan[slots[pair[1]].c].push([slots[pair[1]].num, pair[0].key]));
-  const seatedNames = new Set(pairs.map(pair => pair[0].key));
+  if (ranked.length >= slots.length) {
+    const take = ranked.slice(0, slots.length).sort((a, b) => a.bearing - b.bearing || a.dist - b.dist);
+    const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), slots.map(sl => sl.a));
+    pairs.forEach(pair => plan[slots[pair[1]].c].push([slots[pair[1]].num, pair[0].key]));
+  } else {
+    let idx = 0;
+    for (let c = 5; c <= maxCircle; c++) {
+      const rslots = worldSlots(c);
+      const take = ranked.slice(idx, idx + rslots.length); idx += take.length;
+      if (!take.length) continue;
+      if (take.length < rslots.length) {
+        const free = rslots.slice();
+        take.slice().sort((a, b) => a.bearing - b.bearing).forEach(city => {
+          let bi = 0, bd = 1e9;
+          free.forEach((sl, i) => { const d = Math.abs(sl.a - city.bearing); const dd = Math.min(d, 360 - d); if (dd < bd) { bd = dd; bi = i; } });
+          plan[c].push([free[bi].num, city.n]); free.splice(bi, 1);
+        });
+        continue;
+      }
+      const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), rslots.map(sl => sl.a));
+      pairs.forEach(pair => plan[c].push([rslots[pair[1]].num, pair[0].key]));
+    }
+  }
+  const seatedNames = new Set();
+  for (let c = 5; c <= maxCircle; c++) plan[c].forEach(pair => seatedNames.add(pair[1]));
   return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
 }
 function computeWorldPlan() { // v1.7 "the city finds the centre": the heart's real cities pull, every tiled city pulls, and the centre settles by iteration

@@ -67,7 +67,7 @@ Outside the authored heart, the city is **placed by real geography** instead of 
 - **Read-only in the browser** — every hex shows exactly what the data says; naming a hex for a god of love in the data makes it pink automatically
 - **World placement panel**: switch centre mode, see where Mondiala sits (coordinates, country and flag)
 - **Lattice checker** enforcing the three lattice rules — green spokes stay sacred, symmetry stays whole, no ordinary hex gets left without a god
-- **Headless test suite**: 451 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
+- **Headless test suite**: 462 checks verify the roster's integrity, the heart's authored contents, the three lattice rules, the read-only map, the ring viewer, the compass placements, pools and centres of all three centre modes, the capital audit, zoom and pan behaviour, and that `DATA.md` matches the live city — see [`test/`](test/)
 
 ## Usage
 
@@ -78,7 +78,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 
 - Drag to pan, scroll to zoom — the zoom steps are smooth and follow the wheel; a hard flick still moves only one gentle step. Dragging and zooming never highlight the page text; only the controls stay selectable
 - **Zooming out can never lose the map**: it stops exactly at the full-city view, with the city's edges touching the screen — the default view. Panning away and zooming out brings you right back to it
-- **+ Next ring / − Remove ring** are view-only: watch the pool settle onto ring 9 (and beyond) — the view re-fits so the new rim's edges touch the screen; nothing is saved, a reload resets to the shipped city
+- **+ Next ring / − Remove ring** are view-only: grow the city ring by ring until the pool runs dry, or unwind it all the way down to bare Metropol and grow it back — the view re-fits so the new rim's edges touch the screen; nothing is saved, a reload resets to the shipped city
 - Click a hexagon to inspect it
 - "Check lattice" flags violations of the three lattice rules on the map
 
@@ -87,7 +87,7 @@ Or just use the hosted copy: **<https://lyngvaldarnegard.github.io/Mondiala/>**.
 The headless suite that keeps every claim in this README honest lives in
 **[`test/`](test/)** and is part of the repository — so it survives everything and anyone
 can re-run it. It loads the *shipped* files (`mondiala.html` + its five themed data
-files) the same way a browser would, rebuilds the city, and runs **451 checks**: roster integrity, the
+files) the same way a browser would, rebuilds the city, and runs **462 checks**: roster integrity, the
 authored heart, the lattice rules and validator, the read-only map, the ring viewer, all three centre
 modes' placements, pools and centres, the capital audit, pan/zoom, and a full `DATA.md` consistency pass.
 

@@ -8,13 +8,23 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.3.1 — the ring viewer** | `main` (this push) | current · view-only + Next ring / − Remove ring buttons — watch the pool settle onto ring 9, nothing saved |
+| **v1.3.2 — down to bare Metropol** | `main` (this push) | current · the ring viewer unwinds the whole city to Metropol and back |
+| **v1.3.1 — the ring viewer** | `f945990` | bookmark branch `archive/v1.3.1-ring-viewer` |
 | **v1.3 — the map goes read-only** | `af81811` | bookmark branch `archive/v1.3-read-only-map` |
 | **v1.2 — the civilisation heart** | `a42e888` | bookmark branch `archive/v1.2-the-civilisation-heart` |
 | **v1.1.2 — the data splits into five themed files** | `0484b199` | bookmark branch `archive/v1.1.2-split-data` |
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.3.2 — down to bare Metropol
+
+The ring viewer gets its full range:
+
+- **− Remove ring** unwinds ring by ring, all the way down to bare **Metropol** (ring 0, pool 305) — then **+ Next ring** grows the city back, hex for hex exact
+- **+ Next ring** stops honestly when the pool runs dry (ring 11 in geographic mode: 65 cities on the last rim)
+- Still pure view state — nothing is saved, a reload resets to the shipped city
+- Suite: **462 checks, all green**
 
 ## v1.3.1 — the ring viewer
 

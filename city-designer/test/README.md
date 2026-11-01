@@ -1,7 +1,7 @@
 # Mondiala test suite
 
 Headless checks for the city designer — no browser, no dependencies beyond Node ≥ 18.
-451 checks, run in one process: the app is loaded from the *shipped* files
+462 checks, run in one process: the app is loaded from the *shipped* files
 (`../mondiala.html` + the five themed data files it references, in browser
 script order), given a minimal fake DOM, and exercised end to end:
 
@@ -12,7 +12,7 @@ script order), given a minimal fake DOM, and exercised end to end:
 5. **The validator** — 0/0/0 in the fresh state, the valid message, clear flags
 6. **Centres** — all three modes land on their verified spots (Bulgaria / Tajikistan / Romania), pool 179, parks 30 in every mode
 7. **The read-only map** — the editing UI is gone (no brush, no save/export/import, no add-city, no inspector Apply button), the viewing controls stay, the pool chips render, clicking a hexagon still shows its card
-8. **The ring viewer** — view-only buttons: ring 9 opens with 54 pool cities settled (pool 179 → 125, no pink hexes on the new ring), ring 10 next (pool 65), − Remove ring restores the exact shipped city, and it stops at ring 8
+8. **The ring viewer** — view-only buttons: ring 9 opens with 54 pool cities settled (pool 179 → 125, no pink hexes on the new ring), ring 10 (pool 65), ring 11 takes the last 65 and adding stops when the pool runs dry; removing unwinds the whole city to bare Metropol (pool 305) and growing it back restores the exact shipped city
 9. **Pan / zoom** — the moved-guard and the zoom-out floor at the full-city view
 10. **DATA.md consistency** — the regenerated `../DATA.md` matches the live city in every mode
 
@@ -24,7 +24,7 @@ shows a change there after you edited the app data, commit it.
 - `stubs.js` — the fake DOM (elements, classList, innerHTML mini-parser, event firing)
 - `loader.js` — loads the shipped app files and exposes the app's internals as `__X`
 - `gen_data_md.js` — regenerates `../DATA.md` from the live fresh build
-- `asserts.js` — the 451 checks (self-wrapped so the concatenation shares one scope)
+- `asserts.js` — the 462 checks (self-wrapped so the concatenation shares one scope)
 - `run.sh` — concatenates the four and runs them: `./run.sh`, exit 0 = all green
 - `split_push.py` — rebuilds the six shipped files from the Vibe-side canvas (the
   authored source; the path inside points at the Vibe environment that owns it):

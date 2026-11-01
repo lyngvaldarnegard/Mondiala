@@ -78,7 +78,7 @@ assert "function factsFor" in post_js
 HEADER = ("// Mondiala City Designer — data {n}/5: {title}.\n"
           "// Generated from the Mondiala City Designer canvas; edit there and re-split.\n")
 files = {
-    "mondiala-heart.js":  (HEADER.format(n=1, title="the heart — the hand-authored rings 0–4 (Metropol,\n// the inspiration cities, the cradle civilisations, the cradle cities and Norden)"), heart_js),
+    "mondiala-heart.js":  (HEADER.format(n=1, title="the heart — the hand-authored rings 0–4 (Metropol,\n// the cradle civilisations, the ancient cities, Norden and the inspiration cities)"), heart_js),
     "mondiala-cities.js": (HEADER.format(n=2, title="the world's great cities — the 318-city roster with real\n// coordinates and countries, and the three verified centre spots"), cities_js),
     "mondiala-info.js":   (HEADER.format(n=3, title="the info cards — [flag, style description] for every hex's\n// real-world model"), info_js),
     "mondiala-facts.js":  (HEADER.format(n=4, title="the real-city facts — [population, source, livability,\n// source, Walk Score?] per city"), facts_js),

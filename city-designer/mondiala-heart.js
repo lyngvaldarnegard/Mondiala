@@ -1,5 +1,5 @@
 // Mondiala City Designer — data 1/5: the heart — the hand-authored rings 0–4 (Metropol,
-// the inspiration cities, the cradle civilisations, the cradle cities and Norden).
+// the cradle civilisations, the ancient cities, Norden and the inspiration cities).
 // Generated from the Mondiala City Designer canvas; edit there and re-split.
 // ---------- Source data from Notion “Hexagons of Mondiala” ----------
 // [circle, hexagonNumber|null, name, density|null]

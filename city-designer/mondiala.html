@@ -300,12 +300,38 @@ function worldSlots(c) { // this ring's placeable slots with their true compass 
     .map(p => { const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num: p.num, a }; })
     .sort((u, v) => u.a - v.a);
 }
-function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: each god faces their homeland, by bearing from Mondiala
+let __ringGods = null;
+function pinkRingGods() { // no god is hand-seated: the favourites claim the innermost rings, everyone else keeps their own queue, and the overflow cascades outward
+  if (__ringGods) return __ringGods;
+  const rings = Object.keys(PINK_SLOTS).map(Number).sort((a, b) => a - b);
+  const queue = {}; rings.forEach(c => queue[c] = (PINK_GODS[c] || []).slice());
+  const favSeats = {};
+  for (const name of FAVOURITE_GODS) {
+    const id = name.trim().toLowerCase();
+    let ring = null;
+    for (const c of rings) if ((favSeats[c] || 0) < (PINK_SLOTS[c] || []).length) { ring = c; break; } // the innermost ring with a seat still free
+    if (ring === null) continue; // the favourites have filled the whole lattice
+    let found = false;
+    rings.forEach(c => { const i = queue[c].findIndex(n => n.trim().toLowerCase() === id); if (i > -1) { queue[c].splice(i, 1); found = true; } });
+    if (!found) continue; // already seated in the heart — the innermost seat of all
+    queue[ring].unshift(name); favSeats[ring] = (favSeats[ring] || 0) + 1;
+  }
+  const seated = {}; const carry = [];
+  for (const c of rings) {
+    const cap = (PINK_SLOTS[c] || []).length;
+    const list = queue[c].concat(carry.splice(0, carry.length)); // this ring's own gods first, then the overflow that reached it
+    seated[c] = list.slice(0, cap);
+    list.slice(cap).forEach(n => carry.push(n)); // no room here: cascade outward
+  }
+  __ringGods = seated; return seated;
+}
+function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: the deities face their homelands by compass; the concepts — no homeland — fill the rest in authored order
   const nums = PINK_SLOTS[c] || [];
   if (!nums.length) return [];
   const slotOf = {}; ringPositions(c).forEach(p => slotOf[p.num] = p);
   const slots = nums.map(num => { const p = slotOf[num]; const pt = axialToPixel(p.q, p.r); let a = Math.atan2(pt.x, -pt.y) / GEO_RAD; if (a < 0) a += 360; return { num, a }; }).sort((u, v) => u.a - v.a);
-  const gods = (PINK_GODS[c] || []).map(name => {
+  const ring = pinkRingGods()[c] || [];
+  const gods = ring.map(name => {
     const co = GOD_ORIGINS[name.trim().toLowerCase()]; if (!co) return null;
     const [lat, lon] = co;
     const y = Math.sin((lon - center.lon) * GEO_RAD) * Math.cos(lat * GEO_RAD);
@@ -313,18 +339,34 @@ function pinkPlan(c, center) { // WHICH love god takes WHICH pink slot: each god
     let b = Math.atan2(y, x) / GEO_RAD; if (b < 0) b += 360;
     return { name, b };
   });
-  if (gods.some(g => !g) || gods.length !== slots.length) return nums.map((num, i) => [num, (PINK_GODS[c] || [])[i]]); // no origin known: keep the authored order
-  gods.sort((u, v) => u.b - v.b);
-  let rot = 0, best = 1e18; // circular order matching, same as the cities: try every rotation, keep the truest to the compass
-  for (let r = 0; r < gods.length; r++) {
-    let cost = 0;
-    for (let i = 0; i < gods.length; i++) {
-      const g = gods[(i + r) % gods.length];
-      const d = Math.abs(slots[i].a - g.b); cost += Math.min(d, 360 - d);
+  if (gods.every(g => g) && gods.length === slots.length) { // a full ring of deities: circular order matching, same as the cities — try every rotation, keep the truest to the compass
+    gods.sort((u, v) => u.b - v.b);
+    let rot = 0, best = 1e18;
+    for (let r = 0; r < gods.length; r++) {
+      let cost = 0;
+      for (let i = 0; i < gods.length; i++) {
+        const g = gods[(i + r) % gods.length];
+        const d = Math.abs(slots[i].a - g.b); cost += Math.min(d, 360 - d);
+      }
+      if (cost < best) { best = cost; rot = r; }
     }
-    if (cost < best) { best = cost; rot = r; }
+    return slots.map((sl, i) => [sl.num, gods[(i + rot) % gods.length].name]);
   }
-  return slots.map((sl, i) => [sl.num, gods[(i + rot) % gods.length].name]);
+  const seated = new Array(slots.length).fill(null);
+  const deities = gods.filter(g => g).sort((u, v) => u.b - v.b); // the gods with a homeland face it, evenly spread among the slots
+  if (deities.length) {
+    let best = null;
+    for (let r = 0; r < slots.length; r++) {
+      const take = new Array(slots.length).fill(-1); let cost = 0, free = true;
+      deities.forEach((g, i) => { const pos = Math.floor(i * slots.length / deities.length + r) % slots.length; if (take[pos] > -1) { free = false; return; } take[pos] = i; const d = Math.abs(slots[pos].a - g.b); cost += Math.min(d, 360 - d); });
+      if (free && (!best || cost < best.cost)) best = { cost, take };
+    }
+    if (best) best.take.forEach((di, pos) => { if (di > -1) seated[pos] = deities[di].name; });
+  }
+  const rest = ring.filter(n => !GOD_ORIGINS[n.trim().toLowerCase()]); // the concepts fill the remaining slots in authored order
+  let ci = 0;
+  for (let pos = 0; pos < seated.length; pos++) if (!seated[pos]) seated[pos] = rest[ci++] || null;
+  return slots.map((sl, pos) => [sl.num, seated[pos]]);
 }
 function computeWorldPlan() { // the full rings 5..maxCircle city assignment + the centre + the leftovers
   const cands = [];

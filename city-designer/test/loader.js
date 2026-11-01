@@ -22,7 +22,7 @@ for (const s of __scripts.slice(1, -1)) __src += "\n" + __fs.readFileSync("../" 
 __src += "\n" + __scripts[__scripts.length - 1].body;
 const __export = `
 ;globalThis.__X = {
-  RAW, WORLD_CITIES, CITY_COORDS, CITY_COUNTRY, CITY_INFO, CITY_FACTS, SEX_GODS, PINK_GODS, PINK_SLOTS, GOD_ORIGINS, CENTER_SPOTS, TYPES,
+  RAW, WORLD_CITIES, CITY_COORDS, CITY_COUNTRY, CITY_INFO, CITY_FACTS, SEX_GODS, PINK_GODS, PINK_SLOTS, GOD_ORIGINS, FAVOURITE_GODS, CENTER_SPOTS, TYPES,
   DIRS, SIZE, HEX_AREA,
   get hexes() { return hexes; }, get pool() { return pool; },
   get maxCircle() { return maxCircle; }, set maxCircle(v) { maxCircle = v; },
@@ -34,7 +34,7 @@ const __export = `
   get moved() { return moved; }, set moved(v) { moved = v; },
   get gHexes() { return gHexes; },
   buildCity, computeWorldPlan, computeCenter, bearingDist, greatCircleKm, coordOf, factPop, factLiv, factWalk, factsFor, factPopPos, geoWeight,
-  centerCountry, pinkPlan, worldSlots, neighborKeys, onSpoke, ringPositions, axialToPixel, cityViewBox,
+  centerCountry, pinkPlan, pinkRingGods, worldSlots, neighborKeys, onSpoke, ringPositions, axialToPixel, cityViewBox,
   recenter, refresh, renderPool, renderStats, renderCenterOut, showInspector,
   fmtPop, fmtLatLon
 };

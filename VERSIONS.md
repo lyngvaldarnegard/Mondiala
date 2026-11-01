@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.5 — the lattice steps out** | `main` (this push) | current · the pink lattice moves to ring 6, ring 2 regroups by culture, the six cities ride again, the checker learns the fourth law |
+| **v1.6 — the city reaches the horizon** | `main` (this push) | current · rings 9–11 get their pink lattice, no god hand-seated any more (the favourites rule), the dormant five wake, concepts of eros ride the horizon |
+| **v1.5 — the lattice steps out** | `e059141` | bookmark branch `archive/v1.5-the-lattice-steps-out` |
 | **v1.4.1 — six-fold pink lattice** | `c70e1b9` | bookmark branch `archive/v1.4.1-six-fold-pink-lattice` |
 | **v1.4 — the heart goddesses** | `2e878bf` | bookmark branch `archive/v1.4-the-heart-goddesses` |
 | **v1.3.2 — down to bare Metropol** | `08d7440` | bookmark branch `archive/v1.3.2-down-to-bare-metropol` |
@@ -19,6 +20,18 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v1.6 — the city reaches the horizon
+
+The designed horizon fills in, and the seating of the gods becomes pure rule:
+
+- **Rings 9–11 get their pink lattice**: twelve districts on ring 9 (each section's 3rd and 8th hex), eighteen on ring 10 (the 2nd, 6th and 10th), twelve on ring 11 (the 4th and 9th) — 78 parks at the horizon, up from 36
+- **No god is hand-seated any more**: the favourites rule seats the favoured eight (Eros, Aphrodite, Venus, Freyja, Cupid, Kama, Parvati, Lakshmi) close to the centre — Cupid, Parvati and Lakshmi claim ring 6, and the cascade moves Pothos to ring 8 and Astghik to ring 9
+- **The dormant five wake**: Shaushka, Attis, Min, Lofn and Xochipilli take ring 9 seats, joined by Tu'er Shen, Laka, Diyan Masalanta, Lel, Lelia, Volupia and Astghik
+- **Fourteen new deities**, each with homeland coordinates: Tu'er Shen, Laka, Diyan Masalanta, Lel, Lelia, Volupia, Suadela, Hedylogos, Lempo, Aengus, Wadd, Hymenaios, Aphroditus, Dali
+- **Twenty-two concepts of eros ride the horizon** (from the Hexagons of Mondiala database): Anal, Vagina, Penis, Oral, Tantra, Chastity, Romance, Intimacy, Bondage, Dominance, Submission, Orgy, Promiscuity, Polyamory, Masturbation, Orgasm, Edging, Libido, Erotica, Nude, Voyeurism, Hedonism — deities by compass, concepts in authored order
+- **84 names in the full set**: six heart goddesses, 72 lattice seats and six waiting cradle goddesses
+- Suite: **513 checks, all green**
 
 ## v1.5 — the lattice steps out
 

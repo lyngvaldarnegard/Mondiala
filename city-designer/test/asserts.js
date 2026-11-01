@@ -19,8 +19,10 @@ section("1 · roster integrity");
 eq("hex count", Object.keys(X.hexes).length, 217);
 eq("roster", X.WORLD_CITIES.length, 311);
 eq("facts", Object.keys(X.CITY_FACTS).length, 373);
-eq("info cards", Object.keys(X.CITY_INFO).length, 419);
-eq("gods", X.SEX_GODS.size, 42);
+eq("info cards", Object.keys(X.CITY_INFO).length, 456);
+eq("gods and concepts", X.SEX_GODS.size, 84);
+eq("favourites list", X.FAVOURITE_GODS, ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama","Parvati","Lakshmi"]);
+ok("every pink hex has an info card", Object.values(X.hexes).every(h => h.type !== "park" || X.CITY_INFO[(h.name || "").trim().toLowerCase()]));
 eq("RAW rows", X.RAW.length, 61);
 eq("pool (geo fresh)", X.pool.length, 185);
 eq("no double-placed roster city", (() => { const seen = new Set(); for (const h of Object.values(X.hexes)) { if (!h.name) continue; const n = h.name.trim().toLowerCase(); if (X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n)) { if (seen.has(n)) return false; seen.add(n); } } return true; })(), true);
@@ -64,6 +66,11 @@ for (const h of Object.values(X.hexes)) {
 uncovered.sort((a, b) => { const [c1, n1] = a.split("#"), [c2, n2] = b.split("#"); return (+c1 - +c2) || (+n1 - +n2); });
 eq("whole heart exempt, nothing uncovered (fresh)", uncovered, []);
 eq("parks (fresh: 12 ring 6 + 12 ring 7 + 6 ring 8 + 6 heart goddesses)", parkCount(), 36);
+const parkNames = (c) => Object.values(X.hexes).filter(h => h.circle === c && h.type === "park").map(h => h.name).sort();
+ok("the favourites rule pulls Cupid, Parvati and Lakshmi onto ring 6", ["Cupid","Lakshmi","Parvati"].every(n => parkNames(6).includes(n)));
+eq("ring 6 seats twelve (favourites first)", parkNames(6).length, 12);
+ok("the displaced cascade outward: Pothos to ring 8, Astghik off ring 6", parkNames(8).includes("Pothos") && !parkNames(6).includes("Pothos") && !parkNames(6).includes("Astghik"));
+eq("ring 8 keeps six (Parvati pulled inward)", parkNames(8).length, 6);
 
 // ---------- 4 · capitals aboard ----------
 section("4 · capitals aboard");
@@ -147,22 +154,24 @@ ok("ring-viewer buttons wired", __els.has("btnNextRing") && __els.has("btnDropRi
 __fire($("btnNextRing"), "click", {});
 eq("ring 9 opens", X.maxCircle, 9);
 eq("hexes with ring 9", Object.keys(X.hexes).length, 271);
-eq("ring 9 carries plain cities only", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").length, 0);
-eq("pool after ring 9", X.pool.length, 131);
-eq("pool chips re-render", document.querySelectorAll(".poolname").length, 131);
+eq("ring 9 seats twelve pink districts (the horizon lattice begins)", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").length, 12);
+eq("pool after ring 9", X.pool.length, 143);
+eq("pool chips re-render", document.querySelectorAll(".poolname").length, 143);
 __fire($("btnNextRing"), "click", {});
 eq("ring 10 opens", X.maxCircle, 10);
-eq("pool after ring 10", X.pool.length, 71);
+eq("ring 10 seats eighteen pink districts", Object.values(X.hexes).filter(h => h.circle === 10 && h.type === "park").length, 18);
+eq("pool after ring 10", X.pool.length, 101);
 __fire($("btnNextRing"), "click", {});
-eq("ring 11 takes 66 more", X.pool.length, 5);
+eq("ring 11 seats twelve more pink districts", Object.values(X.hexes).filter(h => h.circle === 11 && h.type === "park").length, 12);
+eq("ring 11 takes 54 more cities", X.pool.length, 47);
 __fire($("btnNextRing"), "click", {});
 eq("add stops at the designed horizon (ring 11)", X.maxCircle, 11);
 __fire($("btnDropRing"), "click", {});
 eq("drop back to 10", X.maxCircle, 10);
-eq("pool back to 71", X.pool.length, 71);
+eq("pool back to 101", X.pool.length, 101);
 __fire($("btnDropRing"), "click", {});
 eq("drop back to 9", X.maxCircle, 9);
-eq("pool back to 131", X.pool.length, 131);
+eq("pool back to 143", X.pool.length, 143);
 __fire($("btnDropRing"), "click", {});
 eq("drop back to 8", X.maxCircle, 8);
 eq("hexes restored", Object.keys(X.hexes).length, 217);
@@ -178,6 +187,44 @@ for (let i = 0; i < 8; i++) __fire($("btnNextRing"), "click", {});
 eq("re-grown to ring 8", X.maxCircle, 8);
 eq("hexes re-grown", Object.keys(X.hexes).length, 217);
 eq("pool re-settled", X.pool.length, 185);
+X.recenter();
+
+// ---------- 7c · the horizon lattice & the favourites rule (grown to ring 11) ----------
+section("7c · the horizon lattice & the favourites rule (grown to ring 11)");
+__fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {});
+eq("grown to the designed horizon", X.maxCircle, 11);
+eq("ring 9 = the approved {2,7} diagonal lattice", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").map(h => h.num).sort((a, b) => a - b), [3,8,12,17,21,26,30,35,39,44,48,53]);
+eq("ring 10 = the approved spoke-flanking + midline lattice", Object.values(X.hexes).filter(h => h.circle === 10 && h.type === "park").map(h => h.num).sort((a, b) => a - b), [2,6,10,12,16,20,22,26,30,32,36,40,42,46,50,52,56,60]);
+eq("ring 11 = the approved {3,8} diagonal lattice", Object.values(X.hexes).filter(h => h.circle === 11 && h.type === "park").map(h => h.num).sort((a, b) => a - b), [4,9,15,20,26,31,37,42,48,53,59,64]);
+ok("ring 9 six-fold", sixfold(9));
+ok("ring 10 six-fold", sixfold(10));
+ok("ring 11 six-fold", sixfold(11));
+const asymG = Object.values(X.hexes).filter(h => h.type === "park" && h.circle > 0 && (!mirrorOf(h) || mirrorOf(h).type !== "park"));
+eq("section mirror symmetry (grown)", asymG.length, 0);
+const touchingG = Object.values(X.hexes).filter(h => h.type === "park" && h.circle > 0 && X.neighborKeys(h.q, h.r).map(k => X.hexes[k]).some(n => n && n.type === "park" && n.circle > 0));
+eq("no two pinks touch (grown)", touchingG.length, 0);
+const onSpokeG = Object.values(X.hexes).filter(h => h.type === "park" && (h.circle === 0 || X.onSpoke(h)));
+eq("no god on the green (grown)", onSpokeG.length, 0);
+const uncoveredG = [];
+for (const h of Object.values(X.hexes)) {
+  if (h.type === "park" || h.circle <= 4 || X.onSpoke(h)) continue;
+  const neigh = X.neighborKeys(h.q, h.r).map(k => X.hexes[k]).filter(Boolean);
+  if (!neigh.some(n => n.type === "park")) uncoveredG.push(h.circle + "#" + h.num);
+}
+eq("nothing uncovered (grown)", uncoveredG, []);
+ok("Astghik rides the overflow to ring 9", parkNames(9).includes("Astghik"));
+ok("the dormant five wake on ring 9", ["Shaushka","Attis","Min","Lofn","Xochipilli"].every(n => parkNames(9).includes(n)));
+ok("the concepts reach the horizon", ["Submission","Hedonism"].every(n => parkNames(11).includes(n)) && ["Anal","Tantra","Chastity"].every(n => parkNames(10).includes(n)));
+eq("parks at the horizon (6 heart + 12+12+6+12+18+12 lattice)", parkCount(), 78);
+eq("pool at the horizon", X.pool.length, 47);
+__fire($("btnValidate"), "click", {});
+ok("no flag-invalid (grown)", document.querySelectorAll(".flag-invalid").length === 0);
+eq("flag-nopark = 0 (grown)", document.querySelectorAll(".flag-nopark").length, 0);
+ok("validator says lattice valid (grown)", $("validatorOut").innerHTML.includes("Lattice valid"));
+__fire($("btnClearFlags"), "click", {});
+for (let i = 0; i < 3; i++) __fire($("btnDropRing"), "click", {});
+eq("back from the horizon", X.maxCircle, 8);
+eq("parks restored", parkCount(), 36);
 X.recenter();
 
 // ---------- 8 · pan / zoom / click-guard ----------

@@ -1,8 +1,8 @@
 # Mondiala — the city, hexagon by hexagon
 
-Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the cradle goddesses wait unplaced) · **311 world cities** on the roster, **185** of them waiting in the pool.
+Mondiala in numbers: **217 hexagons** across rings 0–8 · **217 named hexes** · **36 pink free-use districts** (six goddesses of love sit at the ring-4 middles; the favourites rule seats the favoured eight close to the centre; the cradle goddesses wait unplaced) · **311 world cities** on the roster, **185** of them waiting in the pool.
 
-The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, Athens on the freed Indus spoke, and the Greek pair, Tyre, Ur, Babylon, Rome and Carthage grouped by culture between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
+The heart is authored by hand, every hexagon filled — ring 1 the six cradle civilisations (China, the Indus Valley, Mesopotamia, Egypt, the Andes, Mesoamerica), ring 2 the twelve ancient cities (each cradle's first great city on the spoke behind its civilisation, Athens on the freed Indus spoke, and the Greek pair, Tyre, Ur, Babylon, Rome and Carthage grouped by culture between them), ring 3 Norden with every Nordic country represented, ring 4 the inspiration cities of the world. Six goddesses of love sit at the ring-4 middles — Milda, Kama, Aphrodite, Eros, Venus and Freyja, each facing her homeland; past ring 8 the pink lattice reaches the designed horizon — rings 9–11 seat the dormant five, fourteen new love-gods and the concepts of eros, deities by compass and concepts in authored order; the cradle goddesses stay unplaced. The map is read-only in the browser — every change happens in the data files.
 
 ## The heart — rings 0–4 (authored; identical in every centre mode)
 
@@ -139,23 +139,23 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 2 | St. Gallen |
 | 3 | Sjöfn ♥ |
 | 4 | Strasbourg |
-| 5 | Astghik ♥ |
+| 5 | Parvati ♥ |
 | 6 | Munich |
 | 7 | Prague |
 | 8 | Minsk |
-| 9 | Astarte ♥ |
+| 9 | Lakshmi ♥ |
 | 10 | Diyarbakır |
-| 11 | Qetesh ♥ |
+| 11 | Astarte ♥ |
 | 12 | Aleppo |
 | 13 | Beirut |
 | 14 | Nicosia |
-| 15 | Adonis ♥ |
+| 15 | Qetesh ♥ |
 | 16 | Alexandria |
-| 17 | Anteros ♥ |
+| 17 | Adonis ♥ |
 | 18 | Valletta |
 | 19 | Tunis |
 | 20 | Nice |
-| 21 | Pothos ♥ |
+| 21 | Anteros ♥ |
 | 22 | Monaco |
 | 23 | Oshun ♥ |
 | 24 | Genoa |
@@ -227,7 +227,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 2 | Glasgow |
 | 3 | Edinburgh |
 | 4 | Aberdeen |
-| 5 | Yue Lao ♥ |
+| 5 | Tlazolteotl ♥ |
 | 6 | Stavanger |
 | 7 | Kristiansand |
 | 8 | Turku |
@@ -235,7 +235,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 10 | Baku |
 | 11 | Ashgabat |
 | 12 | Tehran |
-| 13 | Parvati ♥ |
+| 13 | Yue Lao ♥ |
 | 14 | Isfahan |
 | 15 | Baghdad |
 | 16 | Kuwait City |
@@ -243,7 +243,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 18 | Doha |
 | 19 | Riyadh |
 | 20 | Medina |
-| 21 | Mami Wata ♥ |
+| 21 | Pothos ♥ |
 | 22 | Mecca |
 | 23 | Jeddah |
 | 24 | Asmara |
@@ -251,7 +251,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 26 | Khartoum |
 | 27 | Algiers |
 | 28 | Marrakesh |
-| 29 | Erzulie Freda ♥ |
+| 29 | Mami Wata ♥ |
 | 30 | Casablanca |
 | 31 | Rabat |
 | 32 | Seville |
@@ -259,7 +259,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 34 | Bordeaux |
 | 35 | Nantes |
 | 36 | Cork |
-| 37 | Áine ♥ |
+| 37 | Erzulie Freda ♥ |
 | 38 | Cardiff |
 | 39 | Bristol |
 | 40 | Oxford |
@@ -267,7 +267,7 @@ Mondiala sits at 43.02210°, 24.62133° — 🇧🇬 Bulgaria (the Central Balka
 | 42 | Dublin |
 | 43 | Cambridge |
 | 44 | Liverpool |
-| 45 | Tlazolteotl ♥ |
+| 45 | Áine ♥ |
 | 46 | Manchester |
 | 47 | Belfast |
 | 48 | Leeds |
@@ -321,39 +321,39 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 |---|---|
 | 1 | Diyarbakır |
 | 2 | Homoia |
-| 3 | Cupid ♥ |
+| 3 | Turan ♥ |
 | 4 | Ankara |
-| 5 | Turan ♥ |
+| 5 | Lada ♥ |
 | 6 | Sevastopol |
 | 7 | Odesa |
 | 8 | Kyiv |
-| 9 | Lada ♥ |
+| 9 | Sjöfn ♥ |
 | 10 | Dhaka |
-| 11 | Sjöfn ♥ |
+| 11 | Parvati ♥ |
 | 12 | Kolkata |
 | 13 | Chennai |
 | 14 | Hyderabad |
-| 15 | Oshun ♥ |
+| 15 | Lakshmi ♥ |
 | 16 | Bengaluru |
-| 17 | Adonis ♥ |
+| 17 | Oshun ♥ |
 | 18 | Pune |
 | 19 | Mumbai |
 | 20 | Riyadh |
-| 21 | Qetesh ♥ |
+| 21 | Adonis ♥ |
 | 22 | Medina |
-| 23 | Astarte ♥ |
+| 23 | Qetesh ♥ |
 | 24 | Amman |
 | 25 | Jericho |
 | 26 | Jerusalem |
-| 27 | Astghik ♥ |
+| 27 | Astarte ♥ |
 | 28 | Gaza |
 | 29 | Anteros ♥ |
 | 30 | Tel Aviv |
 | 31 | Damascus |
 | 32 | Beirut |
-| 33 | Pothos ♥ |
+| 33 | Prende ♥ |
 | 34 | Nicosia |
-| 35 | Prende ♥ |
+| 35 | Cupid ♥ |
 | 36 | Aleppo |
 
 ### Ring 7
@@ -427,7 +427,7 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 | 18 | Foshan |
 | 19 | Macau |
 | 20 | Hanoi |
-| 21 | Parvati ♥ |
+| 21 | Mami Wata ♥ |
 | 22 | Vientiane |
 | 23 | Bangkok |
 | 24 | Addis Ababa |
@@ -435,7 +435,7 @@ Mondiala sits at 39.13408°, 68.15284° — 🇹🇯 Tajikistan (the Fann mounta
 | 26 | Khartoum |
 | 27 | Valletta |
 | 28 | Palermo |
-| 29 | Mami Wata ♥ |
+| 29 | Pothos ♥ |
 | 30 | Tirana |
 | 31 | Naples |
 | 32 | Podgorica |
@@ -507,23 +507,23 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 2 | Strasbourg |
 | 3 | Sjöfn ♥ |
 | 4 | Frankfurt |
-| 5 | Astghik ♥ |
+| 5 | Parvati ♥ |
 | 6 | Hamburg |
 | 7 | Narva |
 | 8 | Saint Petersburg |
-| 9 | Qetesh ♥ |
+| 9 | Lakshmi ♥ |
 | 10 | Tbilisi |
-| 11 | Astarte ♥ |
+| 11 | Qetesh ♥ |
 | 12 | Yerevan |
 | 13 | Diyarbakır |
 | 14 | Damascus |
-| 15 | Adonis ♥ |
+| 15 | Astarte ♥ |
 | 16 | Beirut |
-| 17 | Anteros ♥ |
+| 17 | Adonis ♥ |
 | 18 | Palermo |
 | 19 | Vatican City |
 | 20 | Florence |
-| 21 | Pothos ♥ |
+| 21 | Anteros ♥ |
 | 22 | Bologna |
 | 23 | Oshun ♥ |
 | 24 | Genoa |
@@ -611,7 +611,7 @@ Mondiala sits at 45.79163°, 28.55326° — 🇲🇩 Moldova (the Budjak steppe 
 | 18 | Kuwait City |
 | 19 | Manama |
 | 20 | Riyadh |
-| 21 | Parvati ♥ |
+| 21 | Pothos ♥ |
 | 22 | Medina |
 | 23 | Mecca |
 | 24 | Jeddah |

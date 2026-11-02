@@ -3,6 +3,7 @@
 const fs = require("fs");
 const X = globalThis.__X;
 const $ = id => document.getElementById(id);
+{ const p = $("placeMode"); p.value = "direction"; __fire(p, "change", {}); } // DATA.md documents the direction-mode layout
 const escCell = s => String(s).replace(/\|/g, "\\|");
 const SUB = { 0: "Metropol", 1: "the cradle civilisations", 2: "the ancient cities", 3: "Norden", 4: "the inspiration cities" };
 const MODENAME = { geo: "geographic midpoint", pop: "population-weighted", great: "greatness-weighted" };

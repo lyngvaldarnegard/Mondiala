@@ -107,10 +107,10 @@
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
       <label class="field" style="margin-top:8px">How the outer cities are placed</label>
       <select id="placeMode">
+        <option value="proximity" selected>Proximity — ring 5 by 6 sectors, then each ring greedily maximizes closest-city score (default)</option>
         <option value="hybrid">Hybrid — compass band, then proximity repair (≥2 of 6 closest must border)</option>
         <option value="direction">Direction only — the original v1.8 compass band, no repair</option>
         <option value="distance">Distance only — rings by km from Mondiala + hard rule (≥2 of 6 closest must border)</option>
-        <option value="proximity">Proximity — ring 5 by 6 sectors, then each ring greedily maximizes closest-city score</option>
       </select>
     </div>
     <div class="card">
@@ -145,7 +145,7 @@ const TYPES = {
 <script src="mondiala-gods.js"></script>
 <script>
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
-let placeMode = "hybrid"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
+let placeMode = "proximity"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
@@ -527,20 +527,25 @@ function fillByProximity(center, cands) { // v1.11 "proximity" mode: ring 5 = 6 
     let s = 0; ranked.forEach((r, i) => { if (ns.has(r.o)) s += 1 / (i + 1); });
     return s;
   };
-  if (maxCircle >= 5) { // ring 5: six 60-degree sectors, closest-to-Mondiala city per sector
-    const rslots = worldSlots(5).slice().sort((a, b) => a.a - b.a);
+  const firstOrdinary = 5; // the first ordinary ring — found, not hardcoded as "the ring after the heart": the lowest circle whose slots are world-placed
+  if (maxCircle >= firstOrdinary) { // first ordinary ring: six 60-degree sectors, closest-to-Mondiala city per sector
+    const rslots = worldSlots(firstOrdinary).slice().sort((a, b) => a.a - b.a);
     const sectors = [[0, 60], [60, 120], [120, 180], [180, 240], [240, 300], [300, 360]];
     for (const [lo, hi] of sectors) {
       const pick = withBD.filter(x => remaining.has(x.n) && x.bearing >= lo && x.bearing < hi).sort((a, b) => a.dist - b.dist)[0];
       if (!pick) continue;
-      const sl = rslots.find(sl2 => !plan[5].some(p => p[0] === sl2.num));
+      const mid = (lo + hi) / 2; // the free slot whose own angle is closest to this sector's centre — one seed per direction
+      const free = rslots.filter(sl2 => !plan[firstOrdinary].some(p => p[0] === sl2.num));
+      if (!free.length) break;
+      const sl = free.reduce((best, sl2) => { const d = Math.abs(sl2.a - mid) % 360; const bd = Math.abs(best.a - mid) % 360; return Math.min(d, 360 - d) < Math.min(bd, 360 - bd) ? sl2 : best; });
       if (!sl) break;
-      plan[5].push([sl.num, pick.n]); seat(pick.n, 5, sl.num); remaining.delete(pick.n);
+      plan[firstOrdinary].push([sl.num, pick.n]); seat(pick.n, firstOrdinary, sl.num); remaining.delete(pick.n);
     }
   }
-  for (let c = 6; c <= maxCircle; c++) { // later rings: greedy per slot, candidates = 40 remaining nearest to nearest seated city
+  for (let c = firstOrdinary; c <= maxCircle; c++) { // the first ordinary ring is filled COMPLETELY (seeded + greedy leftovers) before the next ring starts; later rings use the greedy maximizing rule per free slot
     const rslots = worldSlots(c).slice().sort((a, b) => a.a - b.a);
     for (const sl of rslots) {
+      if (plan[c].some(p => p[0] === sl.num)) continue; // already seeded
       if (remaining.size === 0) break;
       const anchorName = Object.keys(seatedPos)[0] || [...remaining][0];
       const aCo = coordOf(anchorName);

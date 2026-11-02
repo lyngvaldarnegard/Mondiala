@@ -150,6 +150,7 @@ setMode("geo");
 
 // ---------- 6b · the compass decides (direction-first seating) ----------
 section("6b · the compass decides (direction-first seating)");
+{ const p = $("placeMode"); p.value = "direction"; __fire(p, "change", {}); } // bearing/sector assertions hold for the direction mode
 const seatAngleOf = (h) => { const p = X.axialToPixel(h.q, h.r); let a = Math.atan2(p.x, -p.y) / (Math.PI / 180); return a < 0 ? a + 360 : a; };
 const errOf = (h) => { const b = X.bearingDist(X.worldCenter, h.name).bearing; const d = Math.abs(seatAngleOf(h) - b) % 360; return Math.min(d, 360 - d); };
 const seatedCityErrs = () => Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
@@ -328,6 +329,7 @@ X.viewBox = X.cityViewBox(); X.refresh();
 
 // ---------- 9 · DATA.md consistency ----------
 section("9 · DATA.md consistency");
+{ const p = $("placeMode"); p.value = "direction"; __fire(p, "change", {}); } // DATA.md is generated in direction mode
 X.recenter(); // the data-driven rebuild IS the fresh state — there is nothing else to restore
 const md = fs.readFileSync("../DATA.md", "utf8");
 const lines = md.split("\n");
@@ -383,7 +385,14 @@ for (const m of ["direction", "hybrid", "distance", "proximity"]) {
 }
 ok("hybrid beats direction on the 2-of-6 hard rule", modeStats.hybrid.fail2of6 < modeStats.direction.fail2of6);
 ok("proximity mode is seated and scored", modeStats.proximity.score > 0);
-pm.value = "hybrid"; __fire(pm, "change", {});
+{
+  pm.value = "proximity"; __fire(pm, "change", {});
+  const r5 = Object.values(X.hexes).filter(h => h.circle === 5 && h.name && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
+  const r6 = Object.values(X.hexes).filter(h => h.circle === 6 && h.name); // gods count as seated too
+  eq("proximity: the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
+  eq("proximity: ring 6 fully seated (36 hexes)", r6.length, 36);
+}
+pm.value = "proximity"; __fire(pm, "change", {});
 
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");

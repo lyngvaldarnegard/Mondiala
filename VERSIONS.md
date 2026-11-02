@@ -23,6 +23,12 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.13 — proximity mode is the default, first ordinary ring fills completely
+
+- **Proximity mode is now the shipped default** (dropdown + `placeMode` default): the first ordinary ring (found, not hardcoded) is seeded one city per 60° direction sector — closest to Mondiala in each — and then **filled completely** before any later ring starts; rings 6+ are filled greedily slot by slot, each pick maximizing the summed 1/rank closest-city score
+- DATA.md and the bearing/sector assertions document the direction mode explicitly; the mode section pins ring 5 = 30 seated, ring 6 = 36
+- Suite: **785 checks, all green**
+
 ## v1.12 — placement-mode picker + hard proximity rule
 
 The panel's World placement card gains a **placement mode** dropdown with four styles to compare live:

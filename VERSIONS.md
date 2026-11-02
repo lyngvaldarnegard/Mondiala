@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.3 — handpicked default + hemisphere rule** | `main` (this push) | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | `main` (this push) | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -67,6 +67,15 @@ The neighbours mode now runs Sigurd's actual design, restored: each ring is deci
 - **The hemisphere rule (Sigurd's, outer rings only):** a city north of Metropol on the world map never sits south of it on the hexagonal grid. Applied to the hand-picked table in both orientations — 0 remaining north-direction violations (Saint Petersburg, Lille and Strasbourg moved north; the flat table got its own 1 fix).
 - **The southern direction of the rule is structurally impossible** and was ruled "as far as the grid allows": only 38 of the 265 roster cities are north of Metropol (she sits at 48.3°N — nearly the whole populated world is south of that), but the grid's northern half holds 131 ordinary seats in rings 5–11; ~93 southern cities must therefore sit north no matter the seating. The strict version would require empty northern hexes, which the no-empty-hexes law forbids.
 - Suite: **688 checks green** (the hemisphere rule and the default mode are asserted).
+
+## v3.4 — Metropol at the median point; the hemisphere rule made real; contiguity completed
+
+- **Metropol moves to the roster's median point — 33.31°N 15.28°E, the central Mediterranean** (Sigurd's ruling: move Mondiala so each hemisphere holds roughly equal cities, keeping the no-empty law in mind). Each hemisphere now holds near-equal cities (N132/S133, E132/W133), matching the grid halves (131/133/132/132).
+- **The hemisphere rule, both axes:** a city north/south/east/west of Metropol never sits on the opposite side of the grid. The seating is now an exact global assignment (Hungarian, 264 cities × 264 inner seats) with quadrant-match as the hard cost. The crossings that remain (25 pointy / 15 flat) are the **structural minimum**: the roster's quadrant distribution (Europe-heavy NW: 80 NW cities vs 63 NW seats) cannot match the grid's fixed quadrant seats at any centre — measured by exhaustive search. Honolulu, Casablanca, Los Angeles and ~22 others sit one quadrant off; no seating does better while keeping every inner ring full.
+- **The contiguity rule holds fully:** every continent is ONE connected region in both orientations (the pink free-use districts, the heart and the empty frontier hexes permeable).
+- Auckland — the roster's farthest city (18,111 km) — rides the far outer frontier ring's south-east seat, waiting in the pool at the shipped view; the inner rings stay completely full (no empty hexes below the frontier); Melbourne is back on the outer edge.
+- Every region reads its true wedge: Europe NW, Asia E, Africa S, the Americas W, Oceania south-EAST (east of Africa).
+- Suite: **691 checks green** (the median centre, the wedges, the hemisphere minimum, contiguity, the fill law and the lattice all asserted).
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

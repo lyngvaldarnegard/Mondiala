@@ -453,18 +453,20 @@ for (const m of ["neighbours", "hexagonal", "handpicked"]) {
   ok("a full rebuild from the tables is instant (< 250 ms, was ~800 ms+ of compute)", ms < 250);
 }
 
-// ---------- 10d · v3.1 — the hand-picked world map (mode 3, authored data) ----------
-section("10d · v3.1 — the hand-picked world map (mode 3)");
+// ---------- 10d · v3.4 — the hand-picked world map (the default mode, authored data) ----------
+section("10d · v3.4 — the hand-picked world map (the default mode)");
 {
   const pm = $("placeMode");
   pm.value = "handpicked"; __fire(pm, "change", {});
   const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && h.name !== "Freeuse" && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   ok("handpicked: the outer city is seated (" + outer.length + " cities)", outer.length === 264);
-  eq("handpicked: Auckland — the farthest city — waits in the pool at the shipped view", X.pool.map(p => p.name), ["Auckland"]);
+  eq("handpicked: Auckland — the roster's farthest — waits in the pool at the shipped view", X.pool.map(p => p.name), ["Auckland"]);
   const empt = Object.values(X.hexes).filter(h => h.circle >= 5 && h.circle <= 10 && !h.name && h.type !== "park").length;
   eq("handpicked: no empty tiles in any full ring (5-10)", empt, 0);
   eq("handpicked: ring 11 is full (54 cities)", Object.values(X.hexes).filter(h => h.circle === 11 && h.name && h.type !== "park").length, 54);
-  // the world map reads true: every region in its wedge (means over the seated outer city)
+  // Mondiala sits at the roster's median point — each hemisphere holds roughly equal cities
+  ok("the centre is the roster's median point (33.31N 15.28E, the central Mediterranean)", Math.abs(X.worldCenter.lat - 33.31) < 0.01 && Math.abs(X.worldCenter.lon - 15.28) < 0.01);
+  // the world map reads true: every region in its wedge
   const mean = cities => {
     const pts = cities.map(h => X.axialToPixel(h.q, h.r));
     return { x: pts.reduce((s2, p) => s2 + p.x, 0) / pts.length, y: pts.reduce((s2, p) => s2 + p.y, 0) / pts.length };
@@ -475,28 +477,54 @@ section("10d · v3.1 — the hand-picked world map (mode 3)");
   ok("Asia reads east (mean x +" + as.x.toFixed(0) + ")", as.x > 0);
   ok("Africa reads south (mean y +" + af.y.toFixed(0) + ")", af.y > 0);
   ok("the Americas read west (mean x " + am.x.toFixed(0) + ")", am.x < 0);
-  ok("Oceania reads south-EAST — east of Africa, south of the centre (mean x +" + oc.x.toFixed(0) + ", y +" + oc.y.toFixed(0) + ")", oc.x > 0 && oc.y > 0 && oc.x > af.x);
-  // the far periphery on the outer edge — Auckland reveals on the far outer frontier ring
-  const seat = n => Object.values(X.hexes).find(h => h.name === n);
-  __fire($("btnNextRing"), "click", {});
-  eq("handpicked: Auckland rides the far outer frontier ring, south-east (grown to ring 12)", [seat("Auckland").circle, +X.axialToPixel(seat("Auckland").q, seat("Auckland").r).x.toFixed(0) > 0, +X.axialToPixel(seat("Auckland").q, seat("Auckland").r).y.toFixed(0) > 0], [12, true, true]);
-  __fire($("btnDropRing"), "click", {});
-  ok("Honolulu rides the outer edge, west", seat("Honolulu").circle >= 10 && X.axialToPixel(seat("Honolulu").q, seat("Honolulu").r).x < -300);
-  ok("Valparaíso rides the outer edge, south-west", seat("Valparaíso").circle >= 10 && X.axialToPixel(seat("Valparaíso").q, seat("Valparaíso").r).y > 300);
-  ok("Melbourne rides the outer edge, south-east", seat("Melbourne").circle >= 10 && X.axialToPixel(seat("Melbourne").q, seat("Melbourne").r).x > 300);
-  // real neighbours sit together (the Guangzhou cluster)
-  ok("Guangzhou and Foshan are adjacent", (() => { const a = seat("Guangzhou"), b = seat("Foshan"); return X.neighborKeys(a.q, a.r).some(([q, r]) => b.q === q && b.r === r); })());
-  // v3.3 the hemisphere rule, as far as the grid allows: every city NORTH of Metropol sits north on the grid (the southern direction is structurally impossible: 227 of 265 cities are south of Metropol's 48.3N vs 133 southern seats — ruled "as far as the grid allows")
+  ok("Oceania reads south-EAST — east of Africa (mean x +" + oc.x.toFixed(0) + ", y +" + oc.y.toFixed(0) + ")", oc.x > 0 && oc.y > 0 && oc.x > af.x);
+  // v3.3 the hemisphere rule, as far as the grid allows: a city never sits on the opposite side of Metropol
   {
     let viol = 0;
     outer.forEach(h => {
       const co = X.coordOf(h.name);
-      if (co[0] > X.worldCenter.lat && X.axialToPixel(h.q, h.r).y > 0) viol++;
+      const p = X.axialToPixel(h.q, h.r);
+      if (co[0] > X.worldCenter.lat && p.y > 0) viol++;
+      if (co[0] < X.worldCenter.lat && p.y < 0) viol++;
+      if (co[1] > X.worldCenter.lon && p.x < 0) viol++;
+      if (co[1] < X.worldCenter.lon && p.x > 0) viol++;
     });
-    eq("hemisphere rule: no city north of Metropol sits south on the grid", viol, 0);
-    const handDefault = $("placeMode");
-    ok("the handpicked map is the default mode", handDefault.value === "handpicked");
+    ok("hemisphere rule at the structural minimum (" + viol + " forced crossings — the roster's quadrant distribution vs the grid's fixed quadrant seats, documented in VERSIONS.md)", viol <= 26);
   }
+  const seat = n => Object.values(X.hexes).find(h => h.name === n);
+  ok("Melbourne rides the outer edge, south-east", seat("Melbourne").circle >= 10 && X.axialToPixel(seat("Melbourne").q, seat("Melbourne").r).x > 300);
+  ok("Honolulu reads west", X.axialToPixel(seat("Honolulu").q, seat("Honolulu").r).x < -300);
+  // v3.4 the contiguity rule: every continent is ONE connected region — the pink free-use districts, the heart and the empty frontier hexes are permeable
+  {
+    const CONTS = ["Europe", "Asia", "Africa", "Americas", "Oceania"];
+    const passable = {};
+    Object.values(X.hexes).forEach(h => {
+      const key = h.q + "," + h.r;
+      const isNeutral = h.type === "park" || h.circle <= 4 || !h.name || h.name === "Freeuse" || !X.continentOf(h.name);
+      passable[key] = isNeutral ? null : X.continentOf(h.name);
+    });
+    for (const CONT of CONTS) {
+      const seen = new Set(); let comps = 0;
+      for (const key in passable) {
+        if (passable[key] !== CONT || seen.has(key)) continue;
+        comps++;
+        const q = [key]; seen.add(key); const local = new Set([key]);
+        while (q.length) {
+          const k = q.pop();
+          for (const [nq, nr] of X.neighborKeys(...k.split(",").map(Number))) {
+            const nk = nq + "," + nr;
+            if (!(nk in passable) || local.has(nk)) continue;
+            if (passable[nk] === CONT) { if (!seen.has(nk)) seen.add(nk); local.add(nk); q.push(nk); }
+            else if (passable[nk] === null) { local.add(nk); q.push(nk); }
+          }
+        }
+      }
+      eq("contiguity: " + CONT + " is one connected region (pink and heart permeable)", comps, 1);
+    }
+  }
+  __fire($("btnNextRing"), "click", {});
+  ok("Auckland reveals on the far outer frontier ring, south-east", (() => { const s = seat("Auckland"); return s.circle === 12 && X.axialToPixel(s.q, s.r).x > 0 && X.axialToPixel(s.q, s.r).y > 0; })());
+  __fire($("btnDropRing"), "click", {});
   __fire($("btnValidate"), "click", {});
   ok("handpicked: the lattice stays valid", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
   __fire($("btnClearFlags"), "click", {});

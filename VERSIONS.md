@@ -23,6 +23,12 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.14 — proximity score counts only old-ring ↔ new-ring edges
+
+The greedy pick in proximity mode now scores exactly what you specified: for every city in the **old ring** (c−1), sum `1/rank` over the **new-ring** (c) cities bordering it; the candidate's own score and same-ring neighbors no longer count. Measured effect on the shipped view: proximity 2-of-6 failures 105 → 237 (the rule is now stricter about what "good" means), score metric 199.5 → 105.5 on the old definition.
+
+- Suite: **785 checks, all green**
+
 ## v1.13 — proximity mode is the default, first ordinary ring fills completely
 
 - **Proximity mode is now the shipped default** (dropdown + `placeMode` default): the first ordinary ring (found, not hardcoded) is seeded one city per 60° direction sector — closest to Mondiala in each — and then **filled completely** before any later ring starts; rings 6+ are filled greedily slot by slot, each pick maximizing the summed 1/rank closest-city score

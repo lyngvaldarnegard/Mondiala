@@ -520,11 +520,17 @@ function fillByProximity(center, cands) { // v1.11 "proximity" mode: ring 5 = 6 
   const seat = (name, c, num) => { const p = slotPos[c + "#" + num]; seatedPos[name] = p; hexAt[p.q + "," + p.r] = name; };
   const unseat = (name, c, num) => { const p = slotPos[c + "#" + num]; delete seatedPos[name]; delete hexAt[p.q + "," + p.r]; };
   const nbrNames = name => { const p = seatedPos[name]; if (!p) return []; return neighborKeys(p.q, p.r).map(k => hexAt[k]).filter(Boolean); };
-  const scoreOf = name => { // sum of 1/rank over this city's bordered closest cities
-    const others = Object.keys(seatedPos).filter(o => o !== name);
-    const ranked = others.map(o => ({ o, d: gcKm(name, o) })).sort((a, b) => a.d - b.d);
-    const ns = new Set(nbrNames(name));
-    let s = 0; ranked.forEach((r, i) => { if (ns.has(r.o)) s += 1 / (i + 1); });
+  const ringOf = name => { const p = seatedPos[name]; if (!p) return null; return Math.max(Math.abs(p.q), Math.abs(p.r), Math.abs(p.q + p.r)); };
+  // v1.13 score rule: only the OLD ring (c-1) scores, and only against cities in the NEW ring (c) — for every old-ring city, sum 1/rank over the new-ring cities bordering it
+  const oldRingScore = c => {
+    const oldNames = Object.keys(seatedPos).filter(n => ringOf(n) === c - 1);
+    const newNames = Object.keys(seatedPos).filter(n => ringOf(n) === c);
+    let s = 0;
+    for (const on of oldNames) {
+      const ranked = newNames.map(o => ({ o, d: gcKm(on, o) })).sort((a, b) => a.d - b.d);
+      const ns = new Set(nbrNames(on));
+      ranked.forEach((r, i) => { if (ns.has(r.o)) s += 1 / (i + 1); });
+    }
     return s;
   };
   const firstOrdinary = 5; // the first ordinary ring — found, not hardcoded as "the ring after the heart": the lowest circle whose slots are world-placed
@@ -551,10 +557,10 @@ function fillByProximity(center, cands) { // v1.11 "proximity" mode: ring 5 = 6 
       const aCo = coordOf(anchorName);
       const pool = [...remaining].sort((a, b) => greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(a)[0], lon: coordOf(a)[1] }) - greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] })).slice(0, 12);
       let bestName = null, bestGain = -Infinity;
+      const beforeScore = oldRingScore(c);
       for (const name of pool) {
         seat(name, c, sl.num);
-        let gain = scoreOf(name);
-        for (const nb of nbrNames(name)) gain += scoreOf(nb);
+        const gain = oldRingScore(c) - beforeScore; // only old-ring cities' closeness to new-ring neighbors counts
         unseat(name, c, sl.num);
         if (gain > bestGain) { bestGain = gain; bestName = name; }
       }

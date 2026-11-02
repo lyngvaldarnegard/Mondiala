@@ -107,7 +107,8 @@
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
       <label class="field" style="margin-top:8px">How the outer cities are placed</label>
       <select id="placeMode">
-        <option value="hexagonal" selected>Hexagonal (Plan B, default) — every ring split into 6 equal sectors, each filled with its closest cities; centre balanced per sector</option>
+        <option value="latlon" selected>True map (lat/lon grid, default) — north up, x = longitude, y = latitude; outer rings re-laid as a world grid</option>
+        <option value="hexagonal">Hexagonal (Plan B) — every ring split into 6 equal sectors, each filled with its closest cities; centre balanced per sector</option>
         <option value="neighbours">Neighbours (Plan A) — greedy 1/rank score; hard rule: every old-ring city borders one of its 6 closest remaining</option>
         <option value="hybrid">Hybrid — compass band, then proximity repair (≥2 of 6 closest must border)</option>
         <option value="direction">Direction only — the original v1.8 compass band, no repair</option>
@@ -146,7 +147,7 @@ const TYPES = {
 <script src="mondiala-gods.js"></script>
 <script>
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
-let placeMode = "hexagonal"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
+let placeMode = "latlon"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
@@ -472,9 +473,10 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
     const seatedNames = new Set(); for (let c = 5; c <= maxCircle; c++) plan[c].forEach(p => seatedNames.add(p[1]));
     return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
   }
-  if (placeMode === "hexagonal") { // Plan B "Hexagonal" (default): every ring split into 6 equal sectors, each filled with its closest cities; centre balanced so the 6 sectors hold roughly equal city counts AND the sector grid is rotated to match the hexagon's slot gaps
+  if (placeMode === "latlon") return fillByLatLon(cands); // TRUE MAP (default): outer city laid out as a real lat/lon grid — north up, x = longitude
+  if (placeMode === "hexagonal") { // Plan B "Hexagonal": every ordinary ring split into 6 equal 60° sections aligned to the hexagon's slot gaps; each section filled with the closest remaining cities (km from Mondiala) whose bearing falls in it; dry sections top up from the closest remaining anywhere; centre balanced so sectors hold roughly equal counts
     const bc = balanceCenter(center, cands);
-    return fillByProximity(bc, cands);
+    return fillBySectors(bc, cands);
   }
   if (placeMode === "neighbours") return fillGreedy(center, cands); // Plan A "Neighbours": greedy 1/rank score under the hard rule that every old-ring city borders one of its 6 closest remaining candidates
   slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
@@ -536,38 +538,94 @@ function balanceCenter(center, cands) { // v1.15 rule B: nudge Mondiala's spot s
   }
   return best;
 }
-function fillByProximity(center, cands) { // v1.15 RULE B (default "proximity" mode): every ordinary ring split into 6 equal 60-degree sections fitting the hexagon; each section's slots filled with the closest remaining cities (km from Mondiala) whose bearing falls in that section, assigned truest-to-bearing via compassSeat. Ring filled completely before the next starts; only the outermost ring may stay partial. Distance-only, no region labels.
+function fillByLatLon(cands) { // v1.16 TRUE MAP: outer city as a real equirectangular lat/lon grid. World span mapped onto the rings 5..maxCircle lattice: x = longitude (-180..180), y = latitude (90..-90, north up). Each city takes the free outer hex whose grid position (lon,lat) is nearest — so neighbours on the map are neighbours on Earth, and "north of" is literally up. Pink god slots keep their lattice seats; cities never take them.
+  const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
+  const withLL = cands.map(n => { const co = coordOf(n); return { n, lat: co[0], lon: co[1] }; });
+  // all free outer slots with their lat/lon grid position: un-rotate the grid (GRID_ROT) so screen-up = north
+  const slots = [];
+  for (let c = 5; c <= maxCircle; c++) {
+    const reserved = new Set(PINK_SLOTS[c] || []);
+    for (const p of ringPositions(c)) {
+      if (reserved.has(p.num)) continue;
+      let pt = axialToPixel(p.q, p.r);
+      // un-rotate the grid by -GRID_ROT so the lattice axes themselves align with east/north
+      if (GRID_ROT) { const t = -GRID_ROT * Math.PI / 180, nx = pt.x * Math.cos(t) - pt.y * Math.sin(t), ny = pt.x * Math.sin(t) + pt.y * Math.cos(t); pt = { x: nx, y: ny }; }
+      slots.push({ c, num: p.num, x: pt.x, y: -pt.y }); // y up-positive = north
+    }
+  }
+  // world span of the roster itself, so the map shows the cities' own extent, not the full globe
+  const lats = withLL.map(c2 => c2.lat), lons = withLL.map(c2 => c2.lon);
+  const minLat = Math.min(...lats) - 5, maxLat = Math.max(...lats) + 5;
+  const minLon = Math.min(...lons) - 5, maxLon = Math.max(...lons) + 5;
+  const xs = slots.map(sl => sl.x), ys = slots.map(sl => sl.y);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const toLon = x => minLon + (x - minX) / (maxX - minX) * (maxLon - minLon);
+  const toLat = y => minLat + (y - minY) / (maxY - minY) * (maxLat - minLat); // y up-positive (-screenY): top of screen = maxLat (north)
+  for (const sl of slots) { sl.lon = toLon(sl.x); sl.lat = toLat(sl.y); }
+  // assign each city to the free slot nearest in (lon,lat); process cities in any order, greedy nearest-slot
+  const free = slots.slice();
+  const remaining = withLL.slice();
+  // greedy: repeatedly take the city with the nearest free slot
+  while (remaining.length && free.length) {
+    let bi = 0, bd = Infinity;
+    for (let i = 0; i < remaining.length; i++) {
+      for (let j = 0; j < free.length; j++) {
+        const dLon = Math.abs(remaining[i].lon - free[j].lon), dLat = Math.abs(remaining[i].lat - free[j].lat);
+        const d = dLon * Math.cos(remaining[i].lat * Math.PI / 180) + dLat; // degrees, lon scaled by cos(lat)
+        if (d < bd) { bd = d; bi = i; }
+      }
+    }
+    // find the free slot nearest that city
+    let bj = 0, bdj = Infinity;
+    for (let j = 0; j < free.length; j++) {
+      const dLon = Math.abs(remaining[bi].lon - free[j].lon), dLat = Math.abs(remaining[bi].lat - free[j].lat);
+      const d = dLon * Math.cos(remaining[bi].lat * Math.PI / 180) + dLat;
+      if (d < bdj) { bdj = d; bj = j; }
+    }
+    const sl = free.splice(bj, 1)[0];
+    plan[sl.c].push([sl.num, remaining.splice(bi, 1)[0].n]);
+  }
+  const seatedNames = new Set(); for (let c = 5; c <= maxCircle; c++) plan[c].forEach(p => seatedNames.add(p[1]));
+  return { plan, leftover: withLL.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
+}
+function fillBySectors(center, cands) { // Plan B "Hexagonal": per ring, 6 equal 60-degree sections aligned to the slot gaps; each section's slots filled with the closest remaining in-sector cities (nearest-angle assignment); dry sections top up from the closest remaining anywhere; rings fill completely innermost-first
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
   const withBD = cands.map(n => Object.assign({ n }, bearingDist(center, n)));
   const remaining = new Set(withBD.map(x => x.n));
   for (let c = 5; c <= maxCircle; c++) {
     const rslots = worldSlots(c).slice().sort((a, b) => a.a - b.a);
     if (!rslots.length || remaining.size === 0) continue;
-    // rotate the sector grid so its boundaries sit in the gaps between this ring's slot angles (hexagon sections aligned to the slots, not to north)
-    const slotAngles = rslots.map(sl => sl.a).sort((a, b) => a - b);
-    let bestROT = 0, bestGap = -1;
+    // rotate the sector grid so its boundaries sit in the gaps between this ring's slot angles
+    const slotAngles = rslots.map(sl => sl.a);
+    let ROT = 0, bestGap = -1;
     for (let r = 0; r < 60; r += 1) {
       let g = Infinity;
       for (const a of slotAngles) { const d = Math.abs(((a - r) % 60) + 60) % 60; g = Math.min(g, Math.min(d, 60 - d)); }
-      if (g > bestGap) { bestGap = g; bestROT = r; }
+      if (g > bestGap) { bestGap = g; ROT = r; }
     }
-    const ROT = bestROT;
-    for (let k = 0; k < 6; k++) {
-      const lo = ((k * 60 + ROT) % 360), hi = ((k + 1) * 60 + ROT) % 360;
-      const inSec = sl => hi > lo ? (sl.a >= lo && sl.a < hi) : (sl.a >= lo || sl.a < hi);
-      const secSlots = rslots.filter(sl => inSec(sl) && !plan[c].some(p => p[0] === sl.num));
-      if (!secSlots.length) continue;
-      // assign each in-sector city (closest first) to the free slot in this sector whose angle is nearest its bearing
+    // scarce sections last, so they can top up before the pool runs dry
+    const order = [0,1,2,3,4,5].sort((ka, kb) => {
+      const inA = b => { const lo=(ka*60+ROT)%360, hi=((ka+1)*60+ROT)%360; return hi>lo ? (b>=lo&&b<hi) : (b>=lo||b<hi); };
+      const inB = b => { const lo=(kb*60+ROT)%360, hi=((kb+1)*60+ROT)%360; return hi>lo ? (b>=lo&&b<hi) : (b>=lo||b<hi); };
+      return withBD.filter(x => remaining.has(x.n) && inB(x.bearing)).length - withBD.filter(x => remaining.has(x.n) && inA(x.bearing)).length;
+    });
+    for (const k of order) {
+      const lo = (k * 60 + ROT) % 360, hi = ((k + 1) * 60 + ROT) % 360;
+      const inSecA = a => hi > lo ? (a >= lo && a < hi) : (a >= lo || a < hi);
       const inSecB = b => hi > lo ? (b >= lo && b < hi) : (b >= lo || b < hi);
-      const picks = withBD.filter(x => remaining.has(x.n) && inSecB(x.bearing)).sort((a, b) => a.dist - b.dist);
+      const secSlots = rslots.filter(sl => inSecA(sl.a) && !plan[c].some(p => p[0] === sl.num));
+      if (!secSlots.length) continue;
+      let picks = withBD.filter(x => remaining.has(x.n) && inSecB(x.bearing)).sort((a, b) => a.dist - b.dist);
+      if (picks.length < secSlots.length) {
+        const inSec = new Set(picks.map(p2 => p2.n));
+        picks = picks.concat(withBD.filter(x => remaining.has(x.n) && !inSec.has(x.n)).sort((a, b) => a.dist - b.dist));
+      }
+      picks = picks.slice(0, secSlots.length);
       const freeSlots = secSlots.slice();
       for (const pick of picks) {
         if (!freeSlots.length) break;
         let bi = 0, bd = Infinity;
-        for (let i = 0; i < freeSlots.length; i++) {
-          const d = Math.abs(freeSlots[i].a - pick.bearing) % 360;
-          if (Math.min(d, 360 - d) < bd) { bd = Math.min(d, 360 - d); bi = i; }
-        }
+        for (let i = 0; i < freeSlots.length; i++) { const d = Math.abs(freeSlots[i].a - pick.bearing) % 360; if (Math.min(d, 360-d) < bd) { bd = Math.min(d, 360-d); bi = i; } }
         const sl = freeSlots.splice(bi, 1)[0];
         plan[c].push([sl.num, pick.n]); remaining.delete(pick.n);
       }

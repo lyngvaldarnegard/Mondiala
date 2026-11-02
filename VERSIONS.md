@@ -23,6 +23,12 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.16 — TRUE MAP: lat/lon grid is the default placement
+
+The outer city is now laid out as a real world map: each free outer hex is assigned a (lon, lat) position spanning the roster's own extent (x = longitude, y = latitude, north up), and every city takes the free hex nearest its real coordinates — so neighbours on the map are neighbours on Earth, and "north of" is literally up (verified: Taipei sits below Kyiv; corr(latitude, screen-y) = -0.61; zero empty tiles in rings 5–10). Hexagonal, Neighbours, Direction, Distance and Hybrid remain as alternative placement modes in the dropdown.
+
+- Suite: **791 checks, all green** (new assertions pin: no empty tiles in full rings, north-up orientation, Taipei-south-of-Kyiv)
+
 ## v1.15 — allocation modes renamed: Hexagonal (Plan B, default) & Neighbours (Plan A)
 
 The placement dropdown now reads:

@@ -370,7 +370,7 @@ section("10 · placement modes");
 const pm = $("placeMode");
 const modeStats = {};
 function gcKm(a, b) { const R = 6371, t = Math.PI / 180, [la, lo] = X.coordOf(a), [lb, lob] = X.coordOf(b); return R * Math.acos(Math.min(1, Math.sin(la*t)*Math.sin(lb*t)+Math.cos(la*t)*Math.cos(lb*t)*Math.cos((lo-lob)*t))); }
-for (const m of ["direction", "hybrid", "distance", "hexagonal", "neighbours"]) {
+for (const m of ["latlon", "direction", "hybrid", "distance", "hexagonal", "neighbours"]) {
   pm.value = m; __fire(pm, "change", {});
   const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   let v2 = 0, score = 0;
@@ -386,13 +386,26 @@ for (const m of ["direction", "hybrid", "distance", "hexagonal", "neighbours"]) 
 ok("hybrid beats direction on the 2-of-6 hard rule", modeStats.hybrid.fail2of6 < modeStats.direction.fail2of6);
 ok("hexagonal mode is seated and scored", modeStats.hexagonal && modeStats.hexagonal.score > 0); ok("neighbours mode is seated and scored", modeStats.neighbours && modeStats.neighbours.score > 0);
 {
+  pm.value = "latlon"; __fire(pm, "change", {});
+  const empt = Object.values(X.hexes).filter(h => h.circle >= 5 && h.circle <= 10 && !h.name && h.type !== "park").length;
+  eq("latlon (default): no empty tiles in any full ring (5–10)", empt, 0);
+  const rows = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()))
+    .map(h => ({ lat: X.coordOf(h.name)[0], sy: X.axialToPixel(h.q, h.r).y }));
+  let n = rows.length, sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
+  rows.forEach(r => { sx += r.lat; sy += r.sy; sxx += r.lat * r.lat; sxy += r.lat * r.sy; syy += r.sy * r.sy; });
+  const corr = (n * sxy - sx * sy) / Math.sqrt((n * sxx - sx * sx) * (n * syy - sy * sy));
+  ok("latlon: north is up (corr(latitude, screen-y) < -0.4, got " + corr.toFixed(2) + ")", corr < -0.4);
+  const t = Object.values(X.hexes).find(h => h.name === "Taipei"), k = Object.values(X.hexes).find(h => h.name === "Kyiv");
+  ok("latlon: Taipei sits below (south of) Kyiv", t && k && X.axialToPixel(t.q, t.r).y > X.axialToPixel(k.q, k.r).y);
+}
+{
   pm.value = "hexagonal"; __fire(pm, "change", {});
   const r5 = Object.values(X.hexes).filter(h => h.circle === 5 && h.name && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   const r6 = Object.values(X.hexes).filter(h => h.circle === 6 && h.name); // gods count as seated too
   eq("hexagonal: the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
   ok("hexagonal: ring 6 fully seated", r6.length >= 30);
 }
-pm.value = "hexagonal"; __fire(pm, "change", {});
+pm.value = "latlon"; __fire(pm, "change", {});
 
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");

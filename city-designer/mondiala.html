@@ -505,6 +505,33 @@ function fillHexagonal(center, cands) { // each ring split into six 60-degree se
       }
     }
   }
+  // GLOBAL LAT/LON SORT: reassign seated outer cities so screen position follows real coordinates — slots sorted top-to-bottom/left-to-right, cities north-first then west-to-east within each screen row
+  {
+    const slots = Object.keys(seatedPos).map(n => ({ n, p: seatedPos[n] }));
+    const sxs = slots.map(sl => axialToPixel(sl.p.q, sl.p.r).x), sys = slots.map(sl => axialToPixel(sl.p.q, sl.p.r).y);
+    const mnx = Math.min(...sxs), mxx = Math.max(...sxs), mny = Math.min(...sys), mxy = Math.max(...sys);
+    const lats = slots.map(sl => sl.n).map(n => coordOf(n)[0]), lons = slots.map(sl => sl.n).map(n => coordOf(n)[1]);
+    const mnla = Math.min(...lats), mxla = Math.max(...lats), mnlo = Math.min(...lons), mxlo = Math.max(...lons);
+    slots.sort((a, b) => { const pa = axialToPixel(a.p.q, a.p.r), pb = axialToPixel(b.p.q, b.p.r); const ya = (pa.y - mny) / (mxy - mny), yb = (pb.y - mny) / (mxy - mny), xa = (pa.x - mnx) / (mxx - mnx), xb = (pb.x - mnx) / (mxx - mnx); return (ya - yb) || (xa - xb); }); // slots: normalized (y,x)
+    const cities = slots.map(sl => sl.n).sort((a, b) => { const ca = coordOf(a), cb = coordOf(b); return ((cb[0] - mnla) / (mxla - mnla) - (ca[0] - mnla) / (mxla - mnla)) || ((ca[1] - mnlo) / (mxlo - mnlo) - (cb[1] - mnlo) / (mxlo - mnlo)); }); // cities: normalized lat desc, lon asc
+    for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }
+    // bounded local improvement on normalized lat/lon axes
+    {
+      const slotN = slots.map(sl => { const pt = axialToPixel(sl.p.q, sl.p.r); return { x: (pt.x - mnx) / (mxx - mnx), y: (pt.y - mny) / (mxy - mny) }; });
+      const cityN = cities.map(n => { const co = coordOf(n); return { x: (co[1] - mnlo) / (mxlo - mnlo), y: 1 - (co[0] - mnla) / (mxla - mnla) }; });
+      const err = (ci, si) => Math.abs(cityN[ci].x - slotN[si].x) + Math.abs(cityN[ci].y - slotN[si].y);
+      let improved = true, g = 0;
+      while (improved && g++ < 6) {
+        improved = false;
+        for (let a = 0; a < slots.length; a++) for (let b = a + 1; b < slots.length; b++) {
+          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; cityN[a] = cityN[b] = cityN[a]; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
+        }
+      }
+      for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }
+    }
+    for (let c = 5; c <= maxCircle; c++) plan[c] = [];
+    for (const n of cities) { const p = seatedPos[n]; const c = Math.max(Math.abs(p.q), Math.abs(p.r), Math.abs(p.q + p.r)); plan[c].push([p.num, n]); }
+  }
   const seatedNames = new Set(Object.keys(seatedPos));
   return { plan, leftover: cands.filter(n => !seatedNames.has(n)) };
 }
@@ -599,6 +626,33 @@ function fillNeighbours(center, cands) { // v1.15 RULE A ("greedy" mode): first 
       if (!bestName) break;
       plan[c].push([sl.num, bestName]); seat(bestName, c, sl.num); remaining.delete(bestName);
     }
+  }
+  // GLOBAL LAT/LON SORT (same as hexagonal)
+  {
+    const slots = Object.keys(seatedPos).map(n => ({ n, p: seatedPos[n] }));
+    const sxs = slots.map(sl => axialToPixel(sl.p.q, sl.p.r).x), sys = slots.map(sl => axialToPixel(sl.p.q, sl.p.r).y);
+    const mnx = Math.min(...sxs), mxx = Math.max(...sxs), mny = Math.min(...sys), mxy = Math.max(...sys);
+    const lats = slots.map(sl => sl.n).map(n => coordOf(n)[0]), lons = slots.map(sl => sl.n).map(n => coordOf(n)[1]);
+    const mnla = Math.min(...lats), mxla = Math.max(...lats), mnlo = Math.min(...lons), mxlo = Math.max(...lons);
+    slots.sort((a, b) => { const pa = axialToPixel(a.p.q, a.p.r), pb = axialToPixel(b.p.q, b.p.r); const ya = (pa.y - mny) / (mxy - mny), yb = (pb.y - mny) / (mxy - mny), xa = (pa.x - mnx) / (mxx - mnx), xb = (pb.x - mnx) / (mxx - mnx); return (ya - yb) || (xa - xb); }); // slots: normalized (y,x)
+    const cities = slots.map(sl => sl.n).sort((a, b) => { const ca = coordOf(a), cb = coordOf(b); return ((cb[0] - mnla) / (mxla - mnla) - (ca[0] - mnla) / (mxla - mnla)) || ((ca[1] - mnlo) / (mxlo - mnlo) - (cb[1] - mnlo) / (mxlo - mnlo)); }); // cities: normalized lat desc, lon asc
+    for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }
+    // bounded local improvement on normalized lat/lon axes
+    {
+      const slotN = slots.map(sl => { const pt = axialToPixel(sl.p.q, sl.p.r); return { x: (pt.x - mnx) / (mxx - mnx), y: (pt.y - mny) / (mxy - mny) }; });
+      const cityN = cities.map(n => { const co = coordOf(n); return { x: (co[1] - mnlo) / (mxlo - mnlo), y: 1 - (co[0] - mnla) / (mxla - mnla) }; });
+      const err = (ci, si) => Math.abs(cityN[ci].x - slotN[si].x) + Math.abs(cityN[ci].y - slotN[si].y);
+      let improved = true, g = 0;
+      while (improved && g++ < 6) {
+        improved = false;
+        for (let a = 0; a < slots.length; a++) for (let b = a + 1; b < slots.length; b++) {
+          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; cityN[a] = cityN[b] = cityN[a]; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
+        }
+      }
+      for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }
+    }
+    for (let c = 5; c <= maxCircle; c++) plan[c] = [];
+    for (const n of cities) { const p = seatedPos[n]; const c = Math.max(Math.abs(p.q), Math.abs(p.r), Math.abs(p.q + p.r)); plan[c].push([p.num, n]); }
   }
   const seatedNames = new Set(Object.keys(seatedPos));
   return { plan, leftover: withBD.filter(x => !seatedNames.has(x.n)).map(x => x.n) };

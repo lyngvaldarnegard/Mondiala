@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.2 — the true two-rule engine, compass off** | `main` (this push) | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.3 — handpicked default + hemisphere rule** | `main` (this push) | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -60,6 +60,13 @@ The neighbours mode now runs Sigurd's actual design, restored: each ring is deci
 
 - Measured (shipped view, neighbours): median grid-neighbour km 1,330 → **1,204**; the heart's own ring-4 cities now anchor the first ordinary ring directly (the gods never count — no real place on Earth).
 - Suite: **686 checks green** (hard-rule sampled assertions, exactness spot-check, all prior guarantees).
+
+## v3.3 — hand-picked is the default; the hemisphere rule, as far as the grid allows
+
+- **The hand-picked world map is now the default mode.**
+- **The hemisphere rule (Sigurd's, outer rings only):** a city north of Metropol on the world map never sits south of it on the hexagonal grid. Applied to the hand-picked table in both orientations — 0 remaining north-direction violations (Saint Petersburg, Lille and Strasbourg moved north; the flat table got its own 1 fix).
+- **The southern direction of the rule is structurally impossible** and was ruled "as far as the grid allows": only 38 of the 265 roster cities are north of Metropol (she sits at 48.3°N — nearly the whole populated world is south of that), but the grid's northern half holds 131 ordinary seats in rings 5–11; ~93 southern cities must therefore sit north no matter the seating. The strict version would require empty northern hexes, which the no-empty-hexes law forbids.
+- Suite: **688 checks green** (the hemisphere rule and the default mode are asserted).
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

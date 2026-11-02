@@ -1,7 +1,9 @@
 // mondiala-handpicked.js — v3.1 the hand-picked world map, Sigurd's third mode.
 // AUTHORED DATA, like the heart: drafted from the equal-rank whole-ring engine output, then hand-corrected
 // (Melbourne to the outer south-east edge, Auckland to the far frontier's south-east, 26 direction fixes so every
-// region reads as its true wedge: Europe north-west, Asia east, Africa south, the Americas west, Oceania south-east).
+// region reads as its true wedge: Europe north-west, Asia east, Africa south, the Americas west, Oceania south-east;
+// hemisphere rule v3.3: every city NORTH of Metropol sits north on the grid — the southern direction is structurally
+// impossible, 227 of 265 cities are south of Metropol's 48.3N vs 133 southern seats, ruled 'as far as the grid allows').
 // Roster edits do NOT reflow this table — a new city waits in the pool. Sigurd edits this file to make replacements.
 // flat-side-up is derived: the same ring composition, seats re-derived per ring by the circular bearing order.
 SEATING.handpicked = {
@@ -22,11 +24,11 @@ SEATING.handpicked = {
     ],
     [
      3,
-     "Nagoya"
+     "Saint Petersburg"
     ],
     [
      4,
-     "Shenzhen"
+     "Lille"
     ],
     [
      5,
@@ -38,7 +40,7 @@ SEATING.handpicked = {
     ],
     [
      7,
-     "Saint Petersburg"
+     "Nagoya"
     ],
     [
      8,
@@ -94,7 +96,7 @@ SEATING.handpicked = {
     ],
     [
      21,
-     "Lille"
+     "Shenzhen"
     ],
     [
      22,
@@ -234,7 +236,7 @@ SEATING.handpicked = {
    "7": [
     [
      1,
-     "Dushanbe"
+     "Strasbourg"
     ],
     [
      3,
@@ -314,7 +316,7 @@ SEATING.handpicked = {
     ],
     [
      29,
-     "Strasbourg"
+     "Dushanbe"
     ],
     [
      31,
@@ -1123,7 +1125,7 @@ SEATING.handpicked = {
     ],
     [
      7,
-     "Kyiv"
+     "Porto"
     ],
     [
      8,
@@ -1183,7 +1185,7 @@ SEATING.handpicked = {
     ],
     [
      22,
-     "Porto"
+     "Kyiv"
     ],
     [
      23,

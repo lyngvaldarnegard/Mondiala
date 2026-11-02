@@ -486,6 +486,17 @@ section("10d · v3.1 — the hand-picked world map (mode 3)");
   ok("Melbourne rides the outer edge, south-east", seat("Melbourne").circle >= 10 && X.axialToPixel(seat("Melbourne").q, seat("Melbourne").r).x > 300);
   // real neighbours sit together (the Guangzhou cluster)
   ok("Guangzhou and Foshan are adjacent", (() => { const a = seat("Guangzhou"), b = seat("Foshan"); return X.neighborKeys(a.q, a.r).some(([q, r]) => b.q === q && b.r === r); })());
+  // v3.3 the hemisphere rule, as far as the grid allows: every city NORTH of Metropol sits north on the grid (the southern direction is structurally impossible: 227 of 265 cities are south of Metropol's 48.3N vs 133 southern seats — ruled "as far as the grid allows")
+  {
+    let viol = 0;
+    outer.forEach(h => {
+      const co = X.coordOf(h.name);
+      if (co[0] > X.worldCenter.lat && X.axialToPixel(h.q, h.r).y > 0) viol++;
+    });
+    eq("hemisphere rule: no city north of Metropol sits south on the grid", viol, 0);
+    const handDefault = $("placeMode");
+    ok("the handpicked map is the default mode", handDefault.value === "handpicked");
+  }
   __fire($("btnValidate"), "click", {});
   ok("handpicked: the lattice stays valid", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
   __fire($("btnClearFlags"), "click", {});

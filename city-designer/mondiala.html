@@ -100,9 +100,9 @@
       <h2>World placement</h2>
       <label class="field">How the outer cities are placed (city-to-city, real km — hexes have no coordinates)</label>
       <select id="placeMode">
-        <option value="neighbours" selected>Neighbours (default) — greedy closest-city score with a compass sense; every old-ring city borders one of its 6 closest remaining</option>
+        <option value="neighbours">Neighbours — greedy closest-city score with a compass sense; every old-ring city borders one of its 6 closest remaining</option>
         <option value="hexagonal">Hexagonal — centre placed so each 60° sector fills all its ring hexes; sections filled with the closest remaining cities, compass included</option>
-        <option value="handpicked">Hand-picked — the authored world map: every region in its true wedge (Europe north-west, Asia east, Africa south, the Americas west, Oceania south-east), authored data, edited by hand in the data file</option>
+        <option value="handpicked" selected>Hand-picked (default) — the authored world map: every region in its true wedge (Europe north-west, Asia east, Africa south, the Americas west, Oceania south-east), authored data, edited by hand in the data file</option>
       </select>
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
     </div>
@@ -140,7 +140,7 @@ const TYPES = {
 <script src="mondiala-handpicked.js"></script>
 <script>
 const centerMode = "geo"; // the centre-mode dropdown is deleted: the plain geographic midpoint is the only centre; placement modes may adjust it themselves (hexagonal)
-let placeMode = "neighbours"; // "neighbours" (default) · "hexagonal" · "handpicked" (the authored world map) — the three placement modes
+let placeMode = "handpicked"; // "handpicked" (default — the authored world map) · "neighbours" · "hexagonal" — the three placement modes
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }

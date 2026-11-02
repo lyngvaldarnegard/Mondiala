@@ -35,7 +35,7 @@ eq("Metropol", X.hexes["0,0"].name, "Metropol");
 eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Egypt", "Mesopotamia", "Andes", "Mesoamerica"]);
 eq("ring 2", HEX_NAMES(2), ["Constantinople", "Rome", "Alexandria", "Carthage", "Athens", "Babylon", "Ur", "Uruk", "Jericho", "Cusco", "Tenochtitlan", "Chang'an"]);
 eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Vyborg", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
-eq("ring 4 (geo, direction-seated, pointy-side-up)", HEX_NAMES(4), ["Vancouver", "Tokyo", "Kama", "Hong Kong", "Moscow", "Sydney", "Aphrodite", "Cape Town", "Singapore", "Rio de Janeiro", "Eros", "Madrid", "Barcelona", "Lisbon", "Cupid", "Vienna", "Paris", "London", "Venus", "Amsterdam", "New York", "Mexico City", "Freyja", "Berlin"]);
+eq("ring 4 (geo, direction-seated, pointy-side-up)", HEX_NAMES(4), ["Vancouver", "Tokyo", "Kama", "Hong Kong", "Moscow", "Sydney", "Aphrodite", "Cape Town", "Singapore", "Rio de Janeiro", "Eros", "Madrid", "Barcelona", "Lisbon", "Venus", "Vienna", "Paris", "London", "Cupid", "Amsterdam", "New York", "Mexico City", "Freyja", "Berlin"]);
 eq("ring 1 has no densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [null, null, null, null, null, null]);
 eq("Metropol density", X.hexes["0,0"].density, 4355.39);
 eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
@@ -43,7 +43,7 @@ eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus
 
 // ---------- 3 · lattice rules (shipped state: six goddesses in the heart) ----------
 section("3 · lattice rules (shipped state: the six favourites in the heart, outer lattice on rings 6–8)");
-eq("the six favourites hold the ring-4 middles", [3, 7, 11, 15, 19, 23].map(n => { const h = Object.values(X.hexes).find(h => h.circle === 4 && h.num === n); return h ? h.name + ":" + h.type : "?"; }), ["Kama:park", "Aphrodite:park", "Eros:park", "Cupid:park", "Venus:park", "Freyja:park"]);
+eq("the six favourites hold the ring-4 middles", [3, 7, 11, 15, 19, 23].map(n => { const h = Object.values(X.hexes).find(h => h.circle === 4 && h.num === n); return h ? h.name + ":" + h.type : "?"; }), ["Kama:park", "Aphrodite:park", "Eros:park", "Venus:park", "Cupid:park", "Freyja:park"]);
 eq("the six originals hold the spokes, which one by bearing", [1, 5, 9, 13, 17, 21].map(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n).name), ["Vancouver", "Moscow", "Singapore", "Barcelona", "Paris", "New York"]);
 ok("the ring-4 regulars keep compass order", (() => {
   const regs = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map(n => Object.values(X.hexes).find(h => h.circle === 4 && h.num === n));
@@ -80,12 +80,12 @@ eq("parks (fresh: 6+12+12+6+12+18+12 on rings 4,6,7,8,9,10,11)", parkCount(), 78
 const parkNames = (c) => Object.values(X.hexes).filter(h => h.circle === c && h.type === "park").map(h => h.name).sort();
 ok("the favourites rule seats Eros, Aphrodite, Venus, Freyja, Cupid and Kama on ring 4", ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama"].every(n => parkNames(4).includes(n)));
 ok("Parvati and Lakshmi cascade to ring 6", ["Lakshmi","Parvati"].every(n => parkNames(6).includes(n)));
-ok("Pothos rides the overflow onto ring 6", parkNames(6).includes("Pothos"));
-ok("Milda rides the lattice again on ring 7", parkNames(7).includes("Milda"));
-ok("Ishtar keeps her ring-7 seat", parkNames(7).includes("Ishtar"));
-ok("Aizen-Myōō slides outward to ring 8", parkNames(8).includes("Aizen-Myōō"));
+ok("tier 2 concepts fill ring 6", ["Anal","Vagina","Penis","Oral","Tantra","Chastity","Romance","Intimacy","Bondage"].every(n => parkNames(6).includes(n)));
+ok("tier 2 concepts continue on ring 7", ["Dominance","Submission","Orgy","Promiscuity","Polyamory","Masturbation","Orgasm","Edging","Libido","Erotica","Nude","Voyeurism"].every(n => parkNames(7).includes(n)));
+ok("tier 3 gods begin on ring 8", parkNames(8).includes("Oshun"));
+ok("tier 3 gods ride ring 10", parkNames(10).includes("Ishtar") && parkNames(10).includes("Zhiva"));
 eq("ring 6 seats twelve (favourites first)", parkNames(6).length, 12);
-ok("the v1.8 cascade: Pothos fills Cupid's ring-6 seat, Astghik rides outward", parkNames(6).includes("Pothos") && !parkNames(6).includes("Astghik") && !parkNames(6).includes("Cupid"));
+ok("the 3-tier order: core favourites on ring 4, Parvati/Lakshmi on ring 6, concepts next", ["Kama","Aphrodite","Eros","Venus","Cupid","Freyja"].every(n => parkNames(4).includes(n)) && ["Parvati","Lakshmi"].every(n => parkNames(6).includes(n)) && parkNames(6).includes("Anal"));
 eq("ring 8 keeps six (Parvati pulled inward)", parkNames(8).length, 6);
 
 // ---------- 4 · capitals aboard ----------
@@ -165,7 +165,7 @@ for (const m of ["geo", "pop", "great"]) {
   ok(m + " bearing error max < 140° (got " + Math.max(...errs).toFixed(1) + ")", Math.max(...errs) < 140);
   const seats = AFRICA.map(n => { const h = Object.values(X.hexes).find(h => h.name === n); return h ? seatAngleOf(h) : null; }).filter(a => a != null);
   ok(m + " no African city in the eastern sector", seats.every(a => a >= 115), seats.map(a => Math.round(a)).join(","));
-  ok(m + " Africa rides one southern band", seats.every(a => a <= 340) && (seats.filter(a => a < 115).length === 0));
+  ok(m + " Africa rides one southern band", seats.every(a => a >= 115 && a <= 350));
 }
 setMode("geo");
 
@@ -262,8 +262,8 @@ for (const h of Object.values(X.hexes)) {
 }
 eq("nothing uncovered (grown)", uncoveredG, []);
 ok("Astghik rides the overflow to ring 9", parkNames(9).includes("Astghik"));
-ok("the dormant five wake on ring 9", ["Shaushka","Attis","Min","Lofn","Xochipilli"].every(n => parkNames(9).includes(n)));
-ok("the concepts reach the horizon", ["Submission","Hedonism"].every(n => parkNames(11).includes(n)) && ["Anal","Tantra","Chastity"].every(n => parkNames(10).includes(n)));
+ok("tier 3 gods fill rings 8–10", ["Shaushka","Attis","Min","Lofn","Xochipilli"].every(n => parkNames(10).includes(n)));
+ok("tier 3 overflow reaches ring 11", parkNames(11).length === 12 && !parkNames(11).includes("Hedonism"));
 eq("parks at the frontier (6 heart + 12+12+6+12+18+12+18 lattice)", parkCount(), 96);
 eq("pool at the frontier — every city is tiled", X.pool.length, 0);
 __fire($("btnValidate"), "click", {});

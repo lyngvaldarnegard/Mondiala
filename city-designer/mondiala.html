@@ -281,6 +281,8 @@ function buildCity() {
   }
   worldPlan.leftover.forEach(n => pool.push({ name: n, density: null })); // candidates beyond the map's current horizon wait here
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
+  repairProximity(); // v1.10: every outer city should border one of its 6 closest outer cities on Earth (coordinates only)
+
   // every hex named for a god of love is a pink free-use district; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
   Object.values(hexes).forEach(h => { if (SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
   Object.values(hexes).forEach(h => { if (!h.name && h.circle > 4 && (PINK_SLOTS[h.circle] || []).indexOf(h.num) > -1) h.name = "Freeuse"; }); // v1.7: an empty frontier pink district is a free-use park, waiting for its god
@@ -293,6 +295,53 @@ function buildCity() {
 function placeRow(pos, row) {
   const key = pos.q + "," + pos.r;
   hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
+}
+function repairProximity() { // each outer city should border one of its 6 closest outer cities (great-circle km, coordinates only); delta-based greedy swaps, bounded passes
+  const outer = Object.values(hexes).filter(h => h.circle >= 5 && h.name && coordOf(h.name) && !SEX_GODS.has(h.name.trim().toLowerCase()));
+  const n = outer.length;
+  if (n < 2) return;
+  const key = h => h.q + "," + h.r;
+  const coord = h => coordOf(h.name);
+  const near6byName = {};
+  outer.forEach(a => {
+    const co = coord(a);
+    near6byName[a.name] = new Set(outer.filter(b => b.name !== a.name)
+      .map(b => ({ n: b.name, d: greatCircleKm({ lat: co[0], lon: co[1] }, { lat: coord(b)[0], lon: coord(b)[1] }) }))
+      .sort((x, y) => x.d - y.d).slice(0, 6).map(x => x.n));
+  });
+  const nbrs = outer.map(h => neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean).map(h2 => h2.name));
+  const viol = i => [...near6byName[outer[i].name]].some(nm => nbrs[i].includes(nm)) ? 0 : 1;
+  const v = outer.map((_, i) => viol(i));
+  const total = () => v.reduce((s, x) => s + x, 0);
+  let guard = 0;
+  while (guard++ < 400) {
+    const before = total();
+    let improved = false;
+    outerLoop:
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        if (v[i] + v[j] === 0) continue;
+        // swap names in place, recompute only affected violation flags
+        const tmpN = outer[i].name, tmpD = outer[i].density;
+        outer[i].name = outer[j].name; outer[i].density = outer[j].density;
+        outer[j].name = tmpN; outer[j].density = tmpD;
+        const ni = viol(i), nj = viol(j);
+        // neighbors of i and j may change too — recompute those lazily
+        const changed = [i, j];
+        nbrs[i].forEach(k => { const h = hexes[k]; const idx = outer.indexOf(h); if (idx > -1 && !changed.includes(idx)) changed.push(idx); });
+        nbrs[j].forEach(k => { const h = hexes[k]; const idx = outer.indexOf(h); if (idx > -1 && !changed.includes(idx)) changed.push(idx); });
+        const oldV = changed.map(idx => v[idx]);
+        changed.forEach(idx => { v[idx] = viol(idx); });
+        if (total() < before) { improved = true; break outerLoop; }
+        // revert
+        const t2N = outer[i].name, t2D = outer[i].density;
+        outer[i].name = outer[j].name; outer[i].density = outer[j].density;
+        outer[j].name = t2N; outer[j].density = t2D;
+        changed.forEach((idx, k) => { v[idx] = oldV[k]; });
+      }
+    }
+    if (!improved) break;
+  }
 }
 
 // ---------- Coordinate-driven world placement ----------
@@ -358,27 +407,20 @@ function worldSlots(c) { // this ring's placeable slots with their true compass 
     .sort((u, v) => u.a - v.a);
 }
 let __ringGods = null;
-function pinkRingGods() { // no god is hand-seated: the favourites claim the innermost rings, everyone else keeps their own queue, and the overflow cascades outward
+function pinkRingGods() { // v1.10 three-tier allocation: tier 1 the favourite gods, tier 2 the concepts of eros (no homeland), tier 3 every other god — rings fill innermost-first, tier by tier, overflow cascades outward
   if (__ringGods) return __ringGods;
   const rings = Object.keys(PINK_SLOTS).map(Number).sort((a, b) => a - b);
-  const queue = {}; rings.forEach(c => queue[c] = (PINK_GODS[c] || []).slice());
-  const favSeats = {};
-  for (const name of FAVOURITE_GODS) {
-    const id = name.trim().toLowerCase();
-    let ring = null;
-    for (const c of rings) if ((favSeats[c] || 0) < (PINK_SLOTS[c] || []).length) { ring = c; break; } // the innermost ring with a seat still free
-    if (ring === null) continue; // the favourites have filled the whole lattice
-    let found = false;
-    rings.forEach(c => { const i = queue[c].findIndex(n => n.trim().toLowerCase() === id); if (i > -1) { queue[c].splice(i, 1); found = true; } });
-    if (!found) continue; // already seated in the heart — the innermost seat of all
-    queue[ring].unshift(name); favSeats[ring] = (favSeats[ring] || 0) + 1;
-  }
-  const seated = {}; const carry = [];
+  const all = []; rings.forEach(c => (PINK_GODS[c] || []).forEach(n => { if (all.indexOf(n) === -1) all.push(n); }));
+  const isConcept = n => SEX_GODS.has(n.trim().toLowerCase()) && !GOD_ORIGINS[n.trim().toLowerCase()];
+  const tier1 = FAVOURITE_GODS.filter(n => all.indexOf(n) > -1);
+  const rest = all.filter(n => tier1.indexOf(n) === -1);
+  const tier2 = rest.filter(isConcept);
+  const tier3 = rest.filter(n => !isConcept(n));
+  const ordered = tier1.concat(tier2, tier3);
+  const seated = {}; let idx = 0;
   for (const c of rings) {
     const cap = (PINK_SLOTS[c] || []).length;
-    const list = queue[c].concat(carry.splice(0, carry.length)); // this ring's own gods first, then the overflow that reached it
-    seated[c] = list.slice(0, cap);
-    list.slice(cap).forEach(n => carry.push(n)); // no room here: cascade outward
+    seated[c] = ordered.slice(idx, idx + cap); idx += cap;
   }
   __ringGods = seated; return seated;
 }

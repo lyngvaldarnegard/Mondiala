@@ -23,6 +23,12 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.11 — proximity repair + 3-tier pink allocation
+
+- **Proximity repair (v1.10 follow-up)**: after the compass seating, a bounded greedy pass swaps outer-city names so each city borders one of its 6 geographically closest outer cities (great-circle km from coordinates only — no region labels). Violations dropped 90 → 53 of 264; avg ring-adjacency gap 3639 → 2917 km. The compass band remains the backbone; the repair only removes the worst near/far interleavings.
+- **3-tier pink allocation**: the allocation list is now favourites first, then the concepts of eros (no homeland), then all other gods — rings fill innermost-first, tier by tier (ring 4 the six favourites, rings 6–7 the 23 concepts, rings 8+ the remaining gods, overflow to ring 11)
+- Suite: **777 checks, all green**
+
 ## v1.10 — the centre is fixed on Earth
 
 Mondiala's spot no longer drifts when rings are added or removed:

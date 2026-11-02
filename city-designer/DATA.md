@@ -101,13 +101,13 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | Hex | Name |
 |---|---|
 | 1 | Dalian |
-| 2 | Qingdao |
-| 3 | Foshan |
-| 4 | Islamabad |
-| 5 | Kabul |
-| 6 | Tbilisi |
+| 2 | Beijing |
+| 3 | Manila |
+| 4 | Varanasi |
+| 5 | Naypyidaw |
+| 6 | Islamabad |
 | 7 | Baku |
-| 8 | Dubai |
+| 8 | Pune |
 | 9 | Muscat |
 | 10 | Aleppo |
 | 11 | Jerusalem |
@@ -136,12 +136,12 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | Hex | Name |
 |---|---|
 | 1 | Kyoto |
-| 2 | Beijing |
+| 2 | Qingdao |
 | 3 | Volupia ♥ |
 | 4 | Guangzhou |
 | 5 | Anal ♥ |
 | 6 | Kathmandu |
-| 7 | Varanasi |
+| 7 | Kabul |
 | 8 | Jakarta |
 | 9 | Vagina ♥ |
 | 10 | Tehran |
@@ -185,7 +185,7 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | 7 | Orgy ♥ |
 | 8 | Lahore |
 | 9 | Promiscuity ♥ |
-| 10 | Surabaya |
+| 10 | Tbilisi |
 | 11 | Karachi |
 | 12 | Isfahan |
 | 13 | Doha |
@@ -224,13 +224,13 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | Hex | Name |
 |---|---|
 | 1 | Hiroshima |
-| 2 | Nagoya |
+| 2 | Minsk |
 | 3 | Shanghai |
 | 4 | Taipei |
 | 5 | Astarte ♥ |
 | 6 | Almaty |
 | 7 | Phnom Penh |
-| 8 | Naypyidaw |
+| 8 | Bangkok |
 | 9 | Brisbane |
 | 10 | Bandung |
 | 11 | Ahmedabad |
@@ -270,7 +270,7 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | 45 | Hedonism ♥ |
 | 46 | Las Vegas |
 | 47 | Warsaw |
-| 48 | Minsk |
+| 48 | Nagoya |
 
 ### Ring 9
 
@@ -280,12 +280,12 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | 2 | Ulaanbaatar |
 | 3 | Astghik ♥ |
 | 4 | Hangzhou |
-| 5 | Astana |
-| 6 | Manila |
+| 5 | Dongguan |
+| 6 | Astana |
 | 7 | Tashkent |
 | 8 | Anahita ♥ |
 | 9 | Yangon |
-| 10 | Bangkok |
+| 10 | Surabaya |
 | 11 | Melbourne |
 | 12 | Nanaya ♥ |
 | 13 | Odesa |
@@ -351,7 +351,7 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | 14 | Chisinau |
 | 15 | Mumbai |
 | 16 | Shaushka ♥ |
-| 17 | Pune |
+| 17 | Dubai |
 | 18 | Kuwait City |
 | 19 | Ankara |
 | 20 | Attis ♥ |
@@ -406,7 +406,7 @@ Mondiala sits at 48.32165°, 22.45055° — 🇺🇦 Ukraine (nearest: Lviv, 204
 | 4 | Lelia ♥ |
 | 5 | Kyiv |
 | 6 | Shenzhen |
-| 7 | Dongguan |
+| 7 | Foshan |
 | 8 | Hanoi |
 | 9 | Diyan Masalanta ♥ |
 | 10 | Dhaka |
@@ -479,17 +479,17 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 
 | Hex | Name |
 |---|---|
-| 1 | Saint Petersburg |
+| 1 | Guatemala City |
 | 2 | Cancún |
 | 3 | Houston |
-| 4 | Beijing |
-| 5 | Tianjin |
-| 6 | Bengaluru |
+| 4 | Monterrey |
+| 5 | Caracas |
+| 6 | Tianjin |
 | 7 | Bishkek |
-| 8 | Almaty |
+| 8 | Brisbane |
 | 9 | Surabaya |
 | 10 | Perth |
-| 11 | Lahore |
+| 11 | Bengaluru |
 | 12 | Mogadishu |
 | 13 | Harare |
 | 14 | Kigali |
@@ -508,7 +508,7 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 27 | Utrecht |
 | 28 | Birmingham |
 | 29 | Belfast |
-| 30 | Stavanger |
+| 30 | Kingston |
 
 ### Ring 6
 
@@ -517,11 +517,11 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 1 | Panama City |
 | 2 | San Salvador |
 | 3 | Parvati ♥ |
-| 4 | San Francisco |
+| 4 | San Diego |
 | 5 | Anal ♥ |
-| 6 | Osaka |
+| 6 | Hiroshima |
 | 7 | Qingdao |
-| 8 | Chongqing |
+| 8 | Dalian |
 | 9 | Vagina ♥ |
 | 10 | Bangkok |
 | 11 | Penis ♥ |
@@ -555,10 +555,10 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 
 | Hex | Name |
 |---|---|
-| 1 | Kingston |
+| 1 | Saint Petersburg |
 | 2 | Submission ♥ |
 | 3 | Ottawa |
-| 4 | San Diego |
+| 4 | San Francisco |
 | 5 | Portland |
 | 6 | Nagoya |
 | 7 | Orgy ♥ |
@@ -567,7 +567,7 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 10 | Guangzhou |
 | 11 | Chiang Mai |
 | 12 | Dhaka |
-| 13 | Dalian |
+| 13 | Tashkent |
 | 14 | Polyamory ♥ |
 | 15 | Ahmedabad |
 | 16 | Masturbation ♥ |
@@ -604,20 +604,20 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 |---|---|
 | 1 | San José |
 | 2 | Philadelphia |
-| 3 | Guatemala City |
+| 3 | Chongqing |
 | 4 | Chicago |
 | 5 | Hedonism ♥ |
-| 6 | Seattle |
+| 6 | Honolulu |
 | 7 | Kyoto |
-| 8 | Hiroshima |
+| 8 | Osaka |
 | 9 | Shanghai |
-| 10 | Brisbane |
+| 10 | Almaty |
 | 11 | Shenzhen |
 | 12 | Hanoi |
 | 13 | Oshun ♥ |
 | 14 | Kolkata |
 | 15 | Varanasi |
-| 16 | Tashkent |
+| 16 | Lahore |
 | 17 | Pune |
 | 18 | Antananarivo |
 | 19 | Maputo |
@@ -660,7 +660,7 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 3 | Lada ♥ |
 | 4 | Toronto |
 | 5 | Guadalajara |
-| 6 | Monterrey |
+| 6 | Seattle |
 | 7 | Ulaanbaatar |
 | 8 | Milda ♥ |
 | 9 | Fukuoka |
@@ -705,7 +705,7 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 48 | Dionysus ♥ |
 | 49 | Cambridge |
 | 50 | Liverpool |
-| 51 | Caracas |
+| 51 | Stavanger |
 | 52 | Aberdeen |
 | 53 | Turan ♥ |
 | 54 | Turku |
@@ -789,7 +789,7 @@ Mondiala sits at 44.86027°, 64.13385° — 🇺🇿 Uzbekistan (nearest: Tashke
 | 8 | Harbin |
 | 9 | Laka ♥ |
 | 10 | Seoul |
-| 11 | Honolulu |
+| 11 | Beijing |
 | 12 | Hangzhou |
 | 13 | Wuhan |
 | 14 | Chengdu |
@@ -858,13 +858,13 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 
 | Hex | Name |
 |---|---|
-| 1 | Hiroshima |
-| 2 | Taipei |
+| 1 | San Francisco |
+| 2 | Seoul |
 | 3 | Hangzhou |
-| 4 | Guangzhou |
-| 5 | Chiang Mai |
+| 4 | Foshan |
+| 5 | Ho Chi Minh City |
 | 6 | Dushanbe |
-| 7 | Yerevan |
+| 7 | Bandung |
 | 8 | Pune |
 | 9 | Muscat |
 | 10 | Diyarbakır |
@@ -880,7 +880,7 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 20 | Seville |
 | 21 | Salzburg |
 | 22 | Munich |
-| 23 | Kraków |
+| 23 | Harbin |
 | 24 | Antwerp |
 | 25 | The Hague |
 | 26 | San José |
@@ -894,7 +894,7 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | Hex | Name |
 |---|---|
 | 1 | Minsk |
-| 2 | Fukuoka |
+| 2 | Narva |
 | 3 | Volupia ♥ |
 | 4 | Dongguan |
 | 5 | Anal ♥ |
@@ -936,14 +936,14 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 |---|---|
 | 1 | Saint Petersburg |
 | 2 | Submission ♥ |
-| 3 | Harbin |
+| 3 | Qingdao |
 | 4 | Astana |
-| 5 | Foshan |
+| 5 | Guangzhou |
 | 6 | Hanoi |
 | 7 | Orgy ♥ |
-| 8 | Ho Chi Minh City |
+| 8 | Kolkata |
 | 9 | Promiscuity ♥ |
-| 10 | Bandung |
+| 10 | Hyderabad |
 | 11 | Mumbai |
 | 12 | Isfahan |
 | 13 | Odesa |
@@ -981,13 +981,13 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 
 | Hex | Name |
 |---|---|
-| 1 | Nagoya |
-| 2 | Seoul |
+| 1 | Fukuoka |
+| 2 | Dalian |
 | 3 | Tianjin |
 | 4 | Nanjing |
 | 5 | Hedonism ♥ |
 | 6 | Chengdu |
-| 7 | Kolkata |
+| 7 | Tashkent |
 | 8 | Bangkok |
 | 9 | Islamabad |
 | 10 | Delhi |
@@ -1037,7 +1037,7 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 1 | Kyoto |
 | 2 | Pyongyang |
 | 3 | Anahita ♥ |
-| 4 | Qingdao |
+| 4 | Shanghai |
 | 5 | Wuhan |
 | 6 | Shenzhen |
 | 7 | Brisbane |
@@ -1048,7 +1048,7 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 12 | Qetesh ♥ |
 | 13 | Baku |
 | 14 | Bengaluru |
-| 15 | Hyderabad |
+| 15 | Yerevan |
 | 16 | Doha |
 | 17 | Cybele ♥ |
 | 18 | Ankara |
@@ -1097,11 +1097,11 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 2 | Aizen-Myōō ♥ |
 | 3 | Beijing |
 | 4 | Jinan |
-| 5 | Shanghai |
+| 5 | Taipei |
 | 6 | Yue Lao ♥ |
 | 7 | Manila |
 | 8 | Bishkek |
-| 9 | Tashkent |
+| 9 | Chiang Mai |
 | 10 | Tu'er Shen ♥ |
 | 11 | Varanasi |
 | 12 | Ishtar ♥ |
@@ -1151,14 +1151,14 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 56 | Lofn ♥ |
 | 57 | Monterrey |
 | 58 | Stavanger |
-| 59 | San Francisco |
+| 59 | Kraków |
 | 60 | Freyr ♥ |
 
 ### Ring 11
 
 | Hex | Name |
 |---|---|
-| 1 | Dalian |
+| 1 | Hiroshima |
 | 2 | Shenyang |
 | 3 | Ulaanbaatar |
 | 4 | Lelia ♥ |
@@ -1223,7 +1223,7 @@ Mondiala sits at 49.75246°, 25.72213° — 🇺🇦 Ukraine (nearest: Lviv, 122
 | 63 | Dallas |
 | 64 | Lel ♥ |
 | 65 | Portland |
-| 66 | Narva |
+| 66 | Nagoya |
 
 ### Pool — 1 unplaced (great mode)
 

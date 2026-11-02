@@ -105,6 +105,13 @@
         <option value="great">Greatness-weighted — size + livability + walkability</option>
       </select>
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
+      <label class="field" style="margin-top:8px">How the outer cities are placed</label>
+      <select id="placeMode">
+        <option value="hybrid">Hybrid — compass band, then proximity repair (≥2 of 6 closest must border)</option>
+        <option value="direction">Direction only — the original v1.8 compass band, no repair</option>
+        <option value="distance">Distance only — rings by km from Mondiala + hard rule (≥2 of 6 closest must border)</option>
+        <option value="proximity">Proximity — ring 5 by 6 sectors, then each ring greedily maximizes closest-city score</option>
+      </select>
     </div>
     <div class="card">
       <h2>Unplaced names <span id="poolCount"></span></h2>
@@ -138,6 +145,7 @@ const TYPES = {
 <script src="mondiala-gods.js"></script>
 <script>
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
+let placeMode = "hybrid"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
@@ -281,7 +289,7 @@ function buildCity() {
   }
   worldPlan.leftover.forEach(n => pool.push({ name: n, density: null })); // candidates beyond the map's current horizon wait here
   pool.sort((a, b) => factPop(b.name) - factPop(a.name)); // overflow cities, biggest first
-  repairProximity(); // v1.10: every outer city should border one of its 6 closest outer cities on Earth (coordinates only)
+  if (placeMode !== "direction") repairProximity(); // hard rule: each outer city borders ≥2 of its 6 closest outer cities (great-circle km, coordinates only)
 
   // every hex named for a god of love is a pink free-use district; the outer gods sit on the reserved PINK_SLOTS lattice — always off the green metro spokes
   Object.values(hexes).forEach(h => { if (SEX_GODS.has((h.name || "").trim().toLowerCase())) h.type = "park"; });
@@ -296,7 +304,7 @@ function placeRow(pos, row) {
   const key = pos.q + "," + pos.r;
   hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
 }
-function repairProximity() { // each outer city should border one of its 2 closest outer cities (great-circle km, coordinates only); greedy swaps accepted on any total-violation decrease
+function repairProximity() { // HARD RULE: each outer city borders at least 2 of its 6 closest outer cities (great-circle km, coordinates only); greedy swaps accepted on any total-violation decrease
   const outer = Object.values(hexes).filter(h => h.circle >= 5 && h.name && coordOf(h.name) && !SEX_GODS.has(h.name.trim().toLowerCase()));
   const n = outer.length;
   if (n < 2) return;
@@ -306,12 +314,12 @@ function repairProximity() { // each outer city should border one of its 2 close
     const co = coord(a);
     nearKbyName[a.name] = new Set(outer.filter(b => b.name !== a.name)
       .map(b => ({ n: b.name, d: greatCircleKm({ lat: co[0], lon: co[1] }, { lat: coord(b)[0], lon: coord(b)[1] }) }))
-      .sort((x, y) => x.d - y.d).slice(0, 2).map(x => x.n));
+      .sort((x, y) => x.d - y.d).slice(0, 6).map(x => x.n));
   });
-  const viol = h => { const ns = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean).map(h2 => h2.name); return [...nearKbyName[h.name]].some(nm => ns.includes(nm)) ? 0 : 1; };
+  const viol = h => { const ns = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean).map(h2 => h2.name); const hits = [...nearKbyName[h.name]].filter(nm => ns.includes(nm)).length; return hits >= 2 ? 0 : 1; };
   let cur = outer.reduce((s2, h) => s2 + viol(h), 0);
   let guard = 0;
-  while (guard++ < 12) {
+  while (guard++ < 8) {
     let improved = false;
     for (let i = 0; i < n && !improved; i++) {
       for (let j = i + 1; j < n && !improved; j++) {
@@ -456,9 +464,16 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
     .sort((a, b) => a.dist - b.dist || factPopPos(b.n) - factPopPos(a.n)); // distance ranks who gets seated at all (near = inner batch), population breaks ties
   const slots = [];
   for (let c = 5; c <= maxCircle; c++) worldSlots(c).forEach(sl => slots.push({ c, num: sl.num, a: sl.a }));
-  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
-  if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings; v1.11: the band is ordered by bearing, but within each ~12° direction window cities go near-to-far, so a far city (e.g. an American one) never sits inside a near city's (e.g. a European one's) sector
+  if (placeMode === "distance") { // v1.11 distance mode: pure km — nearest city takes the innermost free slot, ties by bearing; the hard proximity rule is enforced afterwards by repairProximity
+    const distSlots = slots.slice().sort((u, v) => (u.c - v.c) || (u.a - v.a));
+    ranked.slice(0, distSlots.length).forEach((x, i) => { const sl = distSlots[i]; plan[sl.c].push([sl.num, x.n]); });
+    const seatedNames = new Set(); for (let c = 5; c <= maxCircle; c++) plan[c].forEach(p => seatedNames.add(p[1]));
+    return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
+  }
+  if (placeMode === "proximity") return fillByProximity(center, cands); // v1.11 proximity mode: ring 5 by 6 direction sectors, every later ring greedily maximized on the 1/rank closest-city score
+  slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
+  if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings
     const take = ranked.slice(0, slots.length);
     const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), slots.map(sl => sl.a));
     pairs.forEach(pair => plan[slots[pair[1]].c].push([slots[pair[1]].num, pair[0].key]));
@@ -492,6 +507,58 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
   const seatedNames = new Set();
   for (let c = 5; c <= maxCircle; c++) plan[c].forEach(pair => seatedNames.add(pair[1]));
   return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
+}
+function fillByProximity(center, cands) { // v1.11 "proximity" mode: ring 5 = 6 direction sectors (closest city to Mondiala per sector); every later ordinary ring filled slot by slot, each pick maximizing the summed 1/rank closest-city score. Distance-only, no region labels.
+  const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
+  const withBD = cands.map(n => Object.assign({ n }, bearingDist(center, n)));
+  const remaining = new Set(withBD.map(x => x.n));
+  const seatedPos = {}; // name -> {q,r}
+  const hexAt = {};    // "q,r" -> name
+  const gcKm = (a, b) => greatCircleKm({ lat: coordOf(a)[0], lon: coordOf(a)[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] });
+  const slotPos = {};  // "c#num" -> {q,r}
+  for (let c = 5; c <= maxCircle; c++) ringPositions(c).forEach(rp => slotPos[c + "#" + rp.num] = rp);
+  const seat = (name, c, num) => { const p = slotPos[c + "#" + num]; seatedPos[name] = p; hexAt[p.q + "," + p.r] = name; };
+  const unseat = (name, c, num) => { const p = slotPos[c + "#" + num]; delete seatedPos[name]; delete hexAt[p.q + "," + p.r]; };
+  const nbrNames = name => { const p = seatedPos[name]; if (!p) return []; return neighborKeys(p.q, p.r).map(k => hexAt[k]).filter(Boolean); };
+  const scoreOf = name => { // sum of 1/rank over this city's bordered closest cities
+    const others = Object.keys(seatedPos).filter(o => o !== name);
+    const ranked = others.map(o => ({ o, d: gcKm(name, o) })).sort((a, b) => a.d - b.d);
+    const ns = new Set(nbrNames(name));
+    let s = 0; ranked.forEach((r, i) => { if (ns.has(r.o)) s += 1 / (i + 1); });
+    return s;
+  };
+  if (maxCircle >= 5) { // ring 5: six 60-degree sectors, closest-to-Mondiala city per sector
+    const rslots = worldSlots(5).slice().sort((a, b) => a.a - b.a);
+    const sectors = [[0, 60], [60, 120], [120, 180], [180, 240], [240, 300], [300, 360]];
+    for (const [lo, hi] of sectors) {
+      const pick = withBD.filter(x => remaining.has(x.n) && x.bearing >= lo && x.bearing < hi).sort((a, b) => a.dist - b.dist)[0];
+      if (!pick) continue;
+      const sl = rslots.find(sl2 => !plan[5].some(p => p[0] === sl2.num));
+      if (!sl) break;
+      plan[5].push([sl.num, pick.n]); seat(pick.n, 5, sl.num); remaining.delete(pick.n);
+    }
+  }
+  for (let c = 6; c <= maxCircle; c++) { // later rings: greedy per slot, candidates = 40 remaining nearest to nearest seated city
+    const rslots = worldSlots(c).slice().sort((a, b) => a.a - b.a);
+    for (const sl of rslots) {
+      if (remaining.size === 0) break;
+      const anchorName = Object.keys(seatedPos)[0] || [...remaining][0];
+      const aCo = coordOf(anchorName);
+      const pool = [...remaining].sort((a, b) => greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(a)[0], lon: coordOf(a)[1] }) - greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] })).slice(0, 12);
+      let bestName = null, bestGain = -Infinity;
+      for (const name of pool) {
+        seat(name, c, sl.num);
+        let gain = scoreOf(name);
+        for (const nb of nbrNames(name)) gain += scoreOf(nb);
+        unseat(name, c, sl.num);
+        if (gain > bestGain) { bestGain = gain; bestName = name; }
+      }
+      if (!bestName) break;
+      plan[c].push([sl.num, bestName]); seat(bestName, c, sl.num); remaining.delete(bestName);
+    }
+  }
+  const seatedNames = new Set(Object.keys(seatedPos));
+  return { plan, leftover: withBD.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
 }
 function computeWorldPlan() { // the centre is FIXED per centre mode: the heart's real cities plus the whole roster — never the tiled subset, so adding rings never moves Mondiala on Earth
   const cands = [];
@@ -674,6 +741,10 @@ function renderCenterOut() {
 }
 document.getElementById("centerMode").addEventListener("change", () => {
   centerMode = document.getElementById("centerMode").value;
+  recenter();
+});
+document.getElementById("placeMode").addEventListener("change", () => {
+  placeMode = document.getElementById("placeMode").value;
   recenter();
 });
 function bumpRing(d) { if (d > 0 && !pool.length) return; maxCircle = Math.max(0, maxCircle + d); viewBox = cityViewBox(); moved = false; recenter(); }

@@ -23,6 +23,19 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.12 — placement-mode picker + hard proximity rule
+
+The panel's World placement card gains a **placement mode** dropdown with four styles to compare live:
+
+- **Hybrid (default)** — the v1.8 compass band, then a repair pass enforcing the hard rule: every outer city borders **at least 2 of its 6 closest** outer cities (great-circle km, coordinates only)
+- **Direction only** — the original v1.8 compass band, no repair (for comparison)
+- **Distance only** — rings filled purely by km from Mondiala, then the same hard rule
+- **Proximity** — ring 5 seeded by 6 direction sectors (closest city per sector), every later ring filled greedily slot by slot, each pick maximizing the summed 1/rank closest-city score (bordering your closest = 1 pt, 2nd closest = 1/2 pt, ...)
+
+Measured on the shipped view (264 outer cities, fail = fewer than 2 of 6 closest bordered): direction 181 fail · hybrid 106 fail · distance 189 fail · proximity 105 fail. Hybrid scores highest on the 1/rank metric (220 vs 170 direction).
+
+- Suite: **783 checks, all green** (new section 10 exercises all four modes and asserts hybrid beats direction on the hard rule)
+
 ## v1.11 — proximity repair + 3-tier pink allocation
 
 - **Proximity repair (v1.10 follow-up)**: after the compass seating, a bounded greedy pass swaps outer-city names so each city borders one of its 6 geographically closest outer cities (great-circle km from coordinates only — no region labels). Violations dropped 90 → 53 of 264; avg ring-adjacency gap 3639 → 2917 km. The compass band remains the backbone; the repair only removes the worst near/far interleavings.

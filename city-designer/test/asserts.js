@@ -363,6 +363,28 @@ for (const [idx, m] of ["geo", "pop", "great"].entries()) {
 }
 setMode("geo");
 
+// ---------- 10 · placement modes ----------
+section("10 · placement modes");
+const pm = $("placeMode");
+const modeStats = {};
+function gcKm(a, b) { const R = 6371, t = Math.PI / 180, [la, lo] = X.coordOf(a), [lb, lob] = X.coordOf(b); return R * Math.acos(Math.min(1, Math.sin(la*t)*Math.sin(lb*t)+Math.cos(la*t)*Math.cos(lb*t)*Math.cos((lo-lob)*t))); }
+for (const m of ["direction", "hybrid", "distance", "proximity"]) {
+  pm.value = m; __fire(pm, "change", {});
+  const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
+  let v2 = 0, score = 0;
+  outer.forEach(a => {
+    const near = outer.filter(b => b !== a).map(b => ({ n: b.name, d: gcKm(a.name, b.name) })).sort((x, y) => x.d - y.d);
+    const ns = X.neighborKeys(a.q, a.r).map(k => X.hexes[k]).filter(Boolean).map(h => h.name);
+    if (near.slice(0, 6).filter((x, i) => ns.includes(x.n)).length < 2) v2++;
+    near.forEach((x, i) => { if (ns.includes(x.n)) score += 1 / (i + 1); });
+  });
+  modeStats[m] = { n: outer.length, fail2of6: v2, score: +score.toFixed(1) };
+  ok("mode '" + m + "' seats outer city (" + outer.length + " cities)", outer.length > 200);
+}
+ok("hybrid beats direction on the 2-of-6 hard rule", modeStats.hybrid.fail2of6 < modeStats.direction.fail2of6);
+ok("proximity mode is seated and scored", modeStats.proximity.score > 0);
+pm.value = "hybrid"; __fire(pm, "change", {});
+
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");
 if (FAIL > 0) process.exit(1);

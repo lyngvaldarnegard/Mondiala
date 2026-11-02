@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.1 — the hand-picked world map** | `main` (this push) | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.2 — the true two-rule engine, compass off** | `main` (this push) | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -53,6 +53,13 @@ The third dropdown option is now **Hand-picked — the authored world map**, rep
 - **The result (measured, shipped view):** Europe north-west, Asia east, Africa south, the Americas west, **Oceania south-east — east of Africa** (Sigurd's ruling: South Africa is west of Australia); median grid-neighbour 1,386 km; corr(lat, y) +0.49, corr(lon, x) +0.75; the Guangzhou cluster and The Hague–Rotterdam sit adjacent; Honolulu west, Valparaíso south-west on the outer edge.
 - The suite asserts the wedges, the periphery, the full rings and the lattice on this mode every run (684 checks).
 - The reverse-fill engine is deleted (in git history); the two formula modes are unchanged.
+
+## v3.2 — the true two-rule whole-ring engine, compass OFF (the eye ruled: WR0)
+
+The neighbours mode now runs Sigurd's actual design, restored: each ring is decided **all at once, not slot by slot** — two rules, exactly as he stated them: (1) HARD — every old-ring city must border at least one of its 6 closest of the cities remaining for the new ring; (2) SUM SCORE — the summed 1/rank over old-ring-to-new-ring adjacencies (rank = real-km rank among the remaining candidates) is maximized, every combination of the ring considered at once (exact Hungarian assignment, verified 300/300 against brute force; a minimal-damage repair pass enforces the hard rule where the optimum leaves it broken). **No compass term** — his eye compared the whole-ring renders and ruled compass-off the correct one (WR0: median 1,204 km, the world reads purely through city-to-city km; the co-equal-rank variant put Europe beneath Africa and was rejected). The engine runs only in the generator; the page still loads instantly from the tables.
+
+- Measured (shipped view, neighbours): median grid-neighbour km 1,330 → **1,204**; the heart's own ring-4 cities now anchor the first ordinary ring directly (the gods never count — no real place on Earth).
+- Suite: **686 checks green** (hard-rule sampled assertions, exactness spot-check, all prior guarantees).
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

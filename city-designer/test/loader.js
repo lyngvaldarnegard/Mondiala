@@ -31,7 +31,7 @@ const __export = `
   get placeMode() { return placeMode; }, set placeMode(v) { placeMode = v; },
   get COMPASS_KM() { return COMPASS_KM; }, set COMPASS_KM(v) { COMPASS_KM = v; },
   get viewMode() { return viewMode; },
-  continentOf, continentFill, CONTINENT_COLORS, eyeTrueDir, readSeating,
+  continentOf, continentFill, CONTINENT_COLORS, eyeTrueDir, readSeating, hungarianMax, heartRingSeats,
   compassSeat, fillWorldPlan, RING4_ORIGINALS,
   get centerMode() { return centerMode; }, set centerMode(v) { centerMode = v; },
   get selected() { return selected; }, set selected(v) { selected = v; },

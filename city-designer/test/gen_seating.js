@@ -4,6 +4,71 @@
 // no expensive compute ever runs at load or at click. Roster edit = re-run sh test/regen.sh
 // and commit the regenerated table. Concatenated after loader.js by run.sh and regen.sh.
 "use strict";
+// v3.6 — the local direction rule, as a deterministic post-pass over a mode's plan: bordering cities
+// never read opposite of reality on either axis (significance-thresholded: >=5 deg latitude, >=15 deg longitude —
+// near-level pairs sit beneath any hex grid's resolution). Greedy targeted swaps; deterministic (sorted iteration).
+function __repairLocalRule(X, rings, center) {
+  const pos = {}, seatXY = {}, keyOf = {}, cityAt = {};
+  const load = () => {
+    for (const k in pos) delete pos[k];
+    for (const k in cityAt) delete cityAt[k];
+    for (let c = 5; c <= 10; c++) for (const [num, name] of (rings[c] || [])) {
+      const p = X.ringPositions(c).find(pp => pp.num === num);
+      const key = p.q + "," + p.r;
+      pos[name] = { c, num };
+      seatXY[name] = X.axialToPixel(p.q, p.r);
+      keyOf[name] = key;
+      cityAt[key] = name;
+    }
+  };
+  load();
+  const doSwap = (a, b) => {
+    const ka = keyOf[a], kb = keyOf[b];
+    delete cityAt[ka]; delete cityAt[kb];
+    const t = pos[a]; pos[a] = pos[b]; pos[b] = t;
+    const t2 = seatXY[a]; seatXY[a] = seatXY[b]; seatXY[b] = t2;
+    const t3 = keyOf[a]; keyOf[a] = keyOf[b]; keyOf[b] = t3;
+    cityAt[kb] = a; cityAt[ka] = b;
+    const ca = pos[a].c, cb = pos[b].c;
+    const fixRing = c => { rings[c] = rings[c].map(p => p[1] === a ? [p[0], b] : p[1] === b ? [p[0], a] : p); };
+    if (ca === cb) fixRing(ca); else { fixRing(ca); fixRing(cb); }
+  };
+  const nbrsOf = n => {
+    const [q, r] = keyOf[n].split(",").map(Number);
+    const out = [];
+    for (const [nq, nr] of X.neighborKeys(q, r)) { const m = cityAt[nq + "," + nr]; if (m) out.push(m); }
+    return out;
+  };
+  const pFlip = (n, m) => {
+    const co = X.coordOf(n), co2 = X.coordOf(m);
+    let f = 0;
+    if (co[0] - co2[0] >= 5 && seatXY[n].y > seatXY[m].y) f++;
+    if (co2[0] - co[0] >= 5 && seatXY[n].y < seatXY[m].y) f++;
+    if (co[1] - co2[1] >= 15 && seatXY[n].x < seatXY[m].x) f++;
+    if (co2[1] - co[1] >= 15 && seatXY[n].x > seatXY[m].x) f++;
+    return f;
+  };
+  const flipsOf = n => { let f = 0; for (const m of nbrsOf(n)) f += pFlip(n, m); return f; };
+  const names = Object.keys(pos).sort();
+  for (let iter = 0; iter < 60; iter++) {
+    let best = null, bestGain = 0;
+    for (const a of names) {
+      const fa = flipsOf(a);
+      if (!fa) continue;
+      for (const b of names) {
+        if (a === b) continue;
+        const fb = flipsOf(b);
+        doSwap(a, b);
+        const gain = (fa + fb) - (flipsOf(a) + flipsOf(b));
+        if (gain > bestGain) { bestGain = gain; best = { a, b }; }
+        doSwap(a, b);
+      }
+    }
+    if (!best) break;
+    doSwap(best.a, best.b);
+  }
+}
+
 function __genSeating(write) {
   const X = globalThis.__X;
   const prev = { placeMode: X.placeMode, GRID_ROT: X.GRID_ROT, maxCircle: X.maxCircle };
@@ -15,6 +80,7 @@ function __genSeating(write) {
       const plan = X.computeWorldPlan();
       const rings = {};
       for (let c = 5; c <= 10; c++) rings[c] = (plan.plan[c] || []).slice().sort((a, b) => a[0] - b[0]);
+      __repairLocalRule(X, rings, plan.center); // v3.6: the local direction rule, on every mode ("for all")
       out[mode][rot ? "pointy" : "flat"] = {
         center: { lat: +plan.center.lat.toFixed(8), lon: +plan.center.lon.toFixed(8) },
         rings, leftover: plan.leftover

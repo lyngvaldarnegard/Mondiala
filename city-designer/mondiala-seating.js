@@ -25,11 +25,11 @@ const SEATING = {
      ],
      [
       4,
-      "Kyiv"
+      "Odesa"
      ],
      [
       5,
-      "Beijing"
+      "Thessaloniki"
      ],
      [
       6,
@@ -53,7 +53,7 @@ const SEATING = {
      ],
      [
       11,
-      "Jerusalem"
+      "Almaty"
      ],
      [
       12,
@@ -69,11 +69,11 @@ const SEATING = {
      ],
      [
       15,
-      "Khartoum"
+      "Abu Dhabi"
      ],
      [
       16,
-      "Naples"
+      "Kinshasa"
      ],
      [
       17,
@@ -109,7 +109,7 @@ const SEATING = {
      ],
      [
       25,
-      "Montreal"
+      "La Paz"
      ],
      [
       26,
@@ -117,7 +117,7 @@ const SEATING = {
      ],
      [
       27,
-      "Ottawa"
+      "Santiago"
      ],
      [
       28,
@@ -129,7 +129,7 @@ const SEATING = {
      ],
      [
       30,
-      "Narva"
+      "Kraków"
      ]
     ],
     "6": [
@@ -139,7 +139,7 @@ const SEATING = {
      ],
      [
       2,
-      "Odesa"
+      "Kyiv"
      ],
      [
       4,
@@ -147,23 +147,23 @@ const SEATING = {
      ],
      [
       6,
-      "Ulaanbaatar"
+      "Pyongyang"
      ],
      [
       7,
-      "Almaty"
+      "Beijing"
      ],
      [
       8,
-      "Tashkent"
+      "Chongqing"
      ],
      [
       10,
-      "Ho Chi Minh City"
+      "Asmara"
      ],
      [
       12,
-      "Kuala Lumpur"
+      "Perth"
      ],
      [
       13,
@@ -171,7 +171,7 @@ const SEATING = {
      ],
      [
       14,
-      "Bengaluru"
+      "Varanasi"
      ],
      [
       16,
@@ -227,17 +227,17 @@ const SEATING = {
      ],
      [
       36,
-      "Kraków"
+      "Narva"
      ]
     ],
     "7": [
      [
       1,
-      "Ankara"
+      "Bucharest"
      ],
      [
       3,
-      "Bucharest"
+      "Ankara"
      ],
      [
       4,
@@ -245,7 +245,7 @@ const SEATING = {
      ],
      [
       5,
-      "Thessaloniki"
+      "Beirut"
      ],
      [
       6,
@@ -253,7 +253,7 @@ const SEATING = {
      ],
      [
       8,
-      "Astana"
+      "Honolulu"
      ],
      [
       10,
@@ -269,7 +269,7 @@ const SEATING = {
      ],
      [
       13,
-      "Hyderabad"
+      "Muscat"
      ],
      [
       15,
@@ -293,15 +293,15 @@ const SEATING = {
      ],
      [
       22,
-      "Kinshasa"
+      "Naples"
      ],
      [
       24,
-      "Accra"
+      "Tripoli"
      ],
      [
       25,
-      "Freetown"
+      "Marrakesh"
      ],
      [
       26,
@@ -329,15 +329,15 @@ const SEATING = {
      ],
      [
       34,
-      "Washington D.C."
+      "Lagos"
      ],
      [
       36,
-      "Atlanta"
+      "Kingston"
      ],
      [
       38,
-      "Dallas"
+      "Abuja"
      ],
      [
       39,
@@ -355,7 +355,7 @@ const SEATING = {
     "8": [
      [
       1,
-      "Baku"
+      "Skopje"
      ],
      [
       2,
@@ -367,11 +367,11 @@ const SEATING = {
      ],
      [
       4,
-      "Aleppo"
+      "Khartoum"
      ],
      [
       6,
-      "Beirut"
+      "Jerusalem"
      ],
      [
       7,
@@ -383,15 +383,15 @@ const SEATING = {
      ],
      [
       9,
-      "Ashgabat"
+      "Dushanbe"
      ],
      [
       10,
-      "Bishkek"
+      "Libreville"
      ],
      [
       11,
-      "Dushanbe"
+      "Bishkek"
      ],
      [
       12,
@@ -399,11 +399,11 @@ const SEATING = {
      ],
      [
       14,
-      "Varanasi"
+      "Bengaluru"
      ],
      [
       15,
-      "Muscat"
+      "Hyderabad"
      ],
      [
       16,
@@ -439,19 +439,19 @@ const SEATING = {
      ],
      [
       25,
-      "Asmara"
+      "Podgorica"
      ],
      [
       26,
-      "Jeddah"
+      "Belgrade"
      ],
      [
       27,
-      "Tripoli"
+      "Accra"
      ],
      [
       28,
-      "Algiers"
+      "Bordeaux"
      ],
      [
       30,
@@ -475,7 +475,7 @@ const SEATING = {
      ],
      [
       35,
-      "Liverpool"
+      "Rabat"
      ],
      [
       36,
@@ -483,15 +483,15 @@ const SEATING = {
      ],
      [
       38,
-      "Bordeaux"
+      "Monrovia"
      ],
      [
       39,
-      "Houston"
+      "Yaoundé"
      ],
      [
       40,
-      "New Orleans"
+      "Guatemala City"
      ],
      [
       41,
@@ -503,11 +503,11 @@ const SEATING = {
      ],
      [
       43,
-      "Las Vegas"
+      "Port-au-Prince"
      ],
      [
       44,
-      "Bern"
+      "Abidjan"
      ],
      [
       46,
@@ -519,17 +519,17 @@ const SEATING = {
      ],
      [
       48,
-      "Tbilisi"
+      "Budapest"
      ]
     ],
     "9": [
      [
       1,
-      "Kuwait City"
+      "Baku"
      ],
      [
       2,
-      "Abu Dhabi"
+      "Aleppo"
      ],
      [
       4,
@@ -541,15 +541,15 @@ const SEATING = {
      ],
      [
       6,
-      "Skopje"
+      "Kuwait City"
      ],
      [
       7,
-      "Pristina"
+      "Baghdad"
      ],
      [
       9,
-      "Dhaka"
+      "Ulaanbaatar"
      ],
      [
       10,
@@ -557,7 +557,7 @@ const SEATING = {
      ],
      [
       11,
-      "Chongqing"
+      "Tashkent"
      ],
      [
       13,
@@ -565,11 +565,11 @@ const SEATING = {
      ],
      [
       14,
-      "Bangkok"
+      "Hanoi"
      ],
      [
       15,
-      "Hanoi"
+      "Bangkok"
      ],
      [
       16,
@@ -593,7 +593,7 @@ const SEATING = {
      ],
      [
       23,
-      "Johannesburg"
+      "Asunción"
      ],
      [
       24,
@@ -601,11 +601,11 @@ const SEATING = {
      ],
      [
       25,
-      "Yaoundé"
+      "Brasília"
      ],
      [
       27,
-      "Podgorica"
+      "Pretoria"
      ],
      [
       28,
@@ -645,19 +645,19 @@ const SEATING = {
      ],
      [
       40,
-      "Budapest"
+      "Las Vegas"
      ],
      [
       41,
-      "Rabat"
+      "Liverpool"
      ],
      [
       42,
-      "Marrakesh"
+      "Freetown"
      ],
      [
       43,
-      "Monrovia"
+      "Algiers"
      ],
      [
       45,
@@ -665,11 +665,11 @@ const SEATING = {
      ],
      [
       46,
-      "Guatemala City"
+      "New Orleans"
      ],
      [
       47,
-      "Kingston"
+      "Atlanta"
      ],
      [
       49,
@@ -677,11 +677,11 @@ const SEATING = {
      ],
      [
       50,
-      "Pyongyang"
+      "Kuala Lumpur"
      ],
      [
       51,
-      "Bratislava"
+      "Ottawa"
      ],
      [
       52,
@@ -689,25 +689,25 @@ const SEATING = {
      ],
      [
       54,
-      "Baghdad"
+      "Pristina"
      ]
     ],
     "10": [
      [
       1,
-      "Maputo"
+      "Astana"
      ],
      [
       3,
-      "Libreville"
+      "Ashgabat"
      ],
      [
       4,
-      "Abuja"
+      "Tbilisi"
      ],
      [
       5,
-      "Belgrade"
+      "Jeddah"
      ],
      [
       7,
@@ -735,11 +735,11 @@ const SEATING = {
      ],
      [
       15,
-      "Brisbane"
+      "Guangzhou"
      ],
      [
       17,
-      "Perth"
+      "Auckland"
      ],
      [
       18,
@@ -747,15 +747,15 @@ const SEATING = {
      ],
      [
       19,
-      "Pretoria"
+      "Ho Chi Minh City"
      ],
      [
       21,
-      "Lagos"
+      "Brisbane"
      ],
      [
       23,
-      "Abidjan"
+      "Maputo"
      ],
      [
       24,
@@ -767,15 +767,15 @@ const SEATING = {
      ],
      [
       27,
-      "Brasília"
-     ],
-     [
-      28,
       "Buenos Aires"
      ],
      [
+      28,
+      "Lima"
+     ],
+     [
       29,
-      "Asunción"
+      "Johannesburg"
      ],
      [
       31,
@@ -827,7 +827,7 @@ const SEATING = {
      ],
      [
       48,
-      "Honolulu"
+      "Dallas"
      ],
      [
       49,
@@ -835,31 +835,31 @@ const SEATING = {
      ],
      [
       51,
-      "Lima"
+      "Houston"
      ],
      [
       53,
-      "La Paz"
+      "Montreal"
      ],
      [
       54,
-      "Santiago"
-     ],
-     [
-      55,
-      "Auckland"
-     ],
-     [
-      57,
       "Santo Domingo"
      ],
      [
+      55,
+      "Dhaka"
+     ],
+     [
+      57,
+      "Bratislava"
+     ],
+     [
       58,
-      "Port-au-Prince"
+      "Bern"
      ],
      [
       59,
-      "Guangzhou"
+      "Washington D.C."
      ]
     ]
    },
@@ -874,19 +874,19 @@ const SEATING = {
     "5": [
      [
       1,
-      "Turku"
+      "Bratislava"
      ],
      [
       2,
-      "Narva"
+      "Lilongwe"
      ],
      [
       3,
-      "Saint Petersburg"
+      "Pretoria"
      ],
      [
       4,
-      "Minsk"
+      "Odesa"
      ],
      [
       5,
@@ -894,7 +894,7 @@ const SEATING = {
      ],
      [
       6,
-      "Kyiv"
+      "Sevastopol"
      ],
      [
       7,
@@ -902,7 +902,7 @@ const SEATING = {
      ],
      [
       8,
-      "Nanjing"
+      "Astana"
      ],
      [
       9,
@@ -918,11 +918,11 @@ const SEATING = {
      ],
      [
       12,
-      "Manila"
+      "Hanoi"
      ],
      [
       13,
-      "Phnom Penh"
+      "Saint Petersburg"
      ],
      [
       14,
@@ -938,7 +938,7 @@ const SEATING = {
      ],
      [
       17,
-      "Medina"
+      "Tripoli"
      ],
      [
       18,
@@ -978,7 +978,7 @@ const SEATING = {
      ],
      [
       27,
-      "Montreal"
+      "Bangkok"
      ],
      [
       28,
@@ -1004,11 +1004,11 @@ const SEATING = {
      ],
      [
       4,
-      "Odesa"
+      "Minsk"
      ],
      [
       6,
-      "Sevastopol"
+      "Kyiv"
      ],
      [
       7,
@@ -1016,7 +1016,7 @@ const SEATING = {
      ],
      [
       8,
-      "Ankara"
+      "Belgrade"
      ],
      [
       10,
@@ -1028,7 +1028,7 @@ const SEATING = {
      ],
      [
       13,
-      "Hanoi"
+      "Guangzhou"
      ],
      [
       14,
@@ -1036,7 +1036,7 @@ const SEATING = {
      ],
      [
       16,
-      "Bangkok"
+      "Asmara"
      ],
      [
       18,
@@ -1076,11 +1076,11 @@ const SEATING = {
      ],
      [
       31,
-      "Stavanger"
+      "Liverpool"
      ],
      [
       32,
-      "Toronto"
+      "Stavanger"
      ],
      [
       34,
@@ -1088,7 +1088,7 @@ const SEATING = {
      ],
      [
       36,
-      "Kristiansand"
+      "Belfast"
      ]
     ],
     "7": [
@@ -1102,7 +1102,7 @@ const SEATING = {
      ],
      [
       4,
-      "Frankfurt"
+      "Manchester"
      ],
      [
       5,
@@ -1130,15 +1130,15 @@ const SEATING = {
      ],
      [
       13,
-      "Ashgabat"
+      "Kabul"
      ],
      [
       15,
-      "Ho Chi Minh City"
+      "Abu Dhabi"
      ],
      [
       17,
-      "Guangzhou"
+      "Dhaka"
      ],
      [
       18,
@@ -1146,11 +1146,11 @@ const SEATING = {
      ],
      [
       19,
-      "Kuala Lumpur"
+      "Addis Ababa"
      ],
      [
       20,
-      "Bengaluru"
+      "Kampala"
      ],
      [
       22,
@@ -1166,7 +1166,7 @@ const SEATING = {
      ],
      [
       26,
-      "Belgrade"
+      "Ankara"
      ],
      [
       27,
@@ -1186,19 +1186,19 @@ const SEATING = {
      ],
      [
       33,
-      "Strasbourg"
+      "Bordeaux"
      ],
      [
       34,
-      "Belfast"
+      "Kristiansand"
      ],
      [
       36,
-      "Manchester"
+      "Casablanca"
      ],
      [
       38,
-      "Chicago"
+      "Caracas"
      ],
      [
       39,
@@ -1206,17 +1206,17 @@ const SEATING = {
      ],
      [
       40,
-      "Dallas"
+      "Chicago"
      ],
      [
       41,
-      "Liverpool"
+      "San Salvador"
      ]
     ],
     "8": [
      [
       1,
-      "Bratislava"
+      "Turku"
      ],
      [
       2,
@@ -1224,11 +1224,11 @@ const SEATING = {
      ],
      [
       3,
-      "Geneva"
+      "Brazzaville"
      ],
      [
       4,
-      "Lyon"
+      "Libreville"
      ],
      [
       6,
@@ -1248,7 +1248,7 @@ const SEATING = {
      ],
      [
       10,
-      "Thessaloniki"
+      "Maputo"
      ],
      [
       11,
@@ -1264,7 +1264,7 @@ const SEATING = {
      ],
      [
       15,
-      "Kabul"
+      "Agra"
      ],
      [
       16,
@@ -1276,7 +1276,7 @@ const SEATING = {
      ],
      [
       18,
-      "Chennai"
+      "Kingston"
      ],
      [
       19,
@@ -1288,23 +1288,23 @@ const SEATING = {
      ],
      [
       22,
-      "Jakarta"
+      "Kuala Lumpur"
      ],
      [
       23,
-      "Hyderabad"
+      "Kigali"
      ],
      [
       24,
-      "Delhi"
-     ],
-     [
-      25,
       "Lahore"
      ],
      [
+      25,
+      "Delhi"
+     ],
+     [
       26,
-      "Dushanbe"
+      "Riyadh"
      ],
      [
       27,
@@ -1316,7 +1316,7 @@ const SEATING = {
      ],
      [
       30,
-      "Budapest"
+      "Algiers"
      ],
      [
       31,
@@ -1328,7 +1328,7 @@ const SEATING = {
      ],
      [
       33,
-      "Algiers"
+      "Budapest"
      ],
      [
       34,
@@ -1340,7 +1340,7 @@ const SEATING = {
      ],
      [
       36,
-      "Bordeaux"
+      "Strasbourg"
      ],
      [
       38,
@@ -1356,11 +1356,11 @@ const SEATING = {
      ],
      [
       41,
-      "Casablanca"
+      "Marrakesh"
      ],
      [
       42,
-      "Marrakesh"
+      "Baghdad"
      ],
      [
       43,
@@ -1372,15 +1372,15 @@ const SEATING = {
      ],
      [
       46,
-      "Astana"
+      "Perth"
      ],
      [
       47,
-      "Ulaanbaatar"
+      "Nanjing"
      ],
      [
       48,
-      "Baghdad"
+      "Geneva"
      ]
     ],
     "9": [
@@ -1390,7 +1390,7 @@ const SEATING = {
      ],
      [
       2,
-      "Riyadh"
+      "Antananarivo"
      ],
      [
       4,
@@ -1406,7 +1406,7 @@ const SEATING = {
      ],
      [
       7,
-      "Bishkek"
+      "Mogadishu"
      ],
      [
       9,
@@ -1418,11 +1418,11 @@ const SEATING = {
      ],
      [
       11,
-      "Chongqing"
+      "Thessaloniki"
      ],
      [
       13,
-      "Abu Dhabi"
+      "Bishkek"
      ],
      [
       14,
@@ -1430,11 +1430,11 @@ const SEATING = {
      ],
      [
       15,
-      "Kathmandu"
+      "Ashgabat"
      ],
      [
       16,
-      "Agra"
+      "Kathmandu"
      ],
      [
       18,
@@ -1442,7 +1442,7 @@ const SEATING = {
      ],
      [
       19,
-      "Dhaka"
+      "Manila"
      ],
      [
       20,
@@ -1450,15 +1450,15 @@ const SEATING = {
      ],
      [
       22,
-      "Mogadishu"
+      "Ho Chi Minh City"
      ],
      [
       23,
-      "Asmara"
+      "Tegucigalpa"
      ],
      [
       24,
-      "Addis Ababa"
+      "Jakarta"
      ],
      [
       25,
@@ -1466,7 +1466,7 @@ const SEATING = {
      ],
      [
       27,
-      "Kampala"
+      "Bengaluru"
      ],
      [
       28,
@@ -1474,11 +1474,11 @@ const SEATING = {
      ],
      [
       29,
-      "Johannesburg"
+      "Harare"
      ],
      [
       31,
-      "Tripoli"
+      "Medina"
      ],
      [
       32,
@@ -1522,15 +1522,15 @@ const SEATING = {
      ],
      [
       45,
-      "Libreville"
+      "Dallas"
      ],
      [
       46,
-      "Caracas"
+      "Lyon"
      ],
      [
       47,
-      "Brazzaville"
+      "Frankfurt"
      ],
      [
       49,
@@ -1556,7 +1556,7 @@ const SEATING = {
     "10": [
      [
       1,
-      "Antananarivo"
+      "Dushanbe"
      ],
      [
       3,
@@ -1564,11 +1564,11 @@ const SEATING = {
      ],
      [
       4,
-      "Lilongwe"
+      "Narva"
      ],
      [
       5,
-      "Kigali"
+      "Hyderabad"
      ],
      [
       7,
@@ -1584,11 +1584,11 @@ const SEATING = {
      ],
      [
       11,
-      "Perth"
+      "Ulaanbaatar"
      ],
      [
       13,
-      "Brisbane"
+      "Kinshasa"
      ],
      [
       14,
@@ -1600,19 +1600,19 @@ const SEATING = {
      ],
      [
       17,
-      "Maputo"
+      "Chongqing"
      ],
      [
       18,
-      "Harare"
+      "Chennai"
      ],
      [
       19,
-      "Pretoria"
+      "Phnom Penh"
      ],
      [
       21,
-      "Kinshasa"
+      "Brisbane"
      ],
      [
       23,
@@ -1628,15 +1628,15 @@ const SEATING = {
      ],
      [
       27,
-      "Brasília"
+      "Johannesburg"
      ],
      [
       28,
-      "Buenos Aires"
+      "Asunción"
      ],
      [
       29,
-      "Asunción"
+      "Buenos Aires"
      ],
      [
       31,
@@ -1660,7 +1660,7 @@ const SEATING = {
      ],
      [
       38,
-      "Medellín"
+      "Managua"
      ],
      [
       39,
@@ -1668,7 +1668,7 @@ const SEATING = {
      ],
      [
       41,
-      "Kingston"
+      "Brasília"
      ],
      [
       43,
@@ -1676,7 +1676,7 @@ const SEATING = {
      ],
      [
       44,
-      "Havana"
+      "Medellín"
      ],
      [
       45,
@@ -1688,15 +1688,15 @@ const SEATING = {
      ],
      [
       48,
-      "Las Vegas"
+      "Honolulu"
      ],
      [
       49,
-      "Seattle"
+      "Havana"
      ],
      [
       51,
-      "Managua"
+      "Seattle"
      ],
      [
       53,
@@ -1704,15 +1704,15 @@ const SEATING = {
      ],
      [
       54,
-      "San Salvador"
+      "Toronto"
      ],
      [
       55,
-      "Tegucigalpa"
+      "Montreal"
      ],
      [
       57,
-      "Honolulu"
+      "Las Vegas"
      ],
      [
       58,
@@ -1737,11 +1737,11 @@ const SEATING = {
     "5": [
      [
       1,
-      "Edinburgh"
+      "Casablanca"
      ],
      [
       2,
-      "Belfast"
+      "Algiers"
      ],
      [
       3,
@@ -1837,7 +1837,7 @@ const SEATING = {
      ],
      [
       26,
-      "The Hague"
+      "Belfast"
      ],
      [
       27,
@@ -1849,11 +1849,11 @@ const SEATING = {
      ],
      [
       29,
-      "Stavanger"
+      "Nice"
      ],
      [
       30,
-      "Glasgow"
+      "Seville"
      ]
     ],
     "6": [
@@ -1883,7 +1883,7 @@ const SEATING = {
      ],
      [
       10,
-      "Minsk"
+      "Kraków"
      ],
      [
       12,
@@ -1911,7 +1911,7 @@ const SEATING = {
      ],
      [
       20,
-      "Strasbourg"
+      "Bratislava"
      ],
      [
       22,
@@ -1927,11 +1927,11 @@ const SEATING = {
      ],
      [
       26,
-      "Seville"
+      "Glasgow"
      ],
      [
       28,
-      "Nice"
+      "Stavanger"
      ],
      [
       30,
@@ -1939,11 +1939,11 @@ const SEATING = {
      ],
      [
       31,
-      "Algiers"
+      "The Hague"
      ],
      [
       32,
-      "Casablanca"
+      "Edinburgh"
      ],
      [
       34,
@@ -1957,11 +1957,11 @@ const SEATING = {
     "7": [
      [
       1,
-      "Belgrade"
+      "Ashgabat"
      ],
      [
       3,
-      "Thessaloniki"
+      "Belgrade"
      ],
      [
       4,
@@ -1973,11 +1973,11 @@ const SEATING = {
      ],
      [
       6,
-      "Damascus"
+      "Thessaloniki"
      ],
      [
       8,
-      "Pristina"
+      "Cairo"
      ],
      [
       10,
@@ -1989,11 +1989,11 @@ const SEATING = {
      ],
      [
       12,
-      "Saint Petersburg"
+      "Minsk"
      ],
      [
       13,
-      "Baku"
+      "Amman"
      ],
      [
       15,
@@ -2001,7 +2001,7 @@ const SEATING = {
      ],
      [
       17,
-      "Cairo"
+      "Pristina"
      ],
      [
       18,
@@ -2009,19 +2009,19 @@ const SEATING = {
      ],
      [
       19,
-      "Kraków"
+      "Saint Petersburg"
      ],
      [
       20,
-      "Tripoli"
-     ],
-     [
-      22,
       "Salzburg"
      ],
      [
+      22,
+      "Tripoli"
+     ],
+     [
       24,
-      "Rabat"
+      "Johannesburg"
      ],
      [
       25,
@@ -2033,15 +2033,15 @@ const SEATING = {
      ],
      [
       27,
-      "Monrovia"
+      "Santo Domingo"
      ],
      [
       29,
-      "Bratislava"
+      "Strasbourg"
      ],
      [
       31,
-      "Abidjan"
+      "Asunción"
      ],
      [
       32,
@@ -2057,15 +2057,15 @@ const SEATING = {
      ],
      [
       36,
-      "Valletta"
+      "Harare"
      ],
      [
       38,
-      "Libreville"
+      "Antananarivo"
      ],
      [
       39,
-      "Beirut"
+      "Phnom Penh"
      ],
      [
       40,
@@ -2073,17 +2073,17 @@ const SEATING = {
      ],
      [
       41,
-      "Bucharest"
+      "Libreville"
      ]
     ],
     "8": [
      [
       1,
-      "Astana"
+      "Osaka"
      ],
      [
       2,
-      "Almaty"
+      "Dushanbe"
      ],
      [
       3,
@@ -2091,7 +2091,7 @@ const SEATING = {
      ],
      [
       4,
-      "Dushanbe"
+      "Almaty"
      ],
      [
       6,
@@ -2099,7 +2099,7 @@ const SEATING = {
      ],
      [
       7,
-      "Kuwait City"
+      "Baku"
      ],
      [
       8,
@@ -2139,7 +2139,7 @@ const SEATING = {
      ],
      [
       18,
-      "Sana'a"
+      "Mecca"
      ],
      [
       19,
@@ -2167,7 +2167,7 @@ const SEATING = {
      ],
      [
       26,
-      "Kinshasa"
+      "Bucharest"
      ],
      [
       27,
@@ -2175,19 +2175,19 @@ const SEATING = {
      ],
      [
       28,
-      "Johannesburg"
+      "Rabat"
      ],
      [
       30,
-      "Brasília"
+      "Medellín"
      ],
      [
       31,
-      "Caracas"
+      "Cancún"
      ],
      [
       32,
-      "Kingston"
+      "New Orleans"
      ],
      [
       33,
@@ -2195,11 +2195,11 @@ const SEATING = {
      ],
      [
       34,
-      "Atlanta"
+      "Toronto"
      ],
      [
       35,
-      "Chicago"
+      "Philadelphia"
      ],
      [
       36,
@@ -2207,15 +2207,15 @@ const SEATING = {
      ],
      [
       38,
-      "Lusaka"
+      "San Juan"
      ],
      [
       39,
-      "Harare"
+      "Valletta"
      ],
      [
       40,
-      "Maputo"
+      "Tel Aviv"
      ],
      [
       41,
@@ -2231,15 +2231,15 @@ const SEATING = {
      ],
      [
       44,
-      "Medina"
+      "Bangkok"
      ],
      [
       46,
-      "Tehran"
+      "Turku"
      ],
      [
       47,
-      "Ashgabat"
+      "Delhi"
      ],
      [
       48,
@@ -2269,7 +2269,7 @@ const SEATING = {
      ],
      [
       7,
-      "Chongqing"
+      "Kuala Lumpur"
      ],
      [
       9,
@@ -2281,19 +2281,19 @@ const SEATING = {
      ],
      [
       11,
-      "Phnom Penh"
+      "Agra"
      ],
      [
       13,
-      "Yangon"
+      "Hyderabad"
      ],
      [
       14,
-      "Guangzhou"
+      "Bengaluru"
      ],
      [
       15,
-      "Ho Chi Minh City"
+      "Manila"
      ],
      [
       16,
@@ -2301,15 +2301,15 @@ const SEATING = {
      ],
      [
       18,
-      "Mumbai"
+      "Jeddah"
      ],
      [
       19,
-      "Amman"
+      "Kuwait City"
      ],
      [
       20,
-      "Mecca"
+      "Sana'a"
      ],
      [
       22,
@@ -2321,11 +2321,11 @@ const SEATING = {
      ],
      [
       24,
-      "Turku"
+      "Tehran"
      ],
      [
       25,
-      "Antananarivo"
+      "Kinshasa"
      ],
      [
       27,
@@ -2333,19 +2333,19 @@ const SEATING = {
      ],
      [
       28,
-      "Montevideo"
+      "La Paz"
      ],
      [
       29,
-      "Buenos Aires"
+      "Quito"
      ],
      [
       31,
-      "Asmara"
+      "Abidjan"
      ],
      [
       32,
-      "Mogadishu"
+      "Monrovia"
      ],
      [
       33,
@@ -2357,7 +2357,7 @@ const SEATING = {
      ],
      [
       36,
-      "New Orleans"
+      "Kingston"
      ],
      [
       37,
@@ -2377,15 +2377,15 @@ const SEATING = {
      ],
      [
       42,
-      "Portland"
+      "Houston"
      ],
      [
       43,
-      "San Francisco"
+      "Chicago"
      ],
      [
       45,
-      "Agra"
+      "Beirut"
      ],
      [
       46,
@@ -2393,11 +2393,11 @@ const SEATING = {
      ],
      [
       47,
-      "Beijing"
+      "San Salvador"
      ],
      [
       49,
-      "Bangkok"
+      "Asmara"
      ],
      [
       50,
@@ -2405,7 +2405,7 @@ const SEATING = {
      ],
      [
       51,
-      "Delhi"
+      "Damascus"
      ],
      [
       52,
@@ -2435,7 +2435,7 @@ const SEATING = {
      ],
      [
       7,
-      "Manila"
+      "Guangzhou"
      ],
      [
       8,
@@ -2447,7 +2447,7 @@ const SEATING = {
      ],
      [
       11,
-      "Kuala Lumpur"
+      "Chongqing"
      ],
      [
       13,
@@ -2455,7 +2455,7 @@ const SEATING = {
      ],
      [
       14,
-      "Hyderabad"
+      "Yangon"
      ],
      [
       15,
@@ -2463,7 +2463,7 @@ const SEATING = {
      ],
      [
       17,
-      "Bengaluru"
+      "Ho Chi Minh City"
      ],
      [
       18,
@@ -2471,7 +2471,7 @@ const SEATING = {
      ],
      [
       19,
-      "Jeddah"
+      "Mumbai"
      ],
      [
       21,
@@ -2479,11 +2479,11 @@ const SEATING = {
      ],
      [
       23,
-      "Tel Aviv"
+      "Maputo"
      ],
      [
       24,
-      "Asunción"
+      "Mogadishu"
      ],
      [
       25,
@@ -2491,19 +2491,19 @@ const SEATING = {
      ],
      [
       27,
-      "San Juan"
+      "Lusaka"
      ],
      [
       28,
-      "Medellín"
+      "Brasília"
      ],
      [
       29,
-      "Quito"
+      "Buenos Aires"
      ],
      [
       31,
-      "La Paz"
+      "Montevideo"
      ],
      [
       33,
@@ -2519,7 +2519,7 @@ const SEATING = {
      ],
      [
       37,
-      "Cancún"
+      "Caracas"
      ],
      [
       38,
@@ -2527,7 +2527,7 @@ const SEATING = {
      ],
      [
       39,
-      "Toronto"
+      "Atlanta"
      ],
      [
       41,
@@ -2535,23 +2535,23 @@ const SEATING = {
      ],
      [
       43,
-      "Philadelphia"
+      "Havana"
      ],
      [
       44,
-      "Los Angeles"
-     ],
-     [
-      45,
       "Honolulu"
      ],
      [
+      45,
+      "Los Angeles"
+     ],
+     [
       47,
-      "Houston"
+      "San Francisco"
      ],
      [
       48,
-      "Havana"
+      "Portland"
      ],
      [
       49,
@@ -2559,7 +2559,7 @@ const SEATING = {
      ],
      [
       51,
-      "San Salvador"
+      "Beijing"
      ],
      [
       53,
@@ -2571,7 +2571,7 @@ const SEATING = {
      ],
      [
       55,
-      "Santo Domingo"
+      "Medina"
      ],
      [
       57,
@@ -2583,7 +2583,7 @@ const SEATING = {
      ],
      [
       59,
-      "Osaka"
+      "Astana"
      ]
     ]
    },
@@ -2598,11 +2598,11 @@ const SEATING = {
     "5": [
      [
       1,
-      "Stavanger"
+      "Hamburg"
      ],
      [
       2,
-      "Glasgow"
+      "Birmingham"
      ],
      [
       3,
@@ -2634,15 +2634,15 @@ const SEATING = {
      ],
      [
       10,
-      "Budapest"
+      "San Salvador"
      ],
      [
       11,
-      "Lviv"
+      "Saint Petersburg"
      ],
      [
       12,
-      "Kyiv"
+      "Narva"
      ],
      [
       13,
@@ -2686,7 +2686,7 @@ const SEATING = {
      ],
      [
       23,
-      "Brussels"
+      "Monaco"
      ],
      [
       24,
@@ -2694,23 +2694,23 @@ const SEATING = {
      ],
      [
       25,
-      "Liverpool"
+      "Jakarta"
      ],
      [
       26,
-      "Manchester"
+      "Seville"
      ],
      [
       27,
-      "Birmingham"
+      "Glasgow"
      ],
      [
       28,
-      "Kristiansand"
+      "Casablanca"
      ],
      [
       29,
-      "The Hague"
+      "Nice"
      ],
      [
       30,
@@ -2720,15 +2720,15 @@ const SEATING = {
     "6": [
      [
       1,
-      "Hamburg"
+      "Stavanger"
      ],
      [
       2,
-      "Frankfurt"
+      "Strasbourg"
      ],
      [
       4,
-      "Toulouse"
+      "Pretoria"
      ],
      [
       6,
@@ -2748,15 +2748,15 @@ const SEATING = {
      ],
      [
       12,
-      "Minsk"
+      "Lilongwe"
      ],
      [
       13,
-      "Saint Petersburg"
+      "Kyiv"
      ],
      [
       14,
-      "Narva"
+      "Maputo"
      ],
      [
       16,
@@ -2784,7 +2784,7 @@ const SEATING = {
      ],
      [
       25,
-      "Strasbourg"
+      "Frankfurt"
      ],
      [
       26,
@@ -2800,29 +2800,29 @@ const SEATING = {
      ],
      [
       31,
-      "Seville"
+      "Manchester"
      ],
      [
       32,
-      "Casablanca"
+      "Kristiansand"
      ],
      [
       34,
-      "Nice"
+      "The Hague"
      ],
      [
       36,
-      "Monaco"
+      "Brussels"
      ]
     ],
     "7": [
      [
       1,
-      "Munich"
+      "Dushanbe"
      ],
      [
       3,
-      "Turku"
+      "Toulouse"
      ],
      [
       4,
@@ -2830,15 +2830,15 @@ const SEATING = {
      ],
      [
       5,
-      "Valletta"
+      "Khartoum"
      ],
      [
       6,
-      "Belgrade"
+      "Johannesburg"
      ],
      [
       8,
-      "Chisinau"
+      "Guatemala City"
      ],
      [
       10,
@@ -2846,7 +2846,7 @@ const SEATING = {
      ],
      [
       11,
-      "Aleppo"
+      "Kabul"
      ],
      [
       12,
@@ -2854,7 +2854,7 @@ const SEATING = {
      ],
      [
       13,
-      "Yerevan"
+      "Abu Dhabi"
      ],
      [
       15,
@@ -2890,15 +2890,15 @@ const SEATING = {
      ],
      [
       26,
-      "Algiers"
+      "Luanda"
      ],
      [
       27,
-      "Marrakesh"
+      "Libreville"
      ],
      [
       29,
-      "Florence"
+      "Tripoli"
      ],
      [
       31,
@@ -2910,11 +2910,11 @@ const SEATING = {
      ],
      [
       33,
-      "Tripoli"
+      "Florence"
      ],
      [
       34,
-      "Abuja"
+      "Belgrade"
      ],
      [
       36,
@@ -2952,7 +2952,7 @@ const SEATING = {
      ],
      [
       4,
-      "Astana"
+      "Beijing"
      ],
      [
       6,
@@ -2972,11 +2972,11 @@ const SEATING = {
      ],
      [
       10,
-      "Islamabad"
+      "San Juan"
      ],
      [
       11,
-      "Tashkent"
+      "Astana"
      ],
      [
       12,
@@ -2992,7 +2992,7 @@ const SEATING = {
      ],
      [
       16,
-      "Abu Dhabi"
+      "Yerevan"
      ],
      [
       17,
@@ -3008,11 +3008,11 @@ const SEATING = {
      ],
      [
       20,
-      "Kabul"
+      "Aleppo"
      ],
      [
       22,
-      "Mecca"
+      "Jerusalem"
      ],
      [
       23,
@@ -3024,7 +3024,7 @@ const SEATING = {
      ],
      [
       25,
-      "Tirana"
+      "Kigali"
      ],
      [
       26,
@@ -3032,11 +3032,11 @@ const SEATING = {
      ],
      [
       27,
-      "Libreville"
+      "Marrakesh"
      ],
      [
       28,
-      "Luanda"
+      "Algiers"
      ],
      [
       30,
@@ -3048,31 +3048,31 @@ const SEATING = {
      ],
      [
       32,
-      "Lusaka"
+      "Guangzhou"
      ],
      [
       33,
-      "Johannesburg"
+      "Wuhan"
      ],
      [
       34,
-      "Pretoria"
+      "Turku"
      ],
      [
       35,
-      "Harare"
+      "Perth"
      ],
      [
       36,
-      "Maputo"
+      "Lviv"
      ],
      [
       38,
-      "Kigali"
+      "Tirana"
      ],
      [
       39,
-      "Lilongwe"
+      "Minsk"
      ],
      [
       40,
@@ -3080,7 +3080,7 @@ const SEATING = {
      ],
      [
       41,
-      "Caracas"
+      "Port-au-Prince"
      ],
      [
       42,
@@ -3096,7 +3096,7 @@ const SEATING = {
      ],
      [
       46,
-      "Khartoum"
+      "Abuja"
      ],
      [
       47,
@@ -3104,7 +3104,7 @@ const SEATING = {
      ],
      [
       48,
-      "Dushanbe"
+      "Las Vegas"
      ]
     ],
     "9": [
@@ -3114,15 +3114,15 @@ const SEATING = {
      ],
      [
       2,
-      "Kathmandu"
+      "Hiroshima"
      ],
      [
       4,
-      "Ulaanbaatar"
+      "Tianjin"
      ],
      [
       5,
-      "Pyongyang"
+      "Kyoto"
      ],
      [
       6,
@@ -3130,7 +3130,7 @@ const SEATING = {
      ],
      [
       7,
-      "Kyoto"
+      "Taipei"
      ],
      [
       9,
@@ -3146,19 +3146,19 @@ const SEATING = {
      ],
      [
       13,
-      "Chongqing"
+      "Tashkent"
      ],
      [
       14,
-      "Beijing"
+      "Yangon"
      ],
      [
       15,
-      "Tianjin"
+      "Ulaanbaatar"
      ],
      [
       16,
-      "Hiroshima"
+      "Kathmandu"
      ],
      [
       18,
@@ -3170,11 +3170,11 @@ const SEATING = {
      ],
      [
       20,
-      "Agra"
+      "Asmara"
      ],
      [
       22,
-      "Bengaluru"
+      "Islamabad"
      ],
      [
       23,
@@ -3182,11 +3182,11 @@ const SEATING = {
      ],
      [
       24,
-      "Jerusalem"
+      "Mecca"
      ],
      [
       25,
-      "Nicosia"
+      "Mogadishu"
      ],
      [
       27,
@@ -3194,23 +3194,23 @@ const SEATING = {
      ],
      [
       28,
-      "Dar es Salaam"
-     ],
-     [
-      29,
       "Antananarivo"
      ],
      [
+      29,
+      "Dar es Salaam"
+     ],
+     [
       31,
-      "São Paulo"
+      "San José"
      ],
      [
       32,
-      "Montevideo"
+      "Panama City"
      ],
      [
       33,
-      "Buenos Aires"
+      "Santiago"
      ],
      [
       34,
@@ -3218,11 +3218,11 @@ const SEATING = {
      ],
      [
       36,
-      "Asmara"
+      "Agra"
      ],
      [
       37,
-      "Mogadishu"
+      "Nicosia"
      ],
      [
       38,
@@ -3230,23 +3230,23 @@ const SEATING = {
      ],
      [
       40,
-      "Perth"
+      "Harare"
      ],
      [
       41,
-      "Jakarta"
+      "Liverpool"
      ],
      [
       42,
-      "Kuala Lumpur"
+      "Santo Domingo"
      ],
      [
       43,
-      "Bangkok"
+      "Philadelphia"
      ],
      [
       45,
-      "Port-au-Prince"
+      "Caracas"
      ],
      [
       46,
@@ -3270,17 +3270,17 @@ const SEATING = {
      ],
      [
       52,
-      "Las Vegas"
+      "Munich"
      ],
      [
       54,
-      "Wuhan"
+      "Valletta"
      ]
     ],
     "10": [
      [
       1,
-      "Guangzhou"
+      "Dallas"
      ],
      [
       3,
@@ -3296,7 +3296,7 @@ const SEATING = {
      ],
      [
       7,
-      "Taipei"
+      "Pyongyang"
      ],
      [
       8,
@@ -3304,7 +3304,7 @@ const SEATING = {
      ],
      [
       9,
-      "Manila"
+      "Brisbane"
      ],
      [
       11,
@@ -3320,11 +3320,11 @@ const SEATING = {
      ],
      [
       15,
-      "Yangon"
+      "Manila"
      ],
      [
       17,
-      "Brisbane"
+      "Chongqing"
      ],
      [
       18,
@@ -3340,19 +3340,19 @@ const SEATING = {
      ],
      [
       23,
-      "Chennai"
+      "Bangkok"
      ],
      [
       24,
-      "Philadelphia"
+      "Chennai"
      ],
      [
       25,
-      "San Juan"
+      "Bengaluru"
      ],
      [
       27,
-      "Santo Domingo"
+      "Kuala Lumpur"
      ],
      [
       28,
@@ -3364,7 +3364,7 @@ const SEATING = {
      ],
      [
       31,
-      "Santiago"
+      "Buenos Aires"
      ],
      [
       33,
@@ -3380,11 +3380,11 @@ const SEATING = {
      ],
      [
       37,
-      "Panama City"
+      "Montevideo"
      ],
      [
       38,
-      "San José"
+      "São Paulo"
      ],
      [
       39,
@@ -3400,7 +3400,7 @@ const SEATING = {
      ],
      [
       44,
-      "Toronto"
+      "Lusaka"
      ],
      [
       45,
@@ -3408,7 +3408,7 @@ const SEATING = {
      ],
      [
       47,
-      "Portland"
+      "Cancún"
      ],
      [
       48,
@@ -3424,27 +3424,27 @@ const SEATING = {
      ],
      [
       53,
-      "Boston"
-     ],
-     [
-      54,
-      "Dallas"
-     ],
-     [
-      55,
       "Atlanta"
      ],
      [
+      54,
+      "Toronto"
+     ],
+     [
+      55,
+      "Boston"
+     ],
+     [
       57,
-      "Cancún"
+      "Portland"
      ],
      [
       58,
-      "Guatemala City"
+      "Budapest"
      ],
      [
       59,
-      "San Salvador"
+      "Chisinau"
      ]
     ]
    },

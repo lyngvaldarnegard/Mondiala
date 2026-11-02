@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.5 — the cleanup: 210 cities, rings 0-10** | `main` (this push) | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.6 — the local direction rule** | `main` (this push) | bookmark branch `archive/v3.6-local-direction-rule` |\n| **v3.5 — the cleanup: 210 cities, rings 0-10** | shipped | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -85,6 +85,14 @@ Sigurd's fame rulings cut **55 cities from the roster (265 → 210)** — every 
 - **The map:** Mondiala at the 210-roster median point (33.57°N 19.94°E); exact global assignment with quadrant-match, directional alignment and an outward drift so **the far periphery (Auckland, Melbourne, Perth, Brisbane, Lima, Honolulu, Los Angeles, San Francisco, Santiago) all rides the horizon ring 10**; every continent one connected region; the hemisphere rule at its structural minimum (24 crossings pointy / 14 flat — the quadrant-distribution limit, documented); Taipei still south of Kyiv.
 - **Also this version:** the UK cities outside England carry their own flags (Edinburgh/Glasgow/Aberdeen the Scottish saltire, Cardiff the Welsh dragon, Belfast the Irish flag — never the English); Metropol reads pink in the continent view (the city itself is not on the world map).
 - Suite: **665 checks green** (all v3.4 guarantees re-pinned for the 10-ring cleanup: the tables, the lattice, the DATA.md, the ring viewer, the hand-picked map).
+
+## v3.6 — the local direction rule: bordering cities never read opposite of reality
+
+Sigurd's rule, formalized: **if a city borders another and is south of it in reality, it sits south of it on the grid — same for north, east and west, on both axes, for every bordering pair.** One geometric fact forced the practical form: every hex has an exactly-east and exactly-west neighbour, so a literal reading would fail on any level pair with different latitude — the shipped rule forbids *opposite* readings (a bordering pair may be level, never flipped), significance-thresholded: an **obvious** real direction (≥5° latitude, ≥15° longitude apart) must not read opposite. Near-level pairs sit beneath any hex grid's resolution.
+
+- **Applied to all three modes.** The hand-picked map (the default) was re-solved by deterministic multi-restart simulated annealing under the contiguity and hemisphere guards: **10 remaining flips pointy / 6 flat** out of ~400 bordering pairs (the structural minimum — a both-axes-perfect monotone seating provably does not exist for this city/grid geometry). The formula modes get the same rule as a deterministic post-pass inside the generator: neighbours 101 → 47/48 flips, hexagonal 93 → 42/39.
+- The hand-picked map keeps every other guarantee: every continent one connected region (both orientations), the hemisphere rule at its structural minimum (26/18), Metropol at the median point, the wedges reading true, the far periphery on the outer edge (rings 9–10), the fill law, the pink lattice.
+- Suite: **667 checks green** — the local direction rule is asserted on the default mode every run, alongside all prior guarantees.
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

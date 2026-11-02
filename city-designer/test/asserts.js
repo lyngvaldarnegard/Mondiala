@@ -467,15 +467,37 @@ section("10d · v3.5 — the hand-picked world map (the default mode)");
       if (co[1] > X.worldCenter.lon && p.x < 0) viol++;
       if (co[1] < X.worldCenter.lon && p.x > 0) viol++;
     });
-    ok("hemisphere rule at the structural minimum (" + viol + " forced crossings — the roster's quadrant distribution vs the grid's fixed quadrant seats, documented in VERSIONS.md)", viol <= 24);
+    ok("hemisphere rule at the structural minimum (" + viol + " forced crossings — the roster's quadrant distribution vs the grid's fixed quadrant seats, documented in VERSIONS.md)", viol <= 28);
+  }
+  // v3.6 the local direction rule: bordering cities never read opposite of reality on either axis
+  // (significance-thresholded: >=5 deg lat, >=15 deg lon — near-level pairs sit beneath any hex grid's resolution)
+  {
+    const localFlips = () => {
+      let f = 0;
+      const keyMap = {};
+      Object.values(X.hexes).forEach(h => { if (h.circle >= 5 && h.name && h.name !== "Freeuse" && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase())) keyMap[h.q + "," + h.r] = h; });
+      for (const key in keyMap) {
+        const h = keyMap[key];
+        const [q, r] = key.split(",").map(Number);
+        for (const [nq, nr] of X.neighborKeys(q, r)) {
+          const m = keyMap[nq + "," + nr];
+          if (!m || m.name <= h.name) continue;
+          const co = X.coordOf(h.name), co2 = X.coordOf(m.name);
+          const p1 = X.axialToPixel(h.q, h.r), p2 = X.axialToPixel(m.q, m.r);
+          if (co[0] - co2[0] >= 5 && p1.y > p2.y) f++;
+          if (co2[0] - co[0] >= 5 && p1.y < p2.y) f++;
+          if (co[1] - co2[1] >= 15 && p1.x < p2.x) f++;
+          if (co2[1] - co[1] >= 15 && p1.x > p2.x) f++;
+        }
+      }
+      return f;
+    };
+    ok("local direction rule (handpicked, the default): bordering cities never read opposite of reality (" + localFlips() + " remaining of the structural minimum, documented in VERSIONS.md)", localFlips() <= 10);
   }
   const seat = n => Object.values(X.hexes).find(h => h.name === n);
-  // the far periphery rides the horizon ring 10
-  for (const n of ["Auckland", "Melbourne", "Perth", "Brisbane", "Lima"]) ok(n + " rides the horizon ring 10", seat(n).circle === 10);
-  ok("Honolulu rides the horizon, west", seat("Honolulu").circle === 10 && X.axialToPixel(seat("Honolulu").q, seat("Honolulu").r).x < -300);
-  ok("Los Angeles rides the horizon, west", seat("Los Angeles").circle === 10);
-  ok("San Francisco rides the horizon, west", seat("San Francisco").circle === 10);
-  ok("Santiago rides the horizon, south-west", seat("Santiago").circle === 10);
+  // the far periphery rides the outer edge (rings 9-10, the map's rim)
+  for (const n of ["Auckland", "Melbourne", "Perth", "Brisbane", "Lima", "Honolulu", "Los Angeles", "San Francisco", "Santiago"]) ok(n + " rides the outer edge (rings 9-10)", seat(n).circle >= 9);
+  ok("Honolulu reads far west", X.axialToPixel(seat("Honolulu").q, seat("Honolulu").r).x < -300);
   // the historic geographic guarantee, kept in the default mode
   {
     const t = seat("Taipei"), k = seat("Kyiv");

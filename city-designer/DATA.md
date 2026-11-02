@@ -103,19 +103,19 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 1 | Saint Petersburg |
 | 2 | Minsk |
 | 3 | Lviv |
-| 4 | Kyiv |
-| 5 | Beijing |
+| 4 | Odesa |
+| 5 | Thessaloniki |
 | 6 | Nanjing |
 | 7 | Wuhan |
 | 8 | Shenzhen |
 | 9 | Manila |
 | 10 | Phnom Penh |
-| 11 | Jerusalem |
+| 11 | Almaty |
 | 12 | Cairo |
 | 13 | Tel Aviv |
 | 14 | Medina |
-| 15 | Khartoum |
-| 16 | Naples |
+| 15 | Abu Dhabi |
+| 16 | Kinshasa |
 | 17 | Sarajevo |
 | 18 | Zagreb |
 | 19 | Florence |
@@ -124,31 +124,31 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 22 | Birmingham |
 | 23 | Edinburgh |
 | 24 | Glasgow |
-| 25 | Montreal |
+| 25 | La Paz |
 | 26 | Philadelphia |
-| 27 | Ottawa |
+| 27 | Santiago |
 | 28 | Warsaw |
 | 29 | Turku |
-| 30 | Narva |
+| 30 | Kraków |
 
 ### Ring 6
 
 | Hex | Name |
 |---|---|
 | 1 | Chisinau |
-| 2 | Odesa |
+| 2 | Kyiv |
 | 3 | Anal ♥ |
 | 4 | Sevastopol |
 | 5 | Parvati ♥ |
-| 6 | Ulaanbaatar |
-| 7 | Almaty |
-| 8 | Tashkent |
+| 6 | Pyongyang |
+| 7 | Beijing |
+| 8 | Chongqing |
 | 9 | Vagina ♥ |
-| 10 | Ho Chi Minh City |
+| 10 | Asmara |
 | 11 | Penis ♥ |
-| 12 | Kuala Lumpur |
+| 12 | Perth |
 | 13 | Chennai |
-| 14 | Bengaluru |
+| 14 | Varanasi |
 | 15 | Oral ♥ |
 | 16 | Amman |
 | 17 | Tantra ♥ |
@@ -170,25 +170,25 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 33 | Bondage ♥ |
 | 34 | Kristiansand |
 | 35 | Volupia ♥ |
-| 36 | Kraków |
+| 36 | Narva |
 
 ### Ring 7
 
 | Hex | Name |
 |---|---|
-| 1 | Ankara |
+| 1 | Bucharest |
 | 2 | Submission ♥ |
-| 3 | Bucharest |
+| 3 | Ankara |
 | 4 | Sofia |
-| 5 | Thessaloniki |
+| 5 | Beirut |
 | 6 | Nicosia |
 | 7 | Orgy ♥ |
-| 8 | Astana |
+| 8 | Honolulu |
 | 9 | Promiscuity ♥ |
 | 10 | Kabul |
 | 11 | Karachi |
 | 12 | Mumbai |
-| 13 | Hyderabad |
+| 13 | Muscat |
 | 14 | Polyamory ♥ |
 | 15 | Yangon |
 | 16 | Masturbation ♥ |
@@ -197,10 +197,10 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 19 | Islamabad |
 | 20 | Lahore |
 | 21 | Orgasm ♥ |
-| 22 | Kinshasa |
+| 22 | Naples |
 | 23 | Edging ♥ |
-| 24 | Accra |
-| 25 | Freetown |
+| 24 | Tripoli |
+| 25 | Marrakesh |
 | 26 | Casablanca |
 | 27 | Andorra la Vella |
 | 28 | Libido ♥ |
@@ -209,11 +209,11 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 31 | The Hague |
 | 32 | Leeds |
 | 33 | Belfast |
-| 34 | Washington D.C. |
+| 34 | Lagos |
 | 35 | Nude ♥ |
-| 36 | Atlanta |
+| 36 | Kingston |
 | 37 | Voyeurism ♥ |
-| 38 | Dallas |
+| 38 | Abuja |
 | 39 | Manchester |
 | 40 | Hamburg |
 | 41 | Prague |
@@ -223,21 +223,21 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 
 | Hex | Name |
 |---|---|
-| 1 | Baku |
+| 1 | Skopje |
 | 2 | Yerevan |
 | 3 | Diyarbakır |
-| 4 | Aleppo |
+| 4 | Khartoum |
 | 5 | Astarte ♥ |
-| 6 | Beirut |
+| 6 | Jerusalem |
 | 7 | Damascus |
 | 8 | Tehran |
-| 9 | Ashgabat |
-| 10 | Bishkek |
-| 11 | Dushanbe |
+| 9 | Dushanbe |
+| 10 | Libreville |
+| 11 | Bishkek |
 | 12 | Delhi |
 | 13 | Adonis ♥ |
-| 14 | Varanasi |
-| 15 | Muscat |
+| 14 | Bengaluru |
+| 15 | Hyderabad |
 | 16 | Sana'a |
 | 17 | Mogadishu |
 | 18 | Addis Ababa |
@@ -247,50 +247,50 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 22 | Kathmandu |
 | 23 | Dubai |
 | 24 | Mecca |
-| 25 | Asmara |
-| 26 | Jeddah |
-| 27 | Tripoli |
-| 28 | Algiers |
+| 25 | Podgorica |
+| 26 | Belgrade |
+| 27 | Accra |
+| 28 | Bordeaux |
 | 29 | Oshun ♥ |
 | 30 | Seville |
 | 31 | Marseille |
 | 32 | Lyon |
 | 33 | Zurich |
 | 34 | Strasbourg |
-| 35 | Liverpool |
+| 35 | Rabat |
 | 36 | Dublin |
 | 37 | Sjöfn ♥ |
-| 38 | Bordeaux |
-| 39 | Houston |
-| 40 | New Orleans |
+| 38 | Monrovia |
+| 39 | Yaoundé |
+| 40 | Guatemala City |
 | 41 | Miami |
 | 42 | Havana |
-| 43 | Las Vegas |
-| 44 | Bern |
+| 43 | Port-au-Prince |
+| 44 | Abidjan |
 | 45 | Hedonism ♥ |
 | 46 | Frankfurt |
 | 47 | Luxembourg |
-| 48 | Tbilisi |
+| 48 | Budapest |
 
 ### Ring 9
 
 | Hex | Name |
 |---|---|
-| 1 | Kuwait City |
-| 2 | Abu Dhabi |
+| 1 | Baku |
+| 2 | Aleppo |
 | 3 | Astghik ♥ |
 | 4 | Doha |
 | 5 | Riyadh |
-| 6 | Skopje |
-| 7 | Pristina |
+| 6 | Kuwait City |
+| 7 | Baghdad |
 | 8 | Anahita ♥ |
-| 9 | Dhaka |
+| 9 | Ulaanbaatar |
 | 10 | Tianjin |
-| 11 | Chongqing |
+| 11 | Tashkent |
 | 12 | Nanaya ♥ |
 | 13 | Naypyidaw |
-| 14 | Bangkok |
-| 15 | Hanoi |
+| 14 | Hanoi |
+| 15 | Bangkok |
 | 16 | Jakarta |
 | 17 | Qetesh ♥ |
 | 18 | Dar es Salaam |
@@ -298,11 +298,11 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 20 | Lilongwe |
 | 21 | Cybele ♥ |
 | 22 | Lusaka |
-| 23 | Johannesburg |
+| 23 | Asunción |
 | 24 | Luanda |
-| 25 | Yaoundé |
+| 25 | Brasília |
 | 26 | Himeros ♥ |
-| 27 | Podgorica |
+| 27 | Pretoria |
 | 28 | Valletta |
 | 29 | Tirana |
 | 30 | Anteros ♥ |
@@ -315,31 +315,31 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 37 | Venice |
 | 38 | Ljubljana |
 | 39 | Dionysus ♥ |
-| 40 | Budapest |
-| 41 | Rabat |
-| 42 | Marrakesh |
-| 43 | Monrovia |
+| 40 | Las Vegas |
+| 41 | Liverpool |
+| 42 | Freetown |
+| 43 | Algiers |
 | 44 | Turan ♥ |
 | 45 | Cancún |
-| 46 | Guatemala City |
-| 47 | Kingston |
+| 46 | New Orleans |
+| 47 | Atlanta |
 | 48 | Lada ♥ |
 | 49 | San Juan |
-| 50 | Pyongyang |
-| 51 | Bratislava |
+| 50 | Kuala Lumpur |
+| 51 | Ottawa |
 | 52 | Geneva |
 | 53 | Milda ♥ |
-| 54 | Baghdad |
+| 54 | Pristina |
 
 ### Ring 10
 
 | Hex | Name |
 |---|---|
-| 1 | Maputo |
+| 1 | Astana |
 | 2 | Yue Lao ♥ |
-| 3 | Libreville |
-| 4 | Abuja |
-| 5 | Belgrade |
+| 3 | Ashgabat |
+| 4 | Tbilisi |
+| 5 | Jeddah |
 | 6 | Tu'er Shen ♥ |
 | 7 | Seoul |
 | 8 | Shanghai |
@@ -349,21 +349,21 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 12 | Shaushka ♥ |
 | 13 | Osaka |
 | 14 | Kyoto |
-| 15 | Brisbane |
+| 15 | Guangzhou |
 | 16 | Attis ♥ |
-| 17 | Perth |
+| 17 | Auckland |
 | 18 | Melbourne |
-| 19 | Pretoria |
+| 19 | Ho Chi Minh City |
 | 20 | Bastet ♥ |
-| 21 | Lagos |
+| 21 | Brisbane |
 | 22 | Min ♥ |
-| 23 | Abidjan |
+| 23 | Maputo |
 | 24 | Montevideo |
 | 25 | São Paulo |
 | 26 | Bes ♥ |
-| 27 | Brasília |
-| 28 | Buenos Aires |
-| 29 | Asunción |
+| 27 | Buenos Aires |
+| 28 | Lima |
+| 29 | Johannesburg |
 | 30 | Peitho ♥ |
 | 31 | Caracas |
 | 32 | Mami Wata ♥ |
@@ -382,18 +382,18 @@ Mondiala sits at 47.82830°, 21.78151° — 🇭🇺 Hungary (nearest: Budapest,
 | 45 | Los Angeles |
 | 46 | Xochipilli ♥ |
 | 47 | Managua |
-| 48 | Honolulu |
+| 48 | Dallas |
 | 49 | Quito |
 | 50 | Zhiva ♥ |
-| 51 | Lima |
+| 51 | Houston |
 | 52 | Lofn ♥ |
-| 53 | La Paz |
-| 54 | Santiago |
-| 55 | Auckland |
+| 53 | Montreal |
+| 54 | Santo Domingo |
+| 55 | Dhaka |
 | 56 | Freyr ♥ |
-| 57 | Santo Domingo |
-| 58 | Port-au-Prince |
-| 59 | Guangzhou |
+| 57 | Bratislava |
+| 58 | Bern |
+| 59 | Washington D.C. |
 | 60 | Aizen-Myōō ♥ |
 
 ### Pool — 0 unplaced (geo mode)

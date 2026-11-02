@@ -29,7 +29,7 @@ const __export = `
   get maxCircle() { return maxCircle; }, set maxCircle(v) { maxCircle = v; },
   get GRID_ROT() { return GRID_ROT; }, set GRID_ROT(v) { GRID_ROT = v; },
   get placeMode() { return placeMode; }, set placeMode(v) { placeMode = v; },
-  get COMPASS_KM() { return COMPASS_KM; }, set COMPASS_KM(v) { COMPASS_KM = v; },
+  get COMPASS_KM() { return COMPASS_KM; }, set COMPASS_KM(v) { COMPASS_KM = v; }, __repairLocalRule,
   get viewMode() { return viewMode; },
   continentOf, continentFill, CONTINENT_COLORS, eyeTrueDir, readSeating, hungarianMax, heartRingSeats,
   compassSeat, fillWorldPlan, RING4_ORIGINALS,

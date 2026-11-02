@@ -8,7 +8,9 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v1.8 — the heart learns direction** | `main` (this push) | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
+| **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | `main` (this push) | bookmark branch `archive/v3.0-the-map-loads` |
+| v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
+| **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
 | **v1.7 — the city finds the centre** | `a69254cb` (+ the density campaign's B1 `7e04820`) | bookmark branch `archive/v1.7-the-city-finds-the-centre` |
 | **v1.6 — the city reaches the horizon** | `8d26c34` | bookmark branch `archive/v1.6-the-city-reaches-the-horizon` |
 | **v1.5 — the lattice steps out** | `e059141` | bookmark branch `archive/v1.5-the-lattice-steps-out` |
@@ -22,6 +24,25 @@ the commits themselves are the real archive.
 | **v1.1.1 — the test toolchain joins the repo** | `6650214` | bookmark branch `archive/v1.1.1-test-toolchain` |
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
+
+## v3.0 — the map loads, instantly, in colour, from formula-generated tables
+
+The five mission items of the v3.0 print, shipped together:
+
+- **The map loads.** Root cause of the permanent blank map (every real browser, desktop and phone, since v2.0): the Init block's first line `document.getElementById("centerMode").value = centerMode` referenced the centre-mode dropdown that v2.0 deleted — real browsers threw `TypeError: Cannot set properties of null` and the script died before `buildCity()` ever ran. The line is deleted. The headless stubs are hardened to real-browser semantics: `getElementById` returns `null` for any id absent from the shipped HTML (the old stubs auto-created it, which is how the suite stayed green for a whole major version while every real browser crashed), and the suite now asserts every id the app requests exists in the HTML. Verified: reintroducing the crash line now crashes the suite with the exact real-browser TypeError.
+- **Instant load: formula-generated seating tables.** The placement formulas run once, offline, in the generator (`city-designer/test/gen_seating.js`, run via `sh city-designer/test/regen.sh`), and ship as `mondiala-seating.js` — one table per placement mode per orientation, generated to the full depth of the roster (ring 12, no dry frontier). The page only reads the tables: no expensive compute at load or at click, «+ Next ring» reveals precomputed rows and inner rings never re-flow. Roster edit = re-run the generator + commit the regenerated table. The suite drift-checks the committed table against the formulas every run, and asserts a full rebuild is instant (< 250 ms) and stable.
+- **Continent view — the new default.** Every hexagon coloured by its city's continent in the Olympic ring colours: Europe blue, Asia yellow, Africa black (kept readable on the dark background; labels get halos), Americas red, Oceania green. Every named hex has a continent — the heart's civilisations included (China → Asia, Egypt → Africa, the Andes → the Americas), via the verified country→continent map (zero unmapped against the roster; heart civilisations fall back to the nearest roster city's continent). The pink free-use districts stay pink in every view; the ring view and the type view remain one click away.
+- **Reverse fill — the third placement mode.** Sigurd's own design: the roster's farthest cities from Mondiala land on the far outer frontier ring (the one ring with empty tiles); the six directional extremes pin the outermost full ring's corners (Honolulu west, Melbourne south, Auckland's eastern extreme rides the frontier as the single farthest city) — corner assignment by eye-true direction from real lon/lat deltas, never great-circle bearing, which lies at extreme range (Honolulu reads due "north" from the centre); then the front fills ring by ring inward, greedily by real km, until it stops against the hand-authored heart. No re-sort — the inward chains are the point.
+- **Variant A — the modes run themselves.** Both existing modes seat with a compass sense: a weak directional term (the city's eye-true direction vs the hex's on-screen direction, `COMPASS_KM = 1500` the tuning knob) rides along in the greedy score; the v2.1/v2.2 global lat/lon re-sort is deleted. Measured (shipped view, neighbours): median grid-neighbour distance **4,847 → 1,330 km** (v2.0 reference: 1,190) with corr(lat, y) −0.54 (v2.2: −0.83, v2.0: −0.08) — Europe at the top, Africa at the bottom, Asia east, the Americas west, and real neighbours sitting together again. Variant B (greedy + local-swap after-step) and the v2.2 baseline are rendered side by side in [`comparison/v3.0-engine-comparison.md`](comparison/v3.0-engine-comparison.md) for the eye to compare; the loser does not ship.
+- Suite: **676 checks, all green** (new sections: real-browser DOM semantics, the continent view, the seating tables incl. drift check, the reverse fill)
+
+## v2.2 — perf fix (2.7 s → 0.8 s load)
+
+Neighbours candidate pool capped 12→6, incremental scoring, swap refinement sampled and bounded at 3 sweeps; the `cityN` swap bug fixed; lat/lon axes kept. Suite 618 green.
+
+## v2.1 — global lat/lon sort pass in both placement modes
+
+North up by construction (corr(lat, y) −0.58) + bounded local swap refinement — at the cost of grid-neighbour adjacency (median 1,202 → 4,925 km). Suite 618 green.
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

@@ -95,6 +95,9 @@ function __parseInto(html, parent) {
   }
 }
 
+const __htmlIds = new Set();    // every id="..." present in the SHIPPED HTML — populated by the loader before the app evals
+const __requestedIds = new Set(); // every id the app has asked getElementById for
+function __stubSetHtmlIds(ids) { ids.forEach(i => __htmlIds.add(i)); }
 const document = {
   _listeners: {},
   children: [],
@@ -103,8 +106,15 @@ const document = {
   createElement: (t) => makeEl(t),
   createElementNS: (ns, t) => makeEl(t, ns),
   getElementById: (id) => {
+    // REAL-BROWSER SEMANTICS (v3.0): an id that exists in the shipped HTML is returned (created on
+    // first touch, like a real DOM element that is there from parse time); an id ABSENT from the
+    // HTML returns null — exactly like a real browser. The old auto-create masked the v2.0 blank-map
+    // crash (getElementById("centerMode") on a deleted dropdown) for the whole 2.x line.
+    __requestedIds.add(id);
     let el = __els.get(id);
-    if (!el) { el = makeEl("div"); el.id = id; __els.set(id, el); }
+    if (el) return el;
+    if (!__htmlIds.has(id)) return null;
+    el = makeEl("div"); el.id = id; __els.set(id, el);
     return el;
   },
   addEventListener: (t, f) => { (document._listeners[t] = document._listeners[t] || []).push(f); },

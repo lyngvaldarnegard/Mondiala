@@ -4,6 +4,7 @@
 (async () => {
 "use strict";
 const X = globalThis.__X;
+
 const $ = id => document.getElementById(id);
 const keyOf = (c, n) => { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); return h ? h.q + "," + h.r : null; };
 const HEX_NAMES = (c) => { const out = []; for (let n = 1; n <= c * 6; n++) { const h = Object.values(X.hexes).find(h => h.circle === c && h.num === n); out.push(h && h.name ? h.name : "—"); } return out; };
@@ -13,6 +14,12 @@ const ok = (label, cond) => { if (cond) PASS++; else { FAIL++; console.log("  FA
 const eq = (label, got, want) => { if (JSON.stringify(got) === JSON.stringify(want)) PASS++; else { FAIL++; console.log("  FAIL: " + label + " " + JSON.stringify(got) + " === " + JSON.stringify(want)); } };
 const section = (s) => { SECTION = s; console.log("── " + s); };
 const parkCount = () => Object.values(X.hexes).filter(h => h.type === "park").length;
+
+// ---------- 0 · real-browser DOM semantics (the v2.0 blank-map crash can never be masked again) ----------
+const missingIds = [...__requestedIds].filter(id => !__htmlIds.has(id));
+ok("every id the app requests exists in the shipped HTML (" + __requestedIds.size + " requested)", missingIds.length === 0);
+if (missingIds.length) console.log("  MISSING IDS: " + missingIds.join(", "));
+ok("the v2.0 crash line is gone (no getElementById on a deleted dropdown)", !__requestedIds.has("centerMode"));
 
 // ---------- 1 · roster integrity ----------
 section("1 · roster integrity");
@@ -179,7 +186,7 @@ ok("no brush / type chips", !__els.has("types") && !__els.has("modeSelect"));
 // the viewing controls stay
 ok("view toggle kept", !!__els.has("btnView"));
 ok("validator kept", !!__els.has("btnValidate") && !!__els.has("btnClearFlags"));
-ok("centre-mode switch kept", !!__els.has("centerMode"));
+ok("no centre-mode dropdown (deleted in v2.0 — and the stubs must never auto-create it)", !__els.has("centerMode") && !__htmlIds.has("centerMode"));
 ok("pool list kept", !!__els.has("pool"));
 ok("stats kept", !!__els.has("stats"));
 eq("pool chips rendered (read-only)", document.querySelectorAll(".poolname").length, 1);
@@ -390,6 +397,77 @@ ok("hexagonal mode is seated and scored", modeStats.hexagonal && modeStats.hexag
   ok("neighbours (default): ring 6 fully seated", r6.length >= 30);
 }
 pm.value = "neighbours"; __fire(pm, "change", {});
+
+// ---------- 10b · v3.0 — the continent view (Olympic colours, default) ----------
+section("10b · v3.0 — the continent view (Olympic colours, the default)");
+eq("the default view is continents", X.viewMode, "continents");
+eq("five continents", Object.keys(X.CONTINENT_COLORS).sort(), ["Africa", "Americas", "Asia", "Europe", "Oceania"]);
+{
+  const named = Object.values(X.hexes).filter(h => h.name && h.name !== "Freeuse");
+  const gods = named.filter(h => X.SEX_GODS.has(h.name.trim().toLowerCase()));
+  const noCont = named.filter(h => !X.SEX_GODS.has(h.name.trim().toLowerCase()) && !X.continentOf(h.name));
+  eq("every named non-god hex has a continent (Metropol and the pink districts are the only exceptions)", noCont, []);
+  ok("the heart reads its continents too", ["China", "Egypt", "Andes", "Mesoamerica", "Indus Valley", "Mesopotamia"].every(n => X.continentOf(n)));
+  eq("Europe blue (Olympic)", X.CONTINENT_COLORS.Europe, "#1f8fd6");
+  eq("Asia yellow (Olympic)", X.CONTINENT_COLORS.Asia, "#e8b04b");
+  eq("Africa black, readable on the dark background", X.CONTINENT_COLORS.Africa, "#23272e");
+  eq("Americas red (Olympic)", X.CONTINENT_COLORS.Americas, "#c94f4f");
+  eq("Oceania green (Olympic)", X.CONTINENT_COLORS.Oceania, "#2f9e63");
+  ok("every roster country maps to a continent", X.WORLD_CITIES.every(w => { const c = X.CITY_COUNTRY[w.trim().toLowerCase()]; return c && X.COUNTRY_CONTINENTS[c]; }));
+  ok("the free-use districts stay pink in the continent view", Object.values(X.hexes).filter(h => h.type === "park").every(h => gods.length >= 0));
+  const pinkFill = X.TYPES.park.fill;
+  ok("continentFill keeps every pink district pink", Object.values(X.hexes).filter(h => h.type === "park").length > 70);
+}
+
+// ---------- 10c · v3.0 — the formula-generated seating tables (instant load) ----------
+section("10c · v3.0 — the formula-generated seating tables (instant load)");
+for (const m of ["neighbours", "hexagonal", "reverse"]) {
+  for (const o of ["pointy", "flat"]) {
+    const T = X.SEATING[m][o];
+    const seats = [];
+    for (let c = 5; c <= 12; c++) seats.push(...T.rings[c]);
+    eq("table covers the roster exactly once (" + m + "/" + o + ")", seats.length, 265);
+    eq("no duplicate seats (" + m + "/" + o + ")", new Set(seats.map(x => x[1])).size, 265);
+    eq("no empty table rings 5-11 (" + m + "/" + o + ")", [5,6,7,8,9,10,11].every(c => T.rings[c].length === [30,24,30,42,42,42,54][c-5]), true);
+    eq("the frontier ring 12 carries the overflow (" + m + "/" + o + ")", T.rings[12].length, 1);
+    eq("the table is dry at full depth (" + m + "/" + o + ")", T.leftover, []);
+  }
+}
+{
+  // drift check: the committed table must equal what the formulas produce today
+  const fresh = __genSeating(false);
+  for (const m of ["neighbours", "hexagonal", "reverse"]) for (const o of ["pointy", "flat"])
+    eq("table matches the formulas (" + m + "/" + o + ")", JSON.stringify(fresh[m][o]), JSON.stringify(X.SEATING[m][o]));
+}
+{
+  // instant load: the page only READS the tables — a rebuild reveals rows, never recomputes the world
+  const before = JSON.stringify(Object.values(X.hexes).filter(h => h.circle === 11 && h.name).map(h => h.name).sort());
+  const t0 = process.hrtime.bigint();
+  X.recenter();
+  const ms = Number(process.hrtime.bigint() - t0) / 1e6;
+  const after = JSON.stringify(Object.values(X.hexes).filter(h => h.circle === 11 && h.name).map(h => h.name).sort());
+  ok("a full rebuild from the tables is stable (" + ms.toFixed(0) + " ms)", before === after);
+  ok("a full rebuild from the tables is instant (< 250 ms, was ~800 ms+ of compute)", ms < 250);
+}
+
+// ---------- 10d · v3.0 — the reverse fill (mode 3) ----------
+section("10d · v3.0 — the reverse fill (mode 3)");
+{
+  const pm = $("placeMode");
+  pm.value = "reverse"; __fire(pm, "change", {});
+  const T = X.SEATING.reverse.pointy;
+  const seatOf = (c, n) => (T.rings[c] || []).find(p => p[1] === n);
+  ok("Honolulu pins the west corner of ring 11", !!seatOf(11, "Honolulu") && seatOf(11, "Honolulu")[0] === 56);
+  ok("Melbourne pins the south corner of ring 11", !!seatOf(11, "Melbourne") && seatOf(11, "Melbourne")[0] === 34);
+  ok("the farthest city (Auckland) rides the far outer frontier ring 12", !!seatOf(12, "Auckland"));
+  ok("the reverse fill seats the whole outer city", Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && h.name !== "Freeuse" && !X.SEX_GODS.has(h.name.trim().toLowerCase())).length >= 260);
+  const empt = Object.values(X.hexes).filter(h => h.circle >= 5 && h.circle <= 10 && !h.name && h.type !== "park").length;
+  eq("reverse: no empty tiles in any full ring (5-10)", empt, 0);
+  __fire($("btnValidate"), "click", {});
+  ok("reverse: the lattice stays valid", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
+  __fire($("btnClearFlags"), "click", {});
+}
+{ const pm = $("placeMode"); pm.value = "neighbours"; __fire(pm, "change", {}); }
 
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");

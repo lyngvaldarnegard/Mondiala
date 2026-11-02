@@ -8,7 +8,7 @@ function __genSeating(write) {
   const X = globalThis.__X;
   const prev = { placeMode: X.placeMode, GRID_ROT: X.GRID_ROT, maxCircle: X.maxCircle };
   const out = {};
-  for (const mode of ["neighbours", "hexagonal", "reverse"]) {
+  for (const mode of ["neighbours", "hexagonal"]) {
     out[mode] = {};
     for (const rot of [30, 0]) {
       X.placeMode = mode; X.GRID_ROT = rot; X.maxCircle = 12;

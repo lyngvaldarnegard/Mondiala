@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | `main` (this push) | bookmark branch `archive/v3.0-the-map-loads` |
+| **v3.1 — the hand-picked world map** | `main` (this push) | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
 | **v1.7 — the city finds the centre** | `a69254cb` (+ the density campaign's B1 `7e04820`) | bookmark branch `archive/v1.7-the-city-finds-the-centre` |
@@ -43,6 +44,15 @@ Neighbours candidate pool capped 12→6, incremental scoring, swap refinement sa
 ## v2.1 — global lat/lon sort pass in both placement modes
 
 North up by construction (corr(lat, y) −0.58) + bounded local swap refinement — at the cost of grid-neighbour adjacency (median 1,202 → 4,925 km). Suite 618 green.
+
+## v3.1 — the hand-picked world map (the third mode)
+
+The third dropdown option is now **Hand-picked — the authored world map**, replacing the reverse fill (Sigurd's ruling: "you can ship it and replace it with the third mode in the toggle. I'll just make replacements afterwards"). Like the heart, it is authored data, not a formula: `mondiala-handpicked.js`, a hand-editable table (city → ring·hex, both orientations). Roster edits do not reflow it — a new city waits in the pool; Sigurd edits the file to make replacements.
+
+- **How it was drafted:** from the equal-rank whole-ring engine output (median 1,168 km — the best adjacency of all engines tried), then hand-corrected per Sigurd's criteria: Melbourne moved to the outer south-east edge; Auckland — the roster's farthest city — to the free south-east seat of the far outer frontier ring 12 (she waits in the pool at the shipped view, revealing on «+ Next ring»); 26 bounded direction fixes so no city sits more than ~100° off its real bearing, every swap improving both cities.
+- **The result (measured, shipped view):** Europe north-west, Asia east, Africa south, the Americas west, **Oceania south-east — east of Africa** (Sigurd's ruling: South Africa is west of Australia); median grid-neighbour 1,386 km; corr(lat, y) +0.49, corr(lon, x) +0.75; the Guangzhou cluster and The Hague–Rotterdam sit adjacent; Honolulu west, Valparaíso south-west on the outer edge.
+- The suite asserts the wedges, the periphery, the full rings and the lattice on this mode every run (684 checks).
+- The reverse-fill engine is deleted (in git history); the two formula modes are unchanged.
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

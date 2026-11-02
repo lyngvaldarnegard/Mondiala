@@ -421,7 +421,7 @@ eq("five continents", Object.keys(X.CONTINENT_COLORS).sort(), ["Africa", "Americ
 
 // ---------- 10c · v3.0 — the formula-generated seating tables (instant load) ----------
 section("10c · v3.0 — the formula-generated seating tables (instant load)");
-for (const m of ["neighbours", "hexagonal", "reverse"]) {
+for (const m of ["neighbours", "hexagonal", "handpicked"]) {
   for (const o of ["pointy", "flat"]) {
     const T = X.SEATING[m][o];
     const seats = [];
@@ -434,10 +434,11 @@ for (const m of ["neighbours", "hexagonal", "reverse"]) {
   }
 }
 {
-  // drift check: the committed table must equal what the formulas produce today
+  // drift check: the FORMULA modes' committed tables must equal what the formulas produce today (the handpicked mode is authored data — like the heart, it never recomputes)
   const fresh = __genSeating(false);
-  for (const m of ["neighbours", "hexagonal", "reverse"]) for (const o of ["pointy", "flat"])
+  for (const m of ["neighbours", "hexagonal"]) for (const o of ["pointy", "flat"])
     eq("table matches the formulas (" + m + "/" + o + ")", JSON.stringify(fresh[m][o]), JSON.stringify(X.SEATING[m][o]));
+  ok("the handpicked mode is authored, not generated", !fresh.handpicked && X.SEATING.handpicked && X.SEATING.handpicked.pointy.rings[5].length === 30);
 }
 {
   // instant load: the page only READS the tables — a rebuild reveals rows, never recomputes the world
@@ -450,21 +451,41 @@ for (const m of ["neighbours", "hexagonal", "reverse"]) {
   ok("a full rebuild from the tables is instant (< 250 ms, was ~800 ms+ of compute)", ms < 250);
 }
 
-// ---------- 10d · v3.0 — the reverse fill (mode 3) ----------
-section("10d · v3.0 — the reverse fill (mode 3)");
+// ---------- 10d · v3.1 — the hand-picked world map (mode 3, authored data) ----------
+section("10d · v3.1 — the hand-picked world map (mode 3)");
 {
   const pm = $("placeMode");
-  pm.value = "reverse"; __fire(pm, "change", {});
-  const T = X.SEATING.reverse.pointy;
-  const seatOf = (c, n) => (T.rings[c] || []).find(p => p[1] === n);
-  ok("Honolulu pins the west corner of ring 11", !!seatOf(11, "Honolulu") && seatOf(11, "Honolulu")[0] === 56);
-  ok("Melbourne pins the south corner of ring 11", !!seatOf(11, "Melbourne") && seatOf(11, "Melbourne")[0] === 34);
-  ok("the farthest city (Auckland) rides the far outer frontier ring 12", !!seatOf(12, "Auckland"));
-  ok("the reverse fill seats the whole outer city", Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && h.name !== "Freeuse" && !X.SEX_GODS.has(h.name.trim().toLowerCase())).length >= 260);
+  pm.value = "handpicked"; __fire(pm, "change", {});
+  const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && h.name !== "Freeuse" && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
+  ok("handpicked: the outer city is seated (" + outer.length + " cities)", outer.length === 264);
+  eq("handpicked: Auckland — the farthest city — waits in the pool at the shipped view", X.pool.map(p => p.name), ["Auckland"]);
   const empt = Object.values(X.hexes).filter(h => h.circle >= 5 && h.circle <= 10 && !h.name && h.type !== "park").length;
-  eq("reverse: no empty tiles in any full ring (5-10)", empt, 0);
+  eq("handpicked: no empty tiles in any full ring (5-10)", empt, 0);
+  eq("handpicked: ring 11 is full (54 cities)", Object.values(X.hexes).filter(h => h.circle === 11 && h.name && h.type !== "park").length, 54);
+  // the world map reads true: every region in its wedge (means over the seated outer city)
+  const mean = cities => {
+    const pts = cities.map(h => X.axialToPixel(h.q, h.r));
+    return { x: pts.reduce((s2, p) => s2 + p.x, 0) / pts.length, y: pts.reduce((s2, p) => s2 + p.y, 0) / pts.length };
+  };
+  const by = cc => outer.filter(h => X.continentOf(h.name) === cc);
+  const eu = mean(by("Europe")), as = mean(by("Asia")), af = mean(by("Africa")), am = mean(by("Americas")), oc = mean(by("Oceania"));
+  ok("Europe reads north-west (mean x " + eu.x.toFixed(0) + ", y " + eu.y.toFixed(0) + ")", eu.x < 0 && eu.y < 0);
+  ok("Asia reads east (mean x +" + as.x.toFixed(0) + ")", as.x > 0);
+  ok("Africa reads south (mean y +" + af.y.toFixed(0) + ")", af.y > 0);
+  ok("the Americas read west (mean x " + am.x.toFixed(0) + ")", am.x < 0);
+  ok("Oceania reads south-EAST — east of Africa, south of the centre (mean x +" + oc.x.toFixed(0) + ", y +" + oc.y.toFixed(0) + ")", oc.x > 0 && oc.y > 0 && oc.x > af.x);
+  // the far periphery on the outer edge — Auckland reveals on the far outer frontier ring
+  const seat = n => Object.values(X.hexes).find(h => h.name === n);
+  __fire($("btnNextRing"), "click", {});
+  eq("handpicked: Auckland rides the far outer frontier ring, south-east (grown to ring 12)", [seat("Auckland").circle, +X.axialToPixel(seat("Auckland").q, seat("Auckland").r).x.toFixed(0) > 0, +X.axialToPixel(seat("Auckland").q, seat("Auckland").r).y.toFixed(0) > 0], [12, true, true]);
+  __fire($("btnDropRing"), "click", {});
+  ok("Honolulu rides the outer edge, west", seat("Honolulu").circle >= 10 && X.axialToPixel(seat("Honolulu").q, seat("Honolulu").r).x < -300);
+  ok("Valparaíso rides the outer edge, south-west", seat("Valparaíso").circle >= 10 && X.axialToPixel(seat("Valparaíso").q, seat("Valparaíso").r).y > 300);
+  ok("Melbourne rides the outer edge, south-east", seat("Melbourne").circle >= 10 && X.axialToPixel(seat("Melbourne").q, seat("Melbourne").r).x > 300);
+  // real neighbours sit together (the Guangzhou cluster)
+  ok("Guangzhou and Foshan are adjacent", (() => { const a = seat("Guangzhou"), b = seat("Foshan"); return X.neighborKeys(a.q, a.r).some(([q, r]) => b.q === q && b.r === r); })());
   __fire($("btnValidate"), "click", {});
-  ok("reverse: the lattice stays valid", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
+  ok("handpicked: the lattice stays valid", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
   __fire($("btnClearFlags"), "click", {});
 }
 { const pm = $("placeMode"); pm.value = "neighbours"; __fire(pm, "change", {}); }

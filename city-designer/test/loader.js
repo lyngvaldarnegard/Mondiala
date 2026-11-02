@@ -12,7 +12,7 @@ const __scripts = [];
   while ((m = re.exec(__html))) __scripts.push({ src: m[1] || null, body: m[2] });
 }
 // expected structure: [app head (inline), the five themed data files + the generated seating table (src tags, empty), app tail (inline)]
-const __DATA_FILES = ["mondiala-heart.js", "mondiala-cities.js", "mondiala-info.js", "mondiala-facts.js", "mondiala-gods.js", "mondiala-seating.js"];
+const __DATA_FILES = ["mondiala-heart.js", "mondiala-cities.js", "mondiala-info.js", "mondiala-facts.js", "mondiala-gods.js", "mondiala-seating.js", "mondiala-handpicked.js"];
 if (__scripts.length !== 2 + __DATA_FILES.length) throw new Error("mondiala.html: expected " + (2 + __DATA_FILES.length) + " script tags, found " + __scripts.length);
 __stubSetHtmlIds([...__html.matchAll(/\bid="([^"]*)"/g)].map(m => m[1])); // real-browser semantics: only ids present in the shipped HTML exist
 const __srcs = __scripts.slice(1, -1).map(s => s.src);
@@ -31,7 +31,7 @@ const __export = `
   get placeMode() { return placeMode; }, set placeMode(v) { placeMode = v; },
   get COMPASS_KM() { return COMPASS_KM; }, set COMPASS_KM(v) { COMPASS_KM = v; },
   get viewMode() { return viewMode; },
-  continentOf, CONTINENT_COLORS, eyeTrueDir, fillReverse, readSeating,
+  continentOf, CONTINENT_COLORS, eyeTrueDir, readSeating,
   compassSeat, fillWorldPlan, RING4_ORIGINALS,
   get centerMode() { return centerMode; }, set centerMode(v) { centerMode = v; },
   get selected() { return selected; }, set selected(v) { selected = v; },

@@ -102,7 +102,7 @@
       <select id="placeMode">
         <option value="neighbours" selected>Neighbours (default) — greedy closest-city score with a compass sense; every old-ring city borders one of its 6 closest remaining</option>
         <option value="hexagonal">Hexagonal — centre placed so each 60° sector fills all its ring hexes; sections filled with the closest remaining cities, compass included</option>
-        <option value="reverse">Reverse fill — the farthest cities seed the outer ring (the corners pinned to the compass extremes), then the front fills ring by ring inward to the heart</option>
+        <option value="handpicked">Hand-picked — the authored world map: every region in its true wedge (Europe north-west, Asia east, Africa south, the Americas west, Oceania south-east), authored data, edited by hand in the data file</option>
       </select>
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
     </div>
@@ -137,9 +137,10 @@ const TYPES = {
 <script src="mondiala-facts.js"></script>
 <script src="mondiala-gods.js"></script>
 <script src="mondiala-seating.js"></script>
+<script src="mondiala-handpicked.js"></script>
 <script>
 const centerMode = "geo"; // the centre-mode dropdown is deleted: the plain geographic midpoint is the only centre; placement modes may adjust it themselves (hexagonal)
-let placeMode = "neighbours"; // "neighbours" (default) · "hexagonal" · "reverse" (outside-in) — the three placement modes
+let placeMode = "neighbours"; // "neighbours" (default) · "hexagonal" · "handpicked" (the authored world map) — the three placement modes
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
@@ -450,8 +451,8 @@ function fillWorldPlan(center, cands) { // v3.0: three placement modes, all city
     const hc = hexagonalCenter(center, cands); // centre PLACED so each 60-degree sector can fill all its ring hexes
     return fillHexagonal(hc, cands);
   }
-  if (placeMode === "reverse") return fillReverse(center, cands);
-  return fillNeighbours(center, cands); // default
+  return fillNeighbours(center, cands); // default (the handpicked mode ships as authored data — mondiala-handpicked.js — and never computes here)
+
 }
 function hexagonalCenter(center, cands) { // place the centre so every 60-degree sector holds enough cities to fill all its hexes in every ring: local search minimizing the worst sector deficit
   const slotsPerSector = {}; // per ring, free slots per 60-degree sector
@@ -645,69 +646,6 @@ function fillNeighbours(center, cands) { // v1.15 RULE A ("greedy" mode): first 
   }
   const seatedNames = new Set(Object.keys(seatedPos));
   return { plan, leftover: withBD.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
-}
-function fillReverse(center, cands) { // v3.0 mode 3 — the reverse fill (Sigurd's design, locked): the farthest cities from Mondiala land on the far outer frontier ring, the six directional extremes pin the outermost full ring's corners (eye-true direction from lon/lat deltas — never great-circle bearing, which lies at extreme range), then the front fills ring by ring inward, greedily by real km, until it stops against the hand-authored heart. No re-sort ever — the inward chains are the entire point.
-  const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
-  const remaining = new Set(cands);
-  const seatedPos = {}; const hexAt = {};
-  const gcKm = (a, b) => greatCircleKm({ lat: coordOf(a)[0], lon: coordOf(a)[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] });
-  const slotPos = {}; for (let c = 5; c <= maxCircle; c++) ringPositions(c).forEach(rp => slotPos[c + "#" + rp.num] = rp);
-  const ordinary = c => ringPositions(c).filter(p => !(PINK_SLOTS[c] || []).includes(p.num));
-  const seat = (name, c, num) => { const p = slotPos[c + "#" + num]; seatedPos[name] = p; hexAt[p.q + "," + p.r] = name; };
-  // rank the whole roster by real great-circle km from the world centre, farthest first
-  const rank = [...cands].map(n => ({ n, d: bearingDist(center, n).dist })).sort((a, b) => b.d - a.d);
-  // the frontier (far outer) ring catches the overflow — the roster's farthest cities land on the one ring with empty tiles
-  const innerSeats = {}; let innerTotal = 0;
-  for (let c = 5; c < maxCircle; c++) { innerSeats[c] = ordinary(c).length; innerTotal += innerSeats[c]; }
-  const frontierCount = Math.min(Math.max(0, cands.length - innerTotal), ordinary(maxCircle).length);
-  const freeOrdinary = c => ordinary(c).filter(p => !plan[c].some(pr => pr[0] === p.num));
-  const takeByDir = (name, c) => { // the free ordinary slot whose on-screen direction best matches the city's eye-true direction
-    let best = null, bestD = Infinity;
-    for (const p of freeOrdinary(c)) { const d = dirDiff(eyeTrueDir(center, name), slotAngleOf(p)); if (d < bestD) { bestD = d; best = p; } }
-    return best;
-  };
-  for (let i = 0; i < frontierCount; i++) { const n = rank[i].n; const p = takeByDir(n, maxCircle); if (!p) break; plan[maxCircle].push([p.num, n]); seat(n, maxCircle, p.num); remaining.delete(n); }
-  // the six corners of the outermost FULL ring, pinned to the roster's directional extremes (lon/lat deltas, never bearing)
-  const seedRing = maxCircle - 1;
-  if (seedRing >= 6 && remaining.size) {
-    const cornerNums = [0, 1, 2, 3, 4, 5].map(k => 1 + k * seedRing);
-    // corner k sits at compass angle [0, 60, 120, 180, 240, 300] (num 1 at the top, clockwise): N, NE, SE, S, SW, W
-    const norm = n => { const c2 = coordOf(n); return { u: (c2[1] - center.lon) / 180, v: (c2[0] - center.lat) / 90 }; }; // eye-true direction components (lon/lat deltas, never bearing)
-    const pins = [
-      [0, ns => ns.v],   // north corner: the northernmost city
-      [3, ns => -ns.v],  // south corner: the southernmost (Melbourne)
-      [5, ns => -ns.u],  // west corner: the westernmost (Honolulu)
-      [2, ns => ns.u],   // the eastern extreme (Auckland) takes the corner her direction points at: south-east
-      [1, ns => ns.u + ns.v],  // north-east: the strongest remaining NE extreme
-      [4, ns => -(ns.u + ns.v)] // south-west: the strongest remaining SW extreme
-    ];
-    for (const [k, score] of pins) {
-      let bestN = null, bestS = -Infinity;
-      for (const n of remaining) { const s = score(norm(n)); if (s > bestS) { bestS = s; bestN = n; } }
-      if (bestN != null) { plan[seedRing].push([cornerNums[k], bestN]); seat(bestN, seedRing, cornerNums[k]); remaining.delete(bestN); }
-    }
-  }
-  // fill the rest of the seed ring by the distance rank, then ring by ring inward — each city takes the free slot whose seated real neighbours are closest in real km (the inward chains)
-  for (let c = seedRing; c >= 5; c--) {
-    for (const pick of rank) {
-      if (!remaining.has(pick.n)) continue;
-      if (!freeOrdinary(c).length) break;
-      let best = null, bestScore = Infinity;
-      for (const p of freeOrdinary(c)) {
-        const nbrs = neighborKeys(p.q, p.r).map(kk => hexAt[kk]).filter(Boolean);
-        const dir = dirDiff(eyeTrueDir(center, pick.n), slotAngleOf(p));
-        let sc;
-        if (nbrs.length) sc = dir * 1e6 + nbrs.reduce((s2, nb) => s2 + gcKm(pick.n, nb), 0) / nbrs.length; // the km-plausible slots first (mean real km to the seated neighbours), then the compass decides within them — the chains carry it down to the heart
-        else sc = dir * 1e6 + 1e6; // no neighbour yet: follow the compass
-        if (sc < bestScore - 1e-9) { bestScore = sc; best = p; }
-      }
-      if (!best) continue;
-      plan[c].push([best.num, pick.n]); seat(pick.n, c, best.num); remaining.delete(pick.n);
-      if (!freeOrdinary(c).length) break;
-    }
-  }
-  const seatedNames = new Set(Object.keys(seatedPos));
-  return { plan, leftover: cands.filter(n => !seatedNames.has(n)) };
 }
 function computeWorldPlan() { // the centre is FIXED per centre mode: the heart's real cities plus the whole roster — never the tiled subset, so adding rings never moves Mondiala on Earth
   const cands = [];

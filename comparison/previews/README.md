@@ -30,3 +30,10 @@ These use the whole-ring engine: hard rule (every old-ring city borders one of i
 | [WREQ](WREQ.svg) | EQUAL-RANK — km-rank + direction-rank co-equal, no number | 1,168 | +0.42 | +0.67 |
 | [WR3000](WR3000.svg) | compass 3000 | 1,201 | +0.36 | +0.51 |
 | [WR4500](WR4500.svg) | compass 4500 | 1,187 | +0.28 | +0.64 |
+
+
+## The shipped hand-picked world map (v3.1, mode 3)
+
+| Preview | What | Median km | corr(lat, y) | corr(lon, x) |
+|---|---|---|---|---|
+| [HAND](HAND.svg) | **Shipped** — the authored world map (drafted from the equal-rank engine output + hand corrections) | 1,386 | +0.49 | +0.75 |

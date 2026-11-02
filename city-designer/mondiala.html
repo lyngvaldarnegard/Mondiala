@@ -521,10 +521,10 @@ function fillHexagonal(center, cands) { // each ring split into six 60-degree se
       const cityN = cities.map(n => { const co = coordOf(n); return { x: (co[1] - mnlo) / (mxlo - mnlo), y: 1 - (co[0] - mnla) / (mxla - mnla) }; });
       const err = (ci, si) => Math.abs(cityN[ci].x - slotN[si].x) + Math.abs(cityN[ci].y - slotN[si].y);
       let improved = true, g = 0;
-      while (improved && g++ < 6) {
+      while (improved && g++ < 3) {
         improved = false;
-        for (let a = 0; a < slots.length; a++) for (let b = a + 1; b < slots.length; b++) {
-          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; cityN[a] = cityN[b] = cityN[a]; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
+        for (let a = 0; a < slots.length; a++) { const b = (a + 1 + ((a * 7919) % Math.max(1, slots.length - 1))) % slots.length; // sampled pairs, not full O(n^2)
+          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
         }
       }
       for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }
@@ -611,12 +611,22 @@ function fillNeighbours(center, cands) { // v1.15 RULE A ("greedy" mode): first 
       const slPos = slotPos[c + "#" + sl.num];
       const seatedKeys = neighborKeys(slPos.q, slPos.r).map(kk => hexAt[kk]).filter(Boolean);
       const aCo = coordOf(seatedKeys[0] || Object.keys(seatedPos)[0] || [...remaining][0]);
-      const pool = [...remaining].sort((a, b) => greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(a)[0], lon: coordOf(a)[1] }) - greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] })).slice(0, 12);
+      const pool = [...remaining].sort((a, b) => greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(a)[0], lon: coordOf(a)[1] }) - greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] })).slice(0, 6);
       const before = oldRingScore(c);
       let bestName = null, bestGain = -Infinity, fallback = null, fallbackGain = -Infinity;
       for (const name of pool) {
         seat(name, c, sl.num);
-        const gain = oldRingScore(c) - before;
+        // incremental: only the candidate's bordered old-ring neighbors change score
+        const p2 = slotPos[c + "#" + sl.num];
+        const affected = neighborKeys(p2.q, p2.r).map(kk => hexAt[kk]).filter(Boolean).filter(n2 => ringOf(n2) === c - 1);
+        let gain = 0;
+        for (const on of affected) {
+          const ranked = Object.keys(seatedPos).filter(n2 => ringOf(n2) === c).map(o => ({ o, d: gcKm(on, o) })).sort((x, y) => x.d - y.d);
+          const ns = new Set(nbrNames(on));
+          let s2 = 0; ranked.forEach((r, i2) => { if (ns.has(r.o)) s2 += 1 / (i2 + 1); });
+          gain += s2;
+        }
+        gain -= affected.reduce((s2, on) => s2 + 0, 0);
         const ok = hardRuleOK(c);
         unseat(name, c, sl.num);
         if (ok && gain > bestGain) { bestGain = gain; bestName = name; }
@@ -643,10 +653,10 @@ function fillNeighbours(center, cands) { // v1.15 RULE A ("greedy" mode): first 
       const cityN = cities.map(n => { const co = coordOf(n); return { x: (co[1] - mnlo) / (mxlo - mnlo), y: 1 - (co[0] - mnla) / (mxla - mnla) }; });
       const err = (ci, si) => Math.abs(cityN[ci].x - slotN[si].x) + Math.abs(cityN[ci].y - slotN[si].y);
       let improved = true, g = 0;
-      while (improved && g++ < 6) {
+      while (improved && g++ < 3) {
         improved = false;
-        for (let a = 0; a < slots.length; a++) for (let b = a + 1; b < slots.length; b++) {
-          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; cityN[a] = cityN[b] = cityN[a]; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
+        for (let a = 0; a < slots.length; a++) { const b = (a + 1 + ((a * 7919) % Math.max(1, slots.length - 1))) % slots.length; // sampled pairs, not full O(n^2)
+          if (err(a, b) + err(b, a) < err(a, a) + err(b, b) - 1e-9) { const t = cities[a]; cities[a] = cities[b]; cities[b] = t; const t2 = cityN[a]; cityN[a] = cityN[b]; cityN[b] = t2; improved = true; }
         }
       }
       for (let k = 0; k < slots.length; k++) { const p = slots[k].p; hexAt[p.q + "," + p.r] = cities[k]; seatedPos[cities[k]] = p; }

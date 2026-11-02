@@ -296,48 +296,31 @@ function placeRow(pos, row) {
   const key = pos.q + "," + pos.r;
   hexes[key] = { q: pos.q, r: pos.r, circle: row[0], num: pos.num, name: row[2], density: row[3], type: "district", notes: "", style: "" };
 }
-function repairProximity() { // each outer city should border one of its 6 closest outer cities (great-circle km, coordinates only); delta-based greedy swaps, bounded passes
+function repairProximity() { // each outer city should border one of its 2 closest outer cities (great-circle km, coordinates only); greedy swaps accepted on any total-violation decrease
   const outer = Object.values(hexes).filter(h => h.circle >= 5 && h.name && coordOf(h.name) && !SEX_GODS.has(h.name.trim().toLowerCase()));
   const n = outer.length;
   if (n < 2) return;
-  const key = h => h.q + "," + h.r;
   const coord = h => coordOf(h.name);
-  const near6byName = {};
+  const nearKbyName = {};
   outer.forEach(a => {
     const co = coord(a);
-    near6byName[a.name] = new Set(outer.filter(b => b.name !== a.name)
+    nearKbyName[a.name] = new Set(outer.filter(b => b.name !== a.name)
       .map(b => ({ n: b.name, d: greatCircleKm({ lat: co[0], lon: co[1] }, { lat: coord(b)[0], lon: coord(b)[1] }) }))
-      .sort((x, y) => x.d - y.d).slice(0, 6).map(x => x.n));
+      .sort((x, y) => x.d - y.d).slice(0, 2).map(x => x.n));
   });
-  const nbrs = outer.map(h => neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean).map(h2 => h2.name));
-  const viol = i => [...near6byName[outer[i].name]].some(nm => nbrs[i].includes(nm)) ? 0 : 1;
-  const v = outer.map((_, i) => viol(i));
-  const total = () => v.reduce((s, x) => s + x, 0);
+  const viol = h => { const ns = neighborKeys(h.q, h.r).map(k => hexes[k]).filter(Boolean).map(h2 => h2.name); return [...nearKbyName[h.name]].some(nm => ns.includes(nm)) ? 0 : 1; };
+  let cur = outer.reduce((s2, h) => s2 + viol(h), 0);
   let guard = 0;
-  while (guard++ < 400) {
-    const before = total();
+  while (guard++ < 12) {
     let improved = false;
-    outerLoop:
-    for (let i = 0; i < n; i++) {
-      for (let j = i + 1; j < n; j++) {
-        if (v[i] + v[j] === 0) continue;
-        // swap names in place, recompute only affected violation flags
-        const tmpN = outer[i].name, tmpD = outer[i].density;
-        outer[i].name = outer[j].name; outer[i].density = outer[j].density;
-        outer[j].name = tmpN; outer[j].density = tmpD;
-        const ni = viol(i), nj = viol(j);
-        // neighbors of i and j may change too — recompute those lazily
-        const changed = [i, j];
-        nbrs[i].forEach(k => { const h = hexes[k]; const idx = outer.indexOf(h); if (idx > -1 && !changed.includes(idx)) changed.push(idx); });
-        nbrs[j].forEach(k => { const h = hexes[k]; const idx = outer.indexOf(h); if (idx > -1 && !changed.includes(idx)) changed.push(idx); });
-        const oldV = changed.map(idx => v[idx]);
-        changed.forEach(idx => { v[idx] = viol(idx); });
-        if (total() < before) { improved = true; break outerLoop; }
-        // revert
-        const t2N = outer[i].name, t2D = outer[i].density;
-        outer[i].name = outer[j].name; outer[i].density = outer[j].density;
-        outer[j].name = t2N; outer[j].density = t2D;
-        changed.forEach((idx, k) => { v[idx] = oldV[k]; });
+    for (let i = 0; i < n && !improved; i++) {
+      for (let j = i + 1; j < n && !improved; j++) {
+        const a = outer[i], b = outer[j];
+        const tN = a.name, tD = a.density;
+        a.name = b.name; a.density = b.density; b.name = tN; b.density = tD;
+        const next = outer.reduce((s2, h) => s2 + viol(h), 0);
+        if (next < cur) { cur = next; improved = true; }
+        else { const rN = a.name, rD = a.density; a.name = b.name; a.density = b.density; b.name = rN; b.density = rD; }
       }
     }
     if (!improved) break;
@@ -475,8 +458,8 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
   for (let c = 5; c <= maxCircle; c++) worldSlots(c).forEach(sl => slots.push({ c, num: sl.num, a: sl.a }));
   slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
-  if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings
-    const take = ranked.slice(0, slots.length).sort((a, b) => a.bearing - b.bearing || a.dist - b.dist);
+  if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings; v1.11: the band is ordered by bearing, but within each ~12° direction window cities go near-to-far, so a far city (e.g. an American one) never sits inside a near city's (e.g. a European one's) sector
+    const take = ranked.slice(0, slots.length);
     const pairs = compassSeat(take.map(x => ({ key: x.n, b: x.bearing, dist: x.dist })), slots.map(sl => sl.a));
     pairs.forEach(pair => plan[slots[pair[1]].c].push([slots[pair[1]].num, pair[0].key]));
   } else { // the frontier: fewer cities than slots — fill ring by ring inner to outer so only the outmost ring can run empty, each ring still bearing-anchored

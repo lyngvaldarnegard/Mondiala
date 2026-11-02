@@ -23,6 +23,15 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.10 — the centre is fixed on Earth
+
+Mondiala's spot no longer drifts when rings are added or removed:
+
+- **Fixed centre**: `computeWorldPlan()` now computes the centre once per mode from the heart's real cities plus the FULL roster — never from the tiled subset — so `maxCircle` only changes which cities are shown, never where Mondiala sits (verified: identical centre at ring 0, 11 and 12)
+- **All 8 remaining heart names gained coordinates** (Metropol, the six ring-1 civilisations, Uruk, Chang'an; China pinned at Nanjing 32.06, 118.8) — they pull the centre but stay off the roster; null facts fall back to the default 500k pop / 70 livability / 50 walk weights, so pop and great modes are unaffected in kind
+- **New centre spots**: geo 48.32165, 22.45055 (Ukraine) · pop 44.86027, 64.13385 (Uzbekistan) · great 49.75246, 25.72213 (Ukraine)
+- Suite: **777 checks, all green**
+
 ## v1.9 — the ancient ring re-seated by apex
 
 Ring 2 is re-seated and ring 1's Egypt and Mesopotamia swap places:

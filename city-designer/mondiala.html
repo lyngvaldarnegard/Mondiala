@@ -468,21 +468,12 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
   for (let c = 5; c <= maxCircle; c++) plan[c].forEach(pair => seatedNames.add(pair[1]));
   return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
 }
-function computeWorldPlan() { // v1.7 "the city finds the centre": the heart's real cities pull, every tiled city pulls, and the centre settles by iteration
+function computeWorldPlan() { // the centre is FIXED per centre mode: the heart's real cities plus the whole roster — never the tiled subset, so adding rings never moves Mondiala on Earth
   const cands = [];
   WORLD_CITIES.concat(extraCities.map(c => c.name)).forEach(n => { if (coordOf(n) && cands.indexOf(n) === -1) cands.push(n); });
   const heart = RAW.filter(r => Array.isArray(r) && r[2] && coordOf(r[2])).map(r => r[2]); // the heart's own real cities — their real-life location pulls the centre too
-  let center = computeCenter(heart.concat(cands)); // the boot centre: the whole world before the first seating
-  let out = fillWorldPlan(center, cands);
-  for (let it = 0; it < 30; it++) { // re-seat, re-centre, repeat — until the centre settles
-    const seated = [];
-    for (let c = 5; c <= maxCircle; c++) (out.plan[c] || []).forEach(p => seated.push(p[1]));
-    const next = computeCenter(heart.concat(seated)); // the heart plus exactly the cities tiled in the current view
-    const moved = Math.abs(next.lat - center.lat) >= 1e-9 || Math.abs(next.lon - center.lon) >= 1e-9;
-    center = next;
-    out = fillWorldPlan(center, cands);
-    if (!moved) break; // the seated set reproduces its own centre — the city has found its centre
-  }
+  const center = computeCenter(heart.concat(cands)); // one fixed spot per mode: heart + full roster
+  const out = fillWorldPlan(center, cands);
   return { plan: out.plan, center, leftover: out.leftover };
 }
 

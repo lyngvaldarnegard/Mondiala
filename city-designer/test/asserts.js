@@ -136,7 +136,7 @@ ok("clear flags works", document.querySelectorAll(".flag-nopark").length === 0);
 // ---------- 6 · centres ----------
 section("6 · centres");
 const setMode = (m) => { $("centerMode").value = m; __fire($("centerMode"), "change", {}); };
-const spots = { geo: ["48.19561479", "21.71451550", "Hungary"], pop: ["44.82975194", "64.21301625", "Uzbekistan"], great: ["49.63609768", "25.10507663", "Ukraine"] };
+const spots = { geo: ["48.32165472", "22.45054520", "Ukraine"], pop: ["44.86026890", "64.13385411", "Uzbekistan"], great: ["49.75245818", "25.72212644", "Ukraine"] };
 for (const m of Object.keys(spots)) {
   setMode(m);
   const [lat, lon, country] = spots[m];
@@ -225,6 +225,15 @@ for (let i = 0; i < 11; i++) __fire($("btnNextRing"), "click", {});
 eq("re-grown to ring 11 (the shipped view)", X.maxCircle, 11);
 eq("hexes re-grown", Object.keys(X.hexes).length, 397);
 eq("pool re-settled", X.pool.length, 1);
+{
+  const c0 = X.worldCenter.lat.toFixed(8) + "," + X.worldCenter.lon.toFixed(8);
+  __fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {});
+  const c12 = X.worldCenter.lat.toFixed(8) + "," + X.worldCenter.lon.toFixed(8);
+  for (let i = 0; i < 12; i++) __fire($("btnDropRing"), "click", {});
+  const cBack = X.worldCenter.lat.toFixed(8) + "," + X.worldCenter.lon.toFixed(8);
+  for (let i = 0; i < 11; i++) __fire($("btnNextRing"), "click", {});
+  eq("the centre is fixed — adding/removing rings never moves Mondiala on Earth", c0 === c12 && c0 === cBack, true);
+}
 X.recenter();
 
 // ---------- 7c · the horizon lattice & the favourites rule (grown to ring 11) ----------

@@ -23,6 +23,15 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v2.0 — two placement modes, city-to-city real km, no hex coordinates
+
+The outer city is placed purely by real great-circle km between cities — hexes have no coordinates, and the old bearing/radius projection is deleted entirely. The centre-mode dropdown is deleted; the plain geographic midpoint is the only centre (each mode may adjust its own).
+
+- **Neighbours (default)**: greedy 1/rank closest-city scoring; hard rule — every city on the previous ring borders at least one of its six closest remaining candidates.
+- **Hexagonal**: the centre is placed so each 60° sector holds enough cities to fill all its ring hexes (no empty tiles outside the frontier ring); each ring's sectors filled with the closest remaining cities to the previous ring in that sector; surplus spills to later rings.
+- Deleted: latlon / direction / distance / hybrid modes, the centre-mode dropdown, the repair pass, and all temporary hex coordinates.
+- Suite: **618 checks, all green**
+
 ## v1.16 — TRUE MAP: lat/lon grid is the default placement
 
 The outer city is now laid out as a real world map: each free outer hex is assigned a (lon, lat) position spanning the roster's own extent (x = longitude, y = latitude, north up), and every city takes the free hex nearest its real coordinates — so neighbours on the map are neighbours on Earth, and "north of" is literally up (verified: Taipei sits below Kyiv; corr(latitude, screen-y) = -0.61; zero empty tiles in rings 5–10). Hexagonal, Neighbours, Direction, Distance and Hybrid remain as alternative placement modes in the dropdown.

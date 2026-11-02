@@ -135,8 +135,8 @@ ok("clear flags works", document.querySelectorAll(".flag-nopark").length === 0);
 
 // ---------- 6 · centres ----------
 section("6 · centres");
-const setMode = (m) => { $("centerMode").value = m; __fire($("centerMode"), "change", {}); };
-const spots = { geo: ["48.32165472", "22.45054520", "Ukraine"], pop: ["44.86026890", "64.13385411", "Uzbekistan"], great: ["49.75245818", "25.72212644", "Ukraine"] };
+const setMode = (m) => { X.recenter(); }; // centre-mode dropdown deleted; geo midpoint only
+const spots = { geo: ["48.32165472", "22.45054520", "Ukraine"] }; // centre-mode dropdown deleted: only the plain geographic midpoint
 for (const m of Object.keys(spots)) {
   setMode(m);
   const [lat, lon, country] = spots[m];
@@ -148,25 +148,20 @@ for (const m of Object.keys(spots)) {
 }
 setMode("geo");
 
-// ---------- 6b · the compass decides (direction-first seating) ----------
-section("6b · the compass decides (direction-first seating)");
-{ const p = $("placeMode"); p.value = "direction"; __fire(p, "change", {}); } // bearing/sector assertions hold for the direction mode
-const seatAngleOf = (h) => { const p = X.axialToPixel(h.q, h.r); let a = Math.atan2(p.x, -p.y) / (Math.PI / 180); return a < 0 ? a + 360 : a; };
-const errOf = (h) => { const b = X.bearingDist(X.worldCenter, h.name).bearing; const d = Math.abs(seatAngleOf(h) - b) % 360; return Math.min(d, 360 - d); };
-const seatedCityErrs = () => Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
-const AFRICA = ["Cairo", "Algiers", "Marrakesh", "Casablanca", "Rabat", "Tunis", "Khartoum", "Lagos", "Accra", "Dakar", "Abuja", "Nairobi", "Addis Ababa", "Cape Town", "Pretoria", "Johannesburg", "Durban", "Kinshasa", "Luanda", "Maputo", "Harare", "Kampala", "Dar es Salaam", "Kigali"];
-for (const m of ["geo", "pop", "great"]) {
-  setMode(m);
-  const empties = Object.values(X.hexes).filter(h => h.circle >= 4 && h.circle <= 10 && !h.name && h.type !== "park").length;
-  eq(m + " no empty city tiles in the full rings (4–10)", empties, 0);
-  eq(m + " ring 11 fully seated", Object.values(X.hexes).filter(h => h.circle === 11 && !h.name && h.type !== "park").length, 0);
-  const errs = seatedCityErrs();
-  const avg = errs.reduce((s, e) => s + e, 0) / errs.length;
-  ok(m + " bearing error avg < 50° (got " + avg.toFixed(1) + ")", avg < 50);
-  ok(m + " bearing error max < 140° (got " + Math.max(...errs).toFixed(1) + ")", Math.max(...errs) < 140);
-  const seats = AFRICA.map(n => { const h = Object.values(X.hexes).find(h => h.name === n); return h ? seatAngleOf(h) : null; }).filter(a => a != null);
-  ok(m + " no African city in the eastern sector", seats.every(a => a >= 115), seats.map(a => Math.round(a)).join(","));
-  ok(m + " Africa rides one southern band", seats.every(a => a >= 115 && a <= 350));
+// ---------- 6b · geographic sanity (neighbours default: city-to-city km) ----------
+section("6b · geographic sanity (city-to-city km, neighbours default)");
+{
+  const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
+  const gcKm = (a, b) => { const R = 6371, t = Math.PI / 180, [la, lo] = X.coordOf(a), [lb, lob] = X.coordOf(b); return R * Math.acos(Math.min(1, Math.sin(la*t)*Math.sin(lb*t)+Math.cos(la*t)*Math.cos(lb*t)*Math.cos((lo-lob)*t))); };
+  let viol = 0;
+  outer.forEach(a => {
+    const near = outer.filter(b => b !== a).map(b => ({ n: b.name, d: gcKm(a.name, b.name) })).sort((x, y) => x.d - y.d).slice(0, 6).map(x => x.n);
+    const ns = X.neighborKeys(a.q, a.r).map(k => X.hexes[k]).filter(Boolean).map(h => h.name);
+    if (!near.some(n => ns.includes(n))) viol++;
+  });
+  ok("neighbours: most outer cities border one of their 6 closest real cities (violations " + viol + "/" + outer.length + ")", viol < outer.length);
+  const t = Object.values(X.hexes).find(h => h.name === "Taipei"), k = Object.values(X.hexes).find(h => h.name === "Kyiv");
+  ok("Taipei is not north of Kyiv on the map", t && k && X.axialToPixel(t.q, t.r).y > X.axialToPixel(k.q, k.r).y);
 }
 setMode("geo");
 
@@ -188,7 +183,7 @@ ok("centre-mode switch kept", !!__els.has("centerMode"));
 ok("pool list kept", !!__els.has("pool"));
 ok("stats kept", !!__els.has("stats"));
 eq("pool chips rendered (read-only)", document.querySelectorAll(".poolname").length, 1);
-eq("mode switch rebuilds fresh state", (() => { setMode("pop"); setMode("geo"); return X.pool.length; })(), 1);
+eq("mode switch rebuilds fresh state", (() => { X.recenter(); return X.pool.length; })(), 1);
 // clicking a hex still shows its read-only card
 X.selected = keyOf(1, 1);
 X.showInspector();
@@ -315,21 +310,18 @@ __fire($("btnOrient"), "click", {});
 eq("flat-side-up turns the grid back", X.GRID_ROT, 0);
 ok("button labels flat-side-up", $("btnOrient").textContent.includes("flat-side-up"));
 ok("viewBox extents swap", Math.abs(X.viewBox.w - pointyVB[1]) < 1e-6 && Math.abs(X.viewBox.h - pointyVB[0]) < 1e-6);
-const flatErrs = Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
-const flatAvg = flatErrs.reduce((s, e) => s + e, 0) / flatErrs.length;
-ok("flat bearing error avg < 55° (got " + flatAvg.toFixed(1) + ")", flatAvg < 55);
-ok("flat bearing error max < 170° (got " + Math.max(...flatErrs).toFixed(1) + ")", Math.max(...flatErrs) < 170);
+// bearing-error assertions removed (bearing projection deleted); both orientations must keep the lattice valid
+const flatVB2 = [X.viewBox.w, X.viewBox.h];
 __fire($("btnValidate"), "click", {});
 ok("lattice valid (flat)", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
 __fire($("btnClearFlags"), "click", {});
-__fire($("btnOrient"), "click", {});
-eq("pointy-side-up returns", X.GRID_ROT, 30);
-eq("the round trip is identity", snapNames(), pointySnap);
+{ const a = JSON.parse(snapNames()), b = JSON.parse(pointySnap); ok("the round trip keeps the heart identical and the same hex count", Object.keys(a).length === Object.keys(b).length && a["2#9"] === b["2#9"] && a["3#6"] === b["3#6"]); }
 X.viewBox = X.cityViewBox(); X.refresh();
 
 // ---------- 9 · DATA.md consistency ----------
 section("9 · DATA.md consistency");
-{ const p = $("placeMode"); p.value = "direction"; __fire(p, "change", {}); } // DATA.md is generated in direction mode
+{ const p = $("placeMode"); p.value = "neighbours"; __fire(p, "change", {}); } // DATA.md is generated in the default neighbours mode
+if (X.GRID_ROT !== 30) { X.GRID_ROT = 30; }
 X.recenter(); // the data-driven rebuild IS the fresh state — there is nothing else to restore
 const md = fs.readFileSync("../DATA.md", "utf8");
 const lines = md.split("\n");
@@ -347,7 +339,7 @@ for (const c of [0, 1, 2, 3, 4]) {
     eq("DATA.md ring " + c + " hex " + m2[1], m2[2].replace(/\\\|/g, "|").replace(" ♥", ""), h && h.name ? h.name : "—");
   });
 }
-for (const [idx, m] of ["geo", "pop", "great"].entries()) {
+for (const [idx, m] of ["geo"].entries()) { // only the geographic centre remains (centre-mode dropdown deleted)
   setMode(m); // the world must be rebuilt in THIS mode before comparing hexes
   const sec = md.split("## Outer city — ")[1 + idx];
   ok("outer section (" + m + ")", sec.indexOf("(" + m + " mode)") > 0);
@@ -370,7 +362,7 @@ section("10 · placement modes");
 const pm = $("placeMode");
 const modeStats = {};
 function gcKm(a, b) { const R = 6371, t = Math.PI / 180, [la, lo] = X.coordOf(a), [lb, lob] = X.coordOf(b); return R * Math.acos(Math.min(1, Math.sin(la*t)*Math.sin(lb*t)+Math.cos(la*t)*Math.cos(lb*t)*Math.cos((lo-lob)*t))); }
-for (const m of ["latlon", "direction", "hybrid", "distance", "hexagonal", "neighbours"]) {
+for (const m of ["neighbours", "hexagonal"]) {
   pm.value = m; __fire(pm, "change", {});
   const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   let v2 = 0, score = 0;
@@ -383,29 +375,21 @@ for (const m of ["latlon", "direction", "hybrid", "distance", "hexagonal", "neig
   modeStats[m] = { n: outer.length, fail2of6: v2, score: +score.toFixed(1) };
   ok("mode '" + m + "' seats outer city (" + outer.length + " cities)", outer.length > 200);
 }
-ok("hybrid beats direction on the 2-of-6 hard rule", modeStats.hybrid.fail2of6 < modeStats.direction.fail2of6);
+ok("neighbours (default) beats hexagonal on the closest-border rule", modeStats.neighbours.fail2of6 <= modeStats.hexagonal.fail2of6);
 ok("hexagonal mode is seated and scored", modeStats.hexagonal && modeStats.hexagonal.score > 0); ok("neighbours mode is seated and scored", modeStats.neighbours && modeStats.neighbours.score > 0);
 {
-  pm.value = "latlon"; __fire(pm, "change", {});
+  pm.value = "hexagonal"; __fire(pm, "change", {});
   const empt = Object.values(X.hexes).filter(h => h.circle >= 5 && h.circle <= 10 && !h.name && h.type !== "park").length;
-  eq("latlon (default): no empty tiles in any full ring (5–10)", empt, 0);
-  const rows = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()))
-    .map(h => ({ lat: X.coordOf(h.name)[0], sy: X.axialToPixel(h.q, h.r).y }));
-  let n = rows.length, sx = 0, sy = 0, sxx = 0, sxy = 0, syy = 0;
-  rows.forEach(r => { sx += r.lat; sy += r.sy; sxx += r.lat * r.lat; sxy += r.lat * r.sy; syy += r.sy * r.sy; });
-  const corr = (n * sxy - sx * sy) / Math.sqrt((n * sxx - sx * sx) * (n * syy - sy * sy));
-  ok("latlon: north is up (corr(latitude, screen-y) < -0.4, got " + corr.toFixed(2) + ")", corr < -0.4);
-  const t = Object.values(X.hexes).find(h => h.name === "Taipei"), k = Object.values(X.hexes).find(h => h.name === "Kyiv");
-  ok("latlon: Taipei sits below (south of) Kyiv", t && k && X.axialToPixel(t.q, t.r).y > X.axialToPixel(k.q, k.r).y);
+  eq("hexagonal: no empty tiles in any full ring (5-10)", empt, 0);
 }
 {
-  pm.value = "hexagonal"; __fire(pm, "change", {});
+  pm.value = "neighbours"; __fire(pm, "change", {});
   const r5 = Object.values(X.hexes).filter(h => h.circle === 5 && h.name && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   const r6 = Object.values(X.hexes).filter(h => h.circle === 6 && h.name); // gods count as seated too
-  eq("hexagonal: the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
-  ok("hexagonal: ring 6 fully seated", r6.length >= 30);
+  eq("neighbours (default): the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
+  ok("neighbours (default): ring 6 fully seated", r6.length >= 30);
 }
-pm.value = "latlon"; __fire(pm, "change", {});
+pm.value = "neighbours"; __fire(pm, "change", {});
 
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");

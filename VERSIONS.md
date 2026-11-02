@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | `main` (this push) | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.5 — the cleanup: 210 cities, rings 0-10** | `main` (this push) | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -76,6 +76,15 @@ The neighbours mode now runs Sigurd's actual design, restored: each ring is deci
 - Auckland — the roster's farthest city (18,111 km) — rides the far outer frontier ring's south-east seat, waiting in the pool at the shipped view; the inner rings stay completely full (no empty hexes below the frontier); Melbourne is back on the outer edge.
 - Every region reads its true wedge: Europe NW, Asia E, Africa S, the Americas W, Oceania south-EAST (east of Africa).
 - Suite: **691 checks green** (the median centre, the wedges, the hemisphere minimum, contiguity, the fill law and the lattice all asserted).
+
+## v3.5 — the cleanup: 210 cities, rings 0–10, nothing beyond
+
+Sigurd's fame rulings cut **55 cities from the roster (265 → 210)** — every cut city's data file entry kept, per the law. The map now shows rings 0–10 only: **the pool is empty, every remaining city is seated, and nothing exists beyond ring 10** — the map ends clean. «+ Next ring» is disabled (nothing left to reveal); «− Remove ring» still unwinds to bare Metropol. The generator runs smaller and faster, as intended.
+
+- **The fame bar (his rulings, learned through the group passes):** fame is cultural, not demographic — a 7M factory city goes, a 0.2M fortress stays. Cut: the UK/Swiss/Italian/French second cities (Bristol, Cardiff, Newcastle, Basel, Lucerne, Lugano, Lausanne, Turin, Palermo, Nantes, Lille), the university cities and Billund, Oxford, Cambridge, Vaduz, Aberdeen, Cork, the Chinese/Indian/Indonesian/Japanese/Brazilian/Mexican industrial seconds (18), Hangzhou, Chengdu, Salvador, Manaus, Isfahan, Dakar, Durban, San Diego, Valparaíso, Cartagena, Chiang Mai — and, by his ruling that capitals may be cut too, Rotterdam, Antwerp and the seven least-famous West/Central African capitals (Nouakchott, Niamey, Bamako, Ouagadougou, Conakry, N'Djamena, Lomé). All of Scandinavia protected; Salzburg, Verona, Bologna, Odesa, Sevastopol, Lviv, Nanjing, Wuhan, Pyongyang, Medellín, Portland and the whole group-5 tier kept by his explicit rulings.
+- **The map:** Mondiala at the 210-roster median point (33.57°N 19.94°E); exact global assignment with quadrant-match, directional alignment and an outward drift so **the far periphery (Auckland, Melbourne, Perth, Brisbane, Lima, Honolulu, Los Angeles, San Francisco, Santiago) all rides the horizon ring 10**; every continent one connected region; the hemisphere rule at its structural minimum (24 crossings pointy / 14 flat — the quadrant-distribution limit, documented); Taipei still south of Kyiv.
+- **Also this version:** the UK cities outside England carry their own flags (Edinburgh/Glasgow/Aberdeen the Scottish saltire, Cardiff the Welsh dragon, Belfast the Irish flag — never the English); Metropol reads pink in the continent view (the city itself is not on the world map).
+- Suite: **665 checks green** (all v3.4 guarantees re-pinned for the 10-ring cleanup: the tables, the lattice, the DATA.md, the ring viewer, the hand-picked map).
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

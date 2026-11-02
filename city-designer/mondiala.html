@@ -185,7 +185,7 @@ function neighborKeys(q, r) {
 }
 
 // ---------- City model ----------
-let maxCircle = 11; // the shipped view shows every full ring — all rings but the outer frontier ring 12
+let maxCircle = 10; // v3.5: the shipped view shows rings 0–10 — the outer frontier ring 11 holds the pool's far periphery
 let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
 let pool = [];         // unplaced names — cities beyond the map's current horizon
 let worldCenter = null; // where Mondiala sits on Earth under the active centre mode
@@ -1067,7 +1067,7 @@ document.getElementById("placeMode").addEventListener("change", () => {
   placeMode = document.getElementById("placeMode").value;
   recenter();
 });
-function bumpRing(d) { if (d > 0 && (!pool.length || maxCircle >= 12)) return; maxCircle = Math.max(0, maxCircle + d); viewBox = cityViewBox(); moved = false; recenter(); }
+function bumpRing(d) { if (d > 0 && (!pool.length || maxCircle >= 11)) return; maxCircle = Math.max(0, maxCircle + d); viewBox = cityViewBox(); moved = false; recenter(); }
 document.getElementById("btnNextRing").addEventListener("click", () => bumpRing(1));
 document.getElementById("btnNextRing").addEventListener("touchend", e => { e.preventDefault(); bumpRing(1); });
 document.getElementById("btnDropRing").addEventListener("click", () => bumpRing(-1));

@@ -12,23 +12,23 @@
 // Prague, Seoul, Dubai, San Francisco, Toronto and Chicago are back aboard too — they once stepped off the heart, and now ride the outer rings again.
 const WORLD_CITIES = [
   // Norden — the Nordic cities beyond the heart
-  "Stavanger","Turku","Kristiansand","Narva","Billund",
+  "Stavanger","Turku","Kristiansand","Narva",
   // Europe
-  "Dublin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Prague","Bratislava","Ljubljana","Sarajevo","Kraków","Bordeaux","Florence","Utrecht","Porto","Bristol","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Zurich","Geneva","Naples","Seville","Marseille",
-  "Bern","Luxembourg","Valletta","Nicosia","Chisinau","Minsk","Tirana","Skopje","Podgorica","Pristina","Vaduz","Monaco","Andorra la Vella","Salzburg","Basel","Lausanne","Lucerne","Lugano","Lyon","Toulouse","Strasbourg","Lille","Nice","Nantes","Rotterdam","The Hague","Antwerp","Cambridge","Oxford","Birmingham","Leeds","Aberdeen","Cork","Belfast","Cardiff","Newcastle upon Tyne","Lviv","Odesa","Sevastopol","Thessaloniki","Turin","Bologna","Genoa","Palermo","Verona",
+  "Dublin","Brussels","Kyiv","Edinburgh","Manchester","Venice","Milan","Zagreb","Saint Petersburg","Liverpool","Glasgow","Munich","Prague","Bratislava","Ljubljana","Sarajevo","Kraków","Bordeaux","Florence","Utrecht","Porto","Hamburg","Budapest","Warsaw","Bucharest","Belgrade","Sofia","Frankfurt","Zurich","Geneva","Naples","Seville","Marseille",
+  "Bern","Luxembourg","Valletta","Nicosia","Chisinau","Minsk","Tirana","Skopje","Podgorica","Pristina","Monaco","Andorra la Vella","Salzburg","Lyon","Toulouse","Strasbourg","Nice","The Hague","Birmingham","Leeds","Belfast","Lviv","Odesa","Sevastopol","Thessaloniki","Bologna","Genoa","Verona",
   // Middle East & Caucasus
-  "Ankara","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Dubai","Tbilisi","Yerevan","Medina","Jeddah","Beirut","Damascus","Aleppo","Diyarbakır","Jerusalem","Mecca","Abu Dhabi","Isfahan",
+  "Ankara","Tel Aviv","Riyadh","Tehran","Baku","Baghdad","Amman","Kuwait City","Doha","Dubai","Tbilisi","Yerevan","Medina","Jeddah","Beirut","Damascus","Aleppo","Diyarbakır","Jerusalem","Mecca","Abu Dhabi",
   // Africa
-  "Cairo","Addis Ababa","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Dakar","Casablanca","Johannesburg","Kampala","Durban","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Marrakesh","Mogadishu",
-  "Rabat","Tripoli","Ouagadougou","Bamako","Niamey","Lomé","Conakry","Freetown","Brazzaville","N'Djamena","Harare","Lusaka","Lilongwe","Asmara","Nouakchott","Libreville",
+  "Cairo","Addis Ababa","Khartoum","Luanda","Nairobi","Kinshasa","Dar es Salaam","Abidjan","Accra","Casablanca","Johannesburg","Kampala","Kigali","Algiers","Antananarivo","Maputo","Pretoria","Yaoundé","Abuja","Monrovia","Lagos","Marrakesh","Mogadishu",
+  "Rabat","Tripoli","Freetown","Brazzaville","Harare","Lusaka","Lilongwe","Asmara","Libreville",
   // Asia
-  "Karachi","Delhi","Beijing","Osaka","Seoul","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Fukuoka","Nagoya","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Ahmedabad","Pune","Surat","Kathmandu","Chengdu","Shenzhen","Guangzhou","Hangzhou","Kuala Lumpur","Suzhou","Nanjing","Tianjin","Jinan","Dalian","Qingdao","Harbin","Shenyang","Chongqing","Foshan","Dongguan","Bandung","Surabaya","Kyoto","Hiroshima","Varanasi","Agra","Chiang Mai",
+  "Karachi","Delhi","Beijing","Osaka","Seoul","Shanghai","Mumbai","Bangkok","Tashkent","Lahore","Dhaka","Bengaluru","Taipei","Ho Chi Minh City","Manila","Kolkata","Chennai","Almaty","Astana","Hanoi","Yangon","Wuhan","Jakarta","Hyderabad","Kathmandu","Shenzhen","Guangzhou","Kuala Lumpur","Nanjing","Tianjin","Chongqing","Kyoto","Hiroshima","Varanasi","Agra",
   "Pyongyang","Ulaanbaatar","Phnom Penh","Naypyidaw","Islamabad","Kabul","Muscat","Sana'a","Dushanbe","Ashgabat","Bishkek",
   // Oceania
   "Melbourne","Perth","Auckland","Brisbane",
   
   // The Americas
-  "Buenos Aires","Montevideo","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Belo Horizonte","Quito","Panama City","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Monterrey","Guadalajara","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Cartagena","Kingston","Havana","Atlanta","San Diego","Santiago","Valparaíso","Salvador","Manaus","Cancún","San José","San Juan","Ottawa","Montreal","Toronto","Las Vegas","Dallas","Portland","Houston","New Orleans","Honolulu","San Salvador","Tegucigalpa","Managua","Asunción","Port-au-Prince",
+  "Buenos Aires","Montevideo","Caracas","Washington D.C.","Boston","Chicago","São Paulo","Quito","Panama City","Philadelphia","Lima","Brasília","Medellín","Guatemala City","Miami","Los Angeles","San Francisco","Seattle","Bogotá","La Paz","Kingston","Havana","Atlanta","Santiago","Cancún","San José","San Juan","Ottawa","Montreal","Toronto","Las Vegas","Dallas","Portland","Houston","New Orleans","Honolulu","San Salvador","Tegucigalpa","Managua","Asunción","Port-au-Prince",
   "Santo Domingo"
 ]; // big (megacities), livable (EIU-style), walkable (Walk Score), ancient (the OG cities) and simply famous — one roster for the whole outer city; every European capital and every capital of a country with more than a million people is aboard — v1.7's exceptions: Vatican City and San Marino stepped off
 

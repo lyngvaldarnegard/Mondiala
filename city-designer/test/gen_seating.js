@@ -11,10 +11,10 @@ function __genSeating(write) {
   for (const mode of ["neighbours", "hexagonal"]) {
     out[mode] = {};
     for (const rot of [30, 0]) {
-      X.placeMode = mode; X.GRID_ROT = rot; X.maxCircle = 12;
+      X.placeMode = mode; X.GRID_ROT = rot; X.maxCircle = 10; // v3.5: the cleanup — rings 5-10 hold all 210; the pool is empty, nothing beyond
       const plan = X.computeWorldPlan();
       const rings = {};
-      for (let c = 5; c <= 12; c++) rings[c] = (plan.plan[c] || []).slice().sort((a, b) => a[0] - b[0]);
+      for (let c = 5; c <= 10; c++) rings[c] = (plan.plan[c] || []).slice().sort((a, b) => a[0] - b[0]);
       out[mode][rot ? "pointy" : "flat"] = {
         center: { lat: +plan.center.lat.toFixed(8), lon: +plan.center.lon.toFixed(8) },
         rings, leftover: plan.leftover

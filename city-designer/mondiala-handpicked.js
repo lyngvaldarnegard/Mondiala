@@ -1,115 +1,113 @@
 // mondiala-handpicked.js — the hand-picked world map, Sigurd's default mode.
-// AUTHORED DATA, like the heart. Mondiala sits at the roster's MEDIAN point (33.31N 15.28E, the central
-// Mediterranean): each hemisphere holds roughly equal cities (N132/S133, E132/W133) matching the grid halves.
-// Hemisphere rule (as far as the grid allows): a city north/south/east/west of Metropol never sits opposite —
-// the exact assignment minimizes the crossings; the structural minimum is forced by the roster's quadrant
-// distribution (Europe-heavy NW) vs the grid's fixed quadrant seats.
-// Contiguity rule: every continent is one connected region (pink districts and the heart permeable).
-// The overflow city rides the far outer frontier ring (pool at the shipped view, reveals on + Next ring).
+// AUTHORED DATA, like the heart. Mondiala sits at the roster's MEDIAN point (33.57N 19.94E, the central
+// Mediterranean) — each hemisphere holds roughly equal cities (N104/S106, E104/W106).
+// v3.5: the cleanup — the roster trimmed to exactly 210 by Sigurd's fame rulings (55 cities off the roster,
+// their data kept); the map shows rings 0-10, every remaining city seated, the pool empty, nothing beyond.
+// Hemisphere rule (as far as the grid allows) · contiguity: every continent one connected region.
 // Roster edits do NOT reflow this table — a new city waits in the pool. Sigurd edits this file to make replacements.
 SEATING.handpicked = {
  "pointy": {
   "center": {
-   "lat": 33.31,
-   "lon": 15.28
+   "lat": 33.57,
+   "lon": 19.94
   },
   "rings": {
    "5": [
     [
      1,
-     "Minsk"
-    ],
-    [
-     2,
      "Kyiv"
     ],
     [
+     2,
+     "Nicosia"
+    ],
+    [
      3,
-     "Beijing"
+     "Ankara"
     ],
     [
      4,
-     "Ulaanbaatar"
+     "Tbilisi"
     ],
     [
      5,
-     "Bishkek"
+     "Aleppo"
     ],
     [
      6,
-     "Hiroshima"
+     "Baghdad"
     ],
     [
      7,
-     "Shenzhen"
+     "Jerusalem"
     ],
     [
      8,
-     "Bangkok"
+     "Muscat"
     ],
     [
      9,
-     "Ho Chi Minh City"
+     "Mecca"
     ],
     [
      10,
-     "Jakarta"
+     "Karachi"
     ],
     [
      11,
-     "Shanghai"
+     "Mogadishu"
     ],
     [
      12,
-     "Kuala Lumpur"
+     "Kampala"
     ],
     [
      13,
-     "Phnom Penh"
+     "Nairobi"
     ],
     [
      14,
-     "Luanda"
+     "Kinshasa"
     ],
     [
      15,
-     "Abuja"
+     "Monrovia"
     ],
     [
      16,
-     "Buenos Aires"
+     "Accra"
     ],
     [
      17,
-     "Valparaíso"
+     "Freetown"
     ],
     [
      18,
-     "La Paz"
+     "Tripoli"
     ],
     [
      19,
-     "Quito"
+     "Marrakesh"
     ],
     [
      20,
-     "San Salvador"
+     "Rabat"
     ],
     [
      21,
-     "Atlanta"
+     "Casablanca"
     ],
     [
      22,
-     "Ottawa"
+     "Algiers"
     ],
     [
      23,
-     "Belfast"
+     "Toulouse"
     ],
     [
      24,
-     "Glasgow"
+     "Liverpool"
     ],
     [
      25,
@@ -117,361 +115,361 @@ SEATING.handpicked = {
     ],
     [
      26,
-     "The Hague"
-    ],
-    [
-     27,
      "Strasbourg"
     ],
     [
+     27,
+     "Brussels"
+    ],
+    [
      28,
-     "Billund"
+     "Prague"
     ],
     [
      29,
-     "Bratislava"
+     "Turku"
     ],
     [
      30,
-     "Warsaw"
+     "Sofia"
     ]
    ],
    "6": [
     [
      1,
-     "Nicosia"
+     "Ashgabat"
     ],
     [
      2,
-     "Sofia"
+     "Odesa"
     ],
     [
      4,
-     "Harbin"
+     "Almaty"
     ],
     [
      6,
-     "Shenyang"
+     "Beirut"
     ],
     [
      7,
-     "Suzhou"
+     "Tel Aviv"
     ],
     [
      8,
-     "Varanasi"
+     "Kuwait City"
     ],
     [
      10,
-     "Chennai"
+     "Dubai"
+    ],
+    [
+     12,
+     "Asmara"
+    ],
+    [
+     13,
+     "Sana'a"
+    ],
+    [
+     14,
+     "Dar es Salaam"
+    ],
+    [
+     16,
+     "Kigali"
+    ],
+    [
+     18,
+     "Abuja"
+    ],
+    [
+     19,
+     "Lagos"
+    ],
+    [
+     20,
+     "Abidjan"
+    ],
+    [
+     22,
+     "Boston"
+    ],
+    [
+     24,
+     "Philadelphia"
+    ],
+    [
+     25,
+     "Washington D.C."
+    ],
+    [
+     26,
+     "Seville"
+    ],
+    [
+     28,
+     "Dublin"
+    ],
+    [
+     30,
+     "Luxembourg"
+    ],
+    [
+     31,
+     "Zurich"
+    ],
+    [
+     32,
+     "Salzburg"
+    ],
+    [
+     34,
+     "Kraków"
+    ],
+    [
+     36,
+     "Minsk"
+    ]
+   ],
+   "7": [
+    [
+     1,
+     "Chisinau"
+    ],
+    [
+     3,
+     "Sevastopol"
+    ],
+    [
+     4,
+     "Bishkek"
+    ],
+    [
+     5,
+     "Diyarbakır"
+    ],
+    [
+     6,
+     "Yerevan"
+    ],
+    [
+     8,
+     "Damascus"
+    ],
+    [
+     10,
+     "Doha"
+    ],
+    [
+     11,
+     "Medina"
+    ],
+    [
+     12,
+     "Jeddah"
+    ],
+    [
+     13,
+     "Cairo"
+    ],
+    [
+     15,
+     "Addis Ababa"
+    ],
+    [
+     17,
+     "Abu Dhabi"
+    ],
+    [
+     18,
+     "Lusaka"
+    ],
+    [
+     19,
+     "Khartoum"
+    ],
+    [
+     20,
+     "Yaoundé"
+    ],
+    [
+     22,
+     "Port-au-Prince"
+    ],
+    [
+     24,
+     "Brasília"
+    ],
+    [
+     25,
+     "Caracas"
+    ],
+    [
+     26,
+     "San Juan"
+    ],
+    [
+     27,
+     "Santo Domingo"
+    ],
+    [
+     29,
+     "Chicago"
+    ],
+    [
+     31,
+     "Porto"
+    ],
+    [
+     32,
+     "Andorra la Vella"
+    ],
+    [
+     33,
+     "Monaco"
+    ],
+    [
+     34,
+     "Leeds"
+    ],
+    [
+     36,
+     "Bologna"
+    ],
+    [
+     38,
+     "Milan"
+    ],
+    [
+     39,
+     "Zagreb"
+    ],
+    [
+     40,
+     "Warsaw"
+    ],
+    [
+     41,
+     "Verona"
+    ]
+   ],
+   "8": [
+    [
+     1,
+     "Bucharest"
+    ],
+    [
+     2,
+     "Dushanbe"
+    ],
+    [
+     3,
+     "Islamabad"
+    ],
+    [
+     4,
+     "Astana"
+    ],
+    [
+     6,
+     "Tashkent"
+    ],
+    [
+     7,
+     "Baku"
+    ],
+    [
+     8,
+     "Tehran"
+    ],
+    [
+     9,
+     "Lahore"
+    ],
+    [
+     10,
+     "Agra"
+    ],
+    [
+     11,
+     "Varanasi"
     ],
     [
      12,
      "Bengaluru"
     ],
     [
-     13,
-     "Yangon"
-    ],
-    [
      14,
-     "Dongguan"
-    ],
-    [
-     16,
-     "Kinshasa"
-    ],
-    [
-     18,
-     "Accra"
-    ],
-    [
-     19,
-     "Abidjan"
-    ],
-    [
-     20,
-     "Montevideo"
-    ],
-    [
-     22,
-     "Guatemala City"
-    ],
-    [
-     24,
-     "Honolulu"
-    ],
-    [
-     25,
-     "San Diego"
-    ],
-    [
-     26,
-     "Seattle"
-    ],
-    [
-     28,
-     "Cork"
-    ],
-    [
-     30,
-     "Newcastle upon Tyne"
-    ],
-    [
-     31,
-     "Utrecht"
-    ],
-    [
-     32,
-     "Milan"
-    ],
-    [
-     34,
-     "Prague"
-    ],
-    [
-     36,
-     "Narva"
-    ]
-   ],
-   "7": [
-    [
-     1,
-     "Saint Petersburg"
-    ],
-    [
-     3,
-     "Almaty"
-    ],
-    [
-     4,
-     "Nagoya"
-    ],
-    [
-     5,
-     "Tianjin"
-    ],
-    [
-     6,
-     "Dalian"
-    ],
-    [
-     8,
-     "Hangzhou"
-    ],
-    [
-     10,
      "Hyderabad"
     ],
     [
-     11,
-     "Naypyidaw"
-    ],
-    [
-     12,
-     "Mecca"
-    ],
-    [
-     13,
-     "Pune"
-    ],
-    [
      15,
-     "Taipei"
-    ],
-    [
-     17,
-     "Foshan"
-    ],
-    [
-     18,
-     "Chiang Mai"
-    ],
-    [
-     19,
-     "Brazzaville"
-    ],
-    [
-     20,
-     "Libreville"
-    ],
-    [
-     22,
-     "Rabat"
-    ],
-    [
-     24,
-     "Santiago"
-    ],
-    [
-     25,
-     "Lima"
-    ],
-    [
-     26,
-     "Managua"
-    ],
-    [
-     27,
-     "Guadalajara"
-    ],
-    [
-     29,
-     "San Francisco"
-    ],
-    [
-     31,
-     "Chicago"
-    ],
-    [
-     32,
-     "Bristol"
-    ],
-    [
-     33,
-     "Cambridge"
-    ],
-    [
-     34,
-     "Cardiff"
-    ],
-    [
-     36,
-     "Brussels"
-    ],
-    [
-     38,
-     "Kristiansand"
-    ],
-    [
-     39,
-     "Vaduz"
-    ],
-    [
-     40,
-     "Zagreb"
-    ],
-    [
-     41,
-     "Turku"
-    ]
-   ],
-   "8": [
-    [
-     1,
-     "Pristina"
-    ],
-    [
-     2,
-     "Astana"
-    ],
-    [
-     3,
-     "Chisinau"
-    ],
-    [
-     4,
-     "Kyoto"
-    ],
-    [
-     6,
-     "Pyongyang"
-    ],
-    [
-     7,
-     "Qingdao"
-    ],
-    [
-     8,
-     "Jinan"
-    ],
-    [
-     9,
-     "Wuhan"
-    ],
-    [
-     10,
-     "Guangzhou"
-    ],
-    [
-     11,
-     "Mumbai"
-    ],
-    [
-     12,
-     "Ahmedabad"
-    ],
-    [
-     14,
-     "Surat"
-    ],
-    [
-     15,
-     "Perth"
+     "Riyadh"
     ],
     [
      16,
-     "Agra"
+     "Mumbai"
     ],
     [
      17,
-     "Manila"
+     "Chennai"
     ],
     [
      18,
-     "Addis Ababa"
+     "Antananarivo"
     ],
     [
      19,
-     "Kolkata"
+     "Lilongwe"
     ],
     [
      20,
-     "Pretoria"
+     "Harare"
     ],
     [
      22,
-     "Yaoundé"
+     "Luanda"
     ],
     [
      23,
-     "Durban"
+     "Libreville"
     ],
     [
      24,
-     "Lagos"
+     "Miami"
     ],
     [
      25,
-     "Asunción"
+     "New Orleans"
     ],
     [
      26,
-     "Belo Horizonte"
+     "São Paulo"
     ],
     [
      27,
-     "Monrovia"
-    ],
-    [
-     28,
-     "Casablanca"
-    ],
-    [
-     30,
      "Medellín"
     ],
     [
+     28,
+     "Dallas"
+    ],
+    [
+     30,
+     "Bogotá"
+    ],
+    [
      31,
-     "Cancún"
+     "Kingston"
     ],
     [
      32,
-     "Monterrey"
+     "Havana"
     ],
     [
      33,
-     "Los Angeles"
+     "Atlanta"
     ],
     [
      34,
@@ -483,255 +481,89 @@ SEATING.handpicked = {
     ],
     [
      36,
-     "Dublin"
+     "Valletta"
     ],
     [
      38,
-     "Nantes"
+     "Lyon"
     ],
     [
      39,
-     "Birmingham"
+     "Genoa"
     ],
     [
      40,
-     "Geneva"
+     "Utrecht"
     ],
     [
      41,
-     "Rotterdam"
-    ],
-    [
-     42,
-     "Basel"
-    ],
-    [
-     43,
      "Frankfurt"
     ],
     [
-     44,
+     42,
+     "Hamburg"
+    ],
+    [
+     43,
      "Stavanger"
     ],
     [
+     44,
+     "Sarajevo"
+    ],
+    [
      46,
-     "Luxembourg"
+     "Podgorica"
     ],
     [
      47,
-     "Kraków"
+     "Lviv"
     ],
     [
      48,
-     "Podgorica"
+     "Thessaloniki"
     ]
    ],
    "9": [
     [
      1,
-     "Skopje"
+     "Wuhan"
     ],
     [
      2,
-     "Bucharest"
-    ],
-    [
-     4,
-     "Odesa"
-    ],
-    [
-     5,
-     "Sevastopol"
-    ],
-    [
-     6,
-     "Dushanbe"
-    ],
-    [
-     7,
      "Kabul"
     ],
     [
-     9,
-     "Seoul"
-    ],
-    [
-     10,
-     "Baghdad"
-    ],
-    [
-     11,
-     "Chengdu"
-    ],
-    [
-     13,
-     "Muscat"
-    ],
-    [
-     14,
-     "Dubai"
-    ],
-    [
-     15,
-     "Abu Dhabi"
-    ],
-    [
-     16,
-     "Karachi"
-    ],
-    [
-     18,
-     "Hanoi"
-    ],
-    [
-     19,
-     "Dar es Salaam"
-    ],
-    [
-     20,
-     "Nairobi"
-    ],
-    [
-     22,
-     "Surabaya"
-    ],
-    [
-     23,
-     "Bandung"
-    ],
-    [
-     24,
-     "Chongqing"
-    ],
-    [
-     25,
-     "N'Djamena"
-    ],
-    [
-     27,
-     "Lomé"
-    ],
-    [
-     28,
-     "Marrakesh"
-    ],
-    [
-     29,
-     "Ouagadougou"
-    ],
-    [
-     31,
-     "Salvador"
-    ],
-    [
-     32,
-     "Dakar"
-    ],
-    [
-     33,
-     "Manaus"
-    ],
-    [
-     34,
-     "Kingston"
-    ],
-    [
-     36,
-     "Houston"
-    ],
-    [
-     37,
-     "Las Vegas"
-    ],
-    [
-     38,
-     "Washington D.C."
-    ],
-    [
-     40,
-     "Porto"
-    ],
-    [
-     41,
-     "Liverpool"
-    ],
-    [
-     42,
-     "Manchester"
-    ],
-    [
-     43,
-     "Oxford"
-    ],
-    [
-     45,
-     "Lille"
-    ],
-    [
-     46,
-     "Antwerp"
-    ],
-    [
-     47,
-     "Zurich"
-    ],
-    [
-     49,
-     "Munich"
-    ],
-    [
-     50,
-     "Hamburg"
-    ],
-    [
-     51,
-     "Bern"
-    ],
-    [
-     52,
-     "Bologna"
-    ],
-    [
-     54,
-     "Belgrade"
-    ]
-   ],
-   "10": [
-    [
-     1,
-     "Tirana"
-    ],
-    [
-     3,
-     "Thessaloniki"
-    ],
-    [
      4,
-     "Islamabad"
+     "Ulaanbaatar"
     ],
     [
      5,
-     "Fukuoka"
+     "Chongqing"
+    ],
+    [
+     6,
+     "Tianjin"
     ],
     [
      7,
-     "Tashkent"
-    ],
-    [
-     8,
-     "Baku"
+     "Beijing"
     ],
     [
      9,
-     "Ashgabat"
+     "Delhi"
+    ],
+    [
+     10,
+     "Kathmandu"
     ],
     [
      11,
-     "Nanjing"
+     "Amman"
     ],
     [
      13,
-     "Delhi"
+     "Naypyidaw"
     ],
     [
      14,
@@ -739,355 +571,297 @@ SEATING.handpicked = {
     ],
     [
      15,
-     "Kathmandu"
-    ],
-    [
-     17,
-     "Sana'a"
-    ],
-    [
-     18,
-     "Doha"
-    ],
-    [
-     19,
-     "Melbourne"
-    ],
-    [
-     21,
-     "Antananarivo"
-    ],
-    [
-     23,
-     "Lilongwe"
-    ],
-    [
-     24,
-     "Harare"
-    ],
-    [
-     25,
-     "Kigali"
-    ],
-    [
-     27,
-     "Maputo"
-    ],
-    [
-     28,
-     "Johannesburg"
-    ],
-    [
-     29,
-     "Niamey"
-    ],
-    [
-     31,
-     "Brasília"
-    ],
-    [
-     33,
-     "Bamako"
-    ],
-    [
-     34,
-     "Freetown"
-    ],
-    [
-     35,
-     "New Orleans"
-    ],
-    [
-     37,
-     "Bogotá"
-    ],
-    [
-     38,
-     "Caracas"
-    ],
-    [
-     39,
-     "San José"
-    ],
-    [
-     41,
-     "Panama City"
-    ],
-    [
-     43,
-     "Seville"
-    ],
-    [
-     44,
-     "Port-au-Prince"
-    ],
-    [
-     45,
-     "Bordeaux"
-    ],
-    [
-     47,
-     "Toulouse"
-    ],
-    [
-     48,
-     "Leeds"
-    ],
-    [
-     49,
-     "Lyon"
-    ],
-    [
-     51,
-     "Lausanne"
-    ],
-    [
-     53,
-     "Verona"
-    ],
-    [
-     54,
-     "Venice"
-    ],
-    [
-     55,
-     "Salzburg"
-    ],
-    [
-     57,
-     "Naples"
-    ],
-    [
-     58,
-     "Lucerne"
-    ],
-    [
-     59,
-     "Budapest"
-    ]
-   ],
-   "11": [
-    [
-     1,
-     "Aleppo"
-    ],
-    [
-     2,
-     "Tehran"
-    ],
-    [
-     3,
-     "Tbilisi"
-    ],
-    [
-     5,
-     "Yerevan"
-    ],
-    [
-     6,
-     "Ankara"
-    ],
-    [
-     7,
-     "Damascus"
-    ],
-    [
-     8,
-     "Diyarbakır"
-    ],
-    [
-     10,
-     "Osaka"
-    ],
-    [
-     11,
-     "Beirut"
-    ],
-    [
-     12,
-     "Isfahan"
-    ],
-    [
-     13,
-     "Amman"
-    ],
-    [
-     14,
-     "Tel Aviv"
+     "Yangon"
     ],
     [
      16,
-     "Medina"
-    ],
-    [
-     17,
-     "Riyadh"
+     "Phnom Penh"
     ],
     [
      18,
-     "Jeddah"
+     "Bangkok"
     ],
     [
      19,
-     "Lahore"
+     "Hanoi"
     ],
     [
-     21,
-     "Brisbane"
+     20,
+     "Kolkata"
     ],
     [
      22,
-     "Mogadishu"
+     "Maputo"
     ],
     [
      23,
-     "Asmara"
+     "Pretoria"
     ],
     [
      24,
-     "Kampala"
+     "Johannesburg"
     ],
     [
      25,
-     "Khartoum"
+     "Cancún"
     ],
     [
      27,
-     "Cairo"
+     "Managua"
     ],
     [
      28,
-     "Lusaka"
-    ],
-    [
-     29,
-     "Jerusalem"
-    ],
-    [
-     30,
-     "Kuwait City"
-    ],
-    [
-     32,
-     "Algiers"
-    ],
-    [
-     33,
-     "Tripoli"
-    ],
-    [
-     34,
-     "Santo Domingo"
-    ],
-    [
-     35,
-     "Conakry"
-    ],
-    [
-     36,
-     "São Paulo"
-    ],
-    [
-     38,
-     "San Juan"
-    ],
-    [
-     39,
-     "Miami"
-    ],
-    [
-     40,
-     "Nouakchott"
-    ],
-    [
-     41,
-     "Cartagena"
-    ],
-    [
-     43,
-     "Havana"
-    ],
-    [
-     44,
      "Tegucigalpa"
     ],
     [
-     45,
-     "Dallas"
+     29,
+     "San José"
     ],
     [
-     46,
-     "Philadelphia"
+     31,
+     "Asunción"
     ],
     [
-     47,
-     "Boston"
+     32,
+     "La Paz"
     ],
     [
-     49,
+     33,
+     "Quito"
+    ],
+    [
+     34,
+     "Panama City"
+    ],
+    [
+     36,
+     "Houston"
+    ],
+    [
+     37,
      "Portland"
     ],
     [
-     50,
+     38,
+     "Seattle"
+    ],
+    [
+     40,
+     "Birmingham"
+    ],
+    [
+     41,
+     "Bordeaux"
+    ],
+    [
+     42,
      "Marseille"
     ],
     [
-     51,
-     "Andorra la Vella"
+     43,
+     "Manchester"
     ],
     [
-     52,
-     "Monaco"
+     45,
+     "Naples"
     ],
     [
-     54,
-     "Nice"
-    ],
-    [
-     55,
-     "Aberdeen"
-    ],
-    [
-     56,
-     "Turin"
-    ],
-    [
-     57,
-     "Lugano"
-    ],
-    [
-     58,
-     "Genoa"
-    ],
-    [
-     60,
+     46,
      "Florence"
     ],
     [
-     61,
+     47,
+     "Kristiansand"
+    ],
+    [
+     49,
+     "Bratislava"
+    ],
+    [
+     50,
+     "Budapest"
+    ],
+    [
+     51,
+     "Tirana"
+    ],
+    [
+     52,
+     "Skopje"
+    ],
+    [
+     54,
+     "Saint Petersburg"
+    ]
+   ],
+   "10": [
+    [
+     1,
+     "Seoul"
+    ],
+    [
+     3,
+     "Nanjing"
+    ],
+    [
+     4,
+     "Hiroshima"
+    ],
+    [
+     5,
+     "Pyongyang"
+    ],
+    [
+     7,
+     "Osaka"
+    ],
+    [
+     8,
+     "Kyoto"
+    ],
+    [
+     9,
+     "Shanghai"
+    ],
+    [
+     11,
+     "Taipei"
+    ],
+    [
+     13,
+     "Shenzhen"
+    ],
+    [
+     14,
+     "Manila"
+    ],
+    [
+     15,
+     "Kuala Lumpur"
+    ],
+    [
+     17,
+     "Jakarta"
+    ],
+    [
+     18,
+     "Guangzhou"
+    ],
+    [
+     19,
+     "Ho Chi Minh City"
+    ],
+    [
+     21,
+     "Perth"
+    ],
+    [
+     23,
+     "Brisbane"
+    ],
+    [
+     24,
+     "Auckland"
+    ],
+    [
+     25,
+     "Melbourne"
+    ],
+    [
+     27,
+     "Brazzaville"
+    ],
+    [
+     28,
+     "Montevideo"
+    ],
+    [
+     29,
+     "Guatemala City"
+    ],
+    [
+     31,
+     "Lima"
+    ],
+    [
+     33,
+     "Buenos Aires"
+    ],
+    [
+     34,
+     "Las Vegas"
+    ],
+    [
+     35,
+     "Santiago"
+    ],
+    [
+     37,
+     "Honolulu"
+    ],
+    [
+     38,
+     "San Salvador"
+    ],
+    [
+     39,
+     "San Francisco"
+    ],
+    [
+     41,
+     "Los Angeles"
+    ],
+    [
+     43,
+     "Ottawa"
+    ],
+    [
+     44,
+     "Belfast"
+    ],
+    [
+     45,
+     "Nice"
+    ],
+    [
+     47,
+     "Geneva"
+    ],
+    [
+     48,
+     "Glasgow"
+    ],
+    [
+     49,
+     "Bern"
+    ],
+    [
+     51,
+     "The Hague"
+    ],
+    [
+     53,
      "Ljubljana"
     ],
     [
-     62,
-     "Palermo"
+     54,
+     "Munich"
     ],
     [
-     63,
-     "Valletta"
+     55,
+     "Venice"
     ],
     [
-     65,
-     "Sarajevo"
+     57,
+     "Belgrade"
     ],
     [
-     66,
-     "Lviv"
-    ]
-   ],
-   "12": [
+     58,
+     "Pristina"
+    ],
     [
-     18,
-     "Auckland"
+     59,
+     "Narva"
     ]
    ]
   },
@@ -1095,26 +869,26 @@ SEATING.handpicked = {
  },
  "flat": {
   "center": {
-   "lat": 33.31,
-   "lon": 15.28
+   "lat": 33.57,
+   "lon": 19.94
   },
   "rings": {
    "5": [
     [
      1,
-     "Bern"
+     "Kraków"
     ],
     [
      2,
-     "Budapest"
+     "Skopje"
     ],
     [
      3,
-     "Saint Petersburg"
+     "Thessaloniki"
     ],
     [
      4,
-     "Suzhou"
+     "Odesa"
     ],
     [
      5,
@@ -1122,27 +896,133 @@ SEATING.handpicked = {
     ],
     [
      6,
-     "Shenyang"
+     "Ankara"
     ],
     [
      7,
-     "Harbin"
+     "Tbilisi"
     ],
     [
      8,
-     "Kyoto"
+     "Ashgabat"
     ],
     [
      9,
-     "Shanghai"
+     "Amman"
     ],
     [
      10,
-     "Bangkok"
+     "Riyadh"
     ],
     [
      11,
-     "Phnom Penh"
+     "Muscat"
+    ],
+    [
+     12,
+     "Mecca"
+    ],
+    [
+     13,
+     "Jerusalem"
+    ],
+    [
+     14,
+     "Addis Ababa"
+    ],
+    [
+     15,
+     "Kigali"
+    ],
+    [
+     16,
+     "Nairobi"
+    ],
+    [
+     17,
+     "Yaoundé"
+    ],
+    [
+     18,
+     "Accra"
+    ],
+    [
+     19,
+     "Abidjan"
+    ],
+    [
+     20,
+     "Freetown"
+    ],
+    [
+     21,
+     "Casablanca"
+    ],
+    [
+     22,
+     "Marrakesh"
+    ],
+    [
+     23,
+     "Tripoli"
+    ],
+    [
+     24,
+     "Boston"
+    ],
+    [
+     25,
+     "Bordeaux"
+    ],
+    [
+     26,
+     "Nice"
+    ],
+    [
+     27,
+     "Manchester"
+    ],
+    [
+     28,
+     "Zurich"
+    ],
+    [
+     29,
+     "Edinburgh"
+    ],
+    [
+     30,
+     "Ljubljana"
+    ]
+   ],
+   "6": [
+    [
+     1,
+     "Tirana"
+    ],
+    [
+     2,
+     "Turku"
+    ],
+    [
+     4,
+     "Kyiv"
+    ],
+    [
+     6,
+     "Diyarbakır"
+    ],
+    [
+     7,
+     "Tashkent"
+    ],
+    [
+     8,
+     "Baghdad"
+    ],
+    [
+     10,
+     "Damascus"
     ],
     [
      12,
@@ -1150,195 +1030,89 @@ SEATING.handpicked = {
     ],
     [
      13,
-     "Brisbane"
+     "Kuwait City"
     ],
     [
      14,
-     "Melbourne"
-    ],
-    [
-     15,
-     "Chennai"
+     "Jeddah"
     ],
     [
      16,
-     "Cairo"
-    ],
-    [
-     17,
-     "Luanda"
+     "Sana'a"
     ],
     [
      18,
-     "Lagos"
+     "Dar es Salaam"
     ],
     [
      19,
-     "Buenos Aires"
+     "Mogadishu"
     ],
     [
      20,
-     "Salvador"
-    ],
-    [
-     21,
-     "Quito"
+     "Luanda"
     ],
     [
      22,
-     "Bogotá"
-    ],
-    [
-     23,
-     "Guadalajara"
+     "Lagos"
     ],
     [
      24,
-     "Philadelphia"
+     "Washington D.C."
     ],
     [
      25,
-     "Montreal"
+     "Philadelphia"
     ],
     [
      26,
-     "Liverpool"
-    ],
-    [
-     27,
-     "Edinburgh"
+     "San Juan"
     ],
     [
      28,
-     "Aberdeen"
-    ],
-    [
-     29,
-     "Strasbourg"
+     "Rabat"
     ],
     [
      30,
      "Valletta"
-    ]
-   ],
-   "6": [
-    [
-     1,
-     "The Hague"
-    ],
-    [
-     2,
-     "Bratislava"
-    ],
-    [
-     4,
-     "Tirana"
-    ],
-    [
-     6,
-     "Astana"
-    ],
-    [
-     7,
-     "Almaty"
-    ],
-    [
-     8,
-     "Fukuoka"
-    ],
-    [
-     10,
-     "Nanjing"
-    ],
-    [
-     12,
-     "Yangon"
-    ],
-    [
-     13,
-     "Bengaluru"
-    ],
-    [
-     14,
-     "Foshan"
-    ],
-    [
-     16,
-     "Manila"
-    ],
-    [
-     18,
-     "Hyderabad"
-    ],
-    [
-     19,
-     "Brazzaville"
-    ],
-    [
-     20,
-     "Yaoundé"
-    ],
-    [
-     22,
-     "Abidjan"
-    ],
-    [
-     24,
-     "Lima"
-    ],
-    [
-     25,
-     "Medellín"
-    ],
-    [
-     26,
-     "San Diego"
-    ],
-    [
-     28,
-     "Atlanta"
-    ],
-    [
-     30,
-     "Porto"
     ],
     [
      31,
-     "Manchester"
+     "Marseille"
     ],
     [
      32,
-     "Dublin"
+     "Liverpool"
     ],
     [
      34,
-     "Rotterdam"
+     "Venice"
     ],
     [
      36,
-     "Munich"
+     "Bratislava"
     ]
    ],
    "7": [
     [
      1,
-     "Naples"
+     "Budapest"
     ],
     [
      3,
-     "Kraków"
+     "Lviv"
     ],
     [
      4,
-     "Narva"
+     "Bucharest"
     ],
     [
      5,
-     "Skopje"
+     "Sevastopol"
     ],
     [
      6,
-     "Bucharest"
+     "Tehran"
     ],
     [
      8,
@@ -1346,59 +1120,59 @@ SEATING.handpicked = {
     ],
     [
      10,
-     "Hiroshima"
+     "Baku"
     ],
     [
      11,
-     "Beijing"
+     "Kabul"
     ],
     [
      12,
-     "Taipei"
+     "Delhi"
     ],
     [
      13,
-     "Hanoi"
+     "Karachi"
     ],
     [
      15,
-     "Naypyidaw"
+     "Dubai"
     ],
     [
      17,
-     "Perth"
+     "Tel Aviv"
     ],
     [
      18,
-     "Pune"
+     "Medina"
     ],
     [
      19,
-     "Mumbai"
+     "Khartoum"
     ],
     [
      20,
-     "Jakarta"
+     "Kampala"
     ],
     [
      22,
-     "Agra"
+     "Lusaka"
     ],
     [
      24,
-     "Abuja"
+     "Libreville"
     ],
     [
      25,
-     "Accra"
+     "Abuja"
     ],
     [
      26,
-     "Asunción"
+     "Brasília"
     ],
     [
      27,
-     "São Paulo"
+     "Monrovia"
     ],
     [
      29,
@@ -1406,19 +1180,19 @@ SEATING.handpicked = {
     ],
     [
      31,
-     "San José"
+     "Santo Domingo"
     ],
     [
      32,
-     "Monterrey"
+     "Atlanta"
     ],
     [
      33,
-     "La Paz"
+     "Portland"
     ],
     [
      34,
-     "Ottawa"
+     "Algiers"
     ],
     [
      36,
@@ -1426,65 +1200,65 @@ SEATING.handpicked = {
     ],
     [
      38,
-     "Cambridge"
+     "Genoa"
     ],
     [
      39,
-     "Antwerp"
+     "Strasbourg"
     ],
     [
      40,
-     "Basel"
+     "Kristiansand"
     ],
     [
      41,
-     "Stavanger"
+     "Zagreb"
     ]
    ],
    "8": [
     [
      1,
-     "Bologna"
+     "Podgorica"
     ],
     [
      2,
-     "Zagreb"
+     "Warsaw"
     ],
     [
      3,
-     "Turku"
+     "Belgrade"
     ],
     [
      4,
-     "Minsk"
+     "Saint Petersburg"
     ],
     [
      6,
-     "Sofia"
+     "Almaty"
     ],
     [
      7,
-     "Thessaloniki"
+     "Astana"
     ],
     [
      8,
-     "Osaka"
+     "Aleppo"
     ],
     [
      9,
-     "Tianjin"
-    ],
-    [
-     10,
-     "Pyongyang"
-    ],
-    [
-     11,
      "Bishkek"
     ],
     [
+     10,
+     "Dushanbe"
+    ],
+    [
+     11,
+     "Yerevan"
+    ],
+    [
      12,
-     "Qingdao"
+     "Beirut"
     ],
     [
      14,
@@ -1492,47 +1266,205 @@ SEATING.handpicked = {
     ],
     [
      15,
-     "Kolkata"
+     "Mumbai"
     ],
     [
      16,
-     "Muscat"
+     "Hyderabad"
     ],
     [
      17,
-     "Chiang Mai"
+     "Abu Dhabi"
     ],
     [
      18,
-     "Shenzhen"
+     "Agra"
     ],
     [
      19,
-     "Dhaka"
+     "Auckland"
     ],
     [
      20,
-     "Surat"
+     "Bengaluru"
     ],
     [
      22,
-     "Nairobi"
+     "Doha"
     ],
     [
      23,
-     "Ahmedabad"
+     "Lilongwe"
     ],
     [
      24,
-     "Bandung"
+     "Harare"
     ],
     [
      25,
-     "Surabaya"
+     "Pretoria"
     ],
     [
      26,
-     "N'Djamena"
+     "Kinshasa"
+    ],
+    [
+     27,
+     "São Paulo"
+    ],
+    [
+     28,
+     "Medellín"
+    ],
+    [
+     30,
+     "New Orleans"
+    ],
+    [
+     31,
+     "Miami"
+    ],
+    [
+     32,
+     "Kingston"
+    ],
+    [
+     33,
+     "Port-au-Prince"
+    ],
+    [
+     34,
+     "Bogotá"
+    ],
+    [
+     35,
+     "Dallas"
+    ],
+    [
+     36,
+     "Havana"
+    ],
+    [
+     38,
+     "Montreal"
+    ],
+    [
+     39,
+     "Porto"
+    ],
+    [
+     40,
+     "Toulouse"
+    ],
+    [
+     41,
+     "Monaco"
+    ],
+    [
+     42,
+     "Dublin"
+    ],
+    [
+     43,
+     "Leeds"
+    ],
+    [
+     44,
+     "Utrecht"
+    ],
+    [
+     46,
+     "Munich"
+    ],
+    [
+     47,
+     "Bologna"
+    ],
+    [
+     48,
+     "Sarajevo"
+    ]
+   ],
+   "9": [
+    [
+     1,
+     "Frankfurt"
+    ],
+    [
+     2,
+     "Florence"
+    ],
+    [
+     4,
+     "Sofia"
+    ],
+    [
+     5,
+     "Chisinau"
+    ],
+    [
+     6,
+     "Ulaanbaatar"
+    ],
+    [
+     7,
+     "Lahore"
+    ],
+    [
+     9,
+     "Beijing"
+    ],
+    [
+     10,
+     "Wuhan"
+    ],
+    [
+     11,
+     "Nanjing"
+    ],
+    [
+     13,
+     "Tianjin"
+    ],
+    [
+     14,
+     "Chongqing"
+    ],
+    [
+     15,
+     "Kathmandu"
+    ],
+    [
+     16,
+     "Dhaka"
+    ],
+    [
+     18,
+     "Bangkok"
+    ],
+    [
+     19,
+     "Naypyidaw"
+    ],
+    [
+     20,
+     "Kolkata"
+    ],
+    [
+     22,
+     "Hanoi"
+    ],
+    [
+     23,
+     "Chennai"
+    ],
+    [
+     24,
+     "Antananarivo"
+    ],
+    [
+     25,
+     "Yangon"
     ],
     [
      27,
@@ -1540,201 +1472,43 @@ SEATING.handpicked = {
     ],
     [
      28,
-     "Valparaíso"
-    ],
-    [
-     30,
-     "Montevideo"
-    ],
-    [
-     31,
-     "Brasília"
-    ],
-    [
-     32,
-     "Managua"
-    ],
-    [
-     33,
-     "Honolulu"
-    ],
-    [
-     34,
-     "Panama City"
-    ],
-    [
-     35,
-     "San Salvador"
-    ],
-    [
-     36,
-     "Los Angeles"
-    ],
-    [
-     38,
-     "Seattle"
-    ],
-    [
-     39,
-     "Toronto"
-    ],
-    [
-     40,
-     "Glasgow"
-    ],
-    [
-     41,
-     "Cork"
-    ],
-    [
-     42,
-     "Nantes"
-    ],
-    [
-     43,
-     "Oxford"
-    ],
-    [
-     44,
-     "Newcastle upon Tyne"
-    ],
-    [
-     46,
-     "Vaduz"
-    ],
-    [
-     47,
-     "Utrecht"
-    ],
-    [
-     48,
-     "Hamburg"
-    ]
-   ],
-   "9": [
-    [
-     1,
-     "Brussels"
-    ],
-    [
-     2,
-     "Lucerne"
-    ],
-    [
-     4,
-     "Sarajevo"
-    ],
-    [
-     5,
-     "Lviv"
-    ],
-    [
-     6,
-     "Kyiv"
-    ],
-    [
-     7,
-     "Dalian"
-    ],
-    [
-     9,
-     "Ashgabat"
-    ],
-    [
-     10,
-     "Tashkent"
-    ],
-    [
-     11,
-     "Dushanbe"
-    ],
-    [
-     13,
-     "Jinan"
-    ],
-    [
-     14,
-     "Seoul"
-    ],
-    [
-     15,
-     "Chongqing"
-    ],
-    [
-     16,
-     "Karachi"
-    ],
-    [
-     18,
-     "Wuhan"
-    ],
-    [
-     19,
-     "Dubai"
-    ],
-    [
-     20,
-     "Kathmandu"
-    ],
-    [
-     22,
-     "Guangzhou"
-    ],
-    [
-     23,
-     "Dongguan"
-    ],
-    [
-     24,
-     "Kampala"
-    ],
-    [
-     25,
-     "Lilongwe"
-    ],
-    [
-     27,
      "Johannesburg"
     ],
     [
-     28,
-     "Durban"
-    ],
-    [
      29,
-     "Hangzhou"
+     "Brazzaville"
     ],
     [
      31,
-     "Belo Horizonte"
+     "Quito"
     ],
     [
      32,
-     "Lomé"
+     "Panama City"
     ],
     [
      33,
-     "Santiago"
+     "Asunción"
     ],
     [
      34,
-     "Monrovia"
+     "Managua"
     ],
     [
      36,
-     "Guatemala City"
+     "La Paz"
     ],
     [
      37,
-     "Casablanca"
+     "Tegucigalpa"
     ],
     [
      38,
-     "Cartagena"
+     "San José"
     ],
     [
      40,
-     "Tegucigalpa"
+     "Cancún"
     ],
     [
      41,
@@ -1742,437 +1516,213 @@ SEATING.handpicked = {
     ],
     [
      42,
-     "Washington D.C."
+     "Chicago"
     ],
     [
      43,
-     "Boston"
+     "Seville"
     ],
     [
      45,
-     "Cardiff"
+     "Andorra la Vella"
     ],
     [
      46,
-     "Bristol"
+     "Lyon"
     ],
     [
      47,
-     "Birmingham"
+     "Glasgow"
     ],
     [
      49,
-     "Leeds"
+     "Brussels"
     ],
     [
      50,
-     "Lausanne"
+     "The Hague"
     ],
     [
      51,
-     "Genoa"
+     "Hamburg"
     ],
     [
      52,
-     "Frankfurt"
+     "Salzburg"
     ],
     [
      54,
-     "Kristiansand"
+     "Luxembourg"
     ]
    ],
    "10": [
     [
      1,
-     "Prague"
-    ],
-    [
-     3,
-     "Billund"
-    ],
-    [
-     4,
-     "Warsaw"
-    ],
-    [
-     5,
-     "Belgrade"
-    ],
-    [
-     7,
-     "Chisinau"
-    ],
-    [
-     8,
-     "Tehran"
-    ],
-    [
-     9,
-     "Odesa"
-    ],
-    [
-     11,
-     "Tbilisi"
-    ],
-    [
-     13,
-     "Ulaanbaatar"
-    ],
-    [
-     14,
-     "Baku"
-    ],
-    [
-     15,
-     "Kabul"
-    ],
-    [
-     17,
-     "Chengdu"
-    ],
-    [
-     18,
-     "Lahore"
-    ],
-    [
-     19,
-     "Delhi"
-    ],
-    [
-     21,
-     "Abu Dhabi"
-    ],
-    [
-     23,
-     "Sana'a"
-    ],
-    [
-     24,
-     "Doha"
-    ],
-    [
-     25,
-     "Addis Ababa"
-    ],
-    [
-     27,
-     "Antananarivo"
-    ],
-    [
-     28,
-     "Kigali"
-    ],
-    [
-     29,
-     "Harare"
-    ],
-    [
-     31,
-     "Pretoria"
-    ],
-    [
-     33,
-     "Libreville"
-    ],
-    [
-     34,
-     "Ouagadougou"
-    ],
-    [
-     35,
-     "Bamako"
-    ],
-    [
-     37,
-     "Rabat"
-    ],
-    [
-     38,
-     "Freetown"
-    ],
-    [
-     39,
-     "Dallas"
-    ],
-    [
-     41,
-     "Manaus"
-    ],
-    [
-     43,
-     "Algiers"
-    ],
-    [
-     44,
-     "Kingston"
-    ],
-    [
-     45,
-     "Havana"
-    ],
-    [
-     47,
-     "San Francisco"
-    ],
-    [
-     48,
-     "Chicago"
-    ],
-    [
-     49,
-     "Cancún"
-    ],
-    [
-     51,
-     "Andorra la Vella"
-    ],
-    [
-     53,
-     "Lille"
-    ],
-    [
-     54,
-     "Lyon"
-    ],
-    [
-     55,
-     "Geneva"
-    ],
-    [
-     57,
-     "Lugano"
-    ],
-    [
-     58,
-     "Verona"
-    ],
-    [
-     59,
-     "Venice"
-    ]
-   ],
-   "11": [
-    [
-     1,
-     "Ljubljana"
-    ],
-    [
-     2,
-     "Salzburg"
-    ],
-    [
-     3,
-     "Zurich"
-    ],
-    [
-     5,
-     "Podgorica"
-    ],
-    [
-     6,
-     "Pristina"
-    ],
-    [
-     7,
-     "Nagoya"
-    ],
-    [
-     8,
-     "Aleppo"
-    ],
-    [
-     10,
-     "Sevastopol"
-    ],
-    [
-     11,
-     "Beirut"
-    ],
-    [
-     12,
-     "Diyarbakır"
-    ],
-    [
-     13,
-     "Ankara"
-    ],
-    [
-     14,
-     "Yerevan"
-    ],
-    [
-     16,
-     "Baghdad"
-    ],
-    [
-     17,
-     "Damascus"
-    ],
-    [
-     18,
-     "Isfahan"
-    ],
-    [
-     19,
-     "Kuwait City"
-    ],
-    [
-     21,
-     "Tel Aviv"
-    ],
-    [
-     22,
-     "Ho Chi Minh City"
-    ],
-    [
-     23,
-     "Mecca"
-    ],
-    [
-     24,
-     "Jeddah"
-    ],
-    [
-     25,
-     "Jerusalem"
-    ],
-    [
-     27,
-     "Khartoum"
-    ],
-    [
-     28,
-     "Amman"
-    ],
-    [
-     29,
-     "Medina"
-    ],
-    [
-     30,
-     "Asmara"
-    ],
-    [
-     32,
-     "Lusaka"
-    ],
-    [
-     33,
-     "Dar es Salaam"
-    ],
-    [
-     34,
-     "Mogadishu"
-    ],
-    [
-     35,
-     "Kinshasa"
-    ],
-    [
-     36,
-     "Riyadh"
-    ],
-    [
-     38,
-     "Niamey"
-    ],
-    [
-     39,
-     "Port-au-Prince"
-    ],
-    [
-     40,
-     "Santo Domingo"
-    ],
-    [
-     41,
-     "Nouakchott"
-    ],
-    [
-     43,
-     "Conakry"
-    ],
-    [
-     44,
-     "Dakar"
-    ],
-    [
-     45,
-     "Miami"
-    ],
-    [
-     46,
-     "Tripoli"
-    ],
-    [
-     47,
-     "San Juan"
-    ],
-    [
-     49,
-     "Marrakesh"
-    ],
-    [
-     50,
-     "New Orleans"
-    ],
-    [
-     51,
-     "Las Vegas"
-    ],
-    [
-     52,
-     "Portland"
-    ],
-    [
-     54,
-     "Seville"
-    ],
-    [
-     55,
-     "Marseille"
-    ],
-    [
-     56,
-     "Bordeaux"
-    ],
-    [
-     57,
-     "Toulouse"
-    ],
-    [
-     58,
-     "Nice"
-    ],
-    [
-     60,
-     "Monaco"
-    ],
-    [
-     61,
-     "Turin"
-    ],
-    [
-     62,
-     "Luxembourg"
-    ],
-    [
-     63,
      "Milan"
     ],
     [
-     65,
-     "Florence"
+     3,
+     "Pristina"
     ],
     [
-     66,
-     "Palermo"
-    ]
-   ],
-   "12": [
+     4,
+     "Narva"
+    ],
+    [
+     5,
+     "Minsk"
+    ],
+    [
+     7,
+     "Kyoto"
+    ],
+    [
+     8,
+     "Seoul"
+    ],
+    [
+     9,
+     "Shanghai"
+    ],
+    [
+     11,
+     "Taipei"
+    ],
+    [
+     13,
+     "Osaka"
+    ],
+    [
+     14,
+     "Hiroshima"
+    ],
+    [
+     15,
+     "Pyongyang"
+    ],
+    [
+     17,
+     "Guangzhou"
+    ],
+    [
+     18,
+     "Manila"
+    ],
+    [
+     19,
+     "Ho Chi Minh City"
+    ],
+    [
+     21,
+     "Jakarta"
+    ],
+    [
+     23,
+     "Brisbane"
+    ],
     [
      24,
-     "Auckland"
+     "Perth"
+    ],
+    [
+     25,
+     "Melbourne"
+    ],
+    [
+     27,
+     "Shenzhen"
+    ],
+    [
+     28,
+     "Phnom Penh"
+    ],
+    [
+     29,
+     "Asmara"
+    ],
+    [
+     31,
+     "Cairo"
+    ],
+    [
+     33,
+     "Lima"
+    ],
+    [
+     34,
+     "San Salvador"
+    ],
+    [
+     35,
+     "Montevideo"
+    ],
+    [
+     37,
+     "Las Vegas"
+    ],
+    [
+     38,
+     "Buenos Aires"
+    ],
+    [
+     39,
+     "Santiago"
+    ],
+    [
+     41,
+     "Guatemala City"
+    ],
+    [
+     43,
+     "San Francisco"
+    ],
+    [
+     44,
+     "Honolulu"
+    ],
+    [
+     45,
+     "Los Angeles"
+    ],
+    [
+     47,
+     "Seattle"
+    ],
+    [
+     48,
+     "Ottawa"
+    ],
+    [
+     49,
+     "Toronto"
+    ],
+    [
+     51,
+     "Birmingham"
+    ],
+    [
+     53,
+     "Geneva"
+    ],
+    [
+     54,
+     "Bern"
+    ],
+    [
+     55,
+     "Naples"
+    ],
+    [
+     57,
+     "Verona"
+    ],
+    [
+     58,
+     "Prague"
+    ],
+    [
+     59,
+     "Stavanger"
     ]
    ]
   },

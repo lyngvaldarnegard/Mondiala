@@ -1,0 +1,44 @@
+[
+ {
+  "tag": "WR0",
+  "median": 1204,
+  "latY": 0.02,
+  "lonX": 0.24,
+  "means": {
+   "Europe": 25,
+   "Africa": 217,
+   "Asia": 97,
+   "Oceania": 81,
+   "Americas": -402
+  },
+  "ms": 23234
+ },
+ {
+  "tag": "WR1500",
+  "median": 1254,
+  "latY": 0.32,
+  "lonX": 0.43,
+  "means": {
+   "Europe": -11,
+   "Africa": 153,
+   "Asia": 22,
+   "Oceania": 81,
+   "Americas": -150
+  },
+  "ms": 26402
+ },
+ {
+  "tag": "WREQ",
+  "median": 1168,
+  "latY": 0.42,
+  "lonX": 0.67,
+  "means": {
+   "Europe": -70,
+   "Asia": -24,
+   "Africa": 342,
+   "Oceania": 414,
+   "Americas": -146
+  },
+  "ms": 30647
+ }
+]

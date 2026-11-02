@@ -406,7 +406,9 @@ eq("five continents", Object.keys(X.CONTINENT_COLORS).sort(), ["Africa", "Americ
   const named = Object.values(X.hexes).filter(h => h.name && h.name !== "Freeuse");
   const gods = named.filter(h => X.SEX_GODS.has(h.name.trim().toLowerCase()));
   const noCont = named.filter(h => !X.SEX_GODS.has(h.name.trim().toLowerCase()) && !X.continentOf(h.name));
-  eq("every named non-god hex has a continent (Metropol and the pink districts are the only exceptions)", noCont, []);
+  eq("only Metropol lacks a continent (the city itself — every other named hex has one)", noCont.map(h => h.name), ["Metropol"]);
+  ok("Metropol has no continent — it is Mondiala, not a city on the world map", X.continentOf("Metropol") === null);
+  ok("Metropol reads pink in the continent view, like the free-use districts", X.continentFill(X.hexes["0,0"]) === X.TYPES.park.fill);
   ok("the heart reads its continents too", ["China", "Egypt", "Andes", "Mesoamerica", "Indus Valley", "Mesopotamia"].every(n => X.continentOf(n)));
   eq("Europe blue (Olympic)", X.CONTINENT_COLORS.Europe, "#1f8fd6");
   eq("Asia yellow (Olympic)", X.CONTINENT_COLORS.Asia, "#e8b04b");

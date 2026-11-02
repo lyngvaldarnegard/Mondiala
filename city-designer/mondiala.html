@@ -658,10 +658,11 @@ function computeWorldPlan() { // the centre is FIXED per centre mode: the heart'
 
 // ---------- Continent view (the Olympic ring colours: Europe blue, Asia yellow, Africa black, Americas red, Oceania green) ----------
 const CONTINENT_COLORS = { Europe: "#1f8fd6", Asia: "#e8b04b", Africa: "#23272e", Americas: "#c94f4f", Oceania: "#2f9e63" };
-function continentOf(name) { // every named hexagon's city has a real place on Earth — Mondiala and the pink districts are the only exceptions
+function continentOf(name) { // every named hexagon's city has a real place on Earth — Metropol (the city itself), the gods and the pink districts are the only exceptions
   if (!name) return null;
   const key = name.trim().toLowerCase();
   if (SEX_GODS.has(key)) return null; // the pink free-use districts stay pink in every view
+  if (key === "metropol") return null; // Mondiala is the city itself, not a copy of a real one — it never rides the world map
   const country = CITY_COUNTRY[key];
   if (country && COUNTRY_CONTINENTS[country]) return COUNTRY_CONTINENTS[country];
   const co = CITY_COORDS[key];
@@ -678,6 +679,7 @@ function continentOf(name) { // every named hexagon's city has a real place on E
 }
 function continentFill(h) {
   if (h.type === "park") return TYPES.park.fill; // the pink free-use districts stay pink in every view
+  if (h.circle === 0) return TYPES.park.fill; // Metropol reads pink too — the city itself is not on the world map
   if (h.name) { const c = continentOf(h.name); if (c) return CONTINENT_COLORS[c]; }
   return TYPES.district.fill;
 }

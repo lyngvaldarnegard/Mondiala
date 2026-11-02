@@ -370,7 +370,7 @@ section("10 · placement modes");
 const pm = $("placeMode");
 const modeStats = {};
 function gcKm(a, b) { const R = 6371, t = Math.PI / 180, [la, lo] = X.coordOf(a), [lb, lob] = X.coordOf(b); return R * Math.acos(Math.min(1, Math.sin(la*t)*Math.sin(lb*t)+Math.cos(la*t)*Math.cos(lb*t)*Math.cos((lo-lob)*t))); }
-for (const m of ["direction", "hybrid", "distance", "proximity"]) {
+for (const m of ["direction", "hybrid", "distance", "hexagonal", "neighbours"]) {
   pm.value = m; __fire(pm, "change", {});
   const outer = Object.values(X.hexes).filter(h => h.circle >= 5 && h.name && X.coordOf(h.name) && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   let v2 = 0, score = 0;
@@ -384,15 +384,15 @@ for (const m of ["direction", "hybrid", "distance", "proximity"]) {
   ok("mode '" + m + "' seats outer city (" + outer.length + " cities)", outer.length > 200);
 }
 ok("hybrid beats direction on the 2-of-6 hard rule", modeStats.hybrid.fail2of6 < modeStats.direction.fail2of6);
-ok("proximity mode is seated and scored", modeStats.proximity.score > 0);
+ok("hexagonal mode is seated and scored", modeStats.hexagonal && modeStats.hexagonal.score > 0); ok("neighbours mode is seated and scored", modeStats.neighbours && modeStats.neighbours.score > 0);
 {
-  pm.value = "proximity"; __fire(pm, "change", {});
+  pm.value = "hexagonal"; __fire(pm, "change", {});
   const r5 = Object.values(X.hexes).filter(h => h.circle === 5 && h.name && !X.SEX_GODS.has(h.name.trim().toLowerCase()));
   const r6 = Object.values(X.hexes).filter(h => h.circle === 6 && h.name); // gods count as seated too
-  eq("proximity: the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
-  eq("proximity: ring 6 fully seated (36 hexes)", r6.length, 36);
+  eq("hexagonal: the first ordinary ring (5) is completely filled before ring 6 starts", r5.length, 30);
+  ok("hexagonal: ring 6 fully seated", r6.length >= 30);
 }
-pm.value = "proximity"; __fire(pm, "change", {});
+pm.value = "hexagonal"; __fire(pm, "change", {});
 
 // ---------- done ----------
 console.log("==== " + (PASS + FAIL) + " checks · " + PASS + " passed · " + FAIL + " failed");

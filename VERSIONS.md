@@ -23,6 +23,16 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.15 — allocation modes renamed: Hexagonal (Plan B, default) & Neighbours (Plan A)
+
+The placement dropdown now reads:
+
+- **Hexagonal (Plan B, default)**: every ordinary ring is split into 6 equal 60° sections aligned to the hexagon's slot gaps; each section is filled with the closest remaining cities (km from Mondiala) whose bearing falls in it, nearest-angle assignment within the section. Rings fill completely innermost-first. The centre is **balanced** by local search so the 6 bearing sectors hold roughly equal city counts (both north-aligned and slot-aligned grids) — so no section ever runs dry. Only the outermost ring may stay partial.
+- **Neighbours (Plan A)**: first ring seeded one city per sector; later rings filled greedily, each slot maximizing the summed 1/rank score (old-ring city's closeness to bordered new-ring cities) under the hard rule that every old-ring city borders ≥1 of its 6 closest remaining candidates (fallback: best score if unsatisfiable).
+- Direction only / Distance only / Hybrid remain for comparison. Centre modes (geo/pop/great) unchanged; only Hexagonal re-balances the centre.
+- Audit (shipped view): Hexagonal bearing-error avg 22° / adjacency gap avg 846 km; Neighbours avg 89° / 3522 km — Hexagonal is far more geographically coherent.
+- Suite: **787 checks, all green**
+
 ## v1.14 — proximity score counts only old-ring ↔ new-ring edges
 
 The greedy pick in proximity mode now scores exactly what you specified: for every city in the **old ring** (c−1), sum `1/rank` over the **new-ring** (c) cities bordering it; the candidate's own score and same-ring neighbors no longer count. Measured effect on the shipped view: proximity 2-of-6 failures 105 → 237 (the rule is now stricter about what "good" means), score metric 199.5 → 105.5 on the old definition.

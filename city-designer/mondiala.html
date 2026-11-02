@@ -107,7 +107,8 @@
       <div id="centerOut" class="hint" style="margin-top:6px"></div>
       <label class="field" style="margin-top:8px">How the outer cities are placed</label>
       <select id="placeMode">
-        <option value="proximity" selected>Proximity — ring 5 by 6 sectors, then each ring greedily maximizes closest-city score (default)</option>
+        <option value="hexagonal" selected>Hexagonal (Plan B, default) — every ring split into 6 equal sectors, each filled with its closest cities; centre balanced per sector</option>
+        <option value="neighbours">Neighbours (Plan A) — greedy 1/rank score; hard rule: every old-ring city borders one of its 6 closest remaining</option>
         <option value="hybrid">Hybrid — compass band, then proximity repair (≥2 of 6 closest must border)</option>
         <option value="direction">Direction only — the original v1.8 compass band, no repair</option>
         <option value="distance">Distance only — rings by km from Mondiala + hard rule (≥2 of 6 closest must border)</option>
@@ -145,7 +146,7 @@ const TYPES = {
 <script src="mondiala-gods.js"></script>
 <script>
 let centerMode = "geo"; // "geo" = geographic midpoint · "pop" = population-weighted · "great" = size + livability + walkability
-let placeMode = "proximity"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
+let placeMode = "hexagonal"; // "direction" = pure compass band (v1.8) · "distance" = distance-ranked rings + hard proximity rule · "hybrid" = compass band + proximity repair (default)
 let extraCities = [];  // user-added cities {name, lat, lon, pop} — each one moves the centre of the map
 
 function factsFor(name) { return name ? CITY_FACTS[name.trim().toLowerCase()] : null; }
@@ -471,7 +472,11 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
     const seatedNames = new Set(); for (let c = 5; c <= maxCircle; c++) plan[c].forEach(p => seatedNames.add(p[1]));
     return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
   }
-  if (placeMode === "proximity") return fillByProximity(center, cands); // v1.11 proximity mode: ring 5 by 6 direction sectors, every later ring greedily maximized on the 1/rank closest-city score
+  if (placeMode === "hexagonal") { // Plan B "Hexagonal" (default): every ring split into 6 equal sectors, each filled with its closest cities; centre balanced so the 6 sectors hold roughly equal city counts AND the sector grid is rotated to match the hexagon's slot gaps
+    const bc = balanceCenter(center, cands);
+    return fillByProximity(bc, cands);
+  }
+  if (placeMode === "neighbours") return fillGreedy(center, cands); // Plan A "Neighbours": greedy 1/rank score under the hard rule that every old-ring city borders one of its 6 closest remaining candidates
   slots.sort((u, v) => (u.a - v.a) || (u.c - v.c)); // the one continuous band: by compass angle, inner ring first within an angle
   if (ranked.length >= slots.length) { // enough cities to fill every slot: the one-band pass — directions stay contiguous across ALL rings
     const take = ranked.slice(0, slots.length);
@@ -508,62 +513,129 @@ function fillWorldPlan(center, cands) { // v1.9 "bearing picks the hex, one band
   for (let c = 5; c <= maxCircle; c++) plan[c].forEach(pair => seatedNames.add(pair[1]));
   return { plan, leftover: ranked.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
 }
-function fillByProximity(center, cands) { // v1.11 "proximity" mode: ring 5 = 6 direction sectors (closest city to Mondiala per sector); every later ordinary ring filled slot by slot, each pick maximizing the summed 1/rank closest-city score. Distance-only, no region labels.
+function sectorCounts(center, cands, rot) { // how many roster cities fall in each 60-degree bearing sector from center (grid rotated by rot degrees)
+  rot = rot || 0;
+  const counts = [0,0,0,0,0,0];
+  cands.forEach(n => { const b = (bearingDist(center, n).bearing - rot + 360) % 360; counts[Math.min(5, Math.floor(b / 60))]++; });
+  return counts;
+}
+function balanceCenter(center, cands) { // v1.15 rule B: nudge Mondiala's spot so the 6 bearing sectors hold roughly equal city counts (so no section ever runs dry) — local search minimizing (max-min) sector count over BOTH the north-aligned and the slot-aligned rotated grids
+  const slotROT = 30; // the hexagon's slot gaps sit near 30-degree offsets
+  const score = c => { const k = sectorCounts(c, cands); const k2 = sectorCounts(c, cands, slotROT); return Math.max(...k) - Math.min(...k) + Math.max(...k2) - Math.min(...k2); };
+  let best = center, bestImb = score(center);
+  let step = 20.0; // degrees — wide first steps so the search can cross sector boundaries, then refine
+  let iters = 0;
+  while (step > 0.002 && iters++ < 60) {
+    let improved = false;
+    for (const [dLat, dLon] of [[step,0],[-step,0],[0,step],[0,-step],[step,step],[-step,-step],[step,-step],[-step,step]]) {
+      const c = { lat: Math.max(-85, Math.min(85, best.lat + dLat)), lon: ((best.lon + dLon + 540) % 360) - 180 };
+      const imb = score(c);
+      if (imb < bestImb - 1e-9) { bestImb = imb; best = c; improved = true; }
+    }
+    if (!improved) step /= 2;
+  }
+  return best;
+}
+function fillByProximity(center, cands) { // v1.15 RULE B (default "proximity" mode): every ordinary ring split into 6 equal 60-degree sections fitting the hexagon; each section's slots filled with the closest remaining cities (km from Mondiala) whose bearing falls in that section, assigned truest-to-bearing via compassSeat. Ring filled completely before the next starts; only the outermost ring may stay partial. Distance-only, no region labels.
   const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
   const withBD = cands.map(n => Object.assign({ n }, bearingDist(center, n)));
   const remaining = new Set(withBD.map(x => x.n));
-  const seatedPos = {}; // name -> {q,r}
-  const hexAt = {};    // "q,r" -> name
+  for (let c = 5; c <= maxCircle; c++) {
+    const rslots = worldSlots(c).slice().sort((a, b) => a.a - b.a);
+    if (!rslots.length || remaining.size === 0) continue;
+    // rotate the sector grid so its boundaries sit in the gaps between this ring's slot angles (hexagon sections aligned to the slots, not to north)
+    const slotAngles = rslots.map(sl => sl.a).sort((a, b) => a - b);
+    let bestROT = 0, bestGap = -1;
+    for (let r = 0; r < 60; r += 1) {
+      let g = Infinity;
+      for (const a of slotAngles) { const d = Math.abs(((a - r) % 60) + 60) % 60; g = Math.min(g, Math.min(d, 60 - d)); }
+      if (g > bestGap) { bestGap = g; bestROT = r; }
+    }
+    const ROT = bestROT;
+    for (let k = 0; k < 6; k++) {
+      const lo = ((k * 60 + ROT) % 360), hi = ((k + 1) * 60 + ROT) % 360;
+      const inSec = sl => hi > lo ? (sl.a >= lo && sl.a < hi) : (sl.a >= lo || sl.a < hi);
+      const secSlots = rslots.filter(sl => inSec(sl) && !plan[c].some(p => p[0] === sl.num));
+      if (!secSlots.length) continue;
+      // assign each in-sector city (closest first) to the free slot in this sector whose angle is nearest its bearing
+      const inSecB = b => hi > lo ? (b >= lo && b < hi) : (b >= lo || b < hi);
+      const picks = withBD.filter(x => remaining.has(x.n) && inSecB(x.bearing)).sort((a, b) => a.dist - b.dist);
+      const freeSlots = secSlots.slice();
+      for (const pick of picks) {
+        if (!freeSlots.length) break;
+        let bi = 0, bd = Infinity;
+        for (let i = 0; i < freeSlots.length; i++) {
+          const d = Math.abs(freeSlots[i].a - pick.bearing) % 360;
+          if (Math.min(d, 360 - d) < bd) { bd = Math.min(d, 360 - d); bi = i; }
+        }
+        const sl = freeSlots.splice(bi, 1)[0];
+        plan[c].push([sl.num, pick.n]); remaining.delete(pick.n);
+      }
+    }
+  }
+  const seatedNames = new Set(); for (let c = 5; c <= maxCircle; c++) plan[c].forEach(p => seatedNames.add(p[1]));
+  return { plan, leftover: withBD.filter(x => !seatedNames.has(x.n)).map(x => x.n) };
+}
+function fillGreedy(center, cands) { // v1.15 RULE A ("greedy" mode): first ordinary ring seeded one city per 60-degree sector (closest to Mondiala); later rings filled slot by slot maximizing the score — for every old-ring (c-1) city, sum 1/rank over bordered new-ring (c) cities — under the HARD rule that every old-ring city borders at least one of its 6 closest remaining candidates. Distance-only.
+  const plan = {}; for (let c = 5; c <= maxCircle; c++) plan[c] = [];
+  const withBD = cands.map(n => Object.assign({ n }, bearingDist(center, n)));
+  const remaining = new Set(withBD.map(x => x.n));
+  const seatedPos = {}; const hexAt = {};
   const gcKm = (a, b) => greatCircleKm({ lat: coordOf(a)[0], lon: coordOf(a)[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] });
-  const slotPos = {};  // "c#num" -> {q,r}
-  for (let c = 5; c <= maxCircle; c++) ringPositions(c).forEach(rp => slotPos[c + "#" + rp.num] = rp);
+  const slotPos = {}; for (let c = 5; c <= maxCircle; c++) ringPositions(c).forEach(rp => slotPos[c + "#" + rp.num] = rp);
   const seat = (name, c, num) => { const p = slotPos[c + "#" + num]; seatedPos[name] = p; hexAt[p.q + "," + p.r] = name; };
   const unseat = (name, c, num) => { const p = slotPos[c + "#" + num]; delete seatedPos[name]; delete hexAt[p.q + "," + p.r]; };
   const nbrNames = name => { const p = seatedPos[name]; if (!p) return []; return neighborKeys(p.q, p.r).map(k => hexAt[k]).filter(Boolean); };
-  const ringOf = name => { const p = seatedPos[name]; if (!p) return null; return Math.max(Math.abs(p.q), Math.abs(p.r), Math.abs(p.q + p.r)); };
-  // v1.13 score rule: only the OLD ring (c-1) scores, and only against cities in the NEW ring (c) — for every old-ring city, sum 1/rank over the new-ring cities bordering it
-  const oldRingScore = c => {
-    const oldNames = Object.keys(seatedPos).filter(n => ringOf(n) === c - 1);
-    const newNames = Object.keys(seatedPos).filter(n => ringOf(n) === c);
+  const ringOf = name => { const p = seatedPos[name]; return p ? Math.max(Math.abs(p.q), Math.abs(p.r), Math.abs(p.q + p.r)) : null; };
+  const oldRingScore = c => { // score: old-ring cities' 1/rank closeness to bordered new-ring cities
     let s = 0;
-    for (const on of oldNames) {
-      const ranked = newNames.map(o => ({ o, d: gcKm(on, o) })).sort((a, b) => a.d - b.d);
+    for (const on of Object.keys(seatedPos).filter(n => ringOf(n) === c - 1)) {
+      const ranked = Object.keys(seatedPos).filter(n => ringOf(n) === c).map(o => ({ o, d: gcKm(on, o) })).sort((a, b) => a.d - b.d);
       const ns = new Set(nbrNames(on));
       ranked.forEach((r, i) => { if (ns.has(r.o)) s += 1 / (i + 1); });
     }
     return s;
   };
-  const firstOrdinary = 5; // the first ordinary ring — found, not hardcoded as "the ring after the heart": the lowest circle whose slots are world-placed
-  if (maxCircle >= firstOrdinary) { // first ordinary ring: six 60-degree sectors, closest-to-Mondiala city per sector
+  const hardRuleOK = c => { // every old-ring city borders >=1 of its 6 closest remaining-or-new-ring candidates
+    for (const on of Object.keys(seatedPos).filter(n => ringOf(n) === c - 1)) {
+      const cands6 = [...remaining].concat(Object.keys(seatedPos).filter(n => ringOf(n) === c))
+        .map(o => ({ o, d: gcKm(on, o) })).sort((a, b) => a.d - b.d).slice(0, 6).map(x => x.o);
+      const ns = new Set(nbrNames(on));
+      if (!cands6.some(o => ns.has(o))) return false;
+    }
+    return true;
+  };
+  const firstOrdinary = 5;
+  if (maxCircle >= firstOrdinary) { // seed: closest-to-Mondiala city per 60-degree sector
     const rslots = worldSlots(firstOrdinary).slice().sort((a, b) => a.a - b.a);
-    const sectors = [[0, 60], [60, 120], [120, 180], [180, 240], [240, 300], [300, 360]];
-    for (const [lo, hi] of sectors) {
+    for (let k = 0; k < 6; k++) {
+      const lo = k * 60, hi = (k + 1) * 60, mid = (lo + hi) / 2;
       const pick = withBD.filter(x => remaining.has(x.n) && x.bearing >= lo && x.bearing < hi).sort((a, b) => a.dist - b.dist)[0];
       if (!pick) continue;
-      const mid = (lo + hi) / 2; // the free slot whose own angle is closest to this sector's centre — one seed per direction
-      const free = rslots.filter(sl2 => !plan[firstOrdinary].some(p => p[0] === sl2.num));
+      const free = rslots.filter(sl => !plan[firstOrdinary].some(p => p[0] === sl.num));
       if (!free.length) break;
-      const sl = free.reduce((best, sl2) => { const d = Math.abs(sl2.a - mid) % 360; const bd = Math.abs(best.a - mid) % 360; return Math.min(d, 360 - d) < Math.min(bd, 360 - bd) ? sl2 : best; });
-      if (!sl) break;
+      const sl = free.reduce((b2, sl2) => { const d = Math.min(Math.abs(sl2.a - mid) % 360, 360 - Math.abs(sl2.a - mid) % 360); const bd = Math.min(Math.abs(b2.a - mid) % 360, 360 - Math.abs(b2.a - mid) % 360); return d < bd ? sl2 : b2; });
       plan[firstOrdinary].push([sl.num, pick.n]); seat(pick.n, firstOrdinary, sl.num); remaining.delete(pick.n);
     }
   }
-  for (let c = firstOrdinary; c <= maxCircle; c++) { // the first ordinary ring is filled COMPLETELY (seeded + greedy leftovers) before the next ring starts; later rings use the greedy maximizing rule per free slot
+  for (let c = firstOrdinary; c <= maxCircle; c++) {
     const rslots = worldSlots(c).slice().sort((a, b) => a.a - b.a);
     for (const sl of rslots) {
-      if (plan[c].some(p => p[0] === sl.num)) continue; // already seeded
+      if (plan[c].some(p => p[0] === sl.num)) continue;
       if (remaining.size === 0) break;
-      const anchorName = Object.keys(seatedPos)[0] || [...remaining][0];
-      const aCo = coordOf(anchorName);
+      const aCo = coordOf(Object.keys(seatedPos)[0] || [...remaining][0]);
       const pool = [...remaining].sort((a, b) => greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(a)[0], lon: coordOf(a)[1] }) - greatCircleKm({ lat: aCo[0], lon: aCo[1] }, { lat: coordOf(b)[0], lon: coordOf(b)[1] })).slice(0, 12);
-      let bestName = null, bestGain = -Infinity;
-      const beforeScore = oldRingScore(c);
+      const before = oldRingScore(c);
+      let bestName = null, bestGain = -Infinity, fallback = null, fallbackGain = -Infinity;
       for (const name of pool) {
         seat(name, c, sl.num);
-        const gain = oldRingScore(c) - beforeScore; // only old-ring cities' closeness to new-ring neighbors counts
+        const gain = oldRingScore(c) - before;
+        const ok = hardRuleOK(c);
         unseat(name, c, sl.num);
-        if (gain > bestGain) { bestGain = gain; bestName = name; }
+        if (ok && gain > bestGain) { bestGain = gain; bestName = name; }
+        if (gain > fallbackGain) { fallbackGain = gain; fallback = name; }
       }
+      if (!bestName) bestName = fallback; // hard rule unsatisfiable by any candidate: take the best-scoring pick anyway
       if (!bestName) break;
       plan[c].push([sl.num, bestName]); seat(bestName, c, sl.num); remaining.delete(bestName);
     }

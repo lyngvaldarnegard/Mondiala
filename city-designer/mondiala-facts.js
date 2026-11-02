@@ -27,11 +27,10 @@ const CITY_FACTS = {
 "constantinople":[14749000,"Istanbul urban area 2025",76,"EIU-style est."],
 
 "babylon":[850000,"Hillah, modern site ≈",null,""],
-"tyre":[200000,"Tyre, modern site ≈",null,""],
 "ur":[650000,"Nasiriyah, modern site ≈",null,""],
 
 "uruk":[40000,"≈ ancient peak c. 2900 BC",null,""],
-"memphis":[30000,"≈ ancient peak c. 2900 BC",null,""],
+"jericho":[20000,"≈ living city, c. 9000 BC origins",null,""],
 
 "chang'an":[1000000,"≈ ancient peak c. 750 AD (Tang)",null,""],
 "qosqo":[150000,"≈ ancient peak c. 1500 AD (Inca)",null,""],
@@ -60,7 +59,6 @@ const CITY_FACTS = {
 "turku | åbo":[277677,"urban area 2024",89,"EIU-style est."],
 "trondheim":[196948,"tettsted 2025",90,"EIU-style est."],
 "bergen":[269548,"tettsted 2025",89,"EIU-style est."],
-"tampere | tammerfors":[341696,"urban area 2024",90,"EIU-style est."],
 "vyborg":[64000,"≈ city",null,""],
 "stavanger":[241644,"Stavanger/Sandnes tettsted 2025",88,"EIU-style est."],
 "kristiansand":[67920,"city 2025",86,"EIU-style est."],

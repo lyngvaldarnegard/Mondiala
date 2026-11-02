@@ -16,15 +16,15 @@ const parkCount = () => Object.values(X.hexes).filter(h => h.type === "park").le
 
 // ---------- 1 · roster integrity ----------
 section("1 · roster integrity");
-eq("hex count", Object.keys(X.hexes).length, 217);
-eq("roster", X.WORLD_CITIES.length, 270);
-eq("facts", Object.keys(X.CITY_FACTS).length, 332);
-eq("info cards", Object.keys(X.CITY_INFO).length, 415);
+eq("hex count (default view: all full rings, to ring 11)", Object.keys(X.hexes).length, 397);
+eq("roster", X.WORLD_CITIES.length, 265);
+eq("facts", Object.keys(X.CITY_FACTS).length, 328);
+eq("info cards", Object.keys(X.CITY_INFO).length, 414);
 eq("gods and concepts", X.SEX_GODS.size, 84);
 eq("favourites list", X.FAVOURITE_GODS, ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama","Parvati","Lakshmi"]);
 ok("every pink hex has an info card", Object.values(X.hexes).every(h => h.type !== "park" || X.CITY_INFO[(h.name || "").trim().toLowerCase()]));
 eq("RAW rows", X.RAW.length, 55);
-eq("pool (geo fresh)", X.pool.length, 144);
+eq("pool (geo fresh)", X.pool.length, 1);
 eq("no double-placed roster city", (() => { const seen = new Set(); for (const h of Object.values(X.hexes)) { if (!h.name) continue; const n = h.name.trim().toLowerCase(); if (X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n)) { if (seen.has(n)) return false; seen.add(n); } } return true; })(), true);
 ok("every roster city has coordinates", X.WORLD_CITIES.every(w => X.CITY_COORDS[w.trim().toLowerCase()]));
 ok("every heart name off the roster", [...HEART_NAMES].every(n => !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === n.trim().toLowerCase())));
@@ -32,14 +32,14 @@ ok("every heart name off the roster", [...HEART_NAMES].every(n => !X.WORLD_CITIE
 // ---------- 2 · the authored heart ----------
 section("2 · the authored heart");
 eq("Metropol", X.hexes["0,0"].name, "Metropol");
-eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Mesopotamia", "Egypt", "Andes", "Mesoamerica"]);
-eq("ring 2", HEX_NAMES(2), ["Chang'an", "Constantinople", "Athens", "Tyre", "Uruk", "Ur", "Memphis", "Babylon", "Cusco", "Rome", "Tenochtitlan", "Carthage"]);
-eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Tampere | Tammerfors", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
-eq("ring 4 (geo, direction-seated)", HEX_NAMES(4), ["Vancouver", "Berlin", "Kama", "Tokyo", "Moscow", "Hong Kong", "Aphrodite", "Sydney", "Singapore", "Cape Town", "Eros", "Rio de Janeiro", "Barcelona", "Madrid", "Cupid", "Lisbon", "Paris", "London", "Venus", "Mexico City", "New York", "Amsterdam", "Freyja", "Vienna"]);
+eq("ring 1", HEX_NAMES(1), ["China", "Indus Valley", "Egypt", "Mesopotamia", "Andes", "Mesoamerica"]);
+eq("ring 2", HEX_NAMES(2), ["Constantinople", "Rome", "Alexandria", "Carthage", "Athens", "Babylon", "Ur", "Uruk", "Jericho", "Cusco", "Tenochtitlan", "Chang'an"]);
+eq("ring 3", HEX_NAMES(3), ["Stockholm", "Vilnius", "Riga", "København", "Tallinn", "Vyborg", "Helsinki", "Malmö", "Aarhus", "Oslo", "Kaunas", "Bergen", "Göteborg", "Trondheim", "Mariehamn", "Reykjavík", "Tórshavn", "Nuuk"]);
+eq("ring 4 (geo, direction-seated, pointy-side-up)", HEX_NAMES(4), ["Vancouver", "Tokyo", "Kama", "Hong Kong", "Moscow", "Sydney", "Aphrodite", "Cape Town", "Singapore", "Rio de Janeiro", "Eros", "Madrid", "Barcelona", "Lisbon", "Cupid", "Vienna", "Paris", "London", "Venus", "Amsterdam", "New York", "Mexico City", "Freyja", "Berlin"]);
 eq("ring 1 has no densities", [1, 2, 3, 4, 5, 6].map(n => Object.values(X.hexes).find(h => h.circle === 1 && h.num === n).density), [null, null, null, null, null, null]);
 eq("Metropol density", X.hexes["0,0"].density, 4355.39);
 eq("small-capital densities", [15, 16, 17, 18].map(n => Object.values(X.hexes).find(h => h.circle === 3 && h.num === n).density), [1068.4, 556, 129.73, 29.15]);
-eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Mesopotamia,Egypt,Andes,Mesoamerica");
+eq("all 6 civilisation spellings", true, HEX_NAMES(1).join(",") === "China,Indus Valley,Egypt,Mesopotamia,Andes,Mesoamerica");
 
 // ---------- 3 · lattice rules (shipped state: six goddesses in the heart) ----------
 section("3 · lattice rules (shipped state: the six favourites in the heart, outer lattice on rings 6–8)");
@@ -76,7 +76,7 @@ for (const h of Object.values(X.hexes)) {
 }
 uncovered.sort((a, b) => { const [c1, n1] = a.split("#"), [c2, n2] = b.split("#"); return (+c1 - +c2) || (+n1 - +n2); });
 eq("whole heart exempt, nothing uncovered (fresh)", uncovered, []);
-eq("parks (fresh: 6 favourites on ring 4 + 12 ring 6 + 12 ring 7 + 6 ring 8)", parkCount(), 36);
+eq("parks (fresh: 6+12+12+6+12+18+12 on rings 4,6,7,8,9,10,11)", parkCount(), 78);
 const parkNames = (c) => Object.values(X.hexes).filter(h => h.circle === c && h.type === "park").map(h => h.name).sort();
 ok("the favourites rule seats Eros, Aphrodite, Venus, Freyja, Cupid and Kama on ring 4", ["Eros","Aphrodite","Venus","Freyja","Cupid","Kama"].every(n => parkNames(4).includes(n)));
 ok("Parvati and Lakshmi cascade to ring 6", ["Lakshmi","Parvati"].every(n => parkNames(6).includes(n)));
@@ -103,15 +103,18 @@ ok("returned cities keep their countries", RETURNED.every(n => X.CITY_COUNTRY[n.
 ok("returned cities keep their info cards", RETURNED.every(n => X.CITY_INFO[n.toLowerCase()]));
 ok("returned cities keep their facts", RETURNED.every(n => X.CITY_FACTS[n.toLowerCase()]));
 ok("every returned city rides the map or the visible pool", RETURNED.every(n => Object.values(X.hexes).some(h => (h.name || "").trim().toLowerCase() === n.toLowerCase()) || X.pool.some(p => p.name.trim().toLowerCase() === n.toLowerCase())));
-eq("Ur sits at Uruk's side", X.hexes[keyOf(2, 6)].name, "Ur");
+eq("Ur rides beside Babylon", X.hexes[keyOf(2, 7)].name, "Ur");
 ok("Ur is off the roster", !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === "ur"));
 ok("Ur keeps its coordinates", !!X.CITY_COORDS["ur"]);
 ok("Ur keeps its country", !!X.CITY_COUNTRY["ur"]);
 ok("Ur keeps its info card", !!X.CITY_INFO["ur"]);
 ok("Ur keeps its facts", !!X.CITY_FACTS["ur"]);
+ok("Tyre and Memphis are gone from the roster", !X.WORLD_CITIES.some(w => ["tyre", "memphis"].includes(w.trim().toLowerCase())));
+ok("Alexandria rides the heart, not the roster", !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === "alexandria") && HEART_NAMES.has("Alexandria"));
+ok("Jericho keeps its coordinates, country, info card and facts (heart city, off the roster)", !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === "jericho") && !!X.CITY_COORDS["jericho"] && !!X.CITY_COUNTRY["jericho"] && !!X.CITY_INFO["jericho"] && !!X.CITY_FACTS["jericho"]);
 // v1.7: the forty deletions — off the roster, and every trace of their data is gone
-const GONE = ["Jericho","Jacmel","Mohenjo-daro","Timbuktu","Tikal","Aksum","Mbabane","Gitega","Port Louis","Cap-Haïtien","Gaborone","Dili","Porto-Novo","Malabo","Port of Spain","Maseru","Yamoussoukro","Port Moresby","Wellington","Banjul","Windhoek","Canberra","Luxor","Bissau","Juba","Bloemfontein","Gaza","Samarkand","Djibouti City","Manama","Macau","Dodoma","Colombo","Quebec City","Bangui","Vientiane","Vatican City","San Marino","Xi'an","Tunis"];
-eq("v1.7 deletions: forty gone", GONE.length, 40);
+const GONE = ["Jacmel","Mohenjo-daro","Timbuktu","Tikal","Aksum","Mbabane","Gitega","Port Louis","Cap-Haïtien","Gaborone","Dili","Porto-Novo","Malabo","Port of Spain","Maseru","Yamoussoukro","Port Moresby","Wellington","Banjul","Windhoek","Canberra","Luxor","Bissau","Juba","Bloemfontein","Gaza","Samarkand","Djibouti City","Manama","Macau","Dodoma","Colombo","Quebec City","Bangui","Vientiane","Vatican City","San Marino","Xi'an","Tunis"];
+eq("v1.7 deletions: thirty-nine gone (Jericho returned)", GONE.length, 39);
 for (const g of GONE) {
   const k = g.toLowerCase();
   ok("v1.7 off the roster: " + g, !X.WORLD_CITIES.some(w => w.trim().toLowerCase() === k));
@@ -133,15 +136,15 @@ ok("clear flags works", document.querySelectorAll(".flag-nopark").length === 0);
 // ---------- 6 · centres ----------
 section("6 · centres");
 const setMode = (m) => { $("centerMode").value = m; __fire($("centerMode"), "change", {}); };
-const spots = { geo: ["47.20695633", "17.24118554", "Hungary"], pop: ["50.28842947", "25.56782284", "Ukraine"], great: ["47.03804177", "18.49706772", "Hungary"] };
+const spots = { geo: ["48.19561479", "21.71451550", "Hungary"], pop: ["44.82975194", "64.21301625", "Uzbekistan"], great: ["49.63609768", "25.10507663", "Ukraine"] };
 for (const m of Object.keys(spots)) {
   setMode(m);
   const [lat, lon, country] = spots[m];
   eq(m + " centre lat", X.worldCenter.lat.toFixed(8), lat);
   eq(m + " centre lon", X.worldCenter.lon.toFixed(8), lon);
   ok(m + " country is " + country, X.centerCountry(X.worldCenter).includes(country));
-  eq(m + " pool (fresh)", X.pool.length, 144);
-  eq(m + " parks (6 favourites on ring 4 + 12 ring 6 + 12 ring 7 + 6 ring 8)", parkCount(), 36);
+  eq(m + " pool (fresh)", X.pool.length, 1);
+  eq(m + " parks (fresh view to ring 11)", parkCount(), 78);
 }
 setMode("geo");
 
@@ -150,12 +153,12 @@ section("6b · the compass decides (direction-first seating)");
 const seatAngleOf = (h) => { const p = X.axialToPixel(h.q, h.r); let a = Math.atan2(p.x, -p.y) / (Math.PI / 180); return a < 0 ? a + 360 : a; };
 const errOf = (h) => { const b = X.bearingDist(X.worldCenter, h.name).bearing; const d = Math.abs(seatAngleOf(h) - b) % 360; return Math.min(d, 360 - d); };
 const seatedCityErrs = () => Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
-const AFRICA = ["Cairo", "Alexandria", "Algiers", "Marrakesh", "Casablanca", "Rabat", "Tunis", "Khartoum", "Lagos", "Accra", "Dakar", "Abuja", "Nairobi", "Addis Ababa", "Cape Town", "Pretoria", "Johannesburg", "Durban", "Kinshasa", "Luanda", "Maputo", "Harare", "Kampala", "Dar es Salaam", "Kigali"];
+const AFRICA = ["Cairo", "Algiers", "Marrakesh", "Casablanca", "Rabat", "Tunis", "Khartoum", "Lagos", "Accra", "Dakar", "Abuja", "Nairobi", "Addis Ababa", "Cape Town", "Pretoria", "Johannesburg", "Durban", "Kinshasa", "Luanda", "Maputo", "Harare", "Kampala", "Dar es Salaam", "Kigali"];
 for (const m of ["geo", "pop", "great"]) {
   setMode(m);
-  const empties = Object.values(X.hexes).filter(h => h.circle >= 4 && h.circle <= 7 && !h.name && h.type !== "park").length;
-  eq(m + " no empty city tiles mid-map (rings 4–7)", empties, 0);
-  eq(m + " ring 8 fully seated", Object.values(X.hexes).filter(h => h.circle === 8 && !h.name && h.type !== "park").length, 0);
+  const empties = Object.values(X.hexes).filter(h => h.circle >= 4 && h.circle <= 10 && !h.name && h.type !== "park").length;
+  eq(m + " no empty city tiles in the full rings (4–10)", empties, 0);
+  eq(m + " ring 11 fully seated", Object.values(X.hexes).filter(h => h.circle === 11 && !h.name && h.type !== "park").length, 0);
   const errs = seatedCityErrs();
   const avg = errs.reduce((s, e) => s + e, 0) / errs.length;
   ok(m + " bearing error avg < 50° (got " + avg.toFixed(1) + ")", avg < 50);
@@ -183,8 +186,8 @@ ok("validator kept", !!__els.has("btnValidate") && !!__els.has("btnClearFlags"))
 ok("centre-mode switch kept", !!__els.has("centerMode"));
 ok("pool list kept", !!__els.has("pool"));
 ok("stats kept", !!__els.has("stats"));
-eq("pool chips rendered (read-only)", document.querySelectorAll(".poolname").length, 144);
-eq("mode switch rebuilds fresh state", (() => { setMode("pop"); setMode("geo"); return X.pool.length; })(), 144);
+eq("pool chips rendered (read-only)", document.querySelectorAll(".poolname").length, 1);
+eq("mode switch rebuilds fresh state", (() => { setMode("pop"); setMode("geo"); return X.pool.length; })(), 1);
 // clicking a hex still shows its read-only card
 X.selected = keyOf(1, 1);
 X.showInspector();
@@ -196,19 +199,10 @@ X.selected = null; X.showInspector();
 // ---------- 7b · the ring viewer (view-only) ----------
 section("7b · the ring viewer (view-only)");
 ok("ring-viewer buttons wired", __els.has("btnNextRing") && __els.has("btnDropRing"));
-__fire($("btnNextRing"), "click", {});
-eq("ring 9 opens", X.maxCircle, 9);
-eq("hexes with ring 9", Object.keys(X.hexes).length, 271);
-eq("ring 9 seats twelve pink districts (the lattice keeps marching out)", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").length, 12);
-eq("pool after ring 9", X.pool.length, 102);
-eq("pool chips re-render", document.querySelectorAll(".poolname").length, 102);
-__fire($("btnNextRing"), "click", {});
-eq("ring 10 opens", X.maxCircle, 10);
-eq("ring 10 seats eighteen pink districts", Object.values(X.hexes).filter(h => h.circle === 10 && h.type === "park").length, 18);
-eq("pool after ring 10", X.pool.length, 60);
-__fire($("btnNextRing"), "click", {});
-eq("ring 11 seats twelve more pink districts", Object.values(X.hexes).filter(h => h.circle === 11 && h.type === "park").length, 12);
-eq("ring 11 leaves six riders at the old horizon", X.pool.length, 6);
+eq("default view: all full rings, to ring 11", X.maxCircle, 11);
+eq("hexes in the default view", Object.keys(X.hexes).length, 397);
+eq("ring 11 seats twelve pink districts at the horizon", Object.values(X.hexes).filter(h => h.circle === 11 && h.type === "park").length, 12);
+eq("one rider left in the pool at ring 11", X.pool.length, 1);
 __fire($("btnNextRing"), "click", {});
 eq("the map is infinite: ring 12 opens", X.maxCircle, 12);
 eq("hexes with ring 12", Object.keys(X.hexes).length, 469);
@@ -218,34 +212,24 @@ eq("the pool runs dry at ring 12 — every city is tiled", X.pool.length, 0);
 __fire($("btnNextRing"), "click", {});
 eq("add stops when the pool is dry", X.maxCircle, 12);
 __fire($("btnDropRing"), "click", {});
-eq("drop back to 11", X.maxCircle, 11);
-eq("pool back to 6", X.pool.length, 6);
-__fire($("btnDropRing"), "click", {});
-eq("drop back to 10", X.maxCircle, 10);
-eq("pool back to 60", X.pool.length, 60);
-__fire($("btnDropRing"), "click", {});
-eq("drop back to 9", X.maxCircle, 9);
-eq("pool back to 102", X.pool.length, 102);
-__fire($("btnDropRing"), "click", {});
-eq("drop back to 8", X.maxCircle, 8);
-eq("hexes restored", Object.keys(X.hexes).length, 217);
-eq("pool restored", X.pool.length, 144);
-for (let i = 0; i < 8; i++) __fire($("btnDropRing"), "click", {});
+eq("drop back to 11 (the shipped view)", X.maxCircle, 11);
+eq("pool back to 1", X.pool.length, 1);
+for (let i = 0; i < 11; i++) __fire($("btnDropRing"), "click", {});
 eq("down to bare Metropol", X.maxCircle, 0);
 eq("only Metropol left", Object.keys(X.hexes).length, 1);
 eq("Metropol survives", X.hexes["0,0"].name, "Metropol");
-eq("pool at ring 0", X.pool.length, 270);
+eq("pool at ring 0", X.pool.length, 265);
 __fire($("btnDropRing"), "click", {});
 eq("cannot go below Metropol", X.maxCircle, 0);
-for (let i = 0; i < 8; i++) __fire($("btnNextRing"), "click", {});
-eq("re-grown to ring 8", X.maxCircle, 8);
-eq("hexes re-grown", Object.keys(X.hexes).length, 217);
-eq("pool re-settled", X.pool.length, 144);
+for (let i = 0; i < 11; i++) __fire($("btnNextRing"), "click", {});
+eq("re-grown to ring 11 (the shipped view)", X.maxCircle, 11);
+eq("hexes re-grown", Object.keys(X.hexes).length, 397);
+eq("pool re-settled", X.pool.length, 1);
 X.recenter();
 
 // ---------- 7c · the horizon lattice & the favourites rule (grown to ring 11) ----------
-section("7c · the horizon lattice & the favourites rule (grown to ring 11)");
-__fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {}); __fire($("btnNextRing"), "click", {});
+section("7c · the horizon lattice & the favourites rule (at ring 12)");
+__fire($("btnNextRing"), "click", {});
 eq("grown past the old horizon — the map is infinite", X.maxCircle, 12);
 eq("ring 9 = the approved {2,7} diagonal lattice", Object.values(X.hexes).filter(h => h.circle === 9 && h.type === "park").map(h => h.num).sort((a, b) => a - b), [3,8,12,17,21,26,30,35,39,44,48,53]);
 eq("ring 10 = the approved spoke-flanking + midline lattice", Object.values(X.hexes).filter(h => h.circle === 10 && h.type === "park").map(h => h.num).sort((a, b) => a - b), [2,6,10,12,16,20,22,26,30,32,36,40,42,46,50,52,56,60]);
@@ -278,9 +262,9 @@ ok("no flag-invalid (grown)", document.querySelectorAll(".flag-invalid").length 
 eq("flag-nopark = 0 (grown)", document.querySelectorAll(".flag-nopark").length, 0);
 ok("validator says lattice valid (grown)", $("validatorOut").innerHTML.includes("Lattice valid"));
 __fire($("btnClearFlags"), "click", {});
-for (let i = 0; i < 4; i++) __fire($("btnDropRing"), "click", {});
-eq("back from the frontier", X.maxCircle, 8);
-eq("parks restored", parkCount(), 36);
+__fire($("btnDropRing"), "click", {});
+eq("back from the frontier to the shipped view", X.maxCircle, 11);
+eq("parks restored", parkCount(), 78);
 X.recenter();
 
 // ---------- 8 · pan / zoom / click-guard ----------
@@ -314,23 +298,23 @@ X.refresh();
 section("8b · the orientation toggle (flat-side-up ↔ pointy-side-up)");
 const snapNames = () => { const m2 = {}; Object.values(X.hexes).forEach(h => m2[h.circle + "#" + h.num] = h.name); return JSON.stringify(m2); };
 ok("orientation button exists", !!__els.has("btnOrient"));
-eq("flat-side-up is the default", X.GRID_ROT, 0);
-const flatSnap = snapNames();
-const flatVB = [X.viewBox.w, X.viewBox.h];
+eq("pointy-side-up is the default", X.GRID_ROT, 30);
+const pointySnap = snapNames();
+const pointyVB = [X.viewBox.w, X.viewBox.h];
 __fire($("btnOrient"), "click", {});
-eq("pointy-side-up turns the grid 30°", X.GRID_ROT, 30);
-ok("button labels pointy-side-up", $("btnOrient").textContent.includes("pointy-side-up"));
-ok("viewBox extents swap", Math.abs(X.viewBox.w - flatVB[1]) < 1e-6 && Math.abs(X.viewBox.h - flatVB[0]) < 1e-6);
-const pointyErrs = Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
-const pointyAvg = pointyErrs.reduce((s, e) => s + e, 0) / pointyErrs.length;
-ok("pointy bearing error avg < 55° (got " + pointyAvg.toFixed(1) + ")", pointyAvg < 55);
-ok("pointy bearing error max < 170° (got " + Math.max(...pointyErrs).toFixed(1) + ")", Math.max(...pointyErrs) < 170);
+eq("flat-side-up turns the grid back", X.GRID_ROT, 0);
+ok("button labels flat-side-up", $("btnOrient").textContent.includes("flat-side-up"));
+ok("viewBox extents swap", Math.abs(X.viewBox.w - pointyVB[1]) < 1e-6 && Math.abs(X.viewBox.h - pointyVB[0]) < 1e-6);
+const flatErrs = Object.values(X.hexes).filter(h => h.circle >= 4 && h.name && X.coordOf(h.name)).map(errOf);
+const flatAvg = flatErrs.reduce((s, e) => s + e, 0) / flatErrs.length;
+ok("flat bearing error avg < 55° (got " + flatAvg.toFixed(1) + ")", flatAvg < 55);
+ok("flat bearing error max < 170° (got " + Math.max(...flatErrs).toFixed(1) + ")", Math.max(...flatErrs) < 170);
 __fire($("btnValidate"), "click", {});
-ok("lattice valid (pointy)", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
+ok("lattice valid (flat)", document.querySelectorAll(".flag-invalid").length === 0 && document.querySelectorAll(".flag-nopark").length === 0 && $("validatorOut").innerHTML.includes("Lattice valid"));
 __fire($("btnClearFlags"), "click", {});
 __fire($("btnOrient"), "click", {});
-eq("flat-side-up returns", X.GRID_ROT, 0);
-eq("the round trip is identity", snapNames(), flatSnap);
+eq("pointy-side-up returns", X.GRID_ROT, 30);
+eq("the round trip is identity", snapNames(), pointySnap);
 X.viewBox = X.cityViewBox(); X.refresh();
 
 // ---------- 9 · DATA.md consistency ----------
@@ -356,13 +340,13 @@ for (const [idx, m] of ["geo", "pop", "great"].entries()) {
   setMode(m); // the world must be rebuilt in THIS mode before comparing hexes
   const sec = md.split("## Outer city — ")[1 + idx];
   ok("outer section (" + m + ")", sec.indexOf("(" + m + " mode)") > 0);
-  const r8 = sec.split("### Ring 8")[1].split("### Pool")[0]; // bounded: this mode's ring 8 only
-  const rows = r8.split("\n").filter(hexLine);
-  eq("DATA.md ring 8 rows (" + m + ")", rows.length, 48);
+  const r11 = sec.split("### Ring 11")[1].split("### Pool")[0]; // bounded: this mode's outermost full ring only
+  const rows = r11.split("\n").filter(hexLine);
+  eq("DATA.md ring 11 rows (" + m + ")", rows.length, 66);
   rows.forEach((row) => {
     const m2 = row.match(/^\| (\d+) \| (.*?) \|$/);
-    const h = Object.values(X.hexes).find(h => h.circle === 8 && h.num === +m2[1]);
-    eq("DATA.md ring 8 hex " + m2[1] + " (" + m + ")", m2[2].replace(/\\\|/g, "|"), (h && h.name ? h.name : "—") + (h && h.type === "park" ? " ♥" : ""));
+    const h = Object.values(X.hexes).find(h => h.circle === 11 && h.num === +m2[1]);
+    eq("DATA.md ring 11 hex " + m2[1] + " (" + m + ")", m2[2].replace(/\\\|/g, "|"), (h && h.name ? h.name : "—") + (h && h.type === "park" ? " ♥" : ""));
   });
   const poolSec = md.split("### Pool — ")[1 + idx];
   const poolList = poolSec.split("\n")[2].split(", ");

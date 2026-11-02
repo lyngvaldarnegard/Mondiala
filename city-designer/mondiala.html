@@ -79,7 +79,7 @@
   <div class="spacer"></div>
   <button id="btnView">View: rings</button>
   <button id="btnNextRing" title="View-only: watch the pool settle onto one more ring — nothing is saved, reload resets">+ Next ring</button>
-  <button id="btnOrient" title="Turn the grid between flat-side-up and pointy-side-up — the whole map re-seats by the new compass, nothing is saved">Orientation: flat-side-up</button>
+  <button id="btnOrient" title="Turn the grid between pointy-side-up and flat-side-up — the whole map re-seats by the new compass, nothing is saved">Orientation: pointy-side-up</button>
   <button id="btnDropRing" title="View-only: remove rings one by one, all the way down to bare Metropol — ring 8 is the shipped city">− Remove ring</button>
   <button id="btnValidate">✓ Check lattice</button>
   <button id="btnClearFlags" class="warn">Clear flags</button>
@@ -145,9 +145,9 @@ function factPop(name) { const f = factsFor(name); return f && f[0] != null ? f[
 function factLive(name) { const f = factsFor(name); return f && f[2] != null ? f[2] : -Infinity; }
 function fmtPop(p) { return p >= 1e6 ? (Math.round(p / 1e5) / 10) + "M" : p.toLocaleString("en-US"); }
 
-// ---------- Hex math (axial coords; the grid renders flat-side-up by default, and GRID_ROT can turn it 30° to pointy-side-up — the whole grid rotates as one rigid body) ----------
+// ---------- Hex math (axial coords; the grid renders pointy-side-up by default, and GRID_ROT can turn it 30° back to flat-side-up — the whole grid rotates as one rigid body) ----------
 const SQ3 = Math.sqrt(3);
-let GRID_ROT = 0; // 0 = flat-side-up (the default) · 30 = pointy-side-up — the toggle turns the grid rigidly and the compass re-flows live
+let GRID_ROT = 30; // 30 = pointy-side-up (the default) · 0 = flat-side-up — the toggle turns the grid rigidly and the compass re-flows live
 const SIZE = 36; // px per 1 km side
 const HEX_AREA = 3 * Math.sqrt(3) / 2; // km²
 const DIRS = [[1,-1,0],[1,0,-1],[0,1,-1],[-1,1,0],[-1,0,1],[0,-1,1]]; // cube dirs
@@ -182,7 +182,7 @@ function neighborKeys(q, r) {
 }
 
 // ---------- City model ----------
-let maxCircle = 8;
+let maxCircle = 11; // the shipped view shows every full ring — all rings but the outer frontier ring 12
 let hexes = {};        // key "q,r" -> {q,r,circle,num,name,density,type,notes}
 let pool = [];         // unplaced names — cities beyond the map's current horizon
 let worldCenter = null; // where Mondiala sits on Earth under the active centre mode

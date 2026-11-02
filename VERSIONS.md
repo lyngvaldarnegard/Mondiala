@@ -23,6 +23,15 @@ the commits themselves are the real archive.
 | **v1.1 — the corrected heart** | `41645f0` | bookmark branch `archive/v1.1-the-corrected-heart` |
 | **v1.0 — the ancient heart** | `d4c84c1` | superseded by v1.1 |
 
+## v1.9 — the ancient ring re-seated by apex
+
+Ring 2 is re-seated and ring 1's Egypt and Mesopotamia swap places:
+
+- **Ring 1 swap**: Egypt rides hex 3 and Mesopotamia hex 4 (was Mesopotamia 3, Egypt 4)
+- **Ring 2 sorted by apex**: hexes 1–9 carry the ancient cities newest-apex-first — Constantinople, Rome, Alexandria, Carthage, Athens, Babylon, Ur, Uruk, Jericho — and hexes 10–12 stay pinned: Cusco, Tenochtitlan, Chang'an. Alexandria takes Memphis's seat (Memphis and Tyre leave the roster entirely); Jericho — the Natufian hunter-gatherer city, c. 9000 BC — fills Tyre's old seat at hex 9 and keeps its coordinates, country, facts and info card as a heart city off the roster
+- **Knock-on**: the world roster drops to 266, the visible pool to 140, and the three centre spots re-settle with Jericho and Alexandria pulling the heart's centre (geo 46.63031, 18.40994 — Hungary; pop 49.55750, 28.64657 — Ukraine; great 46.71222, 19.54379 — Hungary)
+- Suite: **735 checks, all green**
+
 ## v1.8 — the heart learns direction
 
 The compass takes over the seating — direction decides where every city and god sits, the favourites claim the heart's pink seats by rule, and the grid learns to turn:

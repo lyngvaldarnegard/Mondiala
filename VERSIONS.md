@@ -8,7 +8,7 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.6 — the local direction rule** | `main` (this push) | bookmark branch `archive/v3.6-local-direction-rule` |\n| **v3.5 — the cleanup: 210 cities, rings 0-10** | shipped | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
+| **v3.6.1 — Turkey + the Caucasus are Europe** | `main` (this push) | bookmark branch `archive/v3.6.1-caucasus-europe` |\n| **v3.6 — the local direction rule** | shipped | bookmark branch `archive/v3.6-local-direction-rule` |\n| **v3.5 — the cleanup: 210 cities, rings 0-10** | shipped | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |
 | v2.0–v2.2 | `40e27de` → `8406a89` | the city-to-city rework, the lat/lon sort, the perf fix |
 | **v1.8 — the heart learns direction** | superseded by v3.0 | current · direction-first seating, the favourites hold the ring-4 middles, the orientation toggle |
@@ -93,6 +93,10 @@ Sigurd's rule, formalized: **if a city borders another and is south of it in rea
 - **Applied to all three modes.** The hand-picked map (the default) was re-solved by deterministic multi-restart simulated annealing under the contiguity and hemisphere guards: **10 remaining flips pointy / 6 flat** out of ~400 bordering pairs (the structural minimum — a both-axes-perfect monotone seating provably does not exist for this city/grid geometry). The formula modes get the same rule as a deterministic post-pass inside the generator: neighbours 101 → 47/48 flips, hexagonal 93 → 42/39.
 - The hand-picked map keeps every other guarantee: every continent one connected region (both orientations), the hemisphere rule at its structural minimum (26/18), Metropol at the median point, the wedges reading true, the far periphery on the outer edge (rings 9–10), the fill law, the pink lattice.
 - Suite: **667 checks green** — the local direction rule is asserted on the default mode every run, alongside all prior guarantees.
+
+## v3.6.1 — Turkey and the Caucasus are Europe
+
+Sigurd's ruling on the continent map: **Türkiye, Azerbaijan, Georgia and Armenia are Europe** (Cyprus already was). The continent view recolours them blue; contiguity verified — the European region stays one connected body, both orientations; suite 667 green.
 
 ## v2.0 — two placement modes, city-to-city real km, no hex coordinates
 

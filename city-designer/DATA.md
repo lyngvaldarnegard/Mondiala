@@ -67,15 +67,15 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 
 | Hex | Name | Density |
 |---|---|---|
-| 1 | Vancouver | 5749.9 |
+| 1 | Vancouver | 18837 |
 | 2 | Tokyo | 22920 |
 | 3 | Kama | — |
-| 4 | Hong Kong | 27700 |
+| 4 | Hong Kong | 49115 |
 | 5 | Moscow | 10576.2 |
-| 6 | Sydney | 2300 |
+| 6 | Sydney | 16400 |
 | 7 | Aphrodite | — |
-| 8 | Cape Town | 3100 |
-| 9 | Singapore | 8188.27 |
+| 8 | Cape Town | 3616.6 |
+| 9 | Singapore | 12387 |
 | 10 | Rio de Janeiro | 6700 |
 | 11 | Eros | — |
 | 12 | Madrid | 28587 |
@@ -86,9 +86,9 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 | 17 | Paris | 37690 |
 | 18 | London | 9886 |
 | 19 | Cupid | — |
-| 20 | Amsterdam | 4900 |
-| 21 | New York | 11313.8 |
-| 22 | Mexico City | 9100 |
+| 20 | Amsterdam | 13748 |
+| 21 | New York | 28907.7 |
+| 22 | Mexico City | 16827.5 |
 | 23 | Freyja | — |
 | 24 | Berlin | 10062 |
 

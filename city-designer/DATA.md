@@ -44,11 +44,11 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 
 | Hex | Name | Density |
 |---|---|---|
-| 1 | Stockholm | 5261.53 |
-| 2 | Vilnius | 1515 |
-| 3 | Riga | 2339 |
-| 4 | København | 7411.38 |
-| 5 | Tallinn | 2864.3 |
+| 1 | Stockholm | 14605.97 |
+| 2 | Vilnius | 5093.4 |
+| 3 | Riga | 8376 |
+| 4 | København | 5638 |
+| 5 | Tallinn | 1886.6 |
 | 6 | Vyborg | 94 |
 | 7 | Helsinki | 3238.47 |
 | 8 | Malmö | 4049 |
@@ -76,11 +76,11 @@ The heart is authored by hand, every hexagon filled — ring 1 the six cradle ci
 | 7 | Aphrodite | — |
 | 8 | Cape Town | 3616.6 |
 | 9 | Singapore | 12387 |
-| 10 | Rio de Janeiro | 6700 |
+| 10 | Rio de Janeiro | 20400 |
 | 11 | Eros | — |
 | 12 | Madrid | 28587 |
 | 13 | Barcelona | 36105.8 |
-| 14 | Lisbon | 3300 |
+| 14 | Lisbon | 3339.2 |
 | 15 | Venus | — |
 | 16 | Vienna | 5675 |
 | 17 | Paris | 37690 |

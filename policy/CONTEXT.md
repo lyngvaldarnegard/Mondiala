@@ -55,17 +55,27 @@ corporate 22% with current special regimes stay. Charts per variant plus a
 waterfall and a comparison vs today's system. Revenue aggregates per decile
 from SSB income distribution tables; V1 uses decile means.
 
-**Budget** — a Sankey: locked rule-driven income on the left, editable
-expenditure posts on the right, computed live from the other modules. The land
-value tax (LVT) is the balance valve: its rate is whatever closes the gap, and
-the budget always balances — structural invariant, not a UI state. Expenditure
-toggles carry status flags (constitutional / legislated / pledge) with country
-presets (defence 2–5% GDP, aid 0.7–1% GNI, education 4–8%, Ecuador's
-annual-ratchet education rule, culture 1% target vs actual, R&D, health).
-Scenario presets: cheapest vs priciest enacted bundle, and the fictional
-Mondiala's constitution (3% deficit cap with re-election ban, 60% debt,
-education/health floors). Baseline = SBU 2026 posts from the data register; time
-series with SSB history and model projection driven by population projections.
+**Budget** — a Sankey: rule-driven income on the left, expenditure posts on
+the right, computed live from the other modules. Every income post and every
+spending post is individually toggleable; toggling any post live-recomputes
+the totals, the gap, the LVT valve rate and all Sankey percentage shares. No
+preset selector. Each expenditure post either offers named alternatives with
+short explanations labeled by status — country (comparable real-world country
+value), constitutional (enshrined in the constitution), legislated (adopted
+law), pledge (party pledge) — or a plain percentage-of-budget number field the
+user sets directly (a post set to s% of budget is exactly s% of the total:
+T = F/(1−Σs)). The Sankey and all post lists show each post's share of the
+total budget, percentage first, money secondary, and money is always computed
+read-only output. Completeness: every proposal in the Mondiala programme is a
+visible, toggleable post — pensions, health, education, defence, aid,
+transport, culture, research, administration, interest, the food card,
+barnetrygd, the student stipend and municipal transfers; zero hidden posts.
+The land value tax (LVT) is the balance valve: its rate is whatever closes the
+gap, and the budget always balances — structural invariant, not a UI state.
+Baseline = SBU 2026 posts from the data register; time series with SSB history
+and model projection driven by population projections.
+
+
 
 **Food card** — universal, flat SIFO single-adult grocery rate for every
 resident; cost = population × rate × 12. Taxable in B, tax-free in A.

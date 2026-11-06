@@ -1,5 +1,5 @@
 import { get, getWithOverride } from './data.js';
-import { el, clear, card, table, fmt, fmtNOK, formulaBox } from './ui.js';
+import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
 
 // Single-year population counts, spread uniformly over the curated bins.
 export function ageCounts(total = get('population.total')) {
@@ -169,7 +169,7 @@ export function render(main) {
         ctx.restore();
       }
     };
-    ageChart = new Chart(document.getElementById('age-chart'), {
+    ageChart = new Chart(chartCanvas('age-chart'), {
       type: 'bar',
       data: {
         labels,
@@ -211,7 +211,7 @@ export function render(main) {
       return { year: y, total: totals[i], P, cutoff: cc.cutoff };
     });
     socChart?.destroy();
-    socChart = new Chart(document.getElementById('soc-chart'), {
+    socChart = new Chart(chartCanvas('soc-chart'), {
       type: 'line',
       data: {
         labels: rows.map(r => r.year),

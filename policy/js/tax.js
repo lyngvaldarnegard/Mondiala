@@ -1,5 +1,5 @@
 import { get, getWithOverride } from './data.js';
-import { el, clear, card, table, fmt, fmtNOK, formulaBox } from './ui.js';
+import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
 
 // ---- One shared base -----------------------------------------------
 // General capitalised income minus the interest deduction, keeping financial
@@ -181,7 +181,7 @@ export function render(main) {
       return taxC(b, getWithOverride('income.medianWageYear'), state.rateC) / G;
     });
     cumChart?.destroy();
-    cumChart = new Chart(document.getElementById('cum-chart'), {
+    cumChart = new Chart(chartCanvas('cum-chart'), {
       type: 'line',
       data: { labels: xs.map(x => fmt(x, 2)), datasets: [{ label: 'Cumulative tax (in G)', data: series, borderColor: '#e8b04b', tension: .2, pointRadius: 0 }] },
       options: { responsive: true, scales: { x: { title: { display: true, text: 'Income (G)' } }, y: { title: { display: true, text: 'Tax (G)' } } } }
@@ -197,7 +197,7 @@ export function render(main) {
     });
     const today = incomes.map(i => taxToday(i));
     todayChart?.destroy();
-    todayChart = new Chart(document.getElementById('today-chart'), {
+    todayChart = new Chart(chartCanvas('today-chart'), {
       type: 'bar',
       data: { labels: incomes.map(fmtNOK), datasets: [
         { label: 'Model ' + state.variant, data: model, backgroundColor: '#e8b04b' },
@@ -208,7 +208,7 @@ export function render(main) {
     // decile revenue
     const rev = revenueByDecile(state.variant);
     decileChart?.destroy();
-    decileChart = new Chart(document.getElementById('decile-chart'), {
+    decileChart = new Chart(chartCanvas('decile-chart'), {
       type: 'bar',
       data: { labels: rev.map(r => r.decile), datasets: [
         { label: 'Tax per person (NOK)', data: rev.map(r => r.tax), backgroundColor: '#3fb950' },

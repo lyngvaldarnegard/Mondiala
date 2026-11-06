@@ -1,5 +1,5 @@
 import { get, getWithOverride } from './data.js';
-import { el, clear, card, table, fmt, formulaBox } from './ui.js';
+import { el, clear, card, table, fmt, formulaBox, chartCanvas } from './ui.js';
 
 // House size S = odd(∛population) — locked at exactly S.
 export function houseSize(pop = getWithOverride('population.total')) {
@@ -95,7 +95,7 @@ export function render(main) {
     out.append(el('h3', { text: 'STV levelling — election log' }),
       el('p', { class: 'desc', text: r.stv.log.join(' · ') || 'No levelling seats this time.' }));
     chart?.destroy();
-    chart = new Chart(document.getElementById('el-chart'), {
+    chart = new Chart(chartCanvas('el-chart'), {
       type: 'bar',
       data: {
         labels: parties.map(p => p.name),

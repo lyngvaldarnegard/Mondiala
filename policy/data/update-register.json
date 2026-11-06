@@ -187,5 +187,17 @@
       0.15,
       0.3
     ]
+  },
+  {
+    "field": "welfare.studentFteCount",
+    "value": 290000,
+    "unit": "students (FTE)",
+    "source": "draft — replace at data pass (DBH student FTE count)",
+    "cadence": "yearly",
+    "sanity": [
+      100000,
+      600000
+    ],
+    "draft": true
   }
 ]

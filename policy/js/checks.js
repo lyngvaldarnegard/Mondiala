@@ -4,6 +4,7 @@ import { baseIncome, taxA, taxB, taxC } from './tax.js';
 import { cutoff, queueSize, occupationWeights, pensionCost, ageCounts, groups } from './pension.js';
 import { foodCardCost } from './foodcard.js';
 import { computeIncome, computeExpenditure, lvt } from './budget.js';
+import { barnetrygdCost, stipendCost, childCount } from './welfare.js';
 import { grantFor, mayorSalaryG, councilSize, nationalGrantTotal } from './municipal.js';
 import { houseSize, droopQuota, allocate } from './electoral.js';
 
@@ -53,12 +54,31 @@ export function runChecks() {
 
   // Budget always balances via the LVT valve
   const inc = computeIncome('A');
-  const exp = computeExpenditure({ pensionOn: true, foodcardOn: true, municipalOn: true, on: {}, scale: {}, gdpShare: {}, gniShare: {}, cultureTarget: false });
+  const exp = computeExpenditure({});
   const incT = inc.reduce((s, i) => s + i.value, 0);
   const expT = exp.reduce((s, p) => s + p.value, 0);
   const v = lvt(expT, incT);
   add('The budget balances via the LVT valve (invariant)', expT <= incT + v.amount + 1e-6, `expenditure ${fmtNOK(expT)}, income + LVT ${fmtNOK(incT + v.amount)}`);
   add('The LVT rate closes the gap', v.rate >= 0 && (v.amount === 0 || Math.abs(v.amount - (expT - incT)) < 1), fmt(100 * v.rate, 2) + ' %');
+
+  // Items 8/9: every post toggleable, every proposal visible
+  const postIds = get('budget.expenditure.posts').map(p => p.id);
+  add('Every programme proposal is a visible budget post', ['pension', 'foodcard', 'barnetrygd', 'stipend', 'municipal'].every(id => postIds.includes(id)), postIds.join(', '));
+  const expOff = computeExpenditure({ on: { defence: false } });
+  const expOffT = expOff.reduce((s, p) => s + p.value, 0);
+  const vOff = lvt(expOffT, incT);
+  add('Toggling a spending post moves the LVT valve rate', Math.abs(vOff.rate - v.rate) > 1e-12, `${fmt(100 * v.rate, 2)} % → ${fmt(100 * vOff.rate, 2)} %`);
+  const incOff = computeIncome('A', { incomeOn: { corp: false } });
+  const incOffT = incOff.reduce((s, i) => s + i.value, 0);
+  const vIncOff = lvt(expT, incOffT);
+  add('Toggling an income post moves the LVT valve rate', Math.abs(vIncOff.rate - v.rate) > 1e-12, `${fmt(100 * v.rate, 2)} % → ${fmt(100 * vIncOff.rate, 2)} %`);
+  const sB = 0.05;
+  const expB = computeExpenditure({ budgetShare: { transport: sB } });
+  const expBT = expB.reduce((s, p) => s + p.value, 0);
+  const tB = expB.find(p => p.id === 'transport');
+  add('A percentage-of-budget post is exactly its stated share of the total', Math.abs(tB.value / expBT - sB) < 1e-9, fmt(100 * tB.value / expBT, 2) + ' % of ' + fmtNOK(expBT));
+  add('Barnetrygd = children (0–17) × 1 G', Math.abs(barnetrygdCost() - childCount() * get('welfare.barnetrygdPerChildG') * G) < 1e-6, fmtNOK(barnetrygdCost()));
+  add('Student stipend = student FTE count × yearly stipend', stipendCost() === get('welfare.studentFteCount') * get('welfare.studentStipendYear'), fmtNOK(stipendCost()));
 
   // Municipal formulas
   const comm = { residents: 1000, km2: 100, children: 200, pupils: 150, pensioners: 180 };

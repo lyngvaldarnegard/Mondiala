@@ -1,5 +1,5 @@
 import { get, getWithOverride } from './data.js';
-import { el, clear, card, table, fmt, fmtNOK, formulaBox } from './ui.js';
+import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
 
 // Universal, flat SIFO single-adult grocery rate for every resident.
 // cost = population × rate × 12. Taxable in variant B, tax-free in A.
@@ -36,7 +36,7 @@ export function render(main) {
     const years = [...hist.years, ...proj.years.filter(y => y > hist.years[hist.years.length - 1])];
     const totals = [...hist.totals, ...proj.totals.slice(hist.totals.length)];
     chart?.destroy();
-    chart = new Chart(document.getElementById('fc-chart'), {
+    chart = new Chart(chartCanvas('fc-chart'), {
       type: 'line',
       data: {
         labels: years,

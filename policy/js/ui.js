@@ -51,6 +51,17 @@ export function formulaBox(text) {
   return el('div', { class: 'formula', text });
 }
 
+// Chart.js needs a canvas element — pages pass the chartbox div id, this
+// helper makes sure a canvas exists inside it and returns that canvas.
+export function chartCanvas(id) {
+  const box = document.getElementById(id);
+  if (!box) return null;
+  if (box.tagName === 'CANVAS') return box;
+  let c = box.querySelector('canvas');
+  if (!c) { c = document.createElement('canvas'); box.append(c); }
+  return c;
+}
+
 // Chart.js default dark styling
 if (typeof window !== 'undefined' && window.Chart) {
   window.Chart.defaults.color = '#7d8b9d';

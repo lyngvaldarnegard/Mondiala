@@ -28,8 +28,23 @@
 - [x] Block A — item 2: general-input contract — tax calculator inputs are
       multiples of G; budget expenditure inputs are shares of GDP/GNI; money is
       read-only output everywhere
-- [ ] Block B — items 3, 5, 8, 9: diagram rendering, budget post alternatives,
-      full toggles, completeness
+- [x] Block B — item 3: diagrams fixed — Chart.js needs a canvas, pages now
+      create one in each chartbox (ui.chartCanvas) instead of passing the div
+- [x] Block B — items 5, 8, 9: every income and spending post individually
+      toggleable; named status-labeled alternatives (country / constitutional /
+      legislated / pledge) or a plain percentage-of-budget field; preset
+      selector removed; share of budget shown first, money second; barnetrygd
+      and student stipend added as visible posts
 - [ ] Block C — items 4, 10, 11: barnetrygd, variant C decile-1 exemption,
       land base update
 - [ ] Block D — items 6, 7: municipal satsmodell coefficients, Mondiala hex map
+
+## Open data gaps (revision round 1)
+
+- Ecuador's annual-ratchet education rule: no level exists in the register or
+  CONTEXT.md, so no named alternative was added for education — add the level
+  at the data pass before wiring the ratchet.
+- welfare.studentFteCount is draft (DBH student FTE count) — the student
+  stipend post recomputes when the register value is replaced.
+- Ecuador/ratchet, culture 1% target and country alternative levels reuse the
+  ranges already recorded in the data layer; no new numbers were invented.

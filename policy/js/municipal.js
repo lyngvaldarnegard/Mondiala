@@ -1,5 +1,5 @@
 import { get } from './data.js';
-import { el, clear, card, table, fmt, fmtNOK, formulaBox } from './ui.js';
+import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
 import { ageCounts, groups } from './pension.js';
 
 // Needs-based grants in G per unit — never a function of the local tax base.
@@ -77,7 +77,7 @@ export function render(main) {
     out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (same rates over national units): ${fmtNOK(nationalGrantTotal())}.` }));
 
     chart?.destroy();
-    chart = new Chart(document.getElementById('mun-chart'), {
+    chart = new Chart(chartCanvas('mun-chart'), {
       type: 'bar',
       data: {
         labels: rows.map(r => r.name),

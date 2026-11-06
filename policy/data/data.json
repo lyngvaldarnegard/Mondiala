@@ -10,7 +10,9 @@
   },
   "welfare": {
     "barnetrygdPerChildG": 1,
-    "studentStipendYear": 137000
+    "studentStipendYear": 137000,
+    "studentFteCount": 290000,
+    "studentFteCountNote": "draft — replace at data pass (DBH student FTE count)"
   },
   "population": {
     "total": 5550000,
@@ -300,14 +302,14 @@
   },
   "budget": {
     "income": {
-      "note": "locked rule-driven income, computed live from the modules",
+      "note": "locked rule-driven income, computed live from the modules; every post is individually toggleable",
       "oilFundWithdrawalNOK": 642000000000,
       "employerAvgiftNOK": 335000000000,
       "corporateTaxNOK": 165000000000,
       "lvtBaseNOK": 5200000000000
     },
     "expenditure": {
-      "note": "SBU 2026 posts, curated baseline from the register",
+      "note": "every program proposal is a visible, toggleable post; alternatives carry status labels (country / constitutional / legislated / pledge); shares of GDP/GNI are general inputs, money is read-only output",
       "posts": [
         {
           "id": "pension",
@@ -321,73 +323,158 @@
           "name": "Health and care",
           "flag": "legislated",
           "valueNOK": 245000000000,
-          "gdpShare": [
-            0.04,
-            0.08
-          ],
-          "default": 0.075
+          "mode": "gdp",
+          "alternatives": [
+            {
+              "name": "SBU 2026 baseline",
+              "share": null,
+              "status": "legislated"
+            },
+            {
+              "name": "Low comparable-country level (4% of GDP)",
+              "share": 0.04,
+              "status": "country"
+            },
+            {
+              "name": "High comparable-country level (8% of GDP)",
+              "share": 0.08,
+              "status": "country"
+            },
+            {
+              "name": "Mondiala constitution floor (7% of GDP)",
+              "share": 0.07,
+              "status": "constitutional"
+            }
+          ]
         },
         {
           "id": "education",
           "name": "Education",
           "flag": "legislated",
           "valueNOK": 165000000000,
-          "gdpShare": [
-            0.04,
-            0.08
-          ],
-          "default": 0.055
+          "mode": "gdp",
+          "alternatives": [
+            {
+              "name": "SBU 2026 baseline",
+              "share": null,
+              "status": "legislated"
+            },
+            {
+              "name": "Low comparable-country level (4% of GDP)",
+              "share": 0.04,
+              "status": "country"
+            },
+            {
+              "name": "High comparable-country level (8% of GDP)",
+              "share": 0.08,
+              "status": "country"
+            },
+            {
+              "name": "Mondiala constitution floor (6% of GDP)",
+              "share": 0.06,
+              "status": "constitutional"
+            }
+          ]
         },
         {
           "id": "defence",
           "name": "Defence",
           "flag": "pledge",
           "valueNOK": 115000000000,
-          "gdpShare": [
-            0.02,
-            0.05
-          ],
-          "default": 0.032
+          "mode": "gdp",
+          "alternatives": [
+            {
+              "name": "SBU 2026 baseline",
+              "share": null,
+              "status": "legislated"
+            },
+            {
+              "name": "Alliance minimum (2% of GDP)",
+              "share": 0.02,
+              "status": "country"
+            },
+            {
+              "name": "High comparable-country level (5% of GDP)",
+              "share": 0.05,
+              "status": "country"
+            },
+            {
+              "name": "Programme pledge (3.2% of GDP)",
+              "share": 0.032,
+              "status": "pledge"
+            }
+          ]
         },
         {
           "id": "aid",
           "name": "Aid",
           "flag": "pledge",
           "valueNOK": 42000000000,
-          "gniShare": [
-            0.007,
-            0.01
-          ],
-          "default": 0.01
+          "mode": "gni",
+          "alternatives": [
+            {
+              "name": "SBU 2026 baseline",
+              "share": null,
+              "status": "legislated"
+            },
+            {
+              "name": "UN target (0.7% of GNI)",
+              "share": 0.007,
+              "status": "country"
+            },
+            {
+              "name": "Programme pledge (1% of GNI)",
+              "share": 0.01,
+              "status": "pledge"
+            }
+          ]
         },
         {
           "id": "transport",
           "name": "Transport",
           "flag": "legislated",
           "valueNOK": 78000000000,
-          "default": 1
+          "mode": "budget"
         },
         {
           "id": "culture",
           "name": "Culture",
           "flag": "pledge",
           "valueNOK": 8000000000,
-          "targetShare": 0.01,
-          "default": 1
+          "mode": "gdp",
+          "alternatives": [
+            {
+              "name": "SBU 2026 baseline",
+              "share": null,
+              "status": "legislated"
+            },
+            {
+              "name": "1% of GDP target",
+              "share": 0.01,
+              "status": "pledge"
+            }
+          ]
         },
         {
           "id": "research",
           "name": "Research and innovation",
           "flag": "legislated",
           "valueNOK": 34000000000,
-          "default": 1
+          "mode": "budget"
         },
         {
           "id": "admin",
           "name": "Public administration",
           "flag": "legislated",
           "valueNOK": 52000000000,
-          "default": 1
+          "mode": "budget"
+        },
+        {
+          "id": "interest",
+          "name": "Interest costs",
+          "flag": "legislated",
+          "valueNOK": 35000000000,
+          "mode": "budget"
         },
         {
           "id": "foodcard",
@@ -397,18 +484,25 @@
           "computed": "foodcard"
         },
         {
+          "id": "barnetrygd",
+          "name": "Child benefit (barnetrygd)",
+          "flag": "legislated",
+          "valueNOK": 12000000000,
+          "computed": "barnetrygd"
+        },
+        {
+          "id": "stipend",
+          "name": "Student stipend",
+          "flag": "legislated",
+          "valueNOK": 40000000000,
+          "computed": "stipend"
+        },
+        {
           "id": "municipal",
           "name": "Municipal transfers",
           "flag": "legislated",
           "valueNOK": 121000000000,
           "computed": "municipal"
-        },
-        {
-          "id": "interest",
-          "name": "Interest costs",
-          "flag": "legislated",
-          "valueNOK": 35000000000,
-          "default": 1
         }
       ]
     },

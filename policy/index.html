@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Autopilot — regelstyrte policy-modeller</title>
+<style>
+  :root { font-family: Inter, system-ui, sans-serif; --bg:#0d1117; --panel:#161b22; --line:#2b3244; --fg:#dce3ec; --dim:#7d8b9d; --gold:#e8b04b; --green:#3fb950; --red:#f85149; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); min-height: 100vh; }
+  header { padding: 14px 22px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  header h1 { font-size: 18px; letter-spacing: .5px; }
+  header h1 span { color: var(--gold); }
+  nav { display: flex; flex-wrap: wrap; gap: 4px; }
+  nav a { color: var(--dim); text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 6px; }
+  nav a.active, nav a:hover { color: var(--fg); background: var(--panel); }
+  main { padding: 22px; max-width: 1200px; margin: 0 auto; }
+  section.page { display: none; }
+  section.page.active { display: block; }
+  h2 { font-size: 20px; margin-bottom: 6px; }
+  h3 { font-size: 15px; margin: 18px 0 8px; color: var(--gold); }
+  p.desc { color: var(--dim); font-size: 13px; margin-bottom: 16px; max-width: 760px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--dim); font-weight: 500; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  input[type=number], input[type=range], select { background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font-size: 13px; width: 130px; }
+  input[type=range] { width: 160px; padding: 0; }
+  label { font-size: 13px; color: var(--dim); display: inline-block; margin: 4px 10px 4px 0; }
+  .pill { font-size: 11px; padding: 2px 8px; border-radius: 10px; border: 1px solid var(--line); color: var(--dim); }
+  .ok { color: var(--green); } .bad { color: var(--red); }
+  .formula { font-family: ui-monospace, monospace; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 13px; display: inline-block; margin: 4px 0; }
+  .chartbox { position: relative; }
+  canvas { max-width: 100%; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Autopilot — <span>regelstyrte policy-modeller</span></h1>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

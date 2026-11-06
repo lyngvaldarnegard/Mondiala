@@ -132,16 +132,54 @@ export function render(main) {
 
     ageChart?.destroy();
     const labels = counts.map((_, a) => a);
+    // In virtual mode the distribution is re-bucketed over virtual ages —
+    // the toggle visibly shifts the chart.
+    let data;
+    if (state.actualMode) {
+      data = counts.slice();
+    } else {
+      const weights = occupationWeights();
+      data = new Array(counts.length).fill(0);
+      for (let a = 0; a < counts.length; a++) {
+        const career = Math.max(0, a - WORK_START);
+        for (const w of weights) {
+          const v = Math.min(counts.length - 1, Math.floor(a + career * (w.l - 1)));
+          data[v] += counts[a] * w.share;
+        }
+      }
+    }
+    const cutValue = state.actualMode ? c.cutoffActual : c.cutoff;
+    const cutoffLine = {
+      id: 'cutoffLine',
+      afterDatasetsDraw(chart) {
+        const x = chart.scales.x.getPixelForValue(Math.round(cutValue));
+        const { top, bottom } = chart.chartArea;
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.strokeStyle = '#e8b04b';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.moveTo(x, top);
+        ctx.lineTo(x, bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#e8b04b';
+        ctx.fillText(`utgang ${fmt(cutValue, 1)} år`, x + 6, top + 12);
+        ctx.restore();
+      }
+    };
     ageChart = new Chart(document.getElementById('age-chart'), {
       type: 'bar',
       data: {
         labels,
         datasets: [{
           label: state.actualMode ? 'Personer per faktisk alder' : 'Personer per virtuell alder',
-          data: counts.map((cnt, a) => state.actualMode ? cnt : cnt),
+          data,
           backgroundColor: '#3fb950'
         }]
       },
+      plugins: [cutoffLine],
       options: {
         responsive: true,
         scales: {

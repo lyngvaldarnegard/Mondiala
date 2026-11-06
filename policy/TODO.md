@@ -93,3 +93,10 @@
 - [x] Default selections are the programme's own levels (constitutional floors
       and pledges); every alternative now carries a short explanation in the
       selector.
+
+- [x] Electoral system page rebuilt as an infographic explainer of electoral
+      systems (FPTP, two-round, party-list PR, STV, MMP, and the Mondiala
+      model step by step) with a same-votes comparison chart; the live
+      allocation is the illustration, not a calculator.
+- [x] Constitution builder turned into an explainer too: every fiscal article
+      now explains what it does and what it protects against.

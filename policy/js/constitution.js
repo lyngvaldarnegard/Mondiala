@@ -9,8 +9,8 @@ export function currentRules() {
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Constitution builder' }),
-    el('p', { class: 'desc', text: 'Presets Norway / Mondiala / Italy. The fiscal rules link to the budget presets: Mondiala’s 3% deficit cap with a re-election ban, the 60% debt cap, and floors for education and health. The budget always balances through the LVT valve — the cap is therefore structurally satisfied.' }));
+  main.append(el('h2', { text: 'Constitution builder — an explainer' }),
+    el('p', { class: 'desc', text: 'A constitution can bind the money, not just the powers. Each article below explains what the rule does, what it protects against, and what value it takes in each preset (Norway / Mondiala / Italy). The rules are editable so you can see what your own constitution would say — the budget module honours the Mondiala floors as expenditure alternatives. The budget always balances through the LVT valve, so the deficit cap is structurally satisfied.' }));
   const bar = card(
     el('label', { text: 'Preset' }),
     (() => {
@@ -27,15 +27,19 @@ export function render(main) {
     const presets = get('constitution.presets');
     const rules = currentRules();
     const fields = [
-      ['deficitCap', 'Deficit cap (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['debtCap', 'Debt cap (share of GDP)', 'number', 0, 2, 0.05, v => v == null ? '—' : fmt(100 * v, 0) + ' %'],
-      ['educationFloor', 'Education floor (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['healthFloor', 'Health floor (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['reelectionBan', 'Re-election ban on a broken cap', 'checkbox', null, null, null, v => v ? 'yes' : 'no']
+      ['deficitCap', 'Deficit cap (share of GDP)', 'How much the state may spend beyond its income in a year. A cap stops a government from buying one election with the next generation’s money.', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['debtCap', 'Debt cap (share of GDP)', 'The total public debt ceiling. It keeps interest costs from crowding out services and gives the state room to borrow in a real crisis.', 'number', 0, 2, 0.05, v => v == null ? '—' : fmt(100 * v, 0) + ' %'],
+      ['educationFloor', 'Education floor (share of GDP)', 'A minimum the state must always spend on education. A floor survives governments that would rather cut schools than anything else.', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['healthFloor', 'Health floor (share of GDP)', 'A minimum the state must always spend on health — the same idea as the education floor, for healthcare.', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['reelectionBan', 'Re-election ban on a broken cap', 'The enforcement clause: a government that breaks the fiscal caps may not stand for re-election. A rule without a sanction is a suggestion.', 'checkbox', null, null, null, v => v ? 'yes' : 'no']
     ];
     clear(out);
     out.append(el('h3', { text: 'Fiscal rules — ' + state.preset }),
-      table(['Article', 'Value'], fields.map(([key, label, type, min, max, step, show]) => {
+      el('p', { class: 'desc', text: 'Each article: what it says, what it is for, and its value in this preset.' }),
+      ...fields.map(([key, label, why]) => card(
+        el('h3', { text: label }),
+        el('p', { class: 'desc', text: why }))),
+      table(['Article', 'Value', 'In this preset'], fields.map(([key, label, why, type, min, max, step, show]) => {
         let input;
         if (type === 'checkbox') {
           input = el('input', { type: 'checkbox' });
@@ -55,7 +59,7 @@ export function render(main) {
     function redraw() {
       const r = currentRules();
       out.querySelectorAll('tr').forEach((tr, i) => {
-        const show = fields[i][6];
+        const show = fields[i][7];
         tr.children[2].textContent = show(r[fields[i][0]]);
       });
     }

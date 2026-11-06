@@ -128,15 +128,24 @@ anchor: the most expensive communes covering half the population; KOSTRA
 toggle; direct-entry mode. Local LVT on land value. Mayor salary
 G·(α + β·∛pop); council size odd(∛pop).
 
-**Electoral system** — house size S = odd(∛population). Default variant: half
-the seats split equally across counties (floor rounding), the rest are national
-levelling seats recreated via STV-style ranked choice (Droop quota 1/(S+1) as
-the structural threshold, no explicit threshold, no overhang seats, house
-locked at exactly S).
+**Electoral system** — an explainer page, not a calculator: infographic cards
+explain how the main electoral systems turn votes into seats — first past the
+post, two-round runoff, party-list PR (D'Hondt/Sainte-Laguë), STV with the
+Droop quota, mixed-member proportional — each with where it is used and its
+pros and cons, followed by the Mondiala model step by step. A comparison chart
+gives the register's example parties the same votes under winner-takes-all,
+D'Hondt PR and the Mondiala model. The Mondiala model itself: house size
+S = odd(∛population), locked at exactly S; half the seats split equally across
+the counties (floor rounding), the rest national levelling seats recreated via
+STV-style ranked choice; the Droop quota 1/(S+1) is the structural threshold —
+no explicit threshold, no overhang seats.
 
-**Constitution builder + Mondiala** — presets Norway / Mondiala / Italy,
-fiscal rules linked to budget presets; Mondiala hex-map page as the fictional
-sandbox.
+**Constitution builder + Mondiala** — an explainer: each fiscal article
+(deficit cap, debt cap, education floor, health floor, re-election ban) is
+explained in plain language — what it says, what it protects against — with
+presets Norway / Mondiala / Italy and editable values; the Mondiala floors
+appear as budget expenditure alternatives. Mondiala hex-map page as the
+fictional sandbox.
 
 ## Data sources
 SSB PxWebApi for everything live (public finances 10487, income distribution

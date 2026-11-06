@@ -96,10 +96,20 @@ and model projection driven by population projections.
 **Food card** — universal, flat SIFO single-adult grocery rate for every
 resident; cost = population × rate × 12. Taxable in B, tax-free in A.
 
-**Municipal finance** — needs-based state grants in G per unit (residents,
-km², children, pupils, pensioners…), never dependence on local tax base.
-Norm-cost anchor: the most expensive communes covering half the population;
-KOSTRA toggle; direct-entry mode. Local LVT on land value. Mayor salary
+**Municipal finance** — the satsmodell:
+T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k
+          + h·P_k + i·W_k)
+where G is the grant rate unit and the coefficients a–i are POLITICAL
+PARAMETERS (not data): user-editable number fields on the page, initialised to
+1 (neutral equal weighting). No official rates exist — none are invented.
+Variables (per the programme's transfer model): I_k residents, A_k km²,
+B_k children in kindergarten age (1–5), E_barn primary pupils (6–12), E_ung
+lower-secondary pupils (13–15), E_vgs upper-secondary pupils (16–18), S_k
+students (draft register FTE count), P_k pensioners, W_k workforce. Grants are
+never a function of the local tax base; per-commune demographic units are a
+proportional in-app assumption from the register's age distribution. Norm-cost
+anchor: the most expensive communes covering half the population; KOSTRA
+toggle; direct-entry mode. Local LVT on land value. Mayor salary
 G·(α + β·∛pop); council size odd(∛pop).
 
 **Electoral system** — house size S = odd(∛population). Default variant: half

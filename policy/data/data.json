@@ -176,7 +176,7 @@
   },
   "municipal": {
     "grantsPerUnitG": {
-      "note": "draft — replace at data pass (KOSTRA/own curated pass)",
+      "note": "retired — replaced by the satsmodell with political coefficients a–i (no official rates exist)",
       "perResident": 0.35,
       "perKm2": 0.002,
       "perChild": 0.9,
@@ -227,7 +227,8 @@
         "pupils": 20,
         "pensioners": 45
       }
-    ]
+    ],
+    "nationalAreaKm2": 385207
   },
   "electoral": {
     "counties": [

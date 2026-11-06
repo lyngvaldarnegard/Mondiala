@@ -211,5 +211,16 @@
       400000
     ],
     "draft": true
+  },
+  {
+    "field": "municipal.nationalAreaKm2",
+    "value": 385207,
+    "unit": "km²",
+    "source": "SSB area statistics (curated)",
+    "cadence": "per publication",
+    "sanity": [
+      300000,
+      400000
+    ]
   }
 ]

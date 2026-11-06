@@ -2,23 +2,81 @@ import { get } from './data.js';
 import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
 import { ageCounts, groups } from './pension.js';
 
-// Needs-based grants in G per unit — never a function of the local tax base.
-export function grantFor(c, rates = get('municipal.grantsPerUnitG')) {
-  const G = get('G');
-  return G * (rates.perResident * c.residents +
-    rates.perKm2 * c.km2 +
-    rates.perChild * c.children +
-    rates.perPupil * c.pupils +
-    rates.perPensioner * c.pensioners);
+// ---- The satsmodell (item 6) ---------------------------------------
+// T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs
+//            + g·S_k + h·P_k + i·W_k)
+// G is the grant rate unit; the coefficients a–i are POLITICAL PARAMETERS
+// (not data), rendered as user-editable number fields initialised to 1
+// (neutral equal weighting). No official rates exist — none are invented.
+// Variable definitions (Notion, "Public transfers to the municipal sector"):
+//   I_k    residents
+//   A_k    km²
+//   B_k    children in kindergarten age (1–5)
+//   E_barn primary school pupils (6–12)
+//   E_ung  lower secondary pupils (13–15)
+//   E_vgs  upper secondary pupils (16–18)
+//   S_k    students
+//   P_k    pensioners
+//   W_k    persons in the workforce
+const state = { coefs: null, kostra: true, directEntry: null };
+
+export function coefficients() {
+  if (!state.coefs) state.coefs = { a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1 };
+  return state.coefs;
 }
 
-// National total: the same per-unit rates over national unit counts.
-export function nationalGrantTotal() {
+// National unit counts from the register's age distribution; students are
+// the draft register FTE count, area the curated national area.
+export function nationalUnits() {
   const counts = ageCounts();
-  const { U, E } = groups(counts);
-  const children = counts.slice(0, 18).reduce((s, c) => s + c, 0);
-  const pupils = counts.slice(6, 19).reduce((s, c) => s + c, 0);
-  return grantFor({ residents: counts.reduce((s, c) => s + c, 0), km2: 385207, children, pupils, pensioners: E });
+  const N = counts.reduce((s, c) => s + c, 0);
+  const { V, E } = groups(counts);
+  const sum = (lo, hi) => counts.slice(lo, hi + 1).reduce((s, c) => s + c, 0);
+  return {
+    I: N,
+    A: get('municipal.nationalAreaKm2'),
+    B: sum(1, 5),
+    E_barn: sum(6, 12),
+    E_ung: sum(13, 15),
+    E_vgs: sum(16, 18),
+    S: get('welfare.studentFteCount'),
+    P: E,
+    W: V
+  };
+}
+
+export function satsmodell(units, c = coefficients()) {
+  const G = get('G');
+  return G * (c.a * units.I + c.b * units.A + c.c * units.B + c.d * units.E_barn +
+    c.e * units.E_ung + c.f * units.E_vgs + c.g * units.S + c.h * units.P + c.i * units.W);
+}
+
+// National total: the satsmodell over the national unit counts.
+export function nationalGrantTotal() {
+  return satsmodell(nationalUnits());
+}
+
+// Per-commune units: a proportional assumption — the commune carries the
+// national per-resident share of each demographic unit (computed in-app from
+// the register, never a local tax base). Area is the commune's own km².
+export function communeUnits(c) {
+  const n = nationalUnits();
+  const f = c.residents / n.I;
+  return {
+    I: c.residents,
+    A: c.km2,
+    B: f * n.B,
+    E_barn: f * n.E_barn,
+    E_ung: f * n.E_ung,
+    E_vgs: f * n.E_vgs,
+    S: f * n.S,
+    P: f * n.P,
+    W: f * n.W
+  };
+}
+
+export function grantFor(c, coefs = coefficients()) {
+  return satsmodell(communeUnits(c), coefs);
 }
 
 // Mayor salary: G·(α + β·∛pop); council size: odd(∛pop).
@@ -30,13 +88,23 @@ export function councilSize(pop) {
   return n % 2 === 0 ? n + 1 : n;
 }
 
-const state = { kostra: true, directEntry: null };
+const COEF_LABELS = [
+  ['a', 'residents (I_k)'],
+  ['b', 'km² (A_k)'],
+  ['c', 'kindergarten-age children (B_k)'],
+  ['d', 'primary school pupils (E_barn)'],
+  ['e', 'lower secondary pupils (E_ung)'],
+  ['f', 'upper secondary pupils (E_vgs)'],
+  ['g', 'students (S_k)'],
+  ['h', 'pensioners (P_k)'],
+  ['i', 'workforce (W_k)']
+];
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Municipal finance — needs-based grants' }),
-    el('p', { class: 'desc', text: 'The grants are G per unit (residents, km², children, pupils, pensioners) — never a function of the local tax base. Norm-cost anchor: the most expensive communes covering half the population. A local land value tax (LVT) remains alongside the national grants. Ordering formulas: mayor salary G·(α + β·∛residents), council size odd(∛residents).' }),
-    formulaBox('grant = G × (0.35·residents + 0.002·km² + 0.9·children + 1.1·pupils + 0.7·pensioners)'));
+  main.append(el('h2', { text: 'Municipal finance — needs-based grants (the satsmodell)' }),
+    el('p', { class: 'desc', text: 'The grants follow the satsmodell: T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k + h·P_k + i·W_k), where G is the grant rate unit and a–i are POLITICAL PARAMETERS (not data) — user-editable, initialised to 1 for neutral equal weighting. No official rates exist; none are invented. The grants are never a function of the local tax base. Norm-cost anchor: the most expensive communes covering half the population. A local land value tax (LVT) remains alongside the national grants. Ordering formulas: mayor salary G·(α + β·∛residents), council size odd(∛residents).' }),
+    formulaBox('T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k + h·P_k + i·W_k)'));
   const bar = card(
     el('label', { text: 'KOSTRA view' }),
     (() => {
@@ -49,12 +117,14 @@ export function render(main) {
     (() => {
       const c = el('input', { type: 'checkbox' });
       c.addEventListener('change', () => {
-        state.directEntry = c.checked ? { name: 'Own commune', residents: 5000, km2: 300, children: 1000, pupils: 700, pensioners: 900 } : null;
+        state.directEntry = c.checked ? { name: 'Own commune', residents: 5000, km2: 300 } : null;
         draw();
       });
       return c;
     })());
   main.append(bar);
+  const coefCard = card(el('h3', { text: 'Political parameters a–i (not data) — no official rates exist' }));
+  main.append(coefCard);
   const out = card();
   main.append(out);
   const chartCard = card(el('h3', { text: 'Grants per commune' }), el('div', { class: 'chartbox', id: 'mun-chart' }));
@@ -62,19 +132,29 @@ export function render(main) {
   let chart;
 
   function draw() {
+    const c = coefficients();
+    clear(coefCard);
+    coefCard.append(el('h3', { text: 'Political parameters a–i (not data) — no official rates exist' }),
+      table(['Coefficient', 'Unit', 'Value (political parameter)'],
+        COEF_LABELS.map(([k, label]) => {
+          const i = el('input', { type: 'number', step: '0.1', min: '0', value: String(c[k]) });
+          i.addEventListener('input', () => { c[k] = Number(i.value) || 0; draw(); });
+          return ['a–i: ' + k, label, i];
+        })));
+
     const communes = state.directEntry ? [state.directEntry] : get('municipal.exampleCommunes');
-    const rows = communes.map(c => ({
-      ...c,
-      grant: grantFor(c),
-      mayor: mayorSalaryG(c.residents) * get('G'),
-      council: councilSize(c.residents)
+    const rows = communes.map(cm => ({
+      ...cm,
+      grant: grantFor(cm),
+      mayor: mayorSalaryG(cm.residents) * get('G'),
+      council: councilSize(cm.residents)
     }));
     clear(out);
     out.append(table(
-      ['Commune', 'Residents', 'km²', 'Children', 'Pupils', 'Pensioners', 'Grant', 'Mayor salary', 'Council'],
-      rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmt(r.children), fmt(r.pupils), fmt(r.pensioners), fmtNOK(r.grant), fmtNOK(r.mayor), fmt(r.council)]),
-      [1, 2, 3, 4, 5, 6, 7, 8]));
-    out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (same rates over national units): ${fmtNOK(nationalGrantTotal())}.` }));
+      ['Commune', 'Residents', 'km²', 'Grant', 'Mayor salary', 'Council'],
+      rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmtNOK(r.grant), fmtNOK(r.mayor), fmt(r.council)]),
+      [1, 2, 3, 4, 5]));
+    out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (the satsmodell over national unit counts): ${fmtNOK(nationalGrantTotal())}.` }));
 
     chart?.destroy();
     chart = new Chart(chartCanvas('mun-chart'), {

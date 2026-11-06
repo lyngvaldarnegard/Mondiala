@@ -5,7 +5,7 @@ import { cutoff, queueSize, occupationWeights, pensionCost, ageCounts, groups } 
 import { foodCardCost } from './foodcard.js';
 import { computeIncome, computeExpenditure, lvt } from './budget.js';
 import { barnetrygdCost, stipendCost, childCount } from './welfare.js';
-import { grantFor, mayorSalaryG, councilSize, nationalGrantTotal } from './municipal.js';
+import { grantFor, mayorSalaryG, councilSize, nationalGrantTotal, satsmodell, nationalUnits } from './municipal.js';
 import { houseSize, droopQuota, allocate } from './electoral.js';
 
 // Visible checks: every formula from the spec gets a row here. The same
@@ -92,8 +92,19 @@ export function runChecks() {
   add('Barnetrygd = children (0–17) × 1 G', Math.abs(barnetrygdCost() - childCount() * get('welfare.barnetrygdPerChildG') * G) < 1e-6, fmtNOK(barnetrygdCost()));
   add('Student stipend = student FTE count × yearly stipend', stipendCost() === get('welfare.studentFteCount') * get('welfare.studentStipendYear'), fmtNOK(stipendCost()));
 
-  // Municipal formulas
-  const comm = { residents: 1000, km2: 100, children: 200, pupils: 150, pensioners: 180 };
+  // Municipal formulas — the satsmodell (item 6)
+  const nu = nationalUnits();
+  const neutral = { a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1 };
+  add('Satsmodell: neutral coefficients (all 1) weight every unit equally',
+    Math.abs(satsmodell(nu, neutral) - G * (nu.I + nu.A + nu.B + nu.E_barn + nu.E_ung + nu.E_vgs + nu.S + nu.P + nu.W)) < 1e-6,
+    fmtNOK(satsmodell(nu, neutral)));
+  add('Raising political coefficient a raises the grant by exactly G·I_k',
+    Math.abs(satsmodell(nu, { ...neutral, a: 2 }) - satsmodell(nu, neutral) - G * nu.I) < 1e-3,
+    `+ ${fmtNOK(G * nu.I)} for a = 2`);
+  add('A commune with the national units receives the national grant',
+    Math.abs(grantFor({ residents: nu.I, km2: nu.A }) - nationalGrantTotal()) < 1e-6,
+    fmtNOK(nationalGrantTotal()));
+  const comm = { residents: 1000, km2: 100 };
   add('Municipal grants are G-per-unit (need, not tax base)', grantFor(comm) > 0, fmtNOK(grantFor(comm)));
   add('Mayor salary = G·(α + β·∛residents)', Math.abs(mayorSalaryG(1000) * G - (get('municipal.mayorAlpha') + get('municipal.mayorBeta') * 10) * G) < 1e-6, fmtNOK(mayorSalaryG(1000) * G));
   const cs = councilSize(1000);

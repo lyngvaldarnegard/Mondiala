@@ -25,6 +25,7 @@ function makeEl(tag = 'div') {
 const registry = {};
 global.document = {
   createElement: makeEl,
+  createElementNS: (ns, tag) => makeEl(tag),
   createTextNode: t => ({ nodeType: 3, textContent: t }),
   getElementById: id => registry[id] || (registry[id] = makeEl('div')),
   querySelectorAll: () => []

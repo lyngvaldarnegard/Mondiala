@@ -43,7 +43,14 @@
       3,100–3,900), Danish-equivalence anchor source note, estimated flag kept;
       budget page shows the valve rate and the LVT share of budget as two
       separate labeled numbers
-- [ ] Block D — items 6, 7: municipal satsmodell coefficients, Mondiala hex map
+- [x] Block D — item 6: satsmodell implemented with political parameters a–i
+      (init 1, user-editable, labeled as political parameters, not data);
+      variable definitions per the Notion page "Offentlige overføringer til
+      kommunesektoren"; old per-unit rates retired
+- [x] Block D — item 7: hex map restored — SVG elements need createElementNS
+      (document.createElement cannot create them, so the polygons never
+      rendered); no flag property exists on the policy Mondiala page (verified)
+      and none was added
 
 ## Open data gaps (revision round 1)
 
@@ -58,3 +65,10 @@
 - income.decile1ThresholdNOK (230,000 NOK) is a draft placeholder between the
   decile-1 and decile-2 means — the real decile-1 threshold comes at the data
   pass (SSB 09935/05854); the decile means keep their draft flag.
+
+- Municipal per-commune demographic units are a proportional in-app assumption
+  (national per-resident shares × commune residents) until commune-level data
+  enters the register at the data pass.
+- The municipal national grant with neutral coefficients is large (~1.4 tn NOK)
+  because a–i are unweighted political parameters; the user sets the real
+  political weights — no official satser exist.

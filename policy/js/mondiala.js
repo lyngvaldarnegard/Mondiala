@@ -23,19 +23,31 @@ export function render(main) {
     el('p', null, el('a', { href: '../city-designer/mondiala.html', text: 'Open the full interactive city map →' })),
     el('p', null, el('a', { href: '#budget', text: 'The Mondiala preset in the national budget →' }))));
 
-  // hex map
+  // Hex map: SVG elements must be created in the SVG namespace —
+  // document.createElement cannot make them, so the map is drawn with
+  // createElementNS. No flag property; rings 0–3 only.
   const box = document.getElementById('hexmap');
   const size = 26, w = 640, h = 420;
-  const svg = el('svg', { width: String(w), height: String(h), viewBox: `0 0 ${w} ${h}` });
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('width', String(w));
+  svg.setAttribute('height', String(h));
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
   const cx = w / 2, cy = h / 2;
   const hex = (x, y, r, i) => {
+    const poly = document.createElementNS(NS, 'polygon');
     const pts = [];
     for (let k = 0; k < 6; k++) {
       const a = Math.PI / 180 * (60 * k - 30);
       pts.push(`${x + r * Math.cos(a)},${y + r * Math.sin(a)}`);
     }
     const col = i === 0 ? '#e8b04b' : (i <= 6 ? '#3fb950' : (i <= 18 ? '#4c8bf5' : '#7d8b9d'));
-    return el('polygon', { points: pts.join(' '), fill: col, stroke: '#0d1117', 'stroke-width': '1.5', opacity: '0.9' });
+    poly.setAttribute('points', pts.join(' '));
+    poly.setAttribute('fill', col);
+    poly.setAttribute('stroke', '#0d1117');
+    poly.setAttribute('stroke-width', '1.5');
+    poly.setAttribute('opacity', '0.9');
+    return poly;
   };
   svg.append(hex(cx, cy, size, 0));
   let i = 1;

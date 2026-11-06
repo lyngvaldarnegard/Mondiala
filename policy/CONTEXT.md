@@ -33,8 +33,10 @@ Adjusted (virtual) age = age + Σ(years in occupation × (max(1, L_ref/L_j) − 
 weights computed at runtime from occupational life expectancy data — upward
 only, so hard occupations accrue queue credit faster and safe ones count
 exactly 1.0. Pension level 3 G/year. Pages: age-distribution chart with cutoff
-line and actual/virtual toggle, society model over SSB history + projections,
-individual calculator with a user-adjustable occupation-share assumption table.
+line and actual/virtual toggle, individual calculator with a user-adjustable
+occupation-share assumption table. (The population-history trend charts were
+removed — scaling model expenditure linearly by historic population was
+misleading.)
 
 **Tax** — one shared base: general capitalised income (alminnelig inntekt) minus the interest deduction,
 keeping financial fees, small-scale business expenses, BSU and IPS. Three
@@ -64,12 +66,21 @@ from SSB income distribution tables; V1 uses decile means.
 the right, computed live from the other modules. Every income post and every
 spending post is individually toggleable; toggling any post live-recomputes
 the totals, the gap, the LVT valve rate and all Sankey percentage shares. No
-preset selector. Each expenditure post either offers named alternatives with
+preset selector. Income posts: the oil fund (the 3% rule), the employer
+contribution, corporate 22%, the income tax of the chosen variant, and a sin
+tax set equal to the estimated social cost of alcohol and tobacco per year
+(draft register values until the data pass). Defaults select the programme's
+own levels (constitutional floors and pledges) rather than the adopted-budget
+baseline. A commune/country split card shows which posts are delivered
+through the municipal sector (the municipal transfers post) and which by the
+state, with amounts and shares of the budget. Each expenditure post either offers named alternatives with
 short explanations labeled by status — country (comparable real-world country
 value), constitutional (enshrined in the constitution), legislated (adopted
 law), pledge (party pledge) — or a plain percentage-of-budget number field the
 user sets directly (a post set to s% of budget is exactly s% of the total:
-T = F/(1−Σs)). The Sankey and all post lists show each post's share of the
+T = F/(1−Σs)). Every alternative carries a short explanation shown in the
+selector. Culture is 1% of the BUDGET (the programme pledge), not of GDP. The
+Sankey and all post lists show each post's share of the
 total budget, percentage first, money secondary, and money is always computed
 read-only output. Completeness: every proposal in the Mondiala programme is a
 visible, toggleable post — pensions, health, education, defence, aid,
@@ -88,20 +99,25 @@ central, SSB 09594 areas plus market price anchors) — central value
 separate labeled numbers: (1) the valve rate = gap / land base (~12.6% central
 on the ~440 bn gap) — never labeled as a share of budget or GDP — and (2) the
 LVT's share of the total budget.
-Baseline = SBU 2026 posts from the data register; time series with SSB history
-and model projection driven by population projections.
+Baseline = SBU 2026 posts from the data register. The population-history
+trend charts were removed — they made no sense.
 
 
 
 **Food card** — universal, flat SIFO single-adult grocery rate for every
-resident; cost = population × rate × 12. Taxable in B, tax-free in A.
+resident; cost = population × rate × 12. Taxable in B, tax-free in A. (The
+population-history cost chart was removed with the other trend charts.)
 
 **Municipal finance** — the satsmodell:
 T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k
           + h·P_k + i·W_k)
 where G is the grant rate unit and the coefficients a–i are POLITICAL
-PARAMETERS (not data): user-editable number fields on the page, initialised to
-1 (neutral equal weighting). No official rates exist — none are invented.
+PARAMETERS (not data): user-editable number fields on the page. The STANDARD
+RATES are calculated from public data (KOSTRA / SSB service and cost
+statistics) at the data pass and load in as the defaults through the
+register; until then the coefficients are neutral at 1 (equal weighting) —
+nothing is invented. Support per person (grant per resident) is the default
+view; total grants are one toggle away.
 Variables (per the programme's transfer model): I_k residents, A_k km²,
 B_k children in kindergarten age (1–5), E_barn primary pupils (6–12), E_ung
 lower-secondary pupils (13–15), E_vgs upper-secondary pupils (16–18), S_k

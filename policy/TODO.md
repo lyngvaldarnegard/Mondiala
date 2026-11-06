@@ -72,3 +72,24 @@
 - The municipal national grant with neutral coefficients is large (~1.4 tn NOK)
   because a–i are unweighted political parameters; the user sets the real
   political weights — no official satser exist.
+
+## Revision round 1, follow-up
+
+- [x] Population-history trend charts removed (budget time series, pension
+      society model, food card history) — they made no sense.
+- [x] Municipal finance shows support per person (grant per resident) as the
+      default view, plus a per-resident column in the table.
+- [x] Municipal standard rates: the point is public data — the standard rates
+      are calculated from KOSTRA / SSB service and cost statistics at the data
+      pass and load in as coefficient defaults through the register; until
+      then a–i stay neutral at 1. Copy no longer says "no data exists".
+- [x] National budget shows the commune/country split (municipal transfers are
+      the commune side; everything else is country).
+- [x] Sin tax income post added = estimated social cost of alcohol + tobacco
+      per year — sinTax.alcoholSocialCostNOK / sinTax.tobaccoSocialCostNOK are
+      DRAFT placeholders; replace with official estimates (Norwegian
+      Directorate of Health / SSB) at the data pass.
+- [x] Culture is 1% of the BUDGET (programme pledge), not GDP.
+- [x] Default selections are the programme's own levels (constitutional floors
+      and pledges); every alternative now carries a short explanation in the
+      selector.

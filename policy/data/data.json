@@ -151,7 +151,9 @@
         1150000
       ],
       "personsPerDecile": 555000
-    }
+    },
+    "decile1ThresholdNOK": 230000,
+    "decile1ThresholdNote": "draft — placeholder between the decile-1 mean and the decile-2 mean; replace at the data pass (SSB 09935/05854)"
   },
   "tax": {
     "variantA": {
@@ -165,7 +167,8 @@
     },
     "variantC": {
       "defaultRatePercent": 50,
-      "defaultPercentile": 50
+      "exemptDecile": 1,
+      "note": "flat rate above the decile-1 threshold; ONLY decile 1 is exempt, no other exemptions"
     },
     "employerRate": 0.141,
     "corporateRate": 0.22,
@@ -306,7 +309,8 @@
       "oilFundWithdrawalNOK": 642000000000,
       "employerAvgiftNOK": 335000000000,
       "corporateTaxNOK": 165000000000,
-      "lvtBaseNOK": 5200000000000
+      "lvtBaseNOK": 3500000000000,
+      "lvtBaseNote": "estimated — pending data pass; Danish-equivalence anchor (Statistics Denmark taxable grundværdi 1,249 bn DKK 2022 under the old capped regime; reconstructed market total ~2,000–2,500 bn DKK ≈ 3,100–3,900 bn NOK), cross-validated by an area-class × price-per-m² estimate (~2,650 bn NOK central, SSB 09594 areas plus market price anchors); DKK/NOK rate pinned at the data pass"
     },
     "expenditure": {
       "note": "every program proposal is a visible, toggleable post; alternatives carry status labels (country / constitutional / legislated / pledge); shares of GDP/GNI are general inputs, money is read-only output",

@@ -35,8 +35,14 @@
       legislated / pledge) or a plain percentage-of-budget field; preset
       selector removed; share of budget shown first, money second; barnetrygd
       and student stipend added as visible posts
-- [ ] Block C — items 4, 10, 11: barnetrygd, variant C decile-1 exemption,
-      land base update
+- [x] Block C — item 4: barnetrygd 1 G/child (0–17) wired into the B base,
+      the budget posts and the checks (tax-free in A, taxable in B)
+- [x] Block C — item 10: variant C exempts only decile 1 — flat slab above the
+      decile-1 threshold, no other exemptions; code, UI copy and checks updated
+- [x] Block C — item 11: land value base 3,500 bn NOK central (band
+      3,100–3,900), Danish-equivalence anchor source note, estimated flag kept;
+      budget page shows the valve rate and the LVT share of budget as two
+      separate labeled numbers
 - [ ] Block D — items 6, 7: municipal satsmodell coefficients, Mondiala hex map
 
 ## Open data gaps (revision round 1)
@@ -48,3 +54,7 @@
   stipend post recomputes when the register value is replaced.
 - Ecuador/ratchet, culture 1% target and country alternative levels reuse the
   ranges already recorded in the data layer; no new numbers were invented.
+
+- income.decile1ThresholdNOK (230,000 NOK) is a draft placeholder between the
+  decile-1 and decile-2 means — the real decile-1 threshold comes at the data
+  pass (SSB 09935/05854); the decile means keep their draft flag.

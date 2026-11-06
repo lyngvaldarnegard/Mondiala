@@ -44,10 +44,14 @@ export function taxB(base, G, benefits = 0) {
 }
 
 // ---- Variant C: "decile anchored" ----------------------------------
-// flat X % above the Y-th percentile — one anchor number (median wage,
-// SSB 11418) plus one rate. No distribution machinery.
-export function taxC(base, anchor, ratePct) {
-  return (ratePct / 100) * Math.max(0, base - anchor);
+// C exempts ONLY decile 1: the slab applies to everything above the
+// decile-1 threshold, with no other exemptions. One threshold number plus
+// one rate; no distribution machinery.
+export function taxC(base, decile1Threshold, ratePct) {
+  return (ratePct / 100) * Math.max(0, base - decile1Threshold);
+}
+export function decile1Threshold() {
+  return getWithOverride('income.decile1ThresholdNOK');
 }
 
 // ---- Today's system (comparison only) ------------------------------
@@ -71,13 +75,13 @@ export function revenueByDecile(variant) {
   const G = get('G');
   const means = get('income.decileMeans.means');
   const persons = get('income.decileMeans.personsPerDecile');
-  const anchor = getWithOverride('income.medianWageYear');
+  const threshold = decile1Threshold();
   return means.map((m, i) => {
     const base = baseIncome({ gross: m });
     let t = 0;
     if (variant === 'A') t = taxA(base, G);
     if (variant === 'B') t = taxB(base, G, 0);
-    if (variant === 'C') t = taxC(base, anchor, 50);
+    if (variant === 'C') t = taxC(base, threshold, get('tax.variantC.defaultRatePercent'));
     return { decile: 'D' + (i + 1), mean: m, tax: t, revenue: t * persons };
   });
 }
@@ -94,7 +98,7 @@ export function benefitsFor(s) {
 const state = {
   variant: 'A',
   grossG: 5, interestG: 0.6, feesG: 0, businessG: 0, bsuG: 0, ipsG: 0.15,
-  children: 2, rateC: 50
+  children: 2, rateC: null
 };
 
 export function render(main) {
@@ -149,13 +153,14 @@ export function render(main) {
 
   function draw() {
     const G = get('G');
+    if (state.rateC == null) state.rateC = get('tax.variantC.defaultRatePercent');
     const s = moneyState();
     const base = baseIncome(s);
     const benefits = benefitsFor(s);
     let tax = 0, formula = '';
     if (state.variant === 'A') { tax = taxA(base, G); formula = 'the staircase: marginal 0/10/20/30/40/50 % per 1 G bracket'; }
     if (state.variant === 'B') { tax = taxB(base, G, benefits); formula = `flat template: 0.5 × max(0, I − ${get('tax.variantB.thresholdG')} G) where I = base + benefits`; }
-    if (state.variant === 'C') { tax = taxC(base, getWithOverride('income.medianWageYear'), state.rateC); formula = `decile anchored: ${state.rateC} % of base above the anchor (${fmt(getWithOverride('income.medianWageYear'))} NOK, median wage SSB 11418)`; }
+    if (state.variant === 'C') { tax = taxC(base, decile1Threshold(), state.rateC); formula = `decile anchored: ${state.rateC} % of everything above the decile-1 threshold (${fmt(decile1Threshold())} NOK, draft) — only decile 1 is exempt, no other exemptions`; }
     clear(out);
     out.append(
       el('p', null, formulaBox(formula)),
@@ -178,7 +183,7 @@ export function render(main) {
       const b = g * G;
       if (state.variant === 'A') return taxA(b, G) / G;
       if (state.variant === 'B') return taxB(b, G, 0) / G;
-      return taxC(b, getWithOverride('income.medianWageYear'), state.rateC) / G;
+      return taxC(b, decile1Threshold(), state.rateC) / G;
     });
     cumChart?.destroy();
     cumChart = new Chart(chartCanvas('cum-chart'), {
@@ -193,7 +198,7 @@ export function render(main) {
       const b = baseIncome({ gross: i });
       if (state.variant === 'A') return taxA(b, G);
       if (state.variant === 'B') return taxB(b, G, benefitsFor({ gross: i }));
-      return taxC(b, getWithOverride('income.medianWageYear'), state.rateC);
+      return taxC(b, decile1Threshold(), state.rateC);
     });
     const today = incomes.map(i => taxToday(i));
     todayChart?.destroy();

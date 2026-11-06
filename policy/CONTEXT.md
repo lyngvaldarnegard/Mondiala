@@ -43,11 +43,16 @@ toggleable variants over it:
 - B "the flat template": tax = 0.5 × max(0, I − 3 G); welfare benefits (food card,
   barnetrygd 1 G/child, student stipend) add to the base; no exceptions — a 3 G
   pension hits the threshold exactly (zero tax), which is the demographic
-  protection. The card-tracking "net contribution" theory is illustration copy
+  protection. Barnetrygd: 1 G per child (0–17), universal — tax-free in
+  variant A, taxable in variant B (added to the base); a visible, toggleable
+  budget post computed as children × 1 G. The card-tracking "net contribution" theory is illustration copy
   only, never the formula.
-- C "decile anchored": flat X% above the Y-th percentile — default 50% above the
-  median wage (SSB wage statistics, one anchor number, currently 669 600 kr/yr).
-  X and Y editable; one number plus one rate, no distribution machinery.
+- C "decile anchored": C exempts ONLY decile 1. The C slab applies to
+  everything above the decile-1 threshold; no other exemptions. Default rate
+  50% above the decile-1 threshold (draft register field
+  income.decile1ThresholdNOK — placeholder between the decile-1 and decile-2
+  means until the data pass, SSB 09935/05854; the draft flag stays). One
+  threshold number plus one rate, no distribution machinery.
 
 The social security contribution (trygdeavgift), bracket tax (trinnskatt) and wealth tax
 (formuesskatt) are removed; the employer contribution (arbeidsgiveravgift) and
@@ -72,6 +77,17 @@ transport, culture, research, administration, interest, the food card,
 barnetrygd, the student stipend and municipal transfers; zero hidden posts.
 The land value tax (LVT) is the balance valve: its rate is whatever closes the
 gap, and the budget always balances — structural invariant, not a UI state.
+The land value base (budget.income.lvtBaseNOK) is the Danish-equivalence
+anchor: Denmark's reconstructed total land value at market (Statistics
+Denmark's taxable grundværdi 1,249 bn DKK in 2022 under the old capped regime;
+reconstructed market total ~2,000–2,500 bn DKK ≈ 3,100–3,900 bn NOK),
+cross-validated by an area-class × price-per-m² estimate (~2,650 bn NOK
+central, SSB 09594 areas plus market price anchors) — central value
+3,500 bn NOK, band 3,100–3,900 bn NOK, flagged estimated — pending data pass
+(the DKK/NOK rate is pinned at the data pass). The budget page shows TWO
+separate labeled numbers: (1) the valve rate = gap / land base (~12.6% central
+on the ~440 bn gap) — never labeled as a share of budget or GDP — and (2) the
+LVT's share of the total budget.
 Baseline = SBU 2026 posts from the data register; time series with SSB history
 and model projection driven by population projections.
 

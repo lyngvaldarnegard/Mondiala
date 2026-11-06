@@ -156,13 +156,13 @@
   },
   {
     "field": "budget.income.lvtBaseNOK",
-    "value": 5200000000000,
+    "value": 3500000000000,
     "unit": "NOK",
-    "source": "curated land value base — draft — replace at data pass",
+    "source": "estimated — pending data pass; Danish-equivalence anchor: Denmark’s reconstructed total land value at market (Statistics Denmark taxable grundværdi 1,249 bn DKK in 2022 under the old capped regime; reconstructed market total ~2,000–2,500 bn DKK ≈ 3,100–3,900 bn NOK), cross-validated by an area-class × price-per-m² estimate (~2,650 bn NOK central, SSB 09594 areas plus market price anchors); DKK/NOK rate pinned at the data pass",
     "cadence": "yearly",
     "sanity": [
-      1000000000000,
-      15000000000000
+      3100000000000,
+      3900000000000
     ],
     "draft": true
   },
@@ -197,6 +197,18 @@
     "sanity": [
       100000,
       600000
+    ],
+    "draft": true
+  },
+  {
+    "field": "income.decile1ThresholdNOK",
+    "value": 230000,
+    "unit": "NOK",
+    "source": "draft — placeholder between the decile-1 mean and the decile-2 mean; replace at data pass (SSB 09935/05854)",
+    "cadence": "yearly",
+    "sanity": [
+      100000,
+      400000
     ],
     "draft": true
   }

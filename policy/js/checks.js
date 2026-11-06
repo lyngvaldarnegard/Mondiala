@@ -1,6 +1,6 @@
 import { get, getWithOverride } from './data.js';
 import { el, clear, card, table, fmt, fmtNOK } from './ui.js';
-import { baseIncome, taxA, taxB, taxC } from './tax.js';
+import { baseIncome, taxA, taxB, taxC, benefitsFor } from './tax.js';
 import { cutoff, queueSize, occupationWeights, pensionCost, ageCounts, groups } from './pension.js';
 import { foodCardCost } from './foodcard.js';
 import { computeIncome, computeExpenditure, lvt } from './budget.js';
@@ -32,10 +32,21 @@ export function runChecks() {
   add('Variant B: 0.5 × max(0, 6 G − 3 G) = 1.5 G', Math.abs(taxB(6 * G, G, 0) / G - 1.5) < 1e-9, `= ${fmt(taxB(6 * G, G, 0) / G, 2)} G`);
   add('Variant B: benefits (food card) are added to the base', taxB(3 * G, G, 10000) === 5000, `= ${fmt(taxB(3 * G, G, 10000))} NOK`);
 
-  // Variant C: one anchor + one rate
-  const anchor = getWithOverride('income.medianWageYear');
-  add('Variant C: 50% of (anchor + 100 000 − anchor) = 50 000', taxC(anchor + 100000, anchor, 50) === 50000, `= ${fmt(taxC(anchor + 100000, anchor, 50))} NOK`);
-  add('Variant C: below the anchor = 0 tax', taxC(anchor - 1, anchor, 50) === 0, `= ${fmt(taxC(anchor - 1, anchor, 50))} kr`);
+  // Variant C: exempts ONLY decile 1 — the slab applies to everything above
+  // the decile-1 threshold, no other exemptions
+  const d1 = getWithOverride('income.decile1ThresholdNOK');
+  const rateC = get('tax.variantC.defaultRatePercent');
+  add('Variant C: income at the decile-1 threshold pays 0 (only decile 1 is exempt)', taxC(d1, d1, rateC) === 0, `= ${fmt(taxC(d1, d1, rateC))} NOK`);
+  add(`Variant C: ${rateC}% of everything above the decile-1 threshold`, taxC(d1 + 100000, d1, rateC) === (rateC / 100) * 100000, `= ${fmt(taxC(d1 + 100000, d1, rateC))} NOK`);
+  add('Variant C: the decile-1 mean (draft) pays zero tax', get('income.decileMeans.means')[0] <= d1 && taxC(get('income.decileMeans.means')[0], d1, rateC) === 0, `decile-1 mean ${fmt(get('income.decileMeans.means')[0])} NOK ≤ threshold ${fmt(d1)} NOK`);
+  add('Variant C: no other exemptions — the slab is linear above the threshold with no deductions', taxC(2 * d1, d1, rateC) === (rateC / 100) * d1, `= ${fmt(taxC(2 * d1, d1, rateC))} NOK`);
+
+  // Barnetrygd: 1 G per child — tax-free in A, taxable in B (item 4)
+  const kids = 2;
+  const baseNoKids = baseIncome({ gross: 5 * G });
+  const withKids = benefitsFor({ children: kids });
+  add('Barnetrygd is tax-free in variant A (children do not change tax A)', taxA(baseNoKids, G) === taxA(baseNoKids + get('welfare.barnetrygdPerChildG') * 0, G), `tax A = ${fmtNOK(taxA(baseNoKids, G))}`);
+  add('Barnetrygd is taxable in variant B (added to the base, taxed at the flat rate)', Math.abs(taxB(baseNoKids, G, withKids) - taxB(baseNoKids, G, benefitsFor({ children: 0 })) - get('tax.variantB.rate') * get('welfare.barnetrygdPerChildG') * G * kids) < 1e-6, `+ ${fmtNOK(get('tax.variantB.rate') * get('welfare.barnetrygdPerChildG') * G * kids)} tax for ${kids} children`);
 
   // Pension queue
   const counts = ageCounts();
@@ -59,7 +70,8 @@ export function runChecks() {
   const expT = exp.reduce((s, p) => s + p.value, 0);
   const v = lvt(expT, incT);
   add('The budget balances via the LVT valve (invariant)', expT <= incT + v.amount + 1e-6, `expenditure ${fmtNOK(expT)}, income + LVT ${fmtNOK(incT + v.amount)}`);
-  add('The LVT rate closes the gap', v.rate >= 0 && (v.amount === 0 || Math.abs(v.amount - (expT - incT)) < 1), fmt(100 * v.rate, 2) + ' %');
+  add('The LVT rate closes the gap', v.rate >= 0 && (v.amount === 0 || Math.abs(v.amount - (expT - incT)) < 1), fmt(100 * v.rate, 2) + ' % of the land value base');
+  add('Land value base = gap / valve rate (Danish-equivalence anchor, estimated — pending data pass)', Math.abs(v.rate * get('budget.income.lvtBaseNOK') - v.amount) < 1, `${fmtNOK(get('budget.income.lvtBaseNOK'))} base → ${fmt(100 * v.rate, 2)} % valve rate, LVT share of budget ${fmt(100 * v.budgetShare, 1)} %`);
 
   // Items 8/9: every post toggleable, every proposal visible
   const postIds = get('budget.expenditure.posts').map(p => p.id);

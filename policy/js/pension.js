@@ -107,11 +107,10 @@ export function render(main) {
   main.append(bar);
   const outCard = card();
   const chartCard = card(el('h3', { text: 'Age distribution with the exit line' }), el('div', { class: 'chartbox', id: 'age-chart' }));
-  const socCard = card(el('h3', { text: 'Society model over SSB history + projections' }), el('div', { class: 'chartbox', id: 'soc-chart' }));
   const calcCard = card(el('h3', { text: 'Individual calculator' }));
   const wCard = card(el('h3', { text: 'Occupation weights l_j′ = max(1, L_ref/L_j) — computed in-app from register data' }));
-  main.append(outCard, chartCard, socCard, calcCard, wCard);
-  let ageChart, socChart;
+  main.append(outCard, chartCard, calcCard, wCard);
+  let ageChart;
 
   function draw() {
     const G = get('G');
@@ -194,37 +193,6 @@ export function render(main) {
             display: true,
             text: `Exit line: person no. ${fmt(c.P)} — ${state.actualMode ? 'actual' : 'virtual'} age ${fmt(state.actualMode ? c.cutoffActual : c.cutoff, 1)} years`
           }
-        }
-      }
-    });
-
-    // society model over history + projections
-    const hist = get('population.history');
-    const proj = get('population.projections');
-    const years = [...hist.years, ...proj.years.filter(y => y > hist.years[hist.years.length - 1])];
-    const totals = [...hist.totals, ...proj.totals.slice(hist.totals.length)];
-    const rows = years.map((y, i) => {
-      const cnt = ageCounts(totals[i]);
-      const g = groups(cnt);
-      const P = queueSize(totals[i], g.U, g.V);
-      const cc = cutoff(false, cnt);
-      return { year: y, total: totals[i], P, cutoff: cc.cutoff };
-    });
-    socChart?.destroy();
-    socChart = new Chart(chartCanvas('soc-chart'), {
-      type: 'line',
-      data: {
-        labels: rows.map(r => r.year),
-        datasets: [
-          { label: 'Queue P (number of pensioners)', data: rows.map(r => r.P), borderColor: '#e8b04b', yAxisID: 'y' },
-          { label: 'Virtual exit age', data: rows.map(r => r.cutoff), borderColor: '#3fb950', yAxisID: 'y1' }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { position: 'left', title: { display: true, text: 'P' } },
-          y1: { position: 'right', title: { display: true, text: 'Age' } }
         }
       }
     });

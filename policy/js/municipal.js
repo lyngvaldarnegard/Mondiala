@@ -6,8 +6,10 @@ import { ageCounts, groups } from './pension.js';
 // T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs
 //            + g·S_k + h·P_k + i·W_k)
 // G is the grant rate unit; the coefficients a–i are POLITICAL PARAMETERS
-// (not data), rendered as user-editable number fields initialised to 1
-// (neutral equal weighting). No official rates exist — none are invented.
+// (not data), rendered as user-editable number fields. The STANDARD RATES are
+// calculated from public data (KOSTRA / SSB service and cost statistics) at
+// the data pass and drop into the register as the defaults; until then the
+// coefficients stay neutral at 1 (equal weighting) — nothing is invented.
 // Variable definitions (Notion, "Public transfers to the municipal sector"):
 //   I_k    residents
 //   A_k    km²
@@ -103,10 +105,10 @@ const COEF_LABELS = [
 export function render(main) {
   clear(main);
   main.append(el('h2', { text: 'Municipal finance — needs-based grants (the satsmodell)' }),
-    el('p', { class: 'desc', text: 'The grants follow the satsmodell: T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k + h·P_k + i·W_k), where G is the grant rate unit and a–i are POLITICAL PARAMETERS (not data) — user-editable, initialised to 1 for neutral equal weighting. No official rates exist; none are invented. The grants are never a function of the local tax base. Norm-cost anchor: the most expensive communes covering half the population. A local land value tax (LVT) remains alongside the national grants. Ordering formulas: mayor salary G·(α + β·∛residents), council size odd(∛residents).' }),
+    el('p', { class: 'desc', text: 'The grants follow the satsmodell: T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k + h·P_k + i·W_k), where G is the grant rate unit and a–i are POLITICAL PARAMETERS (not data) — user-editable fields. The standard rates are calculated from public data (KOSTRA / SSB service and cost statistics) at the data pass and load in as the defaults; until then the coefficients are neutral at 1 (equal weighting). The grants are never a function of the local tax base. Norm-cost anchor: the most expensive communes covering half the population. A local land value tax (LVT) remains alongside the national grants. Ordering formulas: mayor salary G·(α + β·∛residents), council size odd(∛residents).' }),
     formulaBox('T_k = G · (a·I_k + b·A_k + c·B_k + d·E_barn + e·E_ung + f·E_vgs + g·S_k + h·P_k + i·W_k)'));
   const bar = card(
-    el('label', { text: 'KOSTRA view' }),
+    el('label', { text: 'Per-person view (default; uncheck for totals)' }),
     (() => {
       const c = el('input', { type: 'checkbox' });
       c.checked = state.kostra;
@@ -151,9 +153,9 @@ export function render(main) {
     }));
     clear(out);
     out.append(table(
-      ['Commune', 'Residents', 'km²', 'Grant', 'Mayor salary', 'Council'],
-      rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmtNOK(r.grant), fmtNOK(r.mayor), fmt(r.council)]),
-      [1, 2, 3, 4, 5]));
+      ['Commune', 'Residents', 'km²', 'Grant', 'Grant per resident', 'Mayor salary', 'Council'],
+      rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmtNOK(r.grant), fmtNOK(r.grant / r.residents), fmtNOK(r.mayor), fmt(r.council)]),
+      [1, 2, 3, 4, 5, 6]));
     out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (the satsmodell over national unit counts): ${fmtNOK(nationalGrantTotal())}.` }));
 
     chart?.destroy();
@@ -162,8 +164,8 @@ export function render(main) {
       data: {
         labels: rows.map(r => r.name),
         datasets: state.kostra
-          ? [{ label: 'Grant (NOK)', data: rows.map(r => r.grant), backgroundColor: '#3fb950' }]
-          : [{ label: 'Grant per resident (NOK)', data: rows.map(r => r.grant / r.residents), backgroundColor: '#e8b04b' }]
+          ? [{ label: 'Grant per resident (NOK) — support per person', data: rows.map(r => r.grant / r.residents), backgroundColor: '#e8b04b' }]
+          : [{ label: 'Grant (NOK, total)', data: rows.map(r => r.grant), backgroundColor: '#3fb950' }]
       },
       options: { responsive: true }
     });

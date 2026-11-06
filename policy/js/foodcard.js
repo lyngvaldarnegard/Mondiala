@@ -1,5 +1,5 @@
 import { get, getWithOverride } from './data.js';
-import { el, clear, card, table, fmt, fmtNOK, formulaBox, chartCanvas } from './ui.js';
+import { el, clear, card, table, fmt, fmtNOK, formulaBox } from './ui.js';
 
 // Universal, flat SIFO single-adult grocery rate for every resident.
 // cost = population × rate × 12. Taxable in variant B, tax-free in A.
@@ -14,9 +14,6 @@ export function render(main) {
     formulaBox('cost = population × SIFO rate × 12'));
   const out = card();
   main.append(out);
-  const chartCard = card(el('h3', { text: 'Cost over population history and projection' }), el('div', { class: 'chartbox', id: 'fc-chart' }));
-  main.append(chartCard);
-  let chart;
 
   function draw() {
     const pop = getWithOverride('population.total');
@@ -30,20 +27,6 @@ export function render(main) {
       ['Per person per year', fmt(rate * 12) + ' NOK'],
       ['Treatment in the tax system', 'A: tax-free · B: taxable (added to the base)']
     ], [1]));
-
-    const hist = get('population.history');
-    const proj = get('population.projections');
-    const years = [...hist.years, ...proj.years.filter(y => y > hist.years[hist.years.length - 1])];
-    const totals = [...hist.totals, ...proj.totals.slice(hist.totals.length)];
-    chart?.destroy();
-    chart = new Chart(chartCanvas('fc-chart'), {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: [{ label: 'Food card cost per year', data: totals.map(foodCardCost), borderColor: '#3fb950', fill: true, backgroundColor: 'rgba(63,185,80,.15)' }]
-      },
-      options: { responsive: true, scales: { y: { title: { display: true, text: 'NOK per year' } } } }
-    });
   }
   draw();
 }

@@ -321,7 +321,8 @@
           "name": "Pensions",
           "flag": "legislated",
           "valueNOK": 405000000000,
-          "computed": "pension"
+          "computed": "pension",
+          "level": "country"
         },
         {
           "id": "health",
@@ -331,26 +332,32 @@
           "mode": "gdp",
           "alternatives": [
             {
-              "name": "SBU 2026 baseline",
+              "name": "National budget 2026 baseline",
               "share": null,
-              "status": "legislated"
+              "status": "legislated",
+              "note": "the adopted 2026 national budget level (about 6% of GDP)"
             },
             {
               "name": "Low comparable-country level (4% of GDP)",
               "share": 0.04,
-              "status": "country"
+              "status": "country",
+              "note": "what comparable countries spend on health as a share of GDP"
             },
             {
               "name": "High comparable-country level (8% of GDP)",
               "share": 0.08,
-              "status": "country"
+              "status": "country",
+              "note": "the top of the comparable-country range"
             },
             {
               "name": "Mondiala constitution floor (7% of GDP)",
               "share": 0.07,
-              "status": "constitutional"
+              "status": "constitutional",
+              "note": "enshrined in the Mondiala constitution: health spending may not fall below this"
             }
-          ]
+          ],
+          "level": "country",
+          "defaultAlt": 3
         },
         {
           "id": "education",
@@ -360,26 +367,32 @@
           "mode": "gdp",
           "alternatives": [
             {
-              "name": "SBU 2026 baseline",
+              "name": "National budget 2026 baseline",
               "share": null,
-              "status": "legislated"
+              "status": "legislated",
+              "note": "the adopted 2026 national budget level (about 4% of GDP)"
             },
             {
               "name": "Low comparable-country level (4% of GDP)",
               "share": 0.04,
-              "status": "country"
+              "status": "country",
+              "note": "what comparable countries spend on education as a share of GDP"
             },
             {
               "name": "High comparable-country level (8% of GDP)",
               "share": 0.08,
-              "status": "country"
+              "status": "country",
+              "note": "the top of the comparable-country range"
             },
             {
               "name": "Mondiala constitution floor (6% of GDP)",
               "share": 0.06,
-              "status": "constitutional"
+              "status": "constitutional",
+              "note": "enshrined in the Mondiala constitution: education spending may not fall below this"
             }
-          ]
+          ],
+          "level": "country",
+          "defaultAlt": 3
         },
         {
           "id": "defence",
@@ -389,26 +402,32 @@
           "mode": "gdp",
           "alternatives": [
             {
-              "name": "SBU 2026 baseline",
+              "name": "National budget 2026 baseline",
               "share": null,
-              "status": "legislated"
+              "status": "legislated",
+              "note": "the adopted 2026 national budget level (about 2.8% of GDP)"
             },
             {
               "name": "Alliance minimum (2% of GDP)",
               "share": 0.02,
-              "status": "country"
+              "status": "country",
+              "note": "the NATO 2% of GDP target"
             },
             {
               "name": "High comparable-country level (5% of GDP)",
               "share": 0.05,
-              "status": "country"
+              "status": "country",
+              "note": "the top of the comparable-country range"
             },
             {
               "name": "Programme pledge (3.2% of GDP)",
               "share": 0.032,
-              "status": "pledge"
+              "status": "pledge",
+              "note": "the programme’s own pledge for defence"
             }
-          ]
+          ],
+          "level": "country",
+          "defaultAlt": 3
         },
         {
           "id": "aid",
@@ -418,96 +437,113 @@
           "mode": "gni",
           "alternatives": [
             {
-              "name": "SBU 2026 baseline",
+              "name": "National budget 2026 baseline",
               "share": null,
-              "status": "legislated"
+              "status": "legislated",
+              "note": "the adopted 2026 national budget level (about 1% of GNI)"
             },
             {
               "name": "UN target (0.7% of GNI)",
               "share": 0.007,
-              "status": "country"
+              "status": "country",
+              "note": "the UN 0.7% of GNI aid target"
             },
             {
               "name": "Programme pledge (1% of GNI)",
               "share": 0.01,
-              "status": "pledge"
+              "status": "pledge",
+              "note": "the programme’s own pledge for aid"
             }
-          ]
+          ],
+          "level": "country",
+          "defaultAlt": 2
         },
         {
           "id": "transport",
           "name": "Transport",
           "flag": "legislated",
           "valueNOK": 78000000000,
-          "mode": "budget"
+          "mode": "budget",
+          "level": "country"
         },
         {
           "id": "culture",
           "name": "Culture",
           "flag": "pledge",
           "valueNOK": 8000000000,
-          "mode": "gdp",
+          "mode": "budget",
           "alternatives": [
             {
-              "name": "SBU 2026 baseline",
+              "name": "National budget 2026 baseline",
               "share": null,
-              "status": "legislated"
+              "status": "legislated",
+              "note": "the adopted 2026 national budget level (about 0.4% of the budget)"
             },
             {
-              "name": "1% of GDP target",
+              "name": "1% of the budget",
               "share": 0.01,
-              "status": "pledge"
+              "status": "pledge",
+              "note": "the programme’s pledge: culture at one percent of the total budget"
             }
-          ]
+          ],
+          "level": "country",
+          "defaultAlt": 1
         },
         {
           "id": "research",
           "name": "Research and innovation",
           "flag": "legislated",
           "valueNOK": 34000000000,
-          "mode": "budget"
+          "mode": "budget",
+          "level": "country"
         },
         {
           "id": "admin",
           "name": "Public administration",
           "flag": "legislated",
           "valueNOK": 52000000000,
-          "mode": "budget"
+          "mode": "budget",
+          "level": "country"
         },
         {
           "id": "interest",
           "name": "Interest costs",
           "flag": "legislated",
           "valueNOK": 35000000000,
-          "mode": "budget"
+          "mode": "budget",
+          "level": "country"
         },
         {
           "id": "foodcard",
           "name": "Food card",
           "flag": "constitutional",
           "valueNOK": 287000000000,
-          "computed": "foodcard"
+          "computed": "foodcard",
+          "level": "country"
         },
         {
           "id": "barnetrygd",
           "name": "Child benefit (barnetrygd)",
           "flag": "legislated",
           "valueNOK": 12000000000,
-          "computed": "barnetrygd"
+          "computed": "barnetrygd",
+          "level": "country"
         },
         {
           "id": "stipend",
           "name": "Student stipend",
           "flag": "legislated",
           "valueNOK": 40000000000,
-          "computed": "stipend"
+          "computed": "stipend",
+          "level": "country"
         },
         {
           "id": "municipal",
           "name": "Municipal transfers",
           "flag": "legislated",
           "valueNOK": 121000000000,
-          "computed": "municipal"
+          "computed": "municipal",
+          "level": "commune"
         }
       ]
     },
@@ -542,5 +578,10 @@
   "country": {
     "name": "Norway",
     "note": "default country preset — provides all default data values (G, GDP, GNI, population, rates); the models themselves are general"
+  },
+  "sinTax": {
+    "alcoholSocialCostNOK": 100000000000,
+    "tobaccoSocialCostNOK": 50000000000,
+    "note": "draft — estimated social cost per year; replace at the data pass with official estimates (Norwegian Directorate of Health / SSB)"
   }
 }

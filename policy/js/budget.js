@@ -4,7 +4,7 @@ import { revenueByDecile } from './tax.js';
 import { pensionCost } from './pension.js';
 import { foodCardCost } from './foodcard.js';
 import { nationalGrantTotal } from './municipal.js';
-import { barnetrygdCost, stipendCost } from './welfare.js';
+import { barnetrygdCost, stipendCost, sinTaxCost } from './welfare.js';
 
 // Locked rule-driven income, computed live from the modules. Every income
 // post is individually toggleable (item 8); the LVT valve is structural and
@@ -16,7 +16,8 @@ export function computeIncome(variant = 'A', settings = {}) {
     { id: 'oil', name: 'Oil fund (the 3% rule)', value: d.oilFundWithdrawalNOK },
     { id: 'wage', name: 'Employer contribution', value: d.employerAvgiftNOK },
     { id: 'corp', name: 'Corporate tax 22%', value: d.corporateTaxNOK },
-    { id: 'inctax', name: 'Income tax (variant ' + variant + ')', value: decileRevenue }
+    { id: 'inctax', name: 'Income tax (variant ' + variant + ')', value: decileRevenue },
+    { id: 'sintax', name: 'Sin tax (= alcohol + tobacco social cost)', value: sinTaxCost() }
   ].filter(i => settings.incomeOn?.[i.id] !== false);
 }
 
@@ -43,18 +44,24 @@ export function computeExpenditure(settings) {
     if (p.computed === 'stipend') { fixed.push({ ...p, value: stipendCost() }); continue; }
     if (p.mode === 'budget') { budgetPosts.push(p); continue; }
     const base = p.mode === 'gni' ? gni : gdp;
-    const alt = p.alternatives[settings.choice?.[p.id] ?? 0];
+    const alt = p.alternatives[settings.choice?.[p.id] ?? p.defaultAlt ?? 0];
     const share = settings.custom?.[p.id] ?? (alt.share ?? (p.valueNOK / base));
     fixed.push({ ...p, share, value: share * base });
   }
   // Percentage-of-budget posts: T = F / (1 − Σ s_i), so each post really is
   // its stated share of the total budget.
   const F = fixed.reduce((s, p) => s + p.value, 0);
-  const S = budgetPosts.reduce((s, p) => s + (settings.budgetShare?.[p.id] ?? p.valueNOK / baselineTotal), 0);
+  const budgetShareOf = (p) => {
+    if (settings.budgetShare?.[p.id] != null) return settings.budgetShare[p.id];
+    const alt = p.alternatives?.[settings.choice?.[p.id] ?? p.defaultAlt ?? 0];
+    if (alt) return alt.share ?? p.valueNOK / baselineTotal;
+    return p.valueNOK / baselineTotal;
+  };
+  const S = budgetPosts.reduce((s, p) => s + budgetShareOf(p), 0);
   const T = S >= 0.999 ? F / 0.001 : F / (1 - S);
   const out = fixed.map(p => ({ ...p, budgetShare: p.value / (T || 1) }));
   for (const p of budgetPosts) {
-    const s = settings.budgetShare?.[p.id] ?? p.valueNOK / baselineTotal;
+    const s = budgetShareOf(p);
     out.push({ ...p, share: s, value: s * T, budgetShare: s });
   }
   return out;
@@ -113,9 +120,9 @@ export function render(main) {
   main.append(sankeyCard);
   const balCard = card();
   main.append(balCard);
-  const tsCard = card(el('h3', { text: 'Time series — SSB history and model projection (population-driven)' }), el('div', { class: 'chartbox', id: 'ts-chart' }));
-  main.append(tsCard);
-  let tsChart, sankeySvg;
+  const splitCard = card(el('h3', { text: 'Split between commune and country' }));
+  main.append(splitCard);
+  let sankeySvg;
 
   function draw() {
     const income = computeIncome(state.variant, state);
@@ -148,24 +155,29 @@ export function render(main) {
           cb.checked = state.on[p.id] !== false;
           cb.addEventListener('change', () => { state.on[p.id] = cb.checked; draw(); });
           let input;
+          const baselineTotal = get('budget.expenditure.posts').reduce((s, q) => s + (q.valueNOK || 0), 0);
           if (p.computed) {
             input = el('span', { class: 'desc', text: 'computed from the modules' });
-          } else if (p.mode === 'budget') {
-            const cur = state.budgetShare[p.id] ?? (p.valueNOK / get('budget.expenditure.posts').reduce((s, q) => s + (q.valueNOK || 0), 0));
+          } else if (p.alternatives) {
+            const choice = state.choice[p.id] ?? p.defaultAlt ?? 0;
+            const alt = p.alternatives[choice];
+            const sel = el('select', { onchange: e => { state.choice[p.id] = Number(e.target.value); delete state.custom[p.id]; delete state.budgetShare[p.id]; draw(); } },
+              ...p.alternatives.map((a, k) => el('option', { value: String(k), text: a.name + ' — ' + a.note })));
+            sel.value = String(choice);
+            const ofWhat = p.mode === 'gni' ? 'GNI' : (p.mode === 'budget' ? 'budget' : 'GDP');
+            const fallback = alt.share ?? (p.mode === 'budget' ? p.valueNOK / baselineTotal : p.valueNOK / (p.mode === 'gni' ? gni : gdp));
+            const store = p.mode === 'budget' ? 'budgetShare' : 'custom';
+            const cur = state[store][p.id] ?? fallback;
+            const i = el('input', { type: 'number', min: '0', max: '100', step: '0.1', value: String(100 * cur) });
+            i.addEventListener('input', () => { state[store][p.id] = (Number(i.value) || 0) / 100; draw(); });
+            input = el('span', null, sel, ' ', i, ' % of ' + ofWhat);
+          } else {
+            const cur = state.budgetShare[p.id] ?? p.valueNOK / baselineTotal;
             const i = el('input', { type: 'number', min: '0', max: '99', step: '0.1', value: String(100 * cur) });
             i.addEventListener('input', () => { state.budgetShare[p.id] = (Number(i.value) || 0) / 100; draw(); });
             input = el('span', null, i, ' % of budget');
-          } else {
-            const sel = el('select', { onchange: e => { state.choice[p.id] = Number(e.target.value); delete state.custom[p.id]; draw(); } },
-              ...p.alternatives.map((a, k) => el('option', { value: String(k), text: a.name })));
-            sel.value = String(state.choice[p.id] ?? 0);
-            const ofWhat = p.mode === 'gni' ? 'GNI' : 'GDP';
-            const cur = state.custom[p.id] ?? (p.alternatives[state.choice[p.id] ?? 0].share ?? p.valueNOK / (p.mode === 'gni' ? gni : gdp));
-            const i = el('input', { type: 'number', min: '0', max: '100', step: '0.1', value: String(100 * cur) });
-            i.addEventListener('input', () => { state.custom[p.id] = (Number(i.value) || 0) / 100; draw(); });
-            input = el('span', null, sel, ' ', i, ' % of ' + ofWhat);
           }
-          const status = p.computed ? flagPill(p.flag) : (p.alternatives ? flagPill(p.alternatives[state.choice[p.id] ?? 0].status) : flagPill(p.flag));
+          const status = p.computed ? flagPill(p.flag) : (p.alternatives ? flagPill(p.alternatives[state.choice[p.id] ?? p.defaultAlt ?? 0].status) : flagPill(p.flag));
           const share = row ? fmt(100 * row.budgetShare, 1) + ' %' : '—';
           const amount = row ? fmtNOK(row.value) : '—';
           return [p.name, status, input, share, amount, cb];
@@ -223,25 +235,16 @@ export function render(main) {
       .attr('text-anchor', d => d.x0 < w / 2 ? 'start' : 'end').attr('fill', '#dce3ec').attr('font-size', 11)
       .text(d => d.name);
 
-    // time series: history + projection, expenditure scaled by population path
-    const hist = get('population.history');
-    const proj = get('population.projections');
-    const years = [...hist.years, ...proj.years.filter(y => y > hist.years[hist.years.length - 1])];
-    const totals = [...hist.totals, ...proj.totals.slice(hist.totals.length)];
-    const basePop = totals[0];
-    tsChart?.destroy();
-    tsChart = new Chart(chartCanvas('ts-chart'), {
-      type: 'line',
-      data: {
-        labels: years,
-        datasets: [
-          { label: 'Expenditure (population-driven model)', data: totals.map(t => expTotal * t / basePop), borderColor: '#f85149' },
-          { label: 'Locked income (model)', data: totals.map(t => incomeTotal * t / basePop), borderColor: '#3fb950' },
-          { label: 'LVT valve', data: totals.map(t => Math.max(0, (expTotal - incomeTotal)) * t / basePop), borderColor: '#e8b04b' }
-        ]
-      },
-      options: { responsive: true, scales: { y: { title: { display: true, text: 'NOK' } } } }
-    });
+    // split between commune and country
+    clear(splitCard);
+    const communeTotal = posts.filter(p => p.level === 'commune').reduce((s, p) => s + p.value, 0);
+    const countryTotal = posts.filter(p => p.level !== 'commune').reduce((s, p) => s + p.value, 0);
+    splitCard.append(el('h3', { text: 'Split between commune and country' }),
+      el('p', { class: 'desc', text: 'Commune-level posts are delivered and paid through the municipal sector; country-level posts are paid by the state. The municipal transfers post carries the whole commune side of the budget.' }),
+      table(['Level', 'Posts', 'Amount', 'Share of budget'], [
+        ['Commune (municipal sector)', posts.filter(p => p.level === 'commune').map(p => p.name).join(', ') || '—', fmtNOK(communeTotal), fmt(100 * communeTotal / (totalBudget || 1), 1) + ' %'],
+        ['Country (state)', posts.filter(p => p.level !== 'commune').map(p => p.name).join(', ') || '—', fmtNOK(countryTotal), fmt(100 * countryTotal / (totalBudget || 1), 1) + ' %']
+      ], [2]));
   }
   function flagPill(flag) {
     const t = { country: 'country', constitutional: 'constitutional', legislated: 'legislated', pledge: 'pledge' }[flag] || flag;

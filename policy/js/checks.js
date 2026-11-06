@@ -89,6 +89,13 @@ export function runChecks() {
   const expBT = expB.reduce((s, p) => s + p.value, 0);
   const tB = expB.find(p => p.id === 'transport');
   add('A percentage-of-budget post is exactly its stated share of the total', Math.abs(tB.value / expBT - sB) < 1e-9, fmt(100 * tB.value / expBT, 2) + ' % of ' + fmtNOK(expBT));
+  const culture = exp.find(p => p.id === 'culture');
+  add('Culture at the programme pledge is exactly 1% of the total budget (not GDP)', Math.abs(culture.budgetShare - 0.01) < 1e-9, fmt(100 * culture.budgetShare, 2) + ' % of ' + fmtNOK(expT));
+  const communeT = exp.filter(p => p.level === 'commune').reduce((s, p) => s + p.value, 0);
+  const countryT = exp.filter(p => p.level !== 'commune').reduce((s, p) => s + p.value, 0);
+  add('The commune/country split sums to the expenditure', Math.abs(communeT + countryT - expT) < 1, `commune ${fmtNOK(communeT)} + country ${fmtNOK(countryT)} = ${fmtNOK(expT)}`);
+  const sin = computeIncome('A').find(i => i.id === 'sintax');
+  add('Sin tax = estimated social cost of alcohol + tobacco per year (draft)', Math.abs(sin.value - (get('sinTax.alcoholSocialCostNOK') + get('sinTax.tobaccoSocialCostNOK'))) < 1e-6, fmtNOK(sin.value));
   add('Barnetrygd = children (0–17) × 1 G', Math.abs(barnetrygdCost() - childCount() * get('welfare.barnetrygdPerChildG') * G) < 1e-6, fmtNOK(barnetrygdCost()));
   add('Student stipend = student FTE count × yearly stipend', stipendCost() === get('welfare.studentFteCount') * get('welfare.studentStipendYear'), fmtNOK(stipendCost()));
 

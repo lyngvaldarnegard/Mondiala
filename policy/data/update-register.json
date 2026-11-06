@@ -222,5 +222,29 @@
       300000,
       400000
     ]
+  },
+  {
+    "field": "sinTax.alcoholSocialCostNOK",
+    "value": 100000000000,
+    "unit": "NOK per year",
+    "source": "draft — estimated social cost of alcohol per year; replace at data pass (Norwegian Directorate of Health / SSB estimates)",
+    "cadence": "yearly",
+    "sanity": [
+      20000000000,
+      300000000000
+    ],
+    "draft": true
+  },
+  {
+    "field": "sinTax.tobaccoSocialCostNOK",
+    "value": 50000000000,
+    "unit": "NOK per year",
+    "source": "draft — estimated social cost of tobacco per year; replace at data pass (Norwegian Directorate of Health / SSB estimates)",
+    "cadence": "yearly",
+    "sanity": [
+      10000000000,
+      150000000000
+    ],
+    "draft": true
   }
 ]

@@ -18,3 +18,9 @@ export function barnetrygdCost(total = get('population.total')) {
 export function stipendCost() {
   return get('welfare.studentFteCount') * get('welfare.studentStipendYear');
 }
+
+// Sin tax: set equal to the estimated social cost of alcohol and tobacco
+// per year (draft register values until the data pass).
+export function sinTaxCost() {
+  return get('sinTax.alcoholSocialCostNOK') + get('sinTax.tobaccoSocialCostNOK');
+}

@@ -92,24 +92,24 @@ const state = { actualMode: false, calcAge: 62, shares: null };
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Pensjon — en kø, ikke en fast alder' }),
-    el('p', { class: 'desc', text: 'P = max(1 % × N, V/1.5 − U) bestemmer hvor mange pensjonister økonomien bærer: U = barn + unge (0–24), V = arbeidsstyrken (25–66). Utgangsalderen er den justerte (virtuelle) alderen til person nr. P i en befolkning sortert synkende. Virtuell alder = alder + Σ(år i yrke × (l_j′ − 1)), der l_j′ = max(1, L_ref/L_j) — kun oppover, harde yrker tjener køpoeng raskere, trygge teller nøyaktig 1.0. Pensjonsnivå: 3 G/år.' }),
+  main.append(el('h2', { text: 'Pension — a queue, not a fixed age' }),
+    el('p', { class: 'desc', text: 'P = max(1 % × N, V/1.5 − U) decides how many pensioners the economy carries: U = children + young (0–24), V = the workforce (25–66). The exit age is the adjusted (virtual) age of person no. P in a population sorted descending. Virtual age = age + Σ(years in occupation × (l_j′ − 1)), where l_j′ = max(1, L_ref/L_j) — upward only, hard occupations earn queue credit faster, safe ones count exactly 1.0. Pension level: 3 G/year.' }),
     formulaBox('P = max(1 % × N, V/1.5 − U)'));
   const bar = card(
-    el('label', { text: 'Visning' }),
+    el('label', { text: 'View' }),
     (() => {
       const s = el('select', { onchange: e => { state.actualMode = e.target.value === 'actual'; draw(); } },
-        el('option', { value: 'virtual', text: 'Virtuell alder (justert)' }),
-        el('option', { value: 'actual', text: 'Faktisk alder' }));
+        el('option', { value: 'virtual', text: 'Virtual age (adjusted)' }),
+        el('option', { value: 'actual', text: 'Actual age' }));
       s.value = state.actualMode ? 'actual' : 'virtual';
       return s;
     })());
   main.append(bar);
   const outCard = card();
-  const chartCard = card(el('h3', { text: 'Aldersfordeling med utgangslinje' }), el('div', { class: 'chartbox', id: 'age-chart' }));
-  const socCard = card(el('h3', { text: 'Samfunnsmodell over SSB-historikk + projeksjoner' }), el('div', { class: 'chartbox', id: 'soc-chart' }));
-  const calcCard = card(el('h3', { text: 'Individuell kalkulator' }));
-  const wCard = card(el('h3', { text: 'Yrkesvekter l_j′ = max(1, L_ref/L_j) — regnet i appen fra registerdata' }));
+  const chartCard = card(el('h3', { text: 'Age distribution with the exit line' }), el('div', { class: 'chartbox', id: 'age-chart' }));
+  const socCard = card(el('h3', { text: 'Society model over SSB history + projections' }), el('div', { class: 'chartbox', id: 'soc-chart' }));
+  const calcCard = card(el('h3', { text: 'Individual calculator' }));
+  const wCard = card(el('h3', { text: 'Occupation weights l_j′ = max(1, L_ref/L_j) — computed in-app from register data' }));
   main.append(outCard, chartCard, socCard, calcCard, wCard);
   let ageChart, socChart;
 
@@ -119,15 +119,15 @@ export function render(main) {
     const c = cutoff(state.actualMode, counts);
     const { E } = groups(counts);
     clear(outCard);
-    outCard.append(table(['Størrelse', 'Verdi'], [
-      ['Befolkning N', fmt(c.N)],
-      ['Barn + unge U (0–24)', fmt(c.U)],
-      ['Arbeidsstyrke V (25–66)', fmt(c.V)],
-      ['Kø P = max(1 % × N, V/1.5 − U)', fmt(c.P)],
-      ['Nåværende pensjonister (67+)', fmt(E) + (c.P > E ? ' — køen er lengre' : '')],
-      ['Utgangsalder (' + (state.actualMode ? 'faktisk' : 'virtuell') + ')', fmt(c.cutoff, 1) + ' år'],
-      ['Utgangsalder (faktisk, til sammenligning)', fmt(c.cutoffActual, 1) + ' år'],
-      ['Pensjonskostnad (3 G/år)', fmtNOK(pensionCost())]
+    outCard.append(table(['Quantity', 'Value'], [
+      ['Population N', fmt(c.N)],
+      ['Children + young U (0–24)', fmt(c.U)],
+      ['Workforce V (25–66)', fmt(c.V)],
+      ['Queue P = max(1 % × N, V/1.5 − U)', fmt(c.P)],
+      ['Current pensioners (67+)', fmt(E) + (c.P > E ? ' — the queue is longer' : '')],
+      ['Exit age (' + (state.actualMode ? 'actual' : 'virtual') + ')', fmt(c.cutoff, 1) + ' years'],
+      ['Exit age (actual, for comparison)', fmt(c.cutoffActual, 1) + ' years'],
+      ['Pension cost (3 G/year)', fmtNOK(pensionCost())]
     ], [1]));
 
     ageChart?.destroy();
@@ -165,7 +165,7 @@ export function render(main) {
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.fillStyle = '#e8b04b';
-        ctx.fillText(`utgang ${fmt(cutValue, 1)} år`, x + 6, top + 12);
+        ctx.fillText(`exit ${fmt(cutValue, 1)} years`, x + 6, top + 12);
         ctx.restore();
       }
     };
@@ -174,7 +174,7 @@ export function render(main) {
       data: {
         labels,
         datasets: [{
-          label: state.actualMode ? 'Personer per faktisk alder' : 'Personer per virtuell alder',
+          label: state.actualMode ? 'People per actual age' : 'People per virtual age',
           data,
           backgroundColor: '#3fb950'
         }]
@@ -183,8 +183,8 @@ export function render(main) {
       options: {
         responsive: true,
         scales: {
-          y: { title: { display: true, text: 'Personer' } },
-          x: { title: { display: true, text: state.actualMode ? 'Faktisk alder' : 'Virtuell alder (kohort-yrkesblanding)' } }
+          y: { title: { display: true, text: 'People' } },
+          x: { title: { display: true, text: state.actualMode ? 'Actual age' : 'Virtual age (cohort occupation mix)' } }
         },
         plugins: {
           annotationLike: false,
@@ -192,7 +192,7 @@ export function render(main) {
           legend: { display: false },
           title: {
             display: true,
-            text: `Utgangslinje: person nr. ${fmt(c.P)} — ${state.actualMode ? 'faktisk' : 'virtuell'} alder ${fmt(state.actualMode ? c.cutoffActual : c.cutoff, 1)} år`
+            text: `Exit line: person no. ${fmt(c.P)} — ${state.actualMode ? 'actual' : 'virtual'} age ${fmt(state.actualMode ? c.cutoffActual : c.cutoff, 1)} years`
           }
         }
       }
@@ -216,15 +216,15 @@ export function render(main) {
       data: {
         labels: rows.map(r => r.year),
         datasets: [
-          { label: 'Kø P (antall pensjonister)', data: rows.map(r => r.P), borderColor: '#e8b04b', yAxisID: 'y' },
-          { label: 'Virtuell utgangsalder', data: rows.map(r => r.cutoff), borderColor: '#3fb950', yAxisID: 'y1' }
+          { label: 'Queue P (number of pensioners)', data: rows.map(r => r.P), borderColor: '#e8b04b', yAxisID: 'y' },
+          { label: 'Virtual exit age', data: rows.map(r => r.cutoff), borderColor: '#3fb950', yAxisID: 'y1' }
         ]
       },
       options: {
         responsive: true,
         scales: {
           y: { position: 'left', title: { display: true, text: 'P' } },
-          y1: { position: 'right', title: { display: true, text: 'Alder' } }
+          y1: { position: 'right', title: { display: true, text: 'Age' } }
         }
       }
     });
@@ -233,16 +233,16 @@ export function render(main) {
     const weights = occupationWeights();
     if (!state.shares) state.shares = Object.fromEntries(weights.map(w => [w.name, w.share]));
     clear(calcCard);
-    calcCard.append(el('h3', { text: 'Individuell kalkulator' }),
-      el('label', { text: 'Din alder' }),
+    calcCard.append(el('h3', { text: 'Individual calculator' }),
+      el('label', { text: 'Your age' }),
       (() => {
         const i = el('input', { type: 'number', min: '16', max: '100', value: String(state.calcAge) });
         i.addEventListener('input', () => { state.calcAge = Number(i.value) || 0; drawCalc(); });
         return i;
       })(),
-      el('p', { class: 'desc', text: 'Rediger yrkesandelene (må summere seg til 1) — antagelsestabellen er din; vektene kommer fra registeret.' }),
+      el('p', { class: 'desc', text: 'Edit the occupation shares (must sum to 1) — the assumption table is yours; the weights come from the register.' }),
       el('div', { id: 'calc-out' }));
-    const shareTable = table(['Yrke', 'Andel', 'l_j′'], weights.map(w => {
+    const shareTable = table(['Occupation', 'Share', 'l_j′'], weights.map(w => {
       const inp = el('input', { type: 'number', step: '0.01', min: '0', max: '1', value: String(state.shares[w.name]) });
       inp.addEventListener('input', () => { state.shares[w.name] = Number(inp.value) || 0; drawCalc(); });
       return [w.name, inp, fmt(w.l, 3)];
@@ -255,17 +255,17 @@ export function render(main) {
       const cc = cutoff(false);
       const out = document.getElementById('calc-out');
       out.replaceChildren(table(
-        ['Din faktiske alder', 'Din virtuelle alder', 'Utgangsalder (virtuell)', 'Posisjon'],
-        [[fmt(state.calcAge) + ' år', fmt(vage, 1) + ' år', fmt(cc.cutoff, 1) + ' år',
-          vage >= cc.cutoff ? el('span', { class: 'ok', text: 'over utgangslinjen — pensjonert' }) : el('span', { class: 'bad', text: 'under utgangslinjen — i køen' })]]));
+        ['Your actual age', 'Your virtual age', 'Exit age (virtual)', 'Position'],
+        [[fmt(state.calcAge) + ' years', fmt(vage, 1) + ' years', fmt(cc.cutoff, 1) + ' years',
+          vage >= cc.cutoff ? el('span', { class: 'ok', text: 'above the exit line — retired' }) : el('span', { class: 'bad', text: 'below the exit line — in the queue' })]]));
     }
     drawCalc();
 
     // weights table
     clear(wCard);
-    wCard.append(el('h3', { text: 'Yrkesvekter l_j′ = max(1, L_ref/L_j) — regnet i appen fra registerdata' }),
-      table(['Yrke', 'L_j (register)', 'l_j′', 'Køpoeng per yrkesår'],
-        weights.map(w => [w.name, fmt(w.L, 1) + ' år', fmt(w.l, 3), fmt(w.l - 1, 3)]), [1, 2, 3]));
+    wCard.append(el('h3', { text: 'Occupation weights l_j′ = max(1, L_ref/L_j) — computed in-app from register data' }),
+      table(['Occupation', 'L_j (register)', 'l_j′', 'Queue credit per occupation-year'],
+        weights.map(w => [w.name, fmt(w.L, 1) + ' years', fmt(w.l, 3), fmt(w.l - 1, 3)]), [1, 2, 3]));
   }
   draw();
 }

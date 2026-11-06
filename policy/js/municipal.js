@@ -34,22 +34,22 @@ const state = { kostra: true, directEntry: null };
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Kommuneøkonomi — behovsstyrte tilskudd' }),
-    el('p', { class: 'desc', text: 'Tilskuddene er G per enhet (innbyggere, km², barn, elever, pensjonister) — aldri avhengige av lokalt skattefundament. Normkost-anker: de dyreste kommunene som dekker halve befolkningen. Lokal eiendomsskatt på grunnverdi (LVT) består ved sida av de nasjonale tilskuddene. Ordningsformler: ordførerlønn G·(α + β·∛innbyggere), kommunestyre odd(∛innbyggere).' }),
-    formulaBox('tilskudd = G × (0.35·innbyggere + 0.002·km² + 0.9·barn + 1.1·elever + 0.7·pensjonister)'));
+  main.append(el('h2', { text: 'Municipal finance — needs-based grants' }),
+    el('p', { class: 'desc', text: 'The grants are G per unit (residents, km², children, pupils, pensioners) — never a function of the local tax base. Norm-cost anchor: the most expensive communes covering half the population. A local land value tax (LVT) remains alongside the national grants. Ordering formulas: mayor salary G·(α + β·∛residents), council size odd(∛residents).' }),
+    formulaBox('grant = G × (0.35·residents + 0.002·km² + 0.9·children + 1.1·pupils + 0.7·pensioners)'));
   const bar = card(
-    el('label', { text: 'KOSTRA-visning' }),
+    el('label', { text: 'KOSTRA view' }),
     (() => {
       const c = el('input', { type: 'checkbox' });
       c.checked = state.kostra;
       c.addEventListener('change', () => { state.kostra = c.checked; draw(); });
       return c;
     })(),
-    el('label', { text: 'Direkteinntasting' }),
+    el('label', { text: 'Direct entry' }),
     (() => {
       const c = el('input', { type: 'checkbox' });
       c.addEventListener('change', () => {
-        state.directEntry = c.checked ? { name: 'Egen kommune', residents: 5000, km2: 300, children: 1000, pupils: 700, pensioners: 900 } : null;
+        state.directEntry = c.checked ? { name: 'Own commune', residents: 5000, km2: 300, children: 1000, pupils: 700, pensioners: 900 } : null;
         draw();
       });
       return c;
@@ -57,7 +57,7 @@ export function render(main) {
   main.append(bar);
   const out = card();
   main.append(out);
-  const chartCard = card(el('h3', { text: 'Tilskudd per kommune' }), el('div', { class: 'chartbox', id: 'mun-chart' }));
+  const chartCard = card(el('h3', { text: 'Grants per commune' }), el('div', { class: 'chartbox', id: 'mun-chart' }));
   main.append(chartCard);
   let chart;
 
@@ -71,10 +71,10 @@ export function render(main) {
     }));
     clear(out);
     out.append(table(
-      ['Kommune', 'Innb.', 'km²', 'Barn', 'Elever', 'Pens.', 'Tilskudd', 'Ordførerlønn', 'Styre'],
+      ['Commune', 'Residents', 'km²', 'Children', 'Pupils', 'Pensioners', 'Grant', 'Mayor salary', 'Council'],
       rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmt(r.children), fmt(r.pupils), fmt(r.pensioners), fmtNOK(r.grant), fmtNOK(r.mayor), fmt(r.council)]),
       [1, 2, 3, 4, 5, 6, 7, 8]));
-    out.append(el('p', { class: 'desc', text: `Normkost-anker: ${get('municipal.normCostAnchor')}. Nasjonalt totaltilskudd (samme satser over landsenheter): ${fmtNOK(nationalGrantTotal())}.` }));
+    out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (same rates over national units): ${fmtNOK(nationalGrantTotal())}.` }));
 
     chart?.destroy();
     chart = new Chart(document.getElementById('mun-chart'), {
@@ -82,8 +82,8 @@ export function render(main) {
       data: {
         labels: rows.map(r => r.name),
         datasets: state.kostra
-          ? [{ label: 'Tilskudd (kr)', data: rows.map(r => r.grant), backgroundColor: '#3fb950' }]
-          : [{ label: 'Tilskudd per innbygger (kr)', data: rows.map(r => r.grant / r.residents), backgroundColor: '#e8b04b' }]
+          ? [{ label: 'Grant (NOK)', data: rows.map(r => r.grant), backgroundColor: '#3fb950' }]
+          : [{ label: 'Grant per resident (NOK)', data: rows.map(r => r.grant / r.residents), backgroundColor: '#e8b04b' }]
       },
       options: { responsive: true }
     });

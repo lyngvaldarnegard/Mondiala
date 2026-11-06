@@ -6,22 +6,22 @@ import { el, clear, card, table, fmt } from './ui.js';
 // in the city-designer module of this repo.
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Mondiala — den fiktive hovedstaden' }),
-    el('p', { class: 'desc', text: 'Mondiala er sandkassen: verdens nye hovedstad med sin egen grunnlov — 3 % underskuddstak med gjenvalgsforbud, 60 % gjeldstak, gulv for utdanning og helse. Heks kartet under er en kompakt visning; det fullstendige interaktive bykartet bor i denne repoens city-designer.' }));
-  const mapCard = card(el('h3', { text: 'Heks-kart — ring 0–3' }), el('div', { id: 'hexmap' }));
+  main.append(el('h2', { text: 'Mondiala — the fictional capital' }),
+    el('p', { class: 'desc', text: 'Mondiala is the sandbox: the world’s new capital with its own constitution — a 3% deficit cap with a re-election ban, a 60% debt cap, floors for education and health. The hex map below is a compact view; the full interactive city map lives in this repo’s city-designer.' }));
+  const mapCard = card(el('h3', { text: 'Hex map — rings 0–3' }), el('div', { id: 'hexmap' }));
   main.append(mapCard);
   const c = get('constitution.presets').Mondiala;
-  main.append(card(el('h3', { text: 'Mondialas grunnlov (preset)' }),
-    table(['Regel', 'Verdi'], [
-      ['Underskuddstak', fmt(100 * c.deficitCap, 1) + ' % av BNP'],
-      ['Gjeldstak', fmt(100 * c.debtCap, 0) + ' % av BNP'],
-      ['Utdanningsgulv', fmt(100 * c.educationFloor, 1) + ' % av BNP'],
-      ['Helsegulv', fmt(100 * c.healthFloor, 1) + ' % av BNP'],
-      ['Gjenvalgsforbud ved brutt tak', c.reelectionBan ? 'ja' : 'nei']
+  main.append(card(el('h3', { text: "Mondiala’s constitution (preset)" }),
+    table(['Rule', 'Value'], [
+      ['Deficit cap', fmt(100 * c.deficitCap, 1) + ' % of GDP'],
+      ['Debt cap', fmt(100 * c.debtCap, 0) + ' % of GDP'],
+      ['Education floor', fmt(100 * c.educationFloor, 1) + ' % of GDP'],
+      ['Health floor', fmt(100 * c.healthFloor, 1) + ' % of GDP'],
+      ['Re-election ban on a broken cap', c.reelectionBan ? 'yes' : 'no']
     ], [1])));
-  main.append(card(el('h3', { text: 'Lenker' }),
-    el('p', null, el('a', { href: '../city-designer/mondiala.html', text: 'Åpne det fullstendige interaktive bykartet →' })),
-    el('p', null, el('a', { href: '#budget', text: 'Mondiala-presetten i statsbudsjettet →' }))));
+  main.append(card(el('h3', { text: 'Links' }),
+    el('p', null, el('a', { href: '../city-designer/mondiala.html', text: 'Open the full interactive city map →' })),
+    el('p', null, el('a', { href: '#budget', text: 'The Mondiala preset in the national budget →' }))));
 
   // hex map
   const box = document.getElementById('hexmap');

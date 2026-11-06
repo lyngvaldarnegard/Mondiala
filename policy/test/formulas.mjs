@@ -10,5 +10,5 @@ for (const c of checks) {
   console.log((c.ok ? '  ✓ ' : '  ✗ ') + c.name + (c.ok ? '' : ' — ' + c.detail));
   if (!c.ok) failed++;
 }
-console.log(`\n${checks.length - failed}/${checks.length} kontroller grønne`);
-if (failed) { console.error(failed + ' kontroller feiler'); process.exit(1); }
+console.log(`\n${checks.length - failed}/${checks.length} checks green`);
+if (failed) { console.error(failed + ' checks fail'); process.exit(1); }

@@ -45,14 +45,14 @@ function runSTV(candidates, seats, quota) {
     if (quota > 0 && top.votes >= quota) {
       won[top.name] = (won[top.name] || 0) + 1;
       elected.push({ name: top.name, votes: quota });
-      log.push(`${top.name} tar mandat ${won[top.name]} med ≥ kvote — overflødig overført`);
+      log.push(`${top.name} takes seat ${won[top.name]} with ≥ quota — surplus transferred`);
       top.votes -= quota;
       const surplusShare = top.votes;
       for (const c of pool.slice(1)) c.votes += 0; // transfers only on elimination; surplus stays with the party
       if (top.votes <= 0) pool.shift();
     } else {
       const lowest = pool[pool.length - 1];
-      log.push(`${lowest.name} ryker ut av tildelingen (lavest, ${fmt(lowest.votes)}) — stemmene overført`);
+      log.push(`${lowest.name} is eliminated from the allocation (lowest, ${fmt(lowest.votes)}) — votes transferred`);
       pool.pop();
       const restTotal = pool.reduce((s, c) => s + c.votes, 0);
       for (const c of pool) c.votes += lowest.votes * (restTotal ? c.votes / restTotal : 1 / Math.max(1, pool.length));
@@ -63,12 +63,12 @@ function runSTV(candidates, seats, quota) {
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Valgsystem — S = odd(∛befolkning)' }),
-    el('p', { class: 'desc', text: 'Stortinget låses på nøyaktig S = odd(∛befolkning) representanter. Halvparten av mandatene fordeles likt over fylkene (gulvrunding); resten er nasjonale utjevningsmandater som gjenopprettes via STV-aktig rangert valg. Droop-kvoten 1/(S+1) er den strukturelle sperren — ingen eksplisitt sperre, ingen overhengsmandater, huset låst på S.' }),
-    formulaBox('S = odd(∛N) · kvote = stemmer/(S+1)'));
+  main.append(el('h2', { text: 'Electoral system — S = odd(∛population)' }),
+    el('p', { class: 'desc', text: 'The house is locked at exactly S = odd(∛population) representatives. Half the seats are split equally across the counties (floor rounding); the rest are national levelling seats recreated via STV-style ranked choice. The Droop quota 1/(S+1) is the structural threshold — no explicit threshold, no overhang seats, house locked at S.' }),
+    formulaBox('S = odd(∛N) · quota = votes/(S+1)'));
   const out = card();
   main.append(out);
-  const chartCard = card(el('h3', { text: 'Mandater per parti' }), el('div', { class: 'chartbox', id: 'el-chart' }));
+  const chartCard = card(el('h3', { text: 'Seats per party' }), el('div', { class: 'chartbox', id: 'el-chart' }));
   main.append(chartCard);
   let chart;
 
@@ -81,30 +81,30 @@ export function render(main) {
     const totals = {};
     for (const c of r.countySeats) totals[c.winner] = (totals[c.winner] || 0) + c.seats;
     for (const e of r.stv.elected) totals[e.name] = (totals[e.name] || 0) + 1;
-    out.append(table(['Størrelse', 'Verdi'], [
-      ['Befolkning', fmt(pop)],
-      ['S = odd(∛befolkning)', fmt(r.S)],
-      ['Fylkesmandatpool (halvparten, gulvrunding)', fmt(r.countyPool) + ` = ${fmt(r.perCounty)} per fylke × ${counties.length} fylker`],
-      ['Nasjonale utjevningsmandater (STV)', fmt(r.levelling)],
-      ['Droop-kvote (strukturell terskel)', fmt(r.quota) + ' stemmer = 1/(S+1) av alle stemmer'],
-      ['Sum mandater', fmt(r.countyPool - (r.countyPool - r.perCounty * counties.length) + r.levelling) + ` (låst på S = ${fmt(r.S)})`]
+    out.append(table(['Quantity', 'Value'], [
+      ['Population', fmt(pop)],
+      ['S = odd(∛population)', fmt(r.S)],
+      ['County seat pool (half, floor rounding)', fmt(r.countyPool) + ` = ${fmt(r.perCounty)} per county × ${counties.length} counties`],
+      ['National levelling seats (STV)', fmt(r.levelling)],
+      ['Droop quota (structural threshold)', fmt(r.quota) + ' votes = 1/(S+1) of all votes'],
+      ['Total seats', fmt(r.countyPool - (r.countyPool - r.perCounty * counties.length) + r.levelling) + ` (locked at S = ${fmt(r.S)})`]
     ], [1]));
-    out.append(el('h3', { text: 'Fylkesmandater (lik fordeling)' }),
-      table(['Fylke', 'Velgere', 'Mandater', 'Største parti'],
+    out.append(el('h3', { text: 'County seats (equal split)' }),
+      table(['County', 'Voters', 'Seats', 'Largest party'],
         r.countySeats.map(c => [c.name, fmt(c.voters), fmt(c.seats), c.winner])));
-    out.append(el('h3', { text: 'STV-utjevning — valglogg' }),
-      el('p', { class: 'desc', text: r.stv.log.join(' · ') || 'Ingen utjevningsmandater denne gangen.' }));
+    out.append(el('h3', { text: 'STV levelling — election log' }),
+      el('p', { class: 'desc', text: r.stv.log.join(' · ') || 'No levelling seats this time.' }));
     chart?.destroy();
     chart = new Chart(document.getElementById('el-chart'), {
       type: 'bar',
       data: {
         labels: parties.map(p => p.name),
         datasets: [
-          { label: 'Stemmer', data: parties.map(p => p.votes), backgroundColor: '#7d8b9d', yAxisID: 'y1' },
-          { label: 'Mandater', data: parties.map(p => totals[p.name] || 0), backgroundColor: '#e8b04b' }
+          { label: 'Votes', data: parties.map(p => p.votes), backgroundColor: '#7d8b9d', yAxisID: 'y1' },
+          { label: 'Seats', data: parties.map(p => totals[p.name] || 0), backgroundColor: '#e8b04b' }
         ]
       },
-      options: { responsive: true, scales: { y1: { position: 'right', title: { display: true, text: 'Stemmer' } } } }
+      options: { responsive: true, scales: { y1: { position: 'right', title: { display: true, text: 'Votes' } } } }
     });
   }
   draw();

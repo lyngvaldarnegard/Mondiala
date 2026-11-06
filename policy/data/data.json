@@ -17,37 +17,117 @@
     "ageDistribution": {
       "note": "draft — replace at data pass (SSB table 07459 / Folkemengde 1. januar)",
       "bins": [
-        {"from": 0, "to": 17, "share": 0.198},
-        {"from": 18, "to": 24, "share": 0.078},
-        {"from": 25, "to": 66, "share": 0.522},
-        {"from": 67, "to": 79, "share": 0.121},
-        {"from": 80, "to": 200, "share": 0.081}
+        {
+          "from": 0,
+          "to": 17,
+          "share": 0.198
+        },
+        {
+          "from": 18,
+          "to": 24,
+          "share": 0.078
+        },
+        {
+          "from": 25,
+          "to": 66,
+          "share": 0.522
+        },
+        {
+          "from": 67,
+          "to": 79,
+          "share": 0.121
+        },
+        {
+          "from": 80,
+          "to": 200,
+          "share": 0.081
+        }
       ],
       "singleYearShares": "computed in-app by spreading bins uniformly over single years"
     },
     "projections": {
       "note": "draft — replace at data pass (SSB table 12553)",
-      "years": [2025, 2030, 2040, 2050, 2060],
-      "totals": [5550000, 5750000, 6070000, 6320000, 6550000]
+      "years": [
+        2025,
+        2030,
+        2040,
+        2050,
+        2060
+      ],
+      "totals": [
+        5550000,
+        5750000,
+        6070000,
+        6320000,
+        6550000
+      ]
     },
     "history": {
       "note": "draft — replace at data pass (SSB table 102505)",
-      "years": [1900, 1950, 1980, 2000, 2010, 2020, 2025],
-      "totals": [2240000, 3280000, 4086000, 4491000, 4858000, 5368000, 5550000]
+      "years": [
+        1900,
+        1950,
+        1980,
+        2000,
+        2010,
+        2020,
+        2025
+      ],
+      "totals": [
+        2240000,
+        3280000,
+        4086000,
+        4491000,
+        4858000,
+        5368000,
+        5550000
+      ]
     }
   },
   "occupationalLifeExpectancy": {
     "note": "draft — replace at data pass (STAMI occupational life expectancy publication)",
     "L_ref": 80.0,
     "occupations": [
-      {"name": "Kontor/IT", "L": 82.0, "share": 0.30},
-      {"name": "Undervisning", "L": 81.5, "share": 0.10},
-      {"name": "Helse/omsorg", "L": 80.0, "share": 0.16},
-      {"name": "Industri/bygg", "L": 77.5, "share": 0.16},
-      {"name": "Transport", "L": 77.0, "share": 0.08},
-      {"name": "Renhold/varehandel", "L": 76.5, "share": 0.12},
-      {"name": "Primærnæringer", "L": 78.5, "share": 0.04},
-      {"name": "Ledelse", "L": 82.5, "share": 0.04}
+      {
+        "name": "Office/IT",
+        "L": 82.0,
+        "share": 0.3
+      },
+      {
+        "name": "Teaching",
+        "L": 81.5,
+        "share": 0.1
+      },
+      {
+        "name": "Health/care",
+        "L": 80.0,
+        "share": 0.16
+      },
+      {
+        "name": "Industry/construction",
+        "L": 77.5,
+        "share": 0.16
+      },
+      {
+        "name": "Transport",
+        "L": 77.0,
+        "share": 0.08
+      },
+      {
+        "name": "Cleaning/retail",
+        "L": 76.5,
+        "share": 0.12
+      },
+      {
+        "name": "Primary industries",
+        "L": 78.5,
+        "share": 0.04
+      },
+      {
+        "name": "Management",
+        "L": 82.5,
+        "share": 0.04
+      }
     ]
   },
   "income": {
@@ -56,17 +136,38 @@
     "decileMeans": {
       "note": "draft — replace at data pass (SSB tables 09935/05854); V1 uses decile means",
       "unit": "NOK per year per decile household-equivalent income",
-      "means": [180000, 290000, 360000, 420000, 480000, 540000, 610000, 700000, 830000, 1150000],
+      "means": [
+        180000,
+        290000,
+        360000,
+        420000,
+        480000,
+        540000,
+        610000,
+        700000,
+        830000,
+        1150000
+      ],
       "personsPerDecile": 555000
     }
   },
   "tax": {
-    "variantA": {"bracketRateStep": 0.10, "maxRate": 0.50, "zeroBrackets": 1},
-    "variantB": {"rate": 0.5, "thresholdG": 3},
-    "variantC": {"defaultRatePercent": 50, "defaultPercentile": 50},
+    "variantA": {
+      "bracketRateStep": 0.1,
+      "maxRate": 0.5,
+      "zeroBrackets": 1
+    },
+    "variantB": {
+      "rate": 0.5,
+      "thresholdG": 3
+    },
+    "variantC": {
+      "defaultRatePercent": 50,
+      "defaultPercentile": 50
+    },
     "employerRate": 0.141,
     "corporateRate": 0.22,
-    "interestDeductionNote": "alminnelig inntekt minus the interest deduction; financial fees, small-scale business expenses, BSU and IPS kept in the base"
+    "interestDeductionNote": "general capitalised income (alminnelig inntekt) minus the interest deduction; financial fees, small-scale business expenses, BSU and IPS kept in the base"
   },
   "municipal": {
     "grantsPerUnitG": {
@@ -81,34 +182,120 @@
     "mayorAlpha": 2.2,
     "mayorBeta": 0.16,
     "exampleCommunes": [
-      {"name": "Oslo", "residents": 710000, "km2": 454, "children": 135000, "pupils": 92000, "pensioners": 95000},
-      {"name": "Bergen", "residents": 290000, "km2": 465, "children": 55000, "pupils": 38000, "pensioners": 42000},
-      {"name": "Trondheim", "residents": 215000, "km2": 342, "children": 40000, "pupils": 28000, "pensioners": 32000},
-      {"name": "Røst", "residents": 450, "km2": 18, "children": 80, "pupils": 55, "pensioners": 90},
-      {"name": "Utsira", "residents": 190, "km2": 6, "children": 30, "pupils": 20, "pensioners": 45}
+      {
+        "name": "Oslo",
+        "residents": 710000,
+        "km2": 454,
+        "children": 135000,
+        "pupils": 92000,
+        "pensioners": 95000
+      },
+      {
+        "name": "Bergen",
+        "residents": 290000,
+        "km2": 465,
+        "children": 55000,
+        "pupils": 38000,
+        "pensioners": 42000
+      },
+      {
+        "name": "Trondheim",
+        "residents": 215000,
+        "km2": 342,
+        "children": 40000,
+        "pupils": 28000,
+        "pensioners": 32000
+      },
+      {
+        "name": "Røst",
+        "residents": 450,
+        "km2": 18,
+        "children": 80,
+        "pupils": 55,
+        "pensioners": 90
+      },
+      {
+        "name": "Utsira",
+        "residents": 190,
+        "km2": 6,
+        "children": 30,
+        "pupils": 20,
+        "pensioners": 45
+      }
     ]
   },
   "electoral": {
     "counties": [
-      {"name": "Viken", "voters": 1080000},
-      {"name": "Innlandet", "voters": 375000},
-      {"name": "Vestland", "voters": 435000},
-      {"name": "Rogaland", "voters": 375000},
-      {"name": "Agder", "voters": 245000},
-      {"name": "Trøndelag", "voters": 340000},
-      {"name": "Nordland", "voters": 220000},
-      {"name": "Troms og Finnmark", "voters": 165000},
-      {"name": "Vestfold og Telemark", "voters": 320000},
-      {"name": "Buskerud", "voters": 285000}
+      {
+        "name": "Viken",
+        "voters": 1080000
+      },
+      {
+        "name": "Innlandet",
+        "voters": 375000
+      },
+      {
+        "name": "Vestland",
+        "voters": 435000
+      },
+      {
+        "name": "Rogaland",
+        "voters": 375000
+      },
+      {
+        "name": "Agder",
+        "voters": 245000
+      },
+      {
+        "name": "Trøndelag",
+        "voters": 340000
+      },
+      {
+        "name": "Nordland",
+        "voters": 220000
+      },
+      {
+        "name": "Troms og Finnmark",
+        "voters": 165000
+      },
+      {
+        "name": "Vestfold og Telemark",
+        "voters": 320000
+      },
+      {
+        "name": "Buskerud",
+        "voters": 285000
+      }
     ],
     "parties": [
-      {"name": "A", "votes": 610000},
-      {"name": "B", "votes": 420000},
-      {"name": "C", "votes": 560000},
-      {"name": "D", "votes": 390000},
-      {"name": "E", "votes": 210000},
-      {"name": "F", "votes": 145000},
-      {"name": "G", "votes": 95000}
+      {
+        "name": "A",
+        "votes": 610000
+      },
+      {
+        "name": "B",
+        "votes": 420000
+      },
+      {
+        "name": "C",
+        "votes": 560000
+      },
+      {
+        "name": "D",
+        "votes": 390000
+      },
+      {
+        "name": "E",
+        "votes": 210000
+      },
+      {
+        "name": "F",
+        "votes": 145000
+      },
+      {
+        "name": "G",
+        "votes": 95000
+      }
     ]
   },
   "budget": {
@@ -122,18 +309,107 @@
     "expenditure": {
       "note": "SBU 2026 posts, curated baseline from the register",
       "posts": [
-        {"id": "pension", "name": "Pensjon", "flag": "legislated", "valueNOK": 405000000000, "computed": "pension"},
-        {"id": "health", "name": "Helse og omsorg", "flag": "legislated", "valueNOK": 245000000000, "gdpShare": [0.04, 0.08], "default": 0.075},
-        {"id": "education", "name": "Utdanning", "flag": "legislated", "valueNOK": 165000000000, "gdpShare": [0.04, 0.08], "default": 0.055},
-        {"id": "defence", "name": "Forsvar", "flag": "pledge", "valueNOK": 115000000000, "gdpShare": [0.02, 0.05], "default": 0.032},
-        {"id": "aid", "name": "Bistand", "flag": "pledge", "valueNOK": 42000000000, "gniShare": [0.007, 0.01], "default": 0.01},
-        {"id": "transport", "name": "Samferdsel", "flag": "legislated", "valueNOK": 78000000000, "default": 1},
-        {"id": "culture", "name": "Kultur", "flag": "pledge", "valueNOK": 8000000000, "targetShare": 0.01, "default": 1},
-        {"id": "research", "name": "Forskning og innovasjon", "flag": "legislated", "valueNOK": 34000000000, "default": 1},
-        {"id": "admin", "name": "Forvaltning", "flag": "legislated", "valueNOK": 52000000000, "default": 1},
-        {"id": "foodcard", "name": "Matkort", "flag": "constitutional", "valueNOK": 287000000000, "computed": "foodcard"},
-        {"id": "municipal", "name": "Kommunal overføring", "flag": "legislated", "valueNOK": 121000000000, "computed": "municipal"},
-        {"id": "interest", "name": "Rentekostnad", "flag": "legislated", "valueNOK": 35000000000, "default": 1}
+        {
+          "id": "pension",
+          "name": "Pensions",
+          "flag": "legislated",
+          "valueNOK": 405000000000,
+          "computed": "pension"
+        },
+        {
+          "id": "health",
+          "name": "Health and care",
+          "flag": "legislated",
+          "valueNOK": 245000000000,
+          "gdpShare": [
+            0.04,
+            0.08
+          ],
+          "default": 0.075
+        },
+        {
+          "id": "education",
+          "name": "Education",
+          "flag": "legislated",
+          "valueNOK": 165000000000,
+          "gdpShare": [
+            0.04,
+            0.08
+          ],
+          "default": 0.055
+        },
+        {
+          "id": "defence",
+          "name": "Defence",
+          "flag": "pledge",
+          "valueNOK": 115000000000,
+          "gdpShare": [
+            0.02,
+            0.05
+          ],
+          "default": 0.032
+        },
+        {
+          "id": "aid",
+          "name": "Aid",
+          "flag": "pledge",
+          "valueNOK": 42000000000,
+          "gniShare": [
+            0.007,
+            0.01
+          ],
+          "default": 0.01
+        },
+        {
+          "id": "transport",
+          "name": "Transport",
+          "flag": "legislated",
+          "valueNOK": 78000000000,
+          "default": 1
+        },
+        {
+          "id": "culture",
+          "name": "Culture",
+          "flag": "pledge",
+          "valueNOK": 8000000000,
+          "targetShare": 0.01,
+          "default": 1
+        },
+        {
+          "id": "research",
+          "name": "Research and innovation",
+          "flag": "legislated",
+          "valueNOK": 34000000000,
+          "default": 1
+        },
+        {
+          "id": "admin",
+          "name": "Public administration",
+          "flag": "legislated",
+          "valueNOK": 52000000000,
+          "default": 1
+        },
+        {
+          "id": "foodcard",
+          "name": "Food card",
+          "flag": "constitutional",
+          "valueNOK": 287000000000,
+          "computed": "foodcard"
+        },
+        {
+          "id": "municipal",
+          "name": "Municipal transfers",
+          "flag": "legislated",
+          "valueNOK": 121000000000,
+          "computed": "municipal"
+        },
+        {
+          "id": "interest",
+          "name": "Interest costs",
+          "flag": "legislated",
+          "valueNOK": 35000000000,
+          "default": 1
+        }
       ]
     },
     "gdpNOK": 4100000000000,
@@ -141,9 +417,31 @@
   },
   "constitution": {
     "presets": {
-      "Norge": {"deficitCap": null, "debtCap": null, "educationFloor": null, "healthFloor": null, "reelectionBan": false},
-      "Mondiala": {"deficitCap": 0.03, "debtCap": 0.60, "educationFloor": 0.06, "healthFloor": 0.07, "reelectionBan": true},
-      "Italia": {"deficitCap": 0.03, "debtCap": 0.60, "educationFloor": null, "healthFloor": null, "reelectionBan": false}
+      "Mondiala": {
+        "deficitCap": 0.03,
+        "debtCap": 0.6,
+        "educationFloor": 0.06,
+        "healthFloor": 0.07,
+        "reelectionBan": true
+      },
+      "Norway": {
+        "deficitCap": null,
+        "debtCap": null,
+        "educationFloor": null,
+        "healthFloor": null,
+        "reelectionBan": false
+      },
+      "Italy": {
+        "deficitCap": 0.03,
+        "debtCap": 0.6,
+        "educationFloor": null,
+        "healthFloor": null,
+        "reelectionBan": false
+      }
     }
+  },
+  "country": {
+    "name": "Norway",
+    "note": "default country preset — provides all default data values (G, GDP, GNI, population, rates); the models themselves are general"
   }
 }

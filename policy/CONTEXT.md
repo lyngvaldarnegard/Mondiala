@@ -1,10 +1,15 @@
 # CONTEXT — Autopilot Policy Models
 
-A static, interactive JavaScript webapp modeling a rule-driven ("autopilot")
-Norwegian welfare state. Formulas and live data decide outcomes; users only set
-spending levels within fixed rules. Everything is visible and editable in the
-UI — no hidden constants in code. All concrete numbers live in the data layer
-(data.json + update register), never in logic.
+A static, interactive JavaScript webapp modeling rule-driven ("autopilot")
+policy models. The models are GENERAL, not Norwegian: every user input is a
+fraction or percentage of GDP, GNI, the budget or the population (or a multiple
+of G, the preset basic amount) — never a money input. Money amounts are
+computed read-only output, derived from the general inputs and the country
+preset. Norway is only the default country preset and provides the default
+data values; the user can override any percentage input. Formulas and live
+data decide outcomes; users only set levels within fixed rules. Everything is
+visible and editable in the UI — no hidden constants in code. All concrete
+numbers live in the data layer (data.json + update register), never in logic.
 
 ## Architecture
 - Plain ES-module JavaScript, no backend. Charts via Chart.js; Sankey via
@@ -31,20 +36,21 @@ exactly 1.0. Pension level 3 G/year. Pages: age-distribution chart with cutoff
 line and actual/virtual toggle, society model over SSB history + projections,
 individual calculator with a user-adjustable occupation-share assumption table.
 
-**Tax** — one shared base: alminnelig inntekt minus the interest deduction,
+**Tax** — one shared base: general capitalised income (alminnelig inntekt) minus the interest deduction,
 keeping financial fees, small-scale business expenses, BSU and IPS. Three
 toggleable variants over it:
-- A "trappen": marginal 0/10/20/30/40/50% per 1 G bracket.
-- B "sjablong": tax = 0.5 × max(0, I − 3 G); welfare benefits (food card,
+- A "the staircase": marginal 0/10/20/30/40/50% per 1 G bracket.
+- B "the flat template": tax = 0.5 × max(0, I − 3 G); welfare benefits (food card,
   barnetrygd 1 G/child, student stipend) add to the base; no exceptions — a 3 G
   pension hits the threshold exactly (zero tax), which is the demographic
   protection. The card-tracking "net contribution" theory is illustration copy
   only, never the formula.
-- C "desil-ankret": flat X% above the Y-th percentile — default 50% above the
+- C "decile anchored": flat X% above the Y-th percentile — default 50% above the
   median wage (SSB wage statistics, one anchor number, currently 669 600 kr/yr).
   X and Y editable; one number plus one rate, no distribution machinery.
 
-Trygdeavgift, trinnskatt and formuesskatt are removed; arbeidsgiveravgift and
+The social security contribution (trygdeavgift), bracket tax (trinnskatt) and wealth tax
+(formuesskatt) are removed; the employer contribution (arbeidsgiveravgift) and
 corporate 22% with current special regimes stay. Charts per variant plus a
 waterfall and a comparison vs today's system. Revenue aggregates per decile
 from SSB income distribution tables; V1 uses decile means.

@@ -1,21 +1,191 @@
 [
-  {"field": "G", "value": 136549, "unit": "NOK", "source": "Nav (grunnbeløpet i folketrygden), yearly 1 May", "cadence": "yearly, 1 May", "sanity": [120000, 160000]},
-  {"field": "pensionLevelG", "value": 3, "unit": "G per year", "source": "spec: pension level 3 G/year", "cadence": "per policy change", "sanity": [1, 5]},
-  {"field": "oilFundNOK", "value": 21400000000000, "unit": "NOK", "source": "Norges Bank Investment Management, quarterly", "cadence": "quarterly", "sanity": [8000000000000, 40000000000000]},
-  {"field": "oilFundAnnualWithdrawalRate", "value": 0.03, "unit": "share", "source": "handlingsregelen, 3%", "cadence": "yearly", "sanity": [0.0, 0.05]},
-  {"field": "sifo.grocerySingleAdultMonthly", "value": 4310, "unit": "NOK per month", "source": "SIFO referencebudget (curated; no API)", "cadence": "yearly, February", "sanity": [3000, 7000]},
-  {"field": "income.medianWageYear", "value": 669600, "unit": "NOK per year", "source": "SSB wage statistics table 11418 (curated anchor; live via PxWeb 11418/11419)", "cadence": "yearly", "sanity": [500000, 900000]},
-  {"field": "income.decileMeans", "value": "draft", "source": "SSB income distribution tables 09935/05854 — draft — replace at data pass", "cadence": "yearly", "sanity": null, "draft": true},
-  {"field": "population.ageDistribution", "value": "draft", "source": "SSB table 07459 — draft — replace at data pass", "cadence": "yearly", "sanity": null, "draft": true},
-  {"field": "population.projections", "value": "draft", "source": "SSB table 12553 — draft — replace at data pass", "cadence": "per publication", "sanity": null, "draft": true},
-  {"field": "occupationalLifeExpectancy", "value": "draft", "source": "STAMI occupational life expectancy — draft — replace at data pass; weights l_j' = max(1, L_ref/L_j) computed in-app", "cadence": "per publication", "sanity": null, "draft": true},
-  {"field": "occupationShares", "value": "draft", "source": "draft — replace at data pass (SSB occupation statistics)", "cadence": "per publication", "sanity": null, "draft": true},
-  {"field": "welfare.barnetrygdPerChildG", "value": 1, "unit": "G per child", "source": "spec: barnetrygd 1 G/child", "cadence": "per policy change", "sanity": [0.5, 2]},
-  {"field": "welfare.studentStipendYear", "value": 137000, "unit": "NOK", "source": "Lånekassen (curated) — draft — replace at data pass (DBH student FTE count)", "cadence": "yearly", "sanity": [80000, 200000], "draft": true},
-  {"field": "budget.expenditure", "value": "SBU 2026 posts", "source": "Statsbudsjettet 2026 (curated baseline)", "cadence": "yearly", "sanity": null},
-  {"field": "municipal.grantsPerUnitG", "value": "draft", "source": "KOSTRA / own curated pass — draft — replace at data pass", "cadence": "yearly", "sanity": null, "draft": true},
-  {"field": "budget.gdpNOK", "value": 4100000000000, "unit": "NOK", "source": "SSB national accounts table 102505/10487 — curated", "cadence": "quarterly", "sanity": [3000000000000, 6000000000000]},
-  {"field": "budget.income.lvtBaseNOK", "value": 5200000000000, "unit": "NOK", "source": "curated land value base — draft — replace at data pass", "cadence": "yearly", "sanity": [1000000000000, 15000000000000], "draft": true},
-  {"field": "tax.employerRate", "value": 0.141, "unit": "share", "source": "arbeidsgiveravgift, current regime stays", "cadence": "per legislation", "sanity": [0.0, 0.25]},
-  {"field": "tax.corporateRate", "value": 0.22, "unit": "share", "source": "corporate 22% with current special regimes stays", "cadence": "per legislation", "sanity": [0.15, 0.30]}
+  {
+    "field": "G",
+    "value": 136549,
+    "unit": "NOK",
+    "source": "Nav (basic amount in the national insurance scheme), yearly 1 May",
+    "cadence": "yearly, 1 May",
+    "sanity": [
+      120000,
+      160000
+    ]
+  },
+  {
+    "field": "pensionLevelG",
+    "value": 3,
+    "unit": "G per year",
+    "source": "spec: pension level 3 G/year",
+    "cadence": "per policy change",
+    "sanity": [
+      1,
+      5
+    ]
+  },
+  {
+    "field": "oilFundNOK",
+    "value": 21400000000000,
+    "unit": "NOK",
+    "source": "Norges Bank Investment Management, quarterly",
+    "cadence": "quarterly",
+    "sanity": [
+      8000000000000,
+      40000000000000
+    ]
+  },
+  {
+    "field": "oilFundAnnualWithdrawalRate",
+    "value": 0.03,
+    "unit": "share",
+    "source": "handlingsregelen, 3%",
+    "cadence": "yearly",
+    "sanity": [
+      0.0,
+      0.05
+    ]
+  },
+  {
+    "field": "sifo.grocerySingleAdultMonthly",
+    "value": 4310,
+    "unit": "NOK per month",
+    "source": "SIFO referencebudget (curated; no API)",
+    "cadence": "yearly, February",
+    "sanity": [
+      3000,
+      7000
+    ]
+  },
+  {
+    "field": "income.medianWageYear",
+    "value": 669600,
+    "unit": "NOK per year",
+    "source": "SSB wage statistics table 11418 (curated anchor; live via PxWeb 11418/11419)",
+    "cadence": "yearly",
+    "sanity": [
+      500000,
+      900000
+    ]
+  },
+  {
+    "field": "income.decileMeans",
+    "value": "draft",
+    "source": "SSB income distribution tables 09935/05854 — draft — replace at data pass",
+    "cadence": "yearly",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "population.ageDistribution",
+    "value": "draft",
+    "source": "SSB table 07459 — draft — replace at data pass",
+    "cadence": "yearly",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "population.projections",
+    "value": "draft",
+    "source": "SSB table 12553 — draft — replace at data pass",
+    "cadence": "per publication",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "occupationalLifeExpectancy",
+    "value": "draft",
+    "source": "STAMI occupational life expectancy — draft — replace at data pass; weights l_j' = max(1, L_ref/L_j) computed in-app",
+    "cadence": "per publication",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "occupationShares",
+    "value": "draft",
+    "source": "draft — replace at data pass (SSB occupation statistics)",
+    "cadence": "per publication",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "welfare.barnetrygdPerChildG",
+    "value": 1,
+    "unit": "G per child",
+    "source": "spec: barnetrygd 1 G/child",
+    "cadence": "per policy change",
+    "sanity": [
+      0.5,
+      2
+    ]
+  },
+  {
+    "field": "welfare.studentStipendYear",
+    "value": 137000,
+    "unit": "NOK",
+    "source": "Lånekassen / Norwegian Student Loans Fund (curated) — draft — replace at data pass (DBH student FTE count)",
+    "cadence": "yearly",
+    "sanity": [
+      80000,
+      200000
+    ],
+    "draft": true
+  },
+  {
+    "field": "budget.expenditure",
+    "value": "SBU 2026 posts",
+    "source": "The Norwegian national budget SBU 2026 (curated baseline)",
+    "cadence": "yearly",
+    "sanity": null
+  },
+  {
+    "field": "municipal.grantsPerUnitG",
+    "value": "draft",
+    "source": "KOSTRA / own curated pass — draft — replace at data pass",
+    "cadence": "yearly",
+    "sanity": null,
+    "draft": true
+  },
+  {
+    "field": "budget.gdpNOK",
+    "value": 4100000000000,
+    "unit": "NOK",
+    "source": "SSB national accounts table 102505/10487 — curated",
+    "cadence": "quarterly",
+    "sanity": [
+      3000000000000,
+      6000000000000
+    ]
+  },
+  {
+    "field": "budget.income.lvtBaseNOK",
+    "value": 5200000000000,
+    "unit": "NOK",
+    "source": "curated land value base — draft — replace at data pass",
+    "cadence": "yearly",
+    "sanity": [
+      1000000000000,
+      15000000000000
+    ],
+    "draft": true
+  },
+  {
+    "field": "tax.employerRate",
+    "value": 0.141,
+    "unit": "share",
+    "source": "employer social security contribution (arbeidsgiveravgift), current regime stays",
+    "cadence": "per legislation",
+    "sanity": [
+      0.0,
+      0.25
+    ]
+  },
+  {
+    "field": "tax.corporateRate",
+    "value": 0.22,
+    "unit": "share",
+    "source": "corporate 22% with current special regimes stays",
+    "cadence": "per legislation",
+    "sanity": [
+      0.15,
+      0.3
+    ]
+  }
 ]

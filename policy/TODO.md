@@ -20,3 +20,16 @@
       rules linked to budget presets) + Mondiala hex-map sandbox page
 - [x] Phase 8 — verification: headless formula tests (policy/test/formulas.mjs),
       visible checks page, all routes, Sankey balance, live URL
+
+# Revision round 1 (REVISION-1.md)
+
+- [x] Block A — item 1: English everywhere (policy/ UI strings, comments,
+      docs, data names; proper nouns like Røst/Trøndelag/Lånekassen kept as names)
+- [x] Block A — item 2: general-input contract — tax calculator inputs are
+      multiples of G; budget expenditure inputs are shares of GDP/GNI; money is
+      read-only output everywhere
+- [ ] Block B — items 3, 5, 8, 9: diagram rendering, budget post alternatives,
+      full toggles, completeness
+- [ ] Block C — items 4, 10, 11: barnetrygd, variant C decile-1 exemption,
+      land base update
+- [ ] Block D — items 6, 7: municipal satsmodell coefficients, Mondiala hex map

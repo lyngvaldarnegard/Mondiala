@@ -1,7 +1,7 @@
 import { get } from './data.js';
 import { el, clear, card, table, fmt, formulaBox } from './ui.js';
 
-const state = { preset: 'Norge', rules: null };
+const state = { preset: 'Norway', rules: null };
 
 export function currentRules() {
   return state.rules || get('constitution.presets')[state.preset];
@@ -9,8 +9,8 @@ export function currentRules() {
 
 export function render(main) {
   clear(main);
-  main.append(el('h2', { text: 'Grunnlovsbygger' }),
-    el('p', { class: 'desc', text: 'Presets Norge / Mondiala / Italia. Fiskalreglene er koblet til budsjett-presetsene: Mondialas 3 %-underskuddstak med gjenvalgsforbud, 60 % gjeldstak, og gulv for utdanning og helse. Budsjettet balanserer alltid gjennom LVT-ventilen — taket er derfor strukturelt oppfylt.' }));
+  main.append(el('h2', { text: 'Constitution builder' }),
+    el('p', { class: 'desc', text: 'Presets Norway / Mondiala / Italy. The fiscal rules link to the budget presets: Mondiala’s 3% deficit cap with a re-election ban, the 60% debt cap, and floors for education and health. The budget always balances through the LVT valve — the cap is therefore structurally satisfied.' }));
   const bar = card(
     el('label', { text: 'Preset' }),
     (() => {
@@ -27,15 +27,15 @@ export function render(main) {
     const presets = get('constitution.presets');
     const rules = currentRules();
     const fields = [
-      ['deficitCap', 'Underskuddstak (andel av BNP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['debtCap', 'Gjeldstak (andel av BNP)', 'number', 0, 2, 0.05, v => v == null ? '—' : fmt(100 * v, 0) + ' %'],
-      ['educationFloor', 'Utdanningsgulv (andel av BNP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['healthFloor', 'Helsegulv (andel av BNP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
-      ['reelectionBan', 'Gjenvalgsforbud ved brutt tak', 'checkbox', null, null, null, v => v ? 'ja' : 'nei']
+      ['deficitCap', 'Deficit cap (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['debtCap', 'Debt cap (share of GDP)', 'number', 0, 2, 0.05, v => v == null ? '—' : fmt(100 * v, 0) + ' %'],
+      ['educationFloor', 'Education floor (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['healthFloor', 'Health floor (share of GDP)', 'number', 0, 1, 0.005, v => v == null ? '—' : fmt(100 * v, 1) + ' %'],
+      ['reelectionBan', 'Re-election ban on a broken cap', 'checkbox', null, null, null, v => v ? 'yes' : 'no']
     ];
     clear(out);
-    out.append(el('h3', { text: 'Fiskalregler — ' + state.preset }),
-      table(['Artikkel', 'Verdi'], fields.map(([key, label, type, min, max, step, show]) => {
+    out.append(el('h3', { text: 'Fiscal rules — ' + state.preset }),
+      table(['Article', 'Value'], fields.map(([key, label, type, min, max, step, show]) => {
         let input;
         if (type === 'checkbox') {
           input = el('input', { type: 'checkbox' });
@@ -59,7 +59,7 @@ export function render(main) {
         tr.children[2].textContent = show(r[fields[i][0]]);
       });
     }
-    out.append(el('p', { class: 'desc', text: 'Kobling til budsjettet: preset «Mondiala» i statsbudsjett-modulen setter utdannings- og helsegulvene som utgifts­andeler og viser at 3 %-taket og 60 %-gjeldstaket er strukturelt oppfylt — LVT-ventilen lukker ethvert gap før underskudd oppstår.' }));
+    out.append(el('p', { class: 'desc', text: 'Link to the budget: the Mondiala preset in the national budget module sets the education and health floors as expenditure shares and shows the 3% cap and 60% debt cap are structurally satisfied — the LVT valve closes any gap before a deficit arises.' }));
   }
   draw();
 }

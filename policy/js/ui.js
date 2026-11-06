@@ -18,15 +18,15 @@ export function clear(node) {
 }
 
 export function fmt(n, digits = 0) {
-  return Number(n).toLocaleString('nb-NO', { maximumFractionDigits: digits });
+  return Number(n).toLocaleString('en-GB', { maximumFractionDigits: digits });
 }
 
 export function fmtNOK(n) {
   const abs = Math.abs(n);
-  if (abs >= 1e12) return fmt(n / 1e12, 1) + ' bill. kr';
-  if (abs >= 1e9) return fmt(n / 1e9, 1) + ' mrd kr';
-  if (abs >= 1e6) return fmt(n / 1e6, 1) + ' mill. kr';
-  return fmt(n) + ' kr';
+  if (abs >= 1e12) return fmt(n / 1e12, 1) + ' trillion NOK';
+  if (abs >= 1e9) return fmt(n / 1e9, 1) + ' bn NOK';
+  if (abs >= 1e6) return fmt(n / 1e6, 1) + ' m NOK';
+  return fmt(n) + ' NOK';
 }
 
 export function card(...children) {

@@ -8,7 +8,8 @@ the commits themselves are the real archive.
 
 | Version | Commit | State |
 |---|---|---|
-| **v3.7 — the front page: manifesto, city, sandbox** | `main` (this push) | the root is now a landing page linking the Autopilot manifesto (rebuilt as an illustrated Plan A/B explainer), the society simulator (integrated from politics-economics-sim) and the city map |
+| **v3.7.1 — municipal grant breakdown per unit; student stipend in G** | `main` (this push) | the municipal page decomposes each commune's grant per unit (per resident, per km², per demographic group, with rates and shares); the student stipend is measured in G (1 G/year), not NOK |
+| **v3.7 — the front page: manifesto, city, sandbox** | shipped | the root is now a landing page linking the Autopilot manifesto (rebuilt as an illustrated Plan A/B explainer), the society simulator (integrated from politics-economics-sim) and the city map |
 | **v3.6.1 — Turkey + the Caucasus are Europe** | shipped | bookmark branch `archive/v3.6.1-caucasus-europe` |
 | **v3.6 — the local direction rule** | shipped | bookmark branch `archive/v3.6-local-direction-rule` |\n| **v3.5 — the cleanup: 210 cities, rings 0-10** | shipped | bookmark branch `archive/v3.5-the-cleanup` |\n| **v3.4 — Metropol at the median point, hemispheres real, contiguity complete** | shipped | bookmark branch `archive/v3.4-median-centre` |\n| **v3.3 — handpicked default + hemisphere rule** | shipped | bookmark branch `archive/v3.3-handpicked-default` |\n| **v3.2 — the true two-rule engine, compass off** | shipped | bookmark branch `archive/v3.2-whole-ring-compass-off` |\n| **v3.1 — the hand-picked world map** | shipped | bookmark branch `archive/v3.1-the-handpicked-world-map` |
 | **v3.0 — the map loads, instantly, in colour, from formula-generated tables** | superseded by v3.1 | bookmark branch `archive/v3.0-the-map-loads` |

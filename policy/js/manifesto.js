@@ -232,7 +232,7 @@ function fiveLives() {
 
 function drawLives() {
   const G = get('G');
-  const stipend = get('welfare.studentStipendYear');
+  const stipend = get('welfare.studentStipendYearG') * get('G');
   const personas = [
     { name: 'Student on stipend', gross: stipend, children: 0, note: 'stipend + food card' },
     { name: 'Nurse', gross: 620000, children: 1, note: 'median-ish wage' },

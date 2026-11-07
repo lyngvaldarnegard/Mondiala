@@ -97,7 +97,7 @@ export function runChecks() {
   const sin = computeIncome('A').find(i => i.id === 'sintax');
   add('Sin tax = estimated social cost of alcohol + tobacco per year (draft)', Math.abs(sin.value - (get('sinTax.alcoholSocialCostNOK') + get('sinTax.tobaccoSocialCostNOK'))) < 1e-6, fmtNOK(sin.value));
   add('Barnetrygd = children (0–17) × 1 G', Math.abs(barnetrygdCost() - childCount() * get('welfare.barnetrygdPerChildG') * G) < 1e-6, fmtNOK(barnetrygdCost()));
-  add('Student stipend = student FTE count × yearly stipend', stipendCost() === get('welfare.studentFteCount') * get('welfare.studentStipendYear'), fmtNOK(stipendCost()));
+  add('Student stipend = student FTE count × yearly stipend (1 G per student)', stipendCost() === get('welfare.studentFteCount') * get('welfare.studentStipendYearG') * get('G'), fmtNOK(stipendCost()));
 
   // Municipal formulas — the satsmodell (item 6)
   const nu = nationalUnits();

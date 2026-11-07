@@ -102,6 +102,25 @@ const COEF_LABELS = [
   ['i', 'workforce (W_k)']
 ];
 
+// Unit key per coefficient, in the same order as COEF_LABELS.
+const COEF_UNITS = ['I', 'A', 'B', 'E_barn', 'E_ung', 'E_vgs', 'S', 'P', 'W'];
+
+// Decomposition of one commune's grant: what each unit type (residents, km²,
+// each demographic group) contributes, at the current coefficients.
+export function grantBreakdown(c, coefs = coefficients()) {
+  const G = get('G');
+  const u = communeUnits(c);
+  const rows = COEF_LABELS.map(([k, label], idx) => {
+    const key = COEF_UNITS[idx];
+    const units = u[key];
+    const rate = coefs[k] * G;
+    return { coef: k, label, units, rate, amount: rate * units };
+  });
+  const total = rows.reduce((s, r) => s + r.amount, 0);
+  for (const r of rows) r.share = total > 0 ? r.amount / total : 0;
+  return { rows, total };
+}
+
 export function render(main) {
   clear(main);
   main.append(el('h2', { text: 'Municipal finance — needs-based grants (the satsmodell)' }),
@@ -129,6 +148,8 @@ export function render(main) {
   main.append(coefCard);
   const out = card();
   main.append(out);
+  const breakdownCard = card(el('h3', { text: 'Where the grant comes from — per unit' }));
+  main.append(breakdownCard);
   const chartCard = card(el('h3', { text: 'Grants per commune' }), el('div', { class: 'chartbox', id: 'mun-chart' }));
   main.append(chartCard);
   let chart;
@@ -157,6 +178,30 @@ export function render(main) {
       rows.map(r => [r.name, fmt(r.residents), fmt(r.km2), fmtNOK(r.grant), fmtNOK(r.grant / r.residents), fmtNOK(r.mayor), fmt(r.council)]),
       [1, 2, 3, 4, 5, 6]));
     out.append(el('p', { class: 'desc', text: `Norm-cost anchor: ${get('municipal.normCostAnchor')}. National total grant (the satsmodell over national unit counts): ${fmtNOK(nationalGrantTotal())}.` }));
+
+    // Per-unit decomposition for one commune: how much each km² and each
+    // member of each demographic group brings in, at the current coefficients.
+    clear(breakdownCard);
+    const sel = el('select');
+    for (const cm of communes) sel.append(el('option', { value: cm.name, text: cm.name }));
+    if (state.selectedCommune && communes.some(cm => cm.name === state.selectedCommune)) sel.value = state.selectedCommune;
+    sel.addEventListener('change', () => { state.selectedCommune = sel.value; draw(); return; });
+    const cm = communes.find(x => x.name === sel.value) || communes[0];
+    const bd = grantBreakdown(cm, c);
+    breakdownCard.append(
+      el('h3', { text: 'Where the grant comes from — per unit' }),
+      el('p', { class: 'desc', text: `${cm.name}: every unit earns its coefficient × G. Demographic units are the commune's proportional share of the national counts; residents and km² are the commune's own. Drag the coefficients a–i above and watch each line move.` }),
+      el('label', { text: 'Commune' }), sel,
+      table(
+        ['Unit', 'Units in the commune', 'Rate per unit (coefficient × G)', 'Grant component', 'Share of the grant'],
+        bd.rows.map(r => [
+          `${r.label} — coefficient ${r.coef}`,
+          fmt(r.units, r.units < 100 ? 1 : 0),
+          fmtNOK(r.rate),
+          fmtNOK(r.amount),
+          fmt(100 * r.share, 1) + ' %']),
+        [1, 2, 3, 4]),
+      el('p', { class: 'desc', text: `Sum of the components: ${fmtNOK(bd.total)} — the same number as the grant column in the table above. Per square kilometre: ${fmtNOK(bd.rows[1].rate)}; per resident: ${fmtNOK(bd.rows[0].rate)}; per pensioner: ${fmtNOK(bd.rows[7].rate)} — all at the current coefficients.` }));
 
     chart?.destroy();
     chart = new Chart(chartCanvas('mun-chart'), {

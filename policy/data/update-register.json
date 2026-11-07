@@ -117,14 +117,14 @@
     ]
   },
   {
-    "field": "welfare.studentStipendYear",
-    "value": 137000,
-    "unit": "NOK",
-    "source": "Lånekassen / Norwegian Student Loans Fund (curated) — draft — replace at data pass (DBH student FTE count)",
+    "field": "welfare.studentStipendYearG",
+    "value": 1,
+    "unit": "G per year",
+    "source": "Lånekassen / Norwegian Student Loans Fund (curated, ≈ 137 000 NOK ≈ 1 G) — draft — replace at data pass",
     "cadence": "yearly",
     "sanity": [
-      80000,
-      200000
+      0.5,
+      2
     ],
     "draft": true
   },

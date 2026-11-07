@@ -13,10 +13,14 @@ export function barnetrygdCost(total = get('population.total')) {
   return childCount(total) * get('welfare.barnetrygdPerChildG') * get('G');
 }
 
-// Student stipend: student FTE count × yearly stipend (both from the
-// register; the FTE count is draft until the data pass).
+// Student stipend: student FTE count × yearly stipend in G (both from the
+// register; the FTE count is draft until the data pass). Measured in G, not
+// NOK — every welfare level in the model is a multiple of G.
 export function stipendCost() {
-  return get('welfare.studentFteCount') * get('welfare.studentStipendYear');
+  return get('welfare.studentFteCount') * get('welfare.studentStipendYearG') * get('G');
+}
+export function stipendPerStudentNOK() {
+  return get('welfare.studentStipendYearG') * get('G');
 }
 
 // Sin tax: set equal to the estimated social cost of alcohol and tobacco

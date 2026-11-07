@@ -10,9 +10,9 @@
   },
   "welfare": {
     "barnetrygdPerChildG": 1,
-    "studentStipendYear": 137000,
     "studentFteCount": 290000,
-    "studentFteCountNote": "draft — replace at data pass (DBH student FTE count)"
+    "studentFteCountNote": "draft — replace at data pass (DBH student FTE count)",
+    "studentStipendYearG": 1
   },
   "population": {
     "total": 5550000,

@@ -12,9 +12,9 @@ Three things under one roof: a **personal manifesto** for a rule-driven welfare 
 
 [`simulator/`](simulator/) is a Primer-style sandbox: blobs gather, trade, organise and vote under different economic and political systems. Turn the tax sliders up and watch inequality and poverty respond — the manifesto's rules, tested from the bottom up. One self-contained HTML file, no build step. Version history lives in the [politics-economics-sim repository](https://github.com/lyngvaldarnegard/politics-economics-sim).
 
-## The city map
+## The city map — an idea for how a city could be built
 
-The interactive hex-grid map lives in [`city-designer/`](city-designer/). Open
+Reached through the front page, not as the landing page itself. The interactive hex-grid map lives in [`city-designer/`](city-designer/). Open
 [`city-designer/mondiala.html`](city-designer/mondiala.html) in any browser —
 no build step, no dependencies.
 

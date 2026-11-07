@@ -48,7 +48,7 @@ global.d3 = Object.assign(() => chain(), {
   schemeTableau10: []
 });
 
-const routes = ['tax', 'pension', 'foodcard', 'budget', 'municipal', 'electoral', 'constitution', 'mondiala', 'checks'];
+const routes = ['manifesto', 'tax', 'pension', 'foodcard', 'budget', 'municipal', 'electoral', 'constitution', 'mondiala', 'checks'];
 const modules = {};
 let failures = 0;
 await initData();

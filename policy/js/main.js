@@ -1,5 +1,6 @@
 import { initData, refreshLiveData, getLiveStatus, getRegister, getData } from './data.js';
 import { el, clear, card, table } from './ui.js';
+import * as manifesto from './manifesto.js';
 import * as tax from './tax.js';
 import * as pension from './pension.js';
 import * as foodcard from './foodcard.js';
@@ -11,8 +12,9 @@ import * as mondiala from './mondiala.js';
 import * as checks from './checks.js';
 
 const pages = [
+  { id: 'manifesto', name: 'Manifesto', mod: manifesto },
   { id: 'register', name: 'Data register', mod: null },
-  { id: 'tax', name: 'Tax', mod: tax },
+  { id: 'tax', name: 'Tax workbench', mod: tax },
   { id: 'pension', name: 'Pension', mod: pension },
   { id: 'foodcard', name: 'Food card', mod: foodcard },
   { id: 'budget', name: 'National budget', mod: budget },
@@ -54,7 +56,7 @@ function renderRegister() {
 }
 
 function route() {
-  const id = (location.hash || '#register').slice(1);
+  const id = (location.hash || '#manifesto').slice(1);
   const page = pages.find(p => p.id === id) || pages[0];
   for (const a of nav.children) a.classList.toggle('active', a.dataset.id === page.id);
   clear(main);

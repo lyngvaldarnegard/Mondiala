@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Blob Society Simulator — v5</title>
+<style>
+  :root{
+    --text:#2C2C2B; --muted:#7D7A75; --soft:#F9F8F7; --soft2:#F0EFED;
+    --border:#E6E5E3; --blue:#2783DE; --green:#46A171; --red:#E56458;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--soft);color:var(--text);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:16px 24px 28px;}
+  header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+  h1{font-size:20px;margin:0}
+  .sub{color:var(--muted);font-size:13px;margin-top:2px}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  button{border:1px solid var(--border);background:#fff;color:var(--text);border-radius:8px;padding:8px 14px;font-size:14px;min-height:40px;cursor:pointer;font-family:inherit}
+  button:hover{background:var(--soft2)}
+  button.active{background:var(--blue);border-color:var(--blue);color:#fff}
+  .toggle{display:flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;border-radius:8px;padding:8px 12px;font-size:14px;min-height:40px;cursor:pointer;user-select:none}
+  .toggle input{accent-color:var(--blue)}
+  main{display:flex;gap:16px;align-items:flex-start}
+  .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px;position:relative}
+  canvas#world{display:block;border-radius:6px;cursor:crosshair;max-width:100%;height:auto}
+  .mapcol{flex:1;min-width:0}
+  .charts{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+  @media (max-width:1100px){ .charts{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .charts{grid-template-columns:1fr} }
+  #inspector{position:absolute;top:16px;left:16px;width:210px;background:rgba(255,255,255,.96);border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:12.5px;display:none;z-index:5;box-shadow:0 1px 2px rgba(0,0,0,.05),0 4px 12px rgba(0,0,0,.04)}
+  #inspector h3{margin:0 0 6px;font-size:13px}
+  #inspector .irow{display:flex;justify-content:space-between;padding:1px 0;color:var(--text)}
+  #inspector .irow span:first-child{color:var(--muted)}
+  #inspector .vbar{display:flex;align-items:center;gap:6px;padding:1px 0}
+  #inspector .vbar .n{width:86px;color:var(--muted)}
+  #inspector .vbar .bar{flex:1;height:5px;background:var(--soft2);border-radius:3px;overflow:hidden}
+  #inspector .vbar .bar i{display:block;height:100%;background:var(--blue)}
+  aside{width:248px;flex:none;display:flex;flex-direction:column;gap:12px}
+  .panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 8px;font-weight:600}
+  .stat{display:flex;justify-content:space-between;font-size:14px;padding:3px 0}
+  .stat b{font-variant-numeric:tabular-nums}
+  .legend div{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);padding:2px 0}
+  .sw{width:12px;height:12px;border-radius:3px;flex:none}
+  canvas.mini{width:100%;display:block}
+  .foot{font-size:12px;color:var(--muted);margin-top:6px}
+  #log{font-size:12px;color:var(--text);max-height:132px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+  #log div{border-bottom:1px solid var(--soft2);padding-bottom:3px}
+  details.panel{padding:0}
+  details.panel summary{padding:12px 14px;cursor:pointer;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;list-style:none}
+  details.panel summary::-webkit-details-marker{display:none}
+  details.panel summary::after{content:"+";float:right}
+  details.panel[open] summary::after{content:"–"}
+  .settings-body{padding:0 14px 12px;display:flex;flex-direction:column;gap:10px}
+  .setrow{display:flex;flex-direction:column;gap:2px;font-size:13px}
+  .setrow .lbl{display:flex;justify-content:space-between;color:var(--text)}
+  .setrow .lbl span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
+  .setrow input[type=range]{width:100%;accent-color:var(--blue)}
+  .setrow input[type=number],.setrow select{width:100%;border:1px solid var(--border);border-radius:6px;padding:5px 8px;font-size:13px;font-family:inherit;background:#fff}
+  .setnote{font-size:12px;color:var(--muted)}
+  #err{position:fixed;left:8px;bottom:8px;max-width:60%;background:#FCE9E7;color:#8c2f26;border:1px solid #E56458;border-radius:8px;padding:8px 12px;font:12px/1.4 Menlo,Consolas,monospace;display:none;white-space:pre-wrap;z-index:10}
+  @media (max-width:1000px){ main{flex-direction:column} aside{width:100%} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Blob Society Simulator</h1>
+      <div class="sub">Version 5: manufacturing (tools, bread), laws & enforcement, regimes, scenarios, CSV export. Click a blob to inspect it.</div>
+    </div>
+    <div class="controls">
+      <label class="toggle"><input type="checkbox" id="moneyOn" checked> Money</label>
+      <label class="toggle"><input type="checkbox" id="electionsOn" checked> Elections</label>
+      <select id="scenarioSel" title="Starting scenario" style="min-height:40px;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:14px;font-family:inherit;background:#fff">
+        <option value="founding">Founding (default)</option>
+        <option value="modern">Modern society (unequal)</option>
+        <option value="anarchy">Anarchy (no taxes, no pile)</option>
+        <option value="Georgism">Georgism (high LVT, no income tax)</option>
+        <option value="socialist">Socialist (high taxes, redistribution)</option>
+        <option value="GeorgismLocked">Georgism — locked (elections can't change policy)</option>
+        <option value="SocialistLocked">Socialist — locked (elections can't change policy)</option>
+      </select>
+      <button id="exportBtn">Export CSV</button>
+      <button id="pauseBtn">Pause</button>
+      <button class="spd active" data-s="1">1×</button>
+      <button class="spd" data-s="2">2×</button>
+      <button class="spd" data-s="4">4×</button>
+      <button id="resetBtn">Reset</button>
+      <button id="seedBtn">New seed</button>
+    </div>
+  </header>
+  <main>
+    <div class="mapcol">
+    <div class="card">
+      <canvas id="world" width="896" height="560"></canvas>
+      <div id="inspector"></div>
+    </div>
+    <div class="charts">
+      <div class="panel">
+        <h2>Population &amp; wealth</h2>
+        <canvas id="chart1" class="mini" width="220" height="85"></canvas>
+        <div class="foot">Blue = population, green = avg, dark green = median</div>
+      </div>
+      <div class="panel">
+        <h2>Inequality &amp; poverty</h2>
+        <canvas id="chart2" class="mini" width="220" height="85"></canvas>
+        <div class="foot">Red = Gini, orange = share in poverty</div>
+      </div>
+      <div class="panel">
+        <h2>Prices</h2>
+        <canvas id="chart3" class="mini" width="220" height="85"></canvas>
+        <div class="foot">Purple = berries, yellow = grain, orange = potatoes, green = wood, gray = stone, gold = tools, tan = bread</div>
+      </div>
+      <div class="panel">
+        <h2>Land &amp; money</h2>
+        <canvas id="chart4" class="mini" width="220" height="85"></canvas>
+        <div class="foot">Purple = total land value, blue = money supply</div>
+      </div>
+      <div class="panel">
+        <h2>Government income</h2>
+        <canvas id="chart5" class="mini" width="220" height="85"></canvas>
+        <div class="foot">Purple = land tax, blue = income tax, green = surplus share, orange = exports, gold = wealth tax, tan = sales tax</div>
+      </div>
+    </div>
+    </div>
+    <aside>
+      <div class="panel">
+        <h2>Stats</h2>
+        <div class="stat"><span>Tick</span><b id="sTick">0</b></div>
+        <div class="stat"><span>Population</span><b id="sPop">0</b></div>
+        <div class="stat" id="priceRow"><span>Avg food price</span><b id="sPrice">–</b></div>
+        <div class="stat"><span>Pile food</span><b id="sStock">0</b></div>
+        <div class="stat"><span>Public funds</span><b id="sFunds">0</b></div>
+        <div class="stat"><span>Org baskets</span><b id="sOrgFood">0</b></div>
+        <div class="stat"><span>Org funds</span><b id="sOrgFunds">0</b></div>
+        <div class="stat"><span>Land</span><b id="sLand">commons</b></div>
+        <div class="stat"><span>Land value</span><b id="sLandVal">0</b></div>
+        <div class="stat"><span>Trades</span><b id="sTrades">0</b></div>
+        <div class="stat"><span>Gifts</span><b id="sGifts">0</b></div>
+        <div class="stat"><span>Starved</span><b id="sStarved">0</b></div>
+        <div class="stat"><span>Died of age</span><b id="sAge">0</b></div>
+        <div class="stat"><span>Avg wealth</span><b id="sWealth">0</b></div>
+        <div class="stat"><span>Median wealth</span><b id="sMedian">0</b></div>
+        <div class="stat"><span>Gini</span><b id="sGini">0</b></div>
+        <div class="stat"><span>In poverty</span><b id="sPoverty">0%</b></div>
+        <div class="stat"><span>Income mix</span><b id="sIncome" style="font-size:11px">–</b></div>
+        <div class="stat"><span>Organisations</span><b id="sOrgs">0</b></div>
+        <div class="stat"><span>Ruling</span><b id="sRuling">–</b></div>
+        <div class="stat"><span>Regime</span><b id="sRegime">democracy</b></div>
+        <div class="stat"><span>Tools / bread</span><b id="sCraft">0 / 0</b></div>
+        <div class="stat"><span>Violent deaths</span><b id="sKilled">0</b></div>
+        <div class="stat"><span>Thefts</span><b id="sThefts">0</b></div>
+        <div class="stat"><span>Punished</span><b id="sPunished">0</b></div>
+        <div class="stat"><span>In prison</span><b id="sPrison">0</b></div>
+        <div class="stat"><span>Laws</span><b id="sLaws">–</b></div>
+      </div>
+      <details class="panel">
+        <summary>Policy</summary>
+        <div class="settings-body">
+          <div class="setrow">
+            <div class="lbl"><span>Surplus share to pile</span><span id="vShare">20%</span></div>
+            <input type="range" id="setShare" min="0" max="100" step="5" value="20">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Threshold basis</span></div>
+            <select id="setThreshold">
+              <option value="none">Everyone (flat)</option>
+              <option value="avg">Above average wealth</option>
+              <option value="median">Above median wealth</option>
+              <option value="maxfrac">Above fraction of max</option>
+            </select>
+          </div>
+          <div class="setrow" id="fracRow" style="display:none">
+            <div class="lbl"><span>Fraction of max</span><span id="vFrac">0.8</span></div>
+            <input type="range" id="setFrac" min="0.5" max="0.95" step="0.05" value="0.8">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Income tax</span><span id="vIncomeTax">10%</span></div>
+            <input type="range" id="setIncomeTax" min="0" max="40" step="1" value="10">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Land value tax / cycle</span><span id="vLvt">5%</span></div>
+            <input type="range" id="setLvt" min="0" max="25" step="1" value="5">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Export fraction / cycle</span><span id="vExport">0%</span></div>
+            <input type="range" id="setExport" min="0" max="60" step="5" value="0">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Charity norm</span><span id="vCharity">0.30</span></div>
+            <input type="range" id="setCharity" min="0" max="1" step="0.05" value="0.3">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Wealth tax / cycle</span><span id="vWealthTax">0%</span></div>
+            <input type="range" id="setWealthTax" min="0" max="10" step="0.5" value="0">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Sales tax on trades</span><span id="vSalesTax">0%</span></div>
+            <input type="range" id="setSalesTax" min="0" max="30" step="1" value="0">
+          </div>
+          <div class="setnote">Elections move the first block. You can override anytime.</div>
+        </div>
+      </details>
+      <details class="panel">
+        <summary>Laws &amp; enforcement</summary>
+        <div class="settings-body">
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="lawNoKill"> No killing</label>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="lawNoTheft" checked> No theft</label>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="lawCharity"> Mandatory charity</label>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="lawDuty"> Duty to help</label>
+          <div class="setrow">
+            <div class="lbl"><span>Detection chance</span><span id="vDetect">0.5</span></div>
+            <input type="range" id="setDetect" min="0" max="1" step="0.05" value="0.5">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Punishment severity</span><span id="vSeverity">0.5</span></div>
+            <input type="range" id="setSeverity" min="0" max="1" step="0.05" value="0.5">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Enforcement spending / cycle</span><span id="vEnforce">0</span></div>
+            <input type="range" id="setEnforce" min="0" max="200" step="5" value="0">
+            <div class="setnote">Public funds spent on guards and courts. Raises detection.</div>
+          </div>
+          <div class="setnote">Laws are voted on like policy: the ruling party sets them at elections, blobs can propose them, and you can override anytime.</div>
+        </div>
+      </details>
+      <details class="panel">
+        <summary>World settings</summary>
+        <div class="settings-body">
+          <div class="setrow">
+            <div class="lbl"><span>Regime</span></div>
+            <select id="setRegime">
+              <option value="democracy">Liberal democracy (elections)</option>
+              <option value="anarchy">Anarchy (no state)</option>
+              <option value="monarchy">Feudal monarchy (lord owns land, takes tribute)</option>
+            </select>
+          </div>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="circleOn" checked> Political randomness (circle)</label>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="marketWealth" checked> Wealth at market prices</label>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="autoPhysics"> Auto physics (population homeostasis)</label>
+          <div class="setrow">
+            <div class="lbl"><span>Initial blobs</span><span id="vInit">80</span></div>
+            <input type="number" id="setInit" min="2" max="400" step="1" value="80">
+            <div class="setnote">Applies after Reset</div>
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Population cap</span><span id="vMax">260</span></div>
+            <input type="range" id="setMax" min="20" max="800" step="10" value="260">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Seed</span></div>
+            <input type="number" id="setSeed" min="0" step="1" value="1">
+            <div class="setnote">Applies after Reset</div>
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Hunger rate</span><span id="vHunger">0.06</span></div>
+            <input type="range" id="setHunger" min="0.02" max="0.15" step="0.005" value="0.06">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Thirst rate</span><span id="vThirst">0.12</span></div>
+            <input type="range" id="setThirst" min="0.04" max="0.3" step="0.01" value="0.12">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Resource regrowth</span><span id="vRegrow">0.2</span></div>
+            <input type="range" id="setRegrow" min="0.05" max="0.5" step="0.05" value="0.2">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Reproduction chance</span><span id="vRepro">0.003</span></div>
+            <input type="range" id="setRepro" min="0" max="0.01" step="0.0005" value="0.003">
+          </div>
+          <div class="setrow">
+            <div class="lbl"><span>Gather time (ticks)</span><span id="vGather">16</span></div>
+            <input type="range" id="setGather" min="6" max="30" step="1" value="16">
+          </div>
+          <label class="toggle" style="min-height:36px"><input type="checkbox" id="craftOn" checked> Manufacturing (tools &amp; bread)</label>
+          <div class="setnote">Tools (wood+stone) speed up gathering and building. Bread (grain+tool) is a better food. Turn off to compare.</div>
+        </div>
+      </details>
+      <div class="panel">
+        <h2>Political compass</h2>
+        <canvas id="compass" class="mini" width="220" height="150"></canvas>
+        <div class="foot">X = left↔right, Y = libertarian↔authoritarian. Dots = blobs, circles = parties (number = members), dark ring = ruling. Blue trail = ideology drift, blue dot = current centre of mass, red line = polarisation over time.</div>
+      </div>
+      <div class="panel">
+        <h2>Events</h2>
+        <div id="log"></div>
+      </div>
+      <div class="panel legend">
+        <h2>Legend</h2>
+        <div><span class="sw" style="background:#E6EFE3"></span>Grass tile</div>
+        <div><span class="sw" style="background:#BF8EDA"></span>Berries</div>
+        <div><span class="sw" style="background:#EAC26B"></span>Grain</div>
+        <div><span class="sw" style="background:#DE9255"></span>Potatoes</div>
+        <div><span class="sw" style="background:#D3DFCB"></span>Forest tile</div>
+        <div><span class="sw" style="background:#5C8A4D"></span>Wood</div>
+        <div><span class="sw" style="background:#DDDAD4"></span>Rock tile</div>
+        <div><span class="sw" style="background:#8F8B84"></span>Stone</div>
+        <div><span class="sw" style="background:#BBDCEC"></span>Water</div>
+        <div><span class="sw" style="background:#7D7A75"></span>House</div>
+        <div><span class="sw" style="background:#55524E"></span>Government pile</div>
+        <div><span class="sw" style="background:#8A6D3B"></span>Workshop (crafting)</div>
+        <div><span class="sw" style="background:#fff;border:2px solid #2C2C2B"></span>Outline = owned tile</div>
+        <div><span class="sw" style="background:hsl(110,55%,60%)"></span>Farmer</div>
+        <div><span class="sw" style="background:hsl(30,55%,60%)"></span>Lumberjack</div>
+        <div><span class="sw" style="background:hsl(275,55%,60%)"></span>Miner</div>
+        <div><span class="sw" style="background:#fff;border:1px solid #E56458"></span>Red ring = starving</div>
+        <div><span class="sw" style="background:#fff;border:1px solid #2783DE"></span>Blue ring = thirsty</div>
+        <div><span class="sw" style="background:#C9A227"></span>Tools</div>
+        <div><span class="sw" style="background:#D9A066"></span>Bread</div>
+        <div><span class="sw" style="background:hsl(160,55%,60%)"></span>Miller</div>
+        <div><span class="sw" style="background:hsl(200,55%,60%)"></span>Smith</div>
+        <div><span class="sw" style="background:#fff;border:2px solid #E56458"></span>Prison ring = prisoner</div>
+        <div><span class="sw" style="background:#fff;border:2px dashed #7D7A75"></span>Lord's land (tribute)</div>
+      </div>
+    </aside>
+  </main>
+</div>
+<div id="err"></div>
+<script>
+'use strict';
+window.onerror = function(msg, src, line){ const e=document.getElementById('err'); e.style.display='block'; e.textContent += msg+' (line '+line+')\n'; };
+
+// ---------------- Module map and data flow ----------------
+// One self-contained file, no build step. Sections, top to bottom:
+//   Config & constants   — every slider, toggle and knob lives in CONFIG
+//   State                — world arrays, blob list, prices, orgs, history
+//   World (land layer)   — genWorld, tile values, ownership, regrowth
+//   Blobs (agent layer)  — spawnBlob, needs, perception, wealth
+//   Manufacturing        — production chains: tools (wood+stone), bread (grain+tool)
+//   Politics             — value drift, parties/orgs, elections, auctions, taxes
+//   Regimes              — democracy / anarchy / monarchy; revolt and coups
+//   Laws                 — toggleable laws, lawbreaking formula, enforcement, prison
+//   Decisions            — per-blob AI: decide() picks a state, actState() runs it
+//   Trade and gifts      — market/barter/gift passes over a spatial grid
+//   Stats                — sampling, Gini, history buffers
+//   Tick                 — fixed-timestep scheduler: which system runs when
+//   Render               — canvas map, charts, compass, inspector, stats bar
+//   Reset / loop / UI    — reset(), scenarios, CSV export, event wiring
+// Data flow per tick: tick() -> tickBlob() (needs, decide, actState) ->
+// interactionPass() (trade/gifts, theft, killing) -> periodic passes (prices,
+// politics, regimes, laws, taxes, elections, auto physics) -> sampleStats()
+// -> draw. All randomness flows through the seeded rng; simulation state
+// lives in the module scope; the UI only reads state and writes CONFIG.
+
+// ---------------- Config: every knob lives here ----------------
+// Defaults: every knob's starting value. reset() restores these before a
+// scenario applies its overrides, so a scenario always starts from a known
+// baseline regardless of what the previous run changed.
+const DEFAULTS = {
+  seed: 1,
+  initialBlobs: 80,
+  maxBlobs: 260,
+
+  moneyOn: true,
+  electionsOn: true,
+  surplusShare: 20,
+  charityNorm: 0.3,
+  thresholdBasis: 'none', // none | avg | median | maxfrac
+  thresholdFrac: 0.8,
+  incomeTax: 10,
+  lvtRate: 5,
+  wealthTax: 0,
+  salesTax: 0,
+  exportFrac: 0,
+  circleOn: true,
+  electionEvery: 600,
+  autoPhysics: true,
+  marketWealth: true,
+  craftOn: true,
+  policyLock: false, // locked scenarios: elections pick the party but never change policy
+
+  regime: 'democracy', // democracy | anarchy | monarchy
+  lawNoKill: false, lawNoTheft: true, lawCharity: false, lawDuty: false,
+  detectChance: 0.5, severity: 0.5, enforceSpend: 0,
+  tributeRate: 25, // monarchy: share of gather on lord's land paid as tribute
+};
+const CONFIG = {
+  seed: 1,
+  W: 64, H: 40, T: 14,
+  ticksPerSecond: 20,
+  initialBlobs: 80,
+  maxBlobs: 260,
+
+  hungerRate: 0.06,
+  thirstRate: 0.12,
+  eatBelow: 60,
+  eatGain: 34,
+  drinkBelow: 45,
+
+  foodTarget: 6, woodTarget: 3, stoneTarget: 2,
+  workFood: 12, workWood: 7, workStone: 5, // work targets: blobs stop gathering here, but inventories are unlimited
+
+  speed: 1.6,
+  gatherTicks: 16,
+  tileMax: 6,
+  regrowChance: 0.2,
+  regrowSamples: 40,
+
+  startMoney: 25,
+  startFood: 3,
+  BASE: { berries:3, grain:3, potatoes:3, wood:5, stone:8, tools:14, bread:6 },
+  investWood: 2, investStone: 2, investMoney: 15,
+
+  toolWood: 1, toolStone: 1, toolTicks: 12, toolGatherMul: 2, toolBuildMul: 2, toolUpkeep: 2600,
+  breadGrain: 1, breadTicks: 14, breadFeed: 2.2, // bread feeds more than raw grain
+  craftFoodTarget: 8, craftWoodTarget: 6, craftStoneTarget: 4, craftToolTarget: 2,
+
+  reproSatiety: 80, reproFood: 5, reproCost: 4, reproChance: 0.003,
+  maxAge: 9000,
+  tradeCooldown: 14,
+  upkeepWood: 700, upkeepStone: 1100,
+
+  circleR: 0.125,
+};
+const FOODS = ['berries','grain','potatoes'];
+const GOODS = ['berries','grain','potatoes','wood','stone'];
+const MANUF = ['tools','bread']; // manufactured goods
+const ALLGOODS = GOODS.concat(MANUF);
+const JOBS = ['Farmer','Lumberjack','Miner','Miller','Smith'];
+const LAWS = [
+  { key:'lawNoKill',  label:'No killing' },
+  { key:'lawNoTheft', label:'No theft' },
+  { key:'lawCharity', label:'Mandatory charity' },
+  { key:'lawDuty',    label:'Duty to help' }
+];
+const VALUES = ['selfDirection','stimulation','hedonism','achievement','power','security','conformity','tradition','benevolence','universalism'];
+const TILE_BASE = [0,4,6,9,10]; // water, grass, forest, rock, house
+const WORKSHOP=5; // typeIdx slot for the workshop tile (not a tile type)
+const TAU = Math.PI*2;
+const NEIGHBOR_R2 = 60*60;
+const TRADE_R2 = 12*12;
+const CLICK_R2 = 12*12;
+const TILE_SAMPLE_TRIES = 64;
+const WATER_SAMPLE_TRIES = 56;
+const GRID_CELL = 28;
+let WARMUP = 0; // ?warmup=N overrides
+try{ const q=parseInt(new URLSearchParams(location.search).get('warmup')||'',10); if(q>0) WARMUP=q; }catch(e){}
+
+// ---------------- Helpers ----------------
+function mulberry32(seed){return function(){seed|=0;seed=(seed+0x6D2B79F5)|0;let t=Math.imul(seed^(seed>>>15),1|seed);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+const clamp=(v,a,b)=>v<a?a:(v>b?b:v);
+const el=id=>document.getElementById(id);
+const dist2=(ax,ay,bx,by)=>{ const dx=ax-bx, dy=ay-by; return dx*dx+dy*dy; };
+function zeroGoods(){ const g={berries:0,grain:0,potatoes:0,wood:0,stone:0}; for(const m of MANUF) g[m]=0; return g; }
+function emptyHist(){ return {pop:[],w:[],med:[],g:[],pov:[],pr:{berries:[],grain:[],potatoes:[],wood:[],stone:[],tools:[],bread:[]},land:[],money:[],gov:{lvt:[],income:[],share:[],exp:[],wealth:[],sales:[]},pol:{econ:[],soc:[],spread:[]}}; }
+function goodsValue(goods){ let v=0; for(const g of ALLGOODS) v+=goods[g]*priceOf(g); return v; }
+
+// ---------------- State ----------------
+const W=CONFIG.W, H=CONFIG.H, T=CONFIG.T;
+const WATER=0, GRASS=1, FOREST=2, ROCK=3, HOUSE=4;
+const ORG_BASE=1000000;
+let rng, tiles, amount, crop, typeIdx, blobs, landList;
+let owner, level, assessed, listings, workshopTile;
+let stockpile, stockTile, publicFunds;
+let tickCount, price, trades, gifts, starved, aged, killed, thefts, punished;
+let buyWants, buysDone, hist;
+let orgs, ruling, nextOrgId, nextBlobId, logLines;
+let cloudD, WSTATS, govInc, incomeMix;
+let lordId=-1, prison=[], lawVotes; // prison: [{b, until}]
+let selectedId=-1;
+let running=true, speedMul=1;
+let physBase=null;
+
+// ---------------- World (land layer) ----------------
+function smooth(field,passes){
+  const b=new Float32Array(field.length);
+  for(let p=0;p<passes;p++){
+    for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+      let s=0,c=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+        const nx=x+dx, ny=y+dy;
+        if(nx<0||ny<0||nx>=W||ny>=H) continue;
+        s+=field[ny*W+nx]; c++;
+      }
+      b[y*W+x]=s/c;
+    }
+    field.set(b);
+  }
+}
+function normalize(a){
+  let mn=Infinity,mx=-Infinity;
+  for(let i=0;i<a.length;i++){ if(a[i]<mn)mn=a[i]; if(a[i]>mx)mx=a[i]; }
+  const d=(mx-mn)||1;
+  for(let i=0;i<a.length;i++) a[i]=(a[i]-mn)/d;
+}
+function genWorld(){
+  const n=W*H;
+  tiles=new Uint8Array(n); amount=new Uint8Array(n); crop=new Uint8Array(n);
+  owner=new Int32Array(n).fill(-1); level=new Uint8Array(n); assessed=new Float32Array(n);
+  listings=[];
+  const elev=new Float32Array(n), veg=new Float32Array(n), cn=new Float32Array(n);
+  for(let i=0;i<n;i++){ elev[i]=rng(); veg[i]=rng(); cn[i]=rng(); }
+  smooth(elev,4); smooth(veg,3); smooth(cn,3);
+  normalize(elev); normalize(veg); normalize(cn);
+  typeIdx=[[],[],[],[],[]]; // water, grass, forest, rock, house
+  landList=[];
+  for(let i=0;i<n;i++){
+    let t;
+    if(elev[i]<0.18) t=WATER;
+    else if(veg[i]<0.45) t=GRASS;
+    else if(veg[i]<0.78) t=FOREST;
+    else t=ROCK;
+    tiles[i]=t;
+    if(t!==WATER){ amount[i]=2+((rng()*(CONFIG.tileMax-2))|0); landList.push(i); }
+    if(t===GRASS) crop[i]=cn[i]<0.33?0:(cn[i]<0.66?1:2);
+    typeIdx[t].push(i);
+  }
+  // workshop: a special tile where millers/smiths craft (better than at home)
+  const wi=landList[(rng()*landList.length)|0];
+  typeIdx[5]=[wi]; // index 5 = WORKSHOP marker (not a tile type; tiles[] stays 0-4)
+  workshopTile=wi;
+  stockTile=nearestLandTile(W*T/2,H*T/2);
+}
+function tileXY(i){ return { x:((i%W)+0.5)*T, y:(((i/W)|0)+0.5)*T }; }
+function tileGood(i){ return tiles[i]===GRASS?FOODS[crop[i]]:(tiles[i]===FOREST?'wood':'stone'); }
+function nearestLandTile(x,y){
+  let best=-1,bd=Infinity;
+  for(const i of landList){
+    const p=tileXY(i);
+    const d=dist2(p.x,p.y,x,y);
+    if(d<bd){bd=d;best=i;}
+  }
+  return best;
+}
+function tileValue(i){
+  const t=tiles[i];
+  if(t===WATER) return 0;
+  if(i===workshopTile) return 60; // the workshop is valuable fixed capital
+  const cnt=t===HOUSE?80:Math.max(1,typeIdx[t].length);
+  const scarcity=clamp((W*H/4)/cnt,0.7,2);
+  return TILE_BASE[t]*(1+level[i])*scarcity;
+}
+function tileAssessed(i){ return assessed[i]>0?assessed[i]:tileValue(i); }
+
+// ---------------- Blobs (agent layer) ----------------
+function randomValues(){ const v={}; for(const k of VALUES) v[k]=rng(); return v; }
+function randomUtils(){ return { berries:0.7+rng()*0.6, grain:0.7+rng()*0.6, potatoes:0.7+rng()*0.6, bread:0.8+rng()*0.6 }; }
+function jobHue(job){ return [110,30,275,160,200][job]+rng()*24-12; }
+function econValueTerm(v){ return ((v.power+v.achievement)-(v.benevolence+v.universalism))/2; }
+function socValueTerm(v){ return ((v.tradition+v.conformity+v.security)-(v.selfDirection+v.stimulation+v.universalism))/3; }
+function spawnBlob(x,y,parent){
+  const b={
+    id:nextBlobId++,
+    x:clamp(x,2,W*T-3), y:clamp(y,2,H*T-3),
+    satiety:65+rng()*30,
+    water:70+rng()*30,
+    money:parent?Math.floor(parent.money*0.25):(CONFIG.moneyOn?CONFIG.startMoney:0),
+    inv:zeroGoods(),
+    util:parent?null:randomUtils(),
+    vals:parent?null:randomValues(),
+    econ:0, soc:0, orgId:-1, polT:(rng()*25)|0, memT:(rng()*60)|0,
+    state:'idle', tx:x, ty:y, tile:-1, partner:null, wantType:'berries', pileOrg:-1,
+    gatherT:0, cool:0, age:0, retarget:0, dead:false, craftCool:0,
+    job:parent&&rng()<0.6?parent.job:(rng()*JOBS.length|0),
+    upkeepW:(rng()*CONFIG.upkeepWood)|0, upkeepS:(rng()*CONFIG.upkeepStone)|0, upkeepT:(rng()*CONFIG.toolUpkeep)|0,
+    landTitles:[], hasHouse:false, due:0, dueOrg:0
+  };
+  if(parent){
+    b.util={}; b.vals={};
+    for(const f of FOODS) b.util[f]=clamp(parent.util[f]+(rng()*0.2-0.1),0.4,1.6);
+    b.util.bread=clamp(parent.util.bread+(rng()*0.2-0.1),0.4,1.6);
+    for(const k of VALUES) b.vals[k]=clamp((parent.vals[k]+rng())/2,0,1);
+    b.soc=clamp(parent.soc+(rng()*0.3-0.15),-1,1);
+  }
+  const start=parent?2:CONFIG.startFood;
+  for(let i=0;i<start;i++) b.inv[FOODS[(rng()*3)|0]]++;
+  b.hue=jobHue(b.job);
+  b.econ=clamp(0.5*econValueTerm(b.vals),-1,1);
+  if(!parent) b.soc=clamp(socValueTerm(b.vals),-1,1);
+  return b;
+}
+function foodIn(goods){ return goods.berries+goods.grain+goods.potatoes+goods.bread; }
+function foodCount(b){ return foodIn(b.inv); }
+function hasTools(b){ return b.inv.tools>0; }
+function gatherTicksFor(b){ return hasTools(b) ? Math.max(4,Math.round(CONFIG.gatherTicks/CONFIG.toolGatherMul)) : CONFIG.gatherTicks; }
+function initBlobs(){
+  blobs=[];
+  const g=typeIdx[GRASS];
+  for(let i=0;i<CONFIG.initialBlobs;i++){
+    const t=g[(rng()*g.length)|0];
+    blobs.push(spawnBlob(((t%W)+0.5)*T+(rng()*8-4), (((t/W)|0)+0.5)*T+(rng()*8-4), null));
+  }
+}
+function findBlobById(id){ for(const b of blobs) if(b.id===id && !b.dead) return b; return null; }
+
+// ---------------- Perception and valuation ----------------
+function nearestBlob(b,pred){
+  let best=null,bd=Infinity;
+  for(const o of blobs){
+    if(o===b||o.dead) continue;
+    if(!pred(o)) continue;
+    const d=dist2(o.x,o.y,b.x,b.y);
+    if(d<bd){bd=d;best=o;}
+  }
+  return best;
+}
+function avgFoodPrice(){ return (price.berries+price.grain+price.potatoes)/3; }
+function priceOf(g){ return CONFIG.marketWealth?price[g]:CONFIG.BASE[g]; }
+function landWealth(b){ let s=0; for(const i of b.landTitles) s+=tileValue(i); return s; }
+function wealth(b){
+  return b.money + foodCount(b)*avgFoodPrice() + b.inv.wood*priceOf('wood') + b.inv.stone*priceOf('stone')
+    + b.inv.tools*priceOf('tools') + b.inv.bread*priceOf('bread') + landWealth(b);
+}
+function median(arr){
+  if(!arr.length) return 0;
+  const s=arr.slice().sort((a,b)=>a-b);
+  const m=s.length>>1;
+  return s.length%2?s[m]:(s[m-1]+s[m])/2;
+}
+function thresholdValue(){
+  if(CONFIG.thresholdBasis==='avg') return WSTATS.avg;
+  if(CONFIG.thresholdBasis==='median') return WSTATS.med;
+  if(CONFIG.thresholdBasis==='maxfrac') return WSTATS.max*CONFIG.thresholdFrac;
+  return 0;
+}
+function stockXY(){ return tileXY(stockTile); }
+function orgBasketXY(o){ return tileXY(o.basketTile); }
+function stockFood(){ return foodIn(stockpile); }
+function basketFood(o){ return foodIn(o.basket); }
+function basketValue(o){ let v=0; for(const g of ALLGOODS) v+=(o.basket[g]||0)*priceOf(g); return v; }
+
+// ---------------- Manufacturing ----------------
+// Production chains: tools (wood+stone) speed up gathering and building;
+// bread (grain+tool) is a better food than raw grain. Millers bake bread,
+// smiths make tools. Both goods get moving prices like raw goods.
+function craftTargetReached(b){
+  return foodCount(b)>=CONFIG.craftFoodTarget && b.inv.wood>=CONFIG.craftWoodTarget && b.inv.stone>=CONFIG.craftStoneTarget;
+}
+function chooseCraft(b){
+  // Millers bake bread, smiths make tools; everyone else picks what they lack.
+  // Only returns a craft when the blob actually has (or can get) the inputs.
+  const canTools=b.inv.wood>=CONFIG.toolWood && b.inv.stone>=CONFIG.toolStone;
+  const canBread=b.inv.grain>=CONFIG.breadGrain && b.inv.tools>=1;
+  if(b.job===3) return canBread?'bread':(canTools?'tools':null);
+  if(b.job===4) return canTools?'tools':(canBread?'bread':null);
+  if(b.inv.bread<2 && canBread) return 'bread';
+  if(b.inv.tools<1 && canTools) return 'tools';
+  return null;
+}
+function setCraft(b,what){
+  b.state='craft'; b.craftWhat=what; b.craftT=0; b.partner=null;
+  // craft at the workshop if it exists and is reachable, else at home
+  if(workshopTile>=0 && rng()<0.7){
+    goToTile(b,workshopTile);
+  } else if(b.landTitles.length){
+    const i=b.landTitles[(rng()*b.landTitles.length)|0];
+    goToTile(b,i);
+  } else {
+    b.tx=b.x; b.ty=b.y;
+  }
+}
+function doCraft(b){
+  const what=b.craftWhat;
+  if(what==='tools'){
+    if(b.inv.wood<CONFIG.toolWood || b.inv.stone<CONFIG.toolStone){ b.retarget=0; return; }
+    b.inv.wood-=CONFIG.toolWood; b.inv.stone-=CONFIG.toolStone;
+    receiveGoods(b,'tools',1,'work');
+  } else {
+    if(b.inv.grain<CONFIG.breadGrain || b.inv.tools<1){ b.retarget=0; return; }
+    b.inv.grain-=CONFIG.breadGrain;
+    receiveGoods(b,'bread',1,'work');
+  }
+  b.retarget=0;
+}
+function eatSomething(b){
+  // bread first (best food), then by utility among raw foods
+  if(b.inv.bread>0){ b.inv.bread--; b.satiety=Math.min(100,b.satiety+CONFIG.eatGain*CONFIG.breadFeed); return; }
+  let best=null,bu=-1;
+  for(const f of FOODS){ if(b.inv[f]>0 && b.util[f]>bu){ bu=b.util[f]; best=f; } }
+  if(best){ b.inv[best]--; b.satiety=Math.min(100,b.satiety+CONFIG.eatGain); }
+}
+
+// ---------------- Politics ----------------
+function mental(b){
+  if(!CONFIG.circleOn) return {x:b.econ,y:b.soc};
+  const a=rng()*TAU, r=rng()*CONFIG.circleR;
+  return { x:clamp(b.econ+Math.cos(a)*r,-1,1), y:clamp(b.soc+Math.sin(a)*r,-1,1) };
+}
+function drive(b){ return (b.vals.power+b.vals.achievement+b.vals.selfDirection)/3; }
+function orgById(id){ for(const o of orgs) if(o.id===id) return o; return null; }
+function nameOrg(x,y){
+  if(Math.hypot(x,y)<=0.125) return 'Centrist';
+  return (x<0?'Socialist ':'Capitalist ')+(y<0?'Liberal':'Conservative');
+}
+function neighborsOf(b){
+  const out=[];
+  for(const o of blobs){
+    if(o===b||o.dead) continue;
+    if(dist2(o.x,o.y,b.x,b.y)<NEIGHBOR_R2) out.push(o);
+  }
+  return out;
+}
+function updateBlobPolitics(b){
+  const wellbeing=clamp((wealth(b)-WSTATS.med)/(WSTATS.med+20),-1,1);
+  const econT=clamp(0.6*wellbeing+0.5*econValueTerm(b.vals),-1,1);
+  const neighbors=neighborsOf(b);
+  const n=neighbors.length;
+  let sAvg=0; for(const o of neighbors) sAvg+=o.soc;
+  const density=clamp((n-6)/12,-0.5,0.5);
+  const socT=clamp(0.55*socValueTerm(b.vals)+(n?0.25*(sAvg/n):0)+0.2*density,-1,1);
+  b.econ+=(econT-b.econ)*0.06;
+  b.soc+=(socT-b.soc)*0.06;
+  if(n){
+    const k=VALUES[(rng()*VALUES.length)|0];
+    let va=0; for(const o of neighbors) va+=o.vals[k];
+    b.vals[k]=clamp(b.vals[k]+(rng()*0.04-0.02)+0.03*((va/n)-b.vals[k]),0,1);
+  }
+}
+function updateMembership(b){
+  const m=mental(b);
+  const pop=Math.max(1,blobs.length);
+  let best=null,bd=Infinity;
+  for(const o of orgs){
+    if(o.members>=0.4*pop) continue; // party size cap: no org holds more than 40% of the population
+    const d=Math.hypot(o.x-m.x,o.y-m.y);
+    if(d<=o.radius && d<bd){bd=d;best=o;}
+  }
+  if(best){ b.orgId=best.id; return; }
+  const cur=b.orgId>=0?orgById(b.orgId):null;
+  if(cur){
+    if(Math.hypot(cur.x-m.x,cur.y-m.y)>cur.radius) b.orgId=-1;
+  } else b.orgId=-1;
+}
+function spectrumColor(x){
+  const h=4+((x+1)/2)*208; // red on the left, blue on the right
+  return 'hsl('+Math.round(h)+',65%,55%)';
+}
+function foundOrg(b,minDist){
+  for(const o of orgs){ if(Math.hypot(o.x-b.econ,o.y-b.soc)<minDist) return; }
+  nextOrgId++;
+  // kind: guilds train (right-leaning, achievement), coops share (left), corps invest (power)
+  const r=rng();
+  const kind = b.vals.power>0.6&&b.econ>0 ? 'corp' : (b.econ<0 ? 'coop' : (r<0.5?'guild':'coop'));
+  const kindName = kind==='corp'?'Corp':(kind==='coop'?'Coop':'Guild');
+  const o={id:nextOrgId, name:nameOrg(b.econ,b.soc), kind, kindName, x:b.econ, y:b.soc, members:0, sx:0, sy:0, mx:0, my:0,
+    color:spectrumColor(b.econ), radius:0.06, taxOn:false, taxRate:0,
+    basket:zeroGoods(), basketTile:stockTile, tiles:[]};
+  orgs.push(o);
+  b.orgId=o.id;
+  logEvent('Tick '+tickCount+': <span style="color:'+o.color+'">'+o.name+'</span> '+kindName+' founded');
+}
+function politicsPass(){
+  const pop=Math.max(1,blobs.length);
+  // cloud diameter: max pairwise distance between blob centers
+  cloudD=0.1;
+  for(let i=0;i<blobs.length;i++){ const a=blobs[i]; if(a.dead)continue;
+    for(let j=i+1;j<blobs.length;j++){ const c=blobs[j]; if(c.dead)continue;
+      const d=Math.hypot(a.econ-c.econ,a.soc-c.soc);
+      if(d>cloudD) cloudD=d;
+    }
+  }
+  // org stats
+  for(const o of orgs){ o.members=0; o.sx=0; o.sy=0; o.mx=0; o.my=0; }
+  for(const b of blobs){
+    if(b.dead||b.orgId<0) continue;
+    const o=orgById(b.orgId);
+    if(o){ o.members++; o.sx+=b.econ; o.sy+=b.soc; o.mx+=b.x; o.my+=b.y; }
+    else b.orgId=-1;
+  }
+  const dead=[];
+  for(const o of orgs){
+    if(o.members<3){ dead.push(o.id); }
+    else{
+      o.x=o.sx/o.members; o.y=o.sy/o.members;
+      o.radius=clamp(0.5*cloudD*Math.cbrt(o.members/pop),0.05,cloudD);
+      o.name=nameOrg(o.x,o.y);
+      o.taxOn=o.x<-0.05;
+      o.taxRate=clamp(-o.x,0,1)*25;
+      if(o.kind==='coop'){ o.taxOn=true; o.taxRate=Math.max(o.taxRate,10); } // coops always pool
+      if(o.kind==='corp'){ o.taxOn=false; } // corps keep profits private
+      if(o.taxOn) o.basketTile=nearestLandTile(o.mx/o.members,o.my/o.members);
+    }
+  }
+  if(dead.length){
+    for(const b of blobs) if(dead.includes(b.orgId)) b.orgId=-1;
+    orgs=orgs.filter(o=>!dead.includes(o.id));
+    if(dead.includes(ruling)) ruling=-1;
+    for(let i=0;i<W*H;i++){ if(dead.includes(owner[i]-ORG_BASE)) owner[i]=-1; }
+  }
+  // party colors: leftmost existing party is red, rightmost is blue
+  let minX=Infinity,maxX=-Infinity;
+  for(const o of orgs){ if(o.x<minX)minX=o.x; if(o.x>maxX)maxX=o.x; }
+  const span=maxX-minX;
+  for(const o of orgs){
+    o.color = span>0.05 ? spectrumColor((o.x-minX)/span*2-1) : spectrumColor(o.x);
+  }
+  // founding: driven founders plus random spontaneous creation
+  if(orgs.length<8 && blobs.length>=20){
+    const candidates=blobs.filter(b=>!b.dead && b.orgId<0 && drive(b)>0.62);
+    if(candidates.length) foundOrg(candidates[(rng()*candidates.length)|0],0.15);
+    if(rng()<0.35){
+      const free=blobs.filter(b=>!b.dead && b.orgId<0);
+      if(free.length) foundOrg(free[(rng()*free.length)|0],0.08);
+    }
+  }
+  // move government pile to average blob position
+  let ax=0,ay=0,an=0;
+  for(const b of blobs){ if(!b.dead){ ax+=b.x; ay+=b.y; an++; } }
+  if(an) stockTile=nearestLandTile(ax/an,ay/an);
+  // dead landowners release their tiles
+  for(let i=0;i<W*H;i++){
+    const ow=owner[i];
+    if(ow>=0 && ow<ORG_BASE && !findBlobById(ow)) owner[i]=-1;
+  }
+  runAuctions();
+}
+function runElection(){
+  const eligible=orgs.filter(o=>o.members>=3);
+  if(!eligible.length){ logEvent('Tick '+tickCount+': election skipped, no organisations'); return; }
+  if(CONFIG.regime!=='democracy') return; // only democracies hold elections
+  const votes=new Map(); for(const o of eligible) votes.set(o.id,0);
+  for(const b of blobs){
+    if(b.dead) continue;
+    const m=mental(b);
+    let best=null,bd=Infinity;
+    for(const o of eligible){ const d=(o.x-m.x)*(o.x-m.x)+(o.y-m.y)*(o.y-m.y); if(d<bd){bd=d;best=o;} }
+    if(best) votes.set(best.id,votes.get(best.id)+1);
+  }
+  let win=null,wv=-1;
+  for(const o of eligible){ const v=votes.get(o.id); if(v>wv){wv=v;win=o;} }
+  ruling=win.id;
+  const x=win.x, y=win.y;
+  // policyLock: a locked scenario keeps its policy; the election only picks
+  // the ruling party (visible on the compass and in the log)
+  if(!CONFIG.policyLock){
+    CONFIG.surplusShare=Math.round(50-50*x);
+    CONFIG.charityNorm=clamp(0.5-0.5*y,0,1);
+    CONFIG.incomeTax=Math.round((0.5-0.5*x)*30);
+    CONFIG.lvtRate=Math.round((0.5-0.5*x)*20);
+    CONFIG.exportFrac=Math.round((0.5+0.5*x)*40);
+    CONFIG.thresholdBasis = x<-0.15?'median':(x>0.15?'none':'avg');
+    // wealth tax: left wants it, right does not
+    CONFIG.wealthTax=Math.round((0.5-0.5*x)*4*10)/10;
+    // sales tax: centrists and the right tolerate it, the left does not
+    CONFIG.salesTax=Math.round(clamp(0.2+0.3*x,0,1)*15);
+    // enforcement spending follows the security side of the winner
+    CONFIG.enforceSpend=Math.round(clamp(0.5-0.5*y,0,1)*100);
+  }
+  syncPolicyUI();
+  logEvent('Tick '+tickCount+': <span style="color:'+win.color+'">'+win.name+'</span> wins with '+wv+' votes. Share '+CONFIG.surplusShare+'%, income tax '+CONFIG.incomeTax+'%, LVT '+CONFIG.lvtRate+'%, wealth tax '+CONFIG.wealthTax+'%, sales tax '+CONFIG.salesTax+'%, export '+CONFIG.exportFrac+'%, threshold '+CONFIG.thresholdBasis);
+  if(CONFIG.regime==='democracy' && !CONFIG.policyLock) lawProposals();
+}
+function logEvent(s){
+  logLines.push(s);
+  if(logLines.length>9) logLines.shift();
+}
+
+// ---------------- Regimes ----------------
+// democracy: elections pick the ruling org, which sets policy.
+// anarchy: no state — no taxes, no pile, no enforcement, blobs keep everything.
+// monarchy: the strongest blob is lord, owns land, collects tribute, can be
+// challenged by revolt when poverty is high.
+function pickLord(){
+  let best=null,bw=-Infinity;
+  for(const b of blobs){ if(b.dead) continue; const w=wealth(b)+drive(b)*30; if(w>bw){bw=w;best=b;} }
+  return best;
+}
+// claim unowned commons tiles in a box around the blob (local sampling, not
+// map-wide — a map-wide sample almost never lands inside a small radius)
+function claimLandFor(b, tries){
+  const R=60, x0=Math.max(0,((b.x-R)/T)|0), x1=Math.min(W-1,((b.x+R)/T)|0);
+  const y0=Math.max(0,((b.y-R)/T)|0), y1=Math.min(H-1,((b.y+R)/T)|0);
+  const nx=x1-x0+1, ny=y1-y0+1;
+  for(let k=0;k<tries;k++){
+    const i=(y0+((rng()*ny)|0))*W + x0+((rng()*nx)|0);
+    if(tiles[i]!==WATER && tiles[i]!==HOUSE && owner[i]===-1){
+      owner[i]=b.id; b.landTitles.push(i);
+    }
+  }
+}
+function applyRegime(){
+  if(CONFIG.regime==='anarchy'){
+    CONFIG.surplusShare=0; CONFIG.incomeTax=0; CONFIG.lvtRate=0; CONFIG.wealthTax=0;
+    CONFIG.salesTax=0; CONFIG.exportFrac=0; CONFIG.enforceSpend=0; ruling=-1; lordId=-1;
+    syncPolicyUI();
+    return;
+  }
+  if(CONFIG.regime==='monarchy'){
+    // incumbent hysteresis: the sitting lord keeps power until a challenger
+    // is clearly stronger (1.5x wealth+drive score) or the lord is gone
+    const lord=pickLord();
+    const score=b=>wealth(b)+drive(b)*30;
+    if(lord){
+      const cur= lordId>=0 ? findBlobById(lordId) : null;
+      const curOk = cur && !cur.dead;
+      if(lord.id!==lordId && (!curOk || score(lord)>score(cur)*1.5)){
+        lordId=lord.id; ruling=-1;
+        logEvent('Tick '+tickCount+': Blob #'+lord.id+' seizes power as lord');
+        claimLandFor(lord, 24); // seizure on taking power
+      }
+    }
+    // the lord keeps claiming unowned commons near itself
+    if(lordId>=0){
+      const cur=findBlobById(lordId);
+      if(cur && !cur.dead){ claimLandFor(cur, 12); }
+      else lordId=-1;
+    }
+    return;
+  }
+  lordId=-1;
+}
+let anarchyAnnounced=false;
+function regimePass(){
+  if(CONFIG.regime!=='democracy' && CONFIG.regime!=='monarchy' && CONFIG.regime!=='anarchy') CONFIG.regime='democracy';
+  if(CONFIG.regime==='anarchy'){ if(!anarchyAnnounced){ anarchyAnnounced=true; logEvent('Tick '+tickCount+': anarchy — the state is dissolved'); } applyRegime(); return; }
+  if(CONFIG.regime==='monarchy'){ applyRegime(); revoltCheck(); return; }
+  // democracy: coups when the state is very unpopular (high poverty + high inequality)
+  if(WSTATS.poor>0.45 && WSTATS.gini>0.45 && rng()<0.02){
+    CONFIG.regime='monarchy';
+    logEvent('Tick '+tickCount+': the democracy collapses — a strongman takes over');
+    applyRegime();
+    return;
+  }
+  if(lordId>=0 && CONFIG.regime==='democracy'){ lordId=-1; }
+}
+function revoltCheck(){
+  if(CONFIG.regime!=='monarchy') return;
+  const lord=findBlobById(lordId);
+  if(!lord || lord.dead){ return; }
+  // revolt chance rises with poverty and with the lord's unpopularity
+  const angry=clamp(WSTATS.poor*1.5 + (lord.money>WSTATS.avg*3?0.2:0),0,1);
+  if(rng()<angry*0.004){
+    // rebels: everyone within reach of the lord fights; if they outnumber him, he falls
+    const rebels=blobs.filter(b=>!b.dead && b.id!==lordId && dist2(b.x,b.y,lord.x,lord.y)<NEIGHBOR_R2*4);
+    if(rebels.length>=3){
+      logEvent('Tick '+tickCount+': revolt! Blob #'+lord.id+' is overthrown by '+rebels.length+' rebels');
+      lord.dead=true; killed++; lordId=-1;
+      CONFIG.regime='democracy';
+      logEvent('Tick '+tickCount+': a democracy is proclaimed');
+    }
+  }
+}
+
+// ---------------- Laws ----------------
+// Laws are toggleable rules. Whether a blob breaks a law is a formula, not a
+// coin flip: it weighs the blob's state against the expected punishment, with
+// a social dimension from the blob's values (conformity/tradition/security vs
+// self-direction/stimulation). Enforcement spending raises detection.
+function lawCompliance(b){
+  // 0..1: how much this blob cares about following the law right now
+  const v=b.vals;
+  const lawful=clamp((v.conformity+v.tradition+v.security)/3,0,1);
+  const rebel=clamp((v.selfDirection+v.stimulation)/2,0,1);
+  const desperate=clamp(1-b.satiety/60,0,1); // a starving blob barely cares about laws
+  return clamp(0.5+0.5*lawful-0.35*rebel-0.4*desperate,0,1);
+}
+function effectiveDetection(){
+  return clamp(CONFIG.detectChance + CONFIG.enforceSpend/2000, 0, 1);
+}
+function lawsText(){
+  const on=LAWS.filter(l=>CONFIG[l.key]).map(l=>l.label);
+  return on.length?on.join(', '):'none';
+}
+function punish(b,crime){
+  // fine, prison or exile, scaled by severity. Fines go to the state only when
+  // there is one; in anarchy the fine is simply confiscated.
+  punished++;
+  const sev=CONFIG.severity;
+  const fine=Math.min(b.money, wealth(b)*0.3*sev);
+  b.money=Math.max(0,b.money-fine);
+  if(CONFIG.regime!=='anarchy'){ publicFunds+=fine; govInc.enforce+=fine; }
+  const jail=Math.round(120+300*sev);
+  prison.push({b,until:tickCount+jail});
+  b.state='idle'; b.retarget=0;
+  logEvent('Tick '+tickCount+': Blob #'+b.id+' punished for '+crime+' ('+Math.round(fine)+' fine, '+jail+' ticks)');
+}
+function tryCrime(a,b){
+  // a considers robbing or killing b (adjacent blobs only). Whether a breaks
+  // the law is a formula: expected gain vs expected punishment, weighted by
+  // the blob's compliance (values + desperation), not a coin flip.
+  if(a.cool>0 || b.cool>0 || a.dead || b.dead) return;
+  if(a===b) return;
+  const desperation=clamp(1-a.satiety/50,0,1);
+  const gain=wealth(b);
+  const compliance=lawCompliance(a);
+  const detect=effectiveDetection();
+  // killing: needs a weapon (tool), a non-starving victim worth robbing, and
+  // the expected gain must beat the expected cost of getting caught
+  if(CONFIG.lawNoKill && b.satiety>40 && gain>20){
+    const want=desperation*1.5 + gain/200;
+    const expectedCost=detect*(0.3+0.7*CONFIG.severity)*(40+gain*0.1);
+    const breakProb=(1-compliance)*clamp((want-expectedCost/50)/2,0,1);
+    if(a.inv.tools>0 && want>0.9 && rng()<0.05*breakProb){
+      b.dead=true; killed++;
+      for(const g of ALLGOODS){ const half=Math.floor(b.inv[g]/2); b.inv[g]-=half; a.inv[g]+=half; }
+      a.money+=b.money; b.money=0;
+      logEvent('Tick '+tickCount+': Blob #'+a.id+' killed Blob #'+b.id+' for their goods');
+      if(rng()<detect) punish(a,'killing');
+      a.cool=CONFIG.tradeCooldown*2;
+      return;
+    }
+  }
+  // theft: a desperate or greedy blob takes food (and maybe a tool) from a
+  // well-stocked neighbor
+  if(CONFIG.lawNoTheft && foodCount(b)>CONFIG.foodTarget+2 && gain>10){
+    const want=desperation*2 + clamp(gain/100,0,1);
+    const expectedCost=detect*(0.2+0.6*CONFIG.severity)*30;
+    const breakProb=(1-compliance)*clamp((want-expectedCost/20)/2,0.2,1);
+    if(want>1.2 && rng()<0.08*breakProb){
+      const f=mostAbundantFood(b);
+      const take=Math.max(1,Math.min(3,Math.floor(foodCount(b)/3)));
+      for(let k=0;k<take;k++){ if(b.inv[f]>0){ b.inv[f]--; a.inv[f]++; } }
+      if(rng()<0.3 && b.inv.tools>0){ b.inv.tools--; a.inv.tools++; }
+      thefts++;
+      logEvent('Tick '+tickCount+': Blob #'+a.id+' stole from Blob #'+b.id);
+      if(rng()<detect) punish(a,'theft');
+      a.cool=b.cool=CONFIG.tradeCooldown;
+      return;
+    }
+  }
+}
+function mandatoryCharity(a,b){
+  // lawCharity: a well-fed blob must give food to a starving neighbor
+  if(!CONFIG.lawCharity || a.cool>0 || b.cool>0) return;
+  if(a.satiety>60 && b.satiety<20 && foodCount(a)>CONFIG.foodTarget+1){
+    if(rng()<lawCompliance(a)*0.9){
+      const f=mostAbundantFood(a);
+      a.inv[f]--; b.inv[f]++;
+      gifts++;
+      a.cool=b.cool=CONFIG.tradeCooldown;
+    }
+  }
+}
+function dutyToHelp(a,b){
+  // lawDuty: help a neighbor in need even at some cost — modeled as a gift
+  // of food or a tool when the neighbor is badly off
+  if(!CONFIG.lawDuty || a.cool>0 || b.cool>0) return;
+  if(wealth(a)>WSTATS.med && (b.satiety<25 || b.water<25)){
+    if(rng()<lawCompliance(a)*0.5){
+      if(foodCount(a)>CONFIG.foodTarget+1 && b.satiety<25){
+        const f=mostAbundantFood(a);
+        a.inv[f]--; b.inv[f]++;
+        gifts++;
+      } else if(a.inv.tools>1 && !hasTools(b)){
+        a.inv.tools--; b.inv.tools++;
+      }
+      a.cool=b.cool=CONFIG.tradeCooldown;
+    }
+  }
+}
+function releasePrisoners(){
+  if(!prison.length) return;
+  prison=prison.filter(p=>{
+    if(p.b.dead || tickCount>=p.until){ return false; }
+    // prisoners do not act or gather; they slowly recover satiety from prison rations
+    p.b.satiety=Math.min(100,p.b.satiety+0.5);
+    p.b.water=Math.min(100,p.b.water+1);
+    p.b.state='idle';
+    return true;
+  });
+}
+function isPrisoner(b){ return prison.some(p=>p.b===b); }
+function lawProposals(){
+  // blobs propose laws at elections: each active law gets votes from blobs
+  // whose values fit it; the ruling org's platform decides what passes
+  const r=orgById(ruling);
+  if(!r) return;
+  for(const l of LAWS){
+    // security/tradition values push toward order laws; universalism toward charity
+    let votes=0;
+    for(const b of blobs){
+      if(b.dead) continue;
+      let affinity=0.5;
+      if(l.key==='lawNoKill'||l.key==='lawNoTheft') affinity=(b.vals.security+b.vals.conformity)/2;
+      if(l.key==='lawCharity'||l.key==='lawDuty') affinity=(b.vals.benevolence+b.vals.universalism)/2;
+      const m=mental(b);
+      const dist=Math.hypot(r.x-m.x,r.y-m.y);
+      if(dist<0.4) votes+=affinity; else votes+=1-affinity;
+    }
+    const turnout=Math.max(1,blobs.length);
+    const on=votes/turnout>0.5;
+    if(on!==CONFIG[l.key]){
+      CONFIG[l.key]=on;
+      logEvent('Tick '+tickCount+': law '+(on?'enacted':'repealed')+': '+l.label);
+      syncLawUI();
+    }
+  }
+}
+
+// ---------------- Decisions ----------------
+function goToTile(b,i){
+  const p=tileXY(i);
+  b.tx=p.x; b.ty=p.y;
+}
+function setDrink(b){
+  const list=typeIdx[WATER];
+  let best=-1,bd=Infinity;
+  for(let k=0;k<WATER_SAMPLE_TRIES;k++){
+    const i=list[(rng()*list.length)|0];
+    const p=tileXY(i);
+    const d=dist2(p.x,p.y,b.x,b.y);
+    if(d<bd){bd=d;best=i;}
+  }
+  if(best<0){ setWander(b); return; }
+  b.state='drink'; b.tile=best; b.partner=null;
+  goToTile(b,best);
+}
+function setWander(b){
+  b.state='wander'; b.tile=-1; b.partner=null;
+  if(rng()<0.35 && blobs.length>1){
+    const o=blobs[(rng()*blobs.length)|0];
+    if(o!==b && !o.dead){ b.tx=o.x; b.ty=o.y; return; }
+  }
+  b.tx=clamp(b.x+(rng()*220-110),T,W*T-T);
+  b.ty=clamp(b.y+(rng()*220-110),T,H*T-T);
+}
+function chooseGatherTile(b,type){
+  const list=typeIdx[type];
+  if(!list.length) return -1;
+  let best=-1,bestS=-Infinity;
+  const bene=b.vals.benevolence-0.5;
+  for(let k=0;k<TILE_SAMPLE_TRIES;k++){
+    const i=list[(rng()*list.length)|0];
+    if(tiles[i]!==type || amount[i]<=0) continue;
+    const ow=owner[i];
+    let share=1;
+    if(ow!==-1 && ow!==b.id) share=0.5; // rent or government split
+    const y=(1+level[i])*share;
+    const p=tileXY(i);
+    const d=Math.hypot(p.x-b.x,p.y-b.y);
+    let s=y/(1+d/120);
+    if(bene!==0 && ow!==b.id) s*=1+0.4*bene; // benevolent blobs favor commons, government and org land
+    if(s>bestS){bestS=s;best=i;}
+  }
+  return best;
+}
+function setGather(b,type){
+  const i=chooseGatherTile(b,type);
+  if(i<0){ setWander(b); return; }
+  b.state='gather'; b.tile=i; b.partner=null;
+  goToTile(b,i);
+}
+function findInvestTile(b){
+  let best=-1,bd=Infinity;
+  for(let k=0;k<TILE_SAMPLE_TRIES;k++){
+    const i=landList[(rng()*landList.length)|0];
+    if(tiles[i]===WATER || tiles[i]===HOUSE || owner[i]!==-1) continue;
+    const p=tileXY(i);
+    const d=dist2(p.x,p.y,b.x,b.y);
+    if(d<bd){bd=d;best=i;}
+  }
+  if(best<0 && b.landTitles.length>0){
+    const own=b.landTitles.filter(i=>tiles[i]!==HOUSE && level[i]<5);
+    if(own.length) best=own[(rng()*own.length)|0];
+  }
+  return best;
+}
+function canInvest(b){
+  const goodsOk=b.inv.wood>=CONFIG.investWood && b.inv.stone>=CONFIG.investStone;
+  const moneyOk=CONFIG.moneyOn ? b.money>=CONFIG.investMoney : true;
+  return goodsOk && moneyOk && b.landTitles.length<5 && drive(b)>0.45;
+}
+function chooseFoodToBuy(b){
+  let best=null,bestU=0;
+  for(const f of FOODS){
+    if(price[f]<=b.money){
+      const u=b.util[f]/price[f];
+      if(u>bestU){ bestU=u; best=f; }
+    }
+  }
+  return best;
+}
+function decide(b){
+  b.partner=null; b.tile=-1; b.gatherT=0;
+  const fc=foodCount(b);
+  const starving = b.satiety<45 && fc<=0;
+  const hungry = fc<=4;
+  if(b.water<CONFIG.drinkBelow){ setDrink(b); return; }
+
+  if(starving){
+    const org=b.orgId>=0?orgById(b.orgId):null;
+    if(org && org.taxOn && basketFood(org)>0){ b.state='collect'; b.pileOrg=org.id; const p=orgBasketXY(org); b.tx=p.x; b.ty=p.y; return; }
+    if(stockFood()>0){ b.state='collect'; b.pileOrg=-1; const p=stockXY(); b.tx=p.x; b.ty=p.y; return; }
+  }
+
+  if(CONFIG.moneyOn){
+    if(starving||hungry){
+      const want=chooseFoodToBuy(b);
+      if(want){
+        const s=nearestBlob(b,o=>foodCount(o)>=8 && o.inv[want]>=1);
+        if(s){ buyWants[want]++; b.state='seek'; b.partner=s; b.wantType=want; return; }
+      }
+    }
+  } else {
+    if((starving||hungry) && (b.inv.wood>=1 || b.inv.stone>=1)){
+      const s=nearestBlob(b,o=>foodCount(o)>=8);
+      if(s){ b.state='seek'; b.partner=s; return; }
+    }
+  }
+  if(starving){ setGather(b,GRASS); return; }
+
+  if(fc<CONFIG.foodTarget){ setGather(b,GRASS); return; }
+  const wantsInvest = b.landTitles.length<5 && drive(b)>0.45 && (!CONFIG.moneyOn || b.money>=CONFIG.investMoney);
+  if(wantsInvest && (b.inv.wood<CONFIG.investWood || b.inv.stone<CONFIG.investStone)){
+    if(b.inv.wood<CONFIG.investWood){ setGather(b,FOREST); return; }
+    setGather(b,ROCK); return;
+  }
+  if(b.job===0){ if(fc<CONFIG.workFood){ setGather(b,GRASS); return; } }
+  else if(b.job===1){ if(b.inv.wood<CONFIG.workWood){ setGather(b,FOREST); return; } }
+  else if(b.job===2){ if(b.inv.stone<CONFIG.workStone){ setGather(b,ROCK); return; } }
+
+  // manufacturing: craft when stocked with inputs; otherwise gather inputs
+  if(CONFIG.craftOn && fc>=CONFIG.foodTarget){
+    const what=chooseCraft(b);
+    if(what && b.craftCool<=0){
+      setCraft(b,what); b.craftCool=200+((rng()*200)|0); return;
+    }
+    // gather craft inputs when short (millers/smiths always, others sometimes)
+    if(b.job===3 || b.job===4 || rng()<0.3){
+      const needBread=b.inv.bread<2;
+      const needTools=b.inv.tools<1;
+      if(needBread && b.inv.grain<CONFIG.breadGrain){ setGather(b,GRASS); return; }
+      if(needTools && b.inv.wood<CONFIG.toolWood){ setGather(b,FOREST); return; }
+      if(needTools && b.inv.stone<CONFIG.toolStone){ setGather(b,ROCK); return; }
+    }
+  }
+
+  if(canInvest(b) && rng()<0.5){
+    const i=findInvestTile(b);
+    if(i>=0){ b.state='build'; b.tile=i; goToTile(b,i); return; }
+  }
+  if(CONFIG.surplusShare>0 && wealth(b)>thresholdValue() && (fc>CONFIG.foodTarget+2 || b.inv.wood>CONFIG.woodTarget+1 || b.inv.stone>CONFIG.stoneTarget+1)){
+    b.state='deliver'; b.pileOrg=-1; const p=stockXY(); b.tx=p.x; b.ty=p.y; return;
+  }
+  setWander(b);
+}
+
+// ---------------- Actions ----------------
+function heading(dx,dy){
+  const d=Math.hypot(dx,dy);
+  return { dx, dy, d };
+}
+function move(b,dx,dy,d){
+  const s=Math.min(CONFIG.speed,d);
+  const nx=clamp(b.x+dx/d*s,2,W*T-3), ny=clamp(b.y+dy/d*s,2,H*T-3);
+  const i=clamp(Math.floor(ny/T),0,H-1)*W+clamp(Math.floor(nx/T),0,W-1);
+  if(tiles[i]!==WATER){ b.x=nx; b.y=ny; return; }
+  const ix=clamp(Math.floor(b.y/T),0,H-1)*W+clamp(Math.floor(nx/T),0,W-1);
+  if(tiles[ix]!==WATER){ b.x=nx; return; }
+  const iy=clamp(Math.floor(ny/T),0,H-1)*W+clamp(Math.floor(b.x/T),0,W-1);
+  if(tiles[iy]!==WATER){ b.y=ny; return; }
+  b.retarget=0;
+}
+function receiveGoods(b,type,units,kind){
+  if(units<=0) return;
+  // no state treasury in anarchy: income tax is simply not collected
+  if(CONFIG.regime==='anarchy'){ b.inv[type]+=units; incomeMix[kind]=(incomeMix[kind]||0)+units; return; }
+  const p=priceOf(type);
+  const t=thresholdValue();
+  const w=wealth(b);
+  let f=1;
+  if(t>0 && w<t){ f=clamp((units*p-(t-w))/(units*p),0,1); }
+  b.due+=units*p*f*CONFIG.incomeTax/100;
+  const org=b.orgId>=0?orgById(b.orgId):null;
+  if(org&&org.taxOn) b.dueOrg+=units*p*f*org.taxRate/100;
+  b.inv[type]+=units;
+  incomeMix[kind]=(incomeMix[kind]||0)+units;
+}
+function payDuesTo(b,amount,payTo,onPaid){
+  if(amount<=0) return 0;
+  const f=mostAbundantFood(b), p=priceOf(f);
+  let paid=amount;
+  while(paid>=p && b.inv[f]>0){ b.inv[f]--; payTo[f]++; paid-=p; if(onPaid) onPaid(p); }
+  if(paid>p*5) paid=p*5;
+  return paid;
+}
+function payDues(b){
+  // no state treasury in anarchy: dues are waived, not collected
+  if(CONFIG.regime==='anarchy'){ b.due=0; b.dueOrg=0; return; }
+  if(b.due>0) b.due=payDuesTo(b,b.due,stockpile,p=>{ govInc.income+=p; });
+  const org=b.orgId>=0?orgById(b.orgId):null;
+  if(org && b.dueOrg>0){
+    const basket=org.basket;
+    b.dueOrg=payDuesTo(b,b.dueOrg,basket,null);
+  }
+}
+function actState(b){
+  if(b.state==='gather'){
+    if(b.tile>=0){
+      const h=heading(b.tx-b.x,b.ty-b.y);
+      if(h.d>T*0.9){ move(b,h.dx,h.dy,h.d); return; }
+      if(amount[b.tile]>0){
+        b.gatherT++;
+        if(b.gatherT>=gatherTicksFor(b)){
+          b.gatherT=0;
+          const i=b.tile;
+          const take=Math.min(amount[i],(1+level[i])*(hasTools(b)?CONFIG.toolGatherMul:1));
+          amount[i]-=take;
+          const type=tileGood(i);
+          const ow=owner[i];
+          if(ow===-1 || ow===b.id){ receiveGoods(b,type,take,'work'); }
+          else{
+            let toOwner=Math.floor(take/2), toWorker=take-toOwner;
+            if(CONFIG.regime==='monarchy' && lordId>=0 && ow===lordId){
+              // tribute: the lord takes a share of production on his land
+              const trib=Math.floor(take*CONFIG.tributeRate/100);
+              toOwner+=trib; toWorker-=trib;
+            }
+            if(ow===-2){ stockpile[type]+=toOwner; }
+            else if(ow>=ORG_BASE){ const o=orgById(ow-ORG_BASE); if(o) o.basket[type]+=toOwner; else owner[i]=-1; }
+            else{ const o=findBlobById(ow); if(o) receiveGoods(o,type,toOwner,'rent'); else owner[i]=-1; }
+            receiveGoods(b,type,toWorker,'work');
+          }
+          const atCap=(tiles[i]===GRASS && foodCount(b)>=CONFIG.workFood)||(tiles[i]===FOREST && b.inv.wood>=CONFIG.workWood)||(tiles[i]===ROCK && b.inv.stone>=CONFIG.workStone);
+          if(amount[i]<=0 || atCap) b.retarget=0;
+        }
+      } else b.retarget=0;
+    } else b.retarget=0;
+    return;
+  }
+  if(b.state==='drink'){
+    const h=heading(b.tx-b.x,b.ty-b.y);
+    if(h.d>T*1.4){ move(b,h.dx,h.dy,h.d); return; }
+    b.water=100; b.retarget=0;
+    return;
+  }
+  if(b.state==='seek'){
+    const p=b.partner;
+    const valid = p && !p.dead && foodCount(p)>=8 && (!CONFIG.moneyOn || p.inv[b.wantType]>=1);
+    if(!valid){ b.retarget=0; setWander(b); return; }
+    const h=heading(p.x-b.x,p.y-b.y);
+    if(h.d>10) move(b,h.dx,h.dy,h.d);
+    return;
+  }
+  if(b.state==='deliver'){
+    const h=heading(b.tx-b.x,b.ty-b.y);
+    if(h.d>18){ move(b,h.dx,h.dy,h.d); return; }
+    const room=Math.max(0,wealth(b)-thresholdValue());
+    const org=b.orgId>=0?orgById(b.orgId):null;
+    // in anarchy there is no pile: the surplus share is waived, not collected
+    if(CONFIG.regime!=='anarchy'){
+      deliverSurplus(b,room,CONFIG.surplusShare/100,stockpile,p=>{ govInc.share+=p; });
+    }
+    if(org && org.taxOn && org.taxRate>0){
+      deliverSurplus(b,room,org.taxRate/100,org.basket,null);
+    }
+    b.retarget=0;
+    return;
+  }
+  if(b.state==='collect'){
+    const h=heading(b.tx-b.x,b.ty-b.y);
+    if(h.d>18){ move(b,h.dx,h.dy,h.d); return; }
+    let pileRef=stockpile;
+    if(b.pileOrg>=0){
+      const o=orgById(b.pileOrg);
+      if(!o){ b.retarget=0; return; }
+      pileRef=o.basket;
+    }
+    const order=FOODS.slice().sort((f,g)=>b.util[g]-b.util[f]);
+    for(const f of order){ while(foodCount(b)<CONFIG.foodTarget && pileRef[f]>0){ pileRef[f]--; b.inv[f]++; incomeMix.pile++; } }
+    if(b.inv.wood<CONFIG.woodTarget && pileRef.wood>0){ pileRef.wood--; b.inv.wood++; incomeMix.pile++; }
+    if(b.inv.stone<CONFIG.stoneTarget && pileRef.stone>0){ pileRef.stone--; b.inv.stone++; incomeMix.pile++; }
+    b.retarget=0;
+    return;
+  }
+  if(b.state==='build'){
+    const h=heading(b.tx-b.x,b.ty-b.y);
+    if(h.d>T*0.9){ move(b,h.dx,h.dy,h.d); return; }
+    const i=b.tile;
+    if(i<0 || tiles[i]===WATER || tiles[i]===HOUSE){ b.retarget=0; return; }
+    const mine=owner[i]===b.id;
+    if(!mine && owner[i]!==-1){ b.retarget=0; return; }
+    const woodCost=hasTools(b)?Math.max(1,Math.round(CONFIG.investWood/CONFIG.toolBuildMul)):CONFIG.investWood;
+    const stoneCost=hasTools(b)?Math.max(1,Math.round(CONFIG.investStone/CONFIG.toolBuildMul)):CONFIG.investStone;
+    if(b.inv.wood<woodCost || b.inv.stone<stoneCost){ b.retarget=0; return; }
+    if(!mine && CONFIG.moneyOn && b.money<CONFIG.investMoney){ b.retarget=0; return; }
+    b.inv.wood-=woodCost; b.inv.stone-=stoneCost;
+    if(!mine && CONFIG.moneyOn){
+      b.money-=CONFIG.investMoney;
+      owner[i]=b.id; b.landTitles.push(i);
+    }
+    if(!mine && tiles[i]===GRASS && !b.hasHouse && rng()<0.2){
+      tiles[i]=HOUSE; amount[i]=0; b.hasHouse=true;
+      typeIdx[GRASS].splice(typeIdx[GRASS].indexOf(i),1);
+      typeIdx[HOUSE].push(i);
+    } else if(level[i]<5){
+      level[i]++;
+    }
+    b.retarget=0;
+    return;
+  }
+  if(b.state==='craft'){
+    const h=heading(b.tx-b.x,b.ty-b.y);
+    if(h.d>T*0.9){ move(b,h.dx,h.dy,h.d); return; }
+    b.craftT++;
+    const need=b.craftWhat==='tools'?CONFIG.toolTicks:CONFIG.breadTicks;
+    if(b.craftT>=need){ b.craftT=0; doCraft(b); }
+    return;
+  }
+  const h=heading(b.tx-b.x,b.ty-b.y);
+  if(h.d<6){ setWander(b); return; }
+  move(b,h.dx,h.dy,h.d);
+}
+
+// ---------------- Trade and gifts ----------------
+function mostAbundantFood(b){
+  let best='berries',n=-1;
+  for(const f of FOODS){ if(b.inv[f]>n){ n=b.inv[f]; best=f; } }
+  return best;
+}
+function deliverSurplus(b,room,rate,dest,onPaid){
+  if(rate<=0 || room<=0) return;
+  const fs=Math.max(0,foodCount(b)-CONFIG.foodTarget);
+  const ws=Math.max(0,b.inv.wood-CONFIG.woodTarget);
+  const ss=Math.max(0,b.inv.stone-CONFIG.stoneTarget);
+  const surplusVal=fs*avgFoodPrice()+ws*priceOf('wood')+ss*priceOf('stone');
+  let budget=Math.min(room,surplusVal)*rate;
+  let guard=24;
+  while(budget>0 && guard-->0){
+    let g=null;
+    const bf=mostAbundantFood(b);
+    if(foodCount(b)>CONFIG.foodTarget && b.inv[bf]>0) g=bf;
+    else if(b.inv.wood>CONFIG.woodTarget) g='wood';
+    else if(b.inv.stone>CONFIG.stoneTarget) g='stone';
+    if(!g) break;
+    const p=priceOf(g);
+    b.inv[g]--; dest[g]++;
+    budget-=p;
+    if(onPaid) onPaid(p);
+  }
+}
+function paySalesTax(a,b,amount){
+  if(CONFIG.salesTax<=0 || amount<=0) return;
+  const tax=amount*CONFIG.salesTax/100;
+  a.money=Math.max(0,a.money-tax);
+  // without a state there is no treasury; the tax is simply burned (a sink)
+  if(CONFIG.regime!=='anarchy'){ publicFunds+=tax; govInc.sales+=tax; }
+}
+function tryTradeMarket(a,b){
+  if(a.cool>0 || b.cool>0) return;
+  if(foodCount(a)<=4){
+    let bestT=null,bestU=0;
+    for(const f of FOODS){
+      if(b.inv[f]>=1 && price[f]<=a.money){
+        const u=a.util[f]/price[f];
+        if(u>bestU){ bestU=u; bestT=f; }
+      }
+    }
+    // bread counts as food for trade when money is on
+    if(b.inv.bread>=1 && price.bread<=a.money){
+      const u=(a.util.bread||1)/price.bread;
+      if(u>bestU){ bestU=u; bestT='bread'; }
+    }
+    if(bestT && (bestT==='bread' || foodCount(b)>=8)){
+      a.inv[bestT]++; b.inv[bestT]--; paySalesTax(a,b,price[bestT]); a.money-=price[bestT]; b.money+=price[bestT];
+      trades++; buysDone[bestT]++;
+      a.cool=b.cool=CONFIG.tradeCooldown; return;
+    }
+  }
+  for(const g of ['wood','stone','tools','bread']){
+    const target=g==='wood'?CONFIG.woodTarget:(g==='stone'?CONFIG.stoneTarget:(g==='tools'?1:2));
+    if(a.satiety>55 && a.inv[g]<target && a.money>=price[g]){
+      buyWants[g]++;
+      if(b.inv[g]>target){
+        a.inv[g]++; b.inv[g]--; paySalesTax(a,b,price[g]); a.money-=price[g]; b.money+=price[g];
+        trades++; buysDone[g]++;
+        a.cool=b.cool=CONFIG.tradeCooldown; return;
+      }
+    }
+  }
+}
+function tryTradeBarter(a,b){
+  if(a.cool>0 || b.cool>0) return;
+  const fa=foodCount(a), fb=foodCount(b);
+  if(fa<=4 && fb>=10 && a.inv.wood>=1){
+    const f=mostAbundantFood(b);
+    a.inv.wood--; b.inv.wood++;
+    b.inv[f]-=2; a.inv[f]+=2;
+    trades++; a.cool=b.cool=CONFIG.tradeCooldown; return;
+  }
+  if(fa<=4 && fb>=11 && a.inv.stone>=1){
+    const f=mostAbundantFood(b);
+    a.inv.stone--; b.inv.stone++;
+    b.inv[f]-=3; a.inv[f]+=3;
+    trades++; a.cool=b.cool=CONFIG.tradeCooldown; return;
+  }
+  if(fa<=4 && fb>=8 && a.inv.tools>=1){
+    const f=mostAbundantFood(b);
+    a.inv.tools--; b.inv.tools++;
+    b.inv[f]-=2; a.inv[f]+=2;
+    trades++; a.cool=b.cool=CONFIG.tradeCooldown; return;
+  }
+  if(a.inv.wood>=CONFIG.workWood && a.inv.stone<CONFIG.stoneTarget && b.inv.stone>CONFIG.stoneTarget){
+    a.inv.wood-=2; b.inv.wood+=2;
+    a.inv.stone++; b.inv.stone--;
+    trades++; a.cool=b.cool=CONFIG.tradeCooldown; return;
+  }
+  if(a.inv.wood>=CONFIG.workWood && a.inv.tools<1 && b.inv.tools>0){
+    a.inv.wood--; b.inv.wood++;
+    a.inv.tools++; b.inv.tools--;
+    trades++; a.cool=b.cool=CONFIG.tradeCooldown; return;
+  }
+}
+function tryGift(a,b){
+  if(CONFIG.charityNorm<=0 || a.cool>0 || b.cool>0) return;
+  if(a.satiety<20 && foodCount(b)>CONFIG.foodTarget+1){
+    if(rng()<CONFIG.charityNorm){
+      const f=mostAbundantFood(b);
+      b.inv[f]--; a.inv[f]++;
+      gifts++; incomeMix.gift++;
+      a.cool=b.cool=CONFIG.tradeCooldown;
+    }
+  }
+}
+function interactionPass(){
+  const cs=GRID_CELL, gw=Math.ceil(W*T/cs), gh=Math.ceil(H*T/cs);
+  const grid=new Array(gw*gh);
+  for(const b of blobs){
+    if(b.dead) continue;
+    const gx=clamp((b.x/cs)|0,0,gw-1), gy=clamp((b.y/cs)|0,0,gh-1);
+    const k=gy*gw+gx;
+    if(!grid[k]) grid[k]=[];
+    grid[k].push(b);
+  }
+  const trade = CONFIG.moneyOn ? tryTradeMarket : tryTradeBarter;
+  for(const b of blobs){
+    if(b.dead) continue;
+    const gx=clamp((b.x/cs)|0,0,gw-1), gy=clamp((b.y/cs)|0,0,gh-1);
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+      const nx=gx+dx, ny=gy+dy;
+      if(nx<0||ny<0||nx>=gw||ny>=gh) continue;
+      const cell=grid[ny*gw+nx];
+      if(!cell) continue;
+      for(const o of cell){
+        if(o===b || o.dead) continue;
+        if(dist2(o.x,o.y,b.x,b.y)<TRADE_R2){
+          trade(b,o); trade(o,b); tryGift(b,o); tryGift(o,b);
+          tryCrime(b,o); tryCrime(o,b);
+          mandatoryCharity(b,o); mandatoryCharity(o,b);
+          dutyToHelp(b,o); dutyToHelp(o,b);
+        }
+      }
+    }
+  }
+}
+
+// ---------------- World upkeep, taxes, auctions ----------------
+function regrow(){
+  for(let k=0;k<CONFIG.regrowSamples;k++){
+    const i=(rng()*W*H)|0;
+    if(tiles[i]!==WATER && tiles[i]!==HOUSE && amount[i]<CONFIG.tileMax && rng()<CONFIG.regrowChance) amount[i]++;
+  }
+}
+function adjustPrice(){
+  for(const g of ALLGOODS){
+    const base=CONFIG.BASE[g];
+    if(buyWants[g]>0){
+      const r=buysDone[g]/buyWants[g];
+      if(r<0.5) price[g]=Math.min(base*3,price[g]*1.08);
+      else if(r>0.9) price[g]=Math.max(base*0.4,price[g]*0.94);
+    } else {
+      price[g]+=(base-price[g])*0.02;
+    }
+    buyWants[g]=0; buysDone[g]=0;
+  }
+}
+function listTile(i){ if(i<0 || i>=W*H) return; if(!listings.includes(i)) listings.push(i); }
+function runAuctions(){
+  if(!CONFIG.moneyOn || !listings.length) return;
+  const keep=[];
+  for(const i of listings){
+    const v=tileAssessed(i);
+    let bestBid=0, buyerBlob=null, buyerOrg=null, kind=0; // 0 blob, 1 government, 2 org
+    for(const b of blobs){
+      if(b.dead || b.money<v*0.4) continue;
+      const bid=v*(0.85+rng()*0.3);
+      if(bid>bestBid && bid<=b.money){ bestBid=bid; buyerBlob=b; kind=0; }
+    }
+    const r=orgById(ruling);
+    const rCentrist=r && Math.hypot(r.x,r.y)<=0.125;
+    const govBuys = r && (r.x<-0.1 || rCentrist);
+    if(govBuys && publicFunds>v){ const bid=v*(rCentrist?1.12:1.05); if(bid>bestBid){ bestBid=bid; kind=1; buyerBlob=null; } }
+    for(const o of orgs){
+      if(o.x>=-0.1) continue;
+      if(basketValue(o)>v){ const bid=v*(0.9+rng()*0.2); if(bid>bestBid){ bestBid=bid; buyerOrg=o; kind=2; } }
+    }
+    if(bestBid<=0){ keep.push(i); continue; }
+    const prev=owner[i];
+    const seller=(prev>=0 && prev<ORG_BASE)?findBlobById(prev):null;
+    if(prev>=ORG_BASE){ const po=orgById(prev-ORG_BASE); if(po){ const ti=po.tiles.indexOf(i); if(ti>=0) po.tiles.splice(ti,1); } }
+    if(kind===0){
+      buyerBlob.money-=bestBid;
+      if(seller) seller.money+=bestBid;
+      else if(CONFIG.regime!=='anarchy') publicFunds+=bestBid; // unowned land sold in anarchy: price is burned
+      owner[i]=buyerBlob.id; buyerBlob.landTitles.push(i);
+    } else if(kind===1){
+      publicFunds-=bestBid;
+      if(seller) seller.money+=bestBid;
+      owner[i]=-2;
+    } else {
+      let remaining=bestBid;
+      for(const g of ALLGOODS){ while((buyerOrg.basket[g]||0)>0 && remaining>=price[g]){ buyerOrg.basket[g]--; remaining-=price[g]; } }
+      if(seller) seller.money+=bestBid;
+      else if(CONFIG.regime!=='anarchy') publicFunds+=bestBid;
+      owner[i]=ORG_BASE+buyerOrg.id; buyerOrg.tiles.push(i);
+    }
+    if(seller){ const ti=seller.landTitles.indexOf(i); if(ti>=0) seller.landTitles.splice(ti,1); }
+    assessed[i]=bestBid;
+  }
+  listings=keep;
+}
+function taxCycle(){
+  if(CONFIG.regime==='anarchy') return; // no state, no taxes
+  // exports are a government decision and create money; they need a treasury
+  if(CONFIG.moneyOn && CONFIG.exportFrac>0){
+    for(const g of ALLGOODS){
+      const u=Math.floor((stockpile[g]||0)*CONFIG.exportFrac/100);
+      if(u>0){ stockpile[g]-=u; const v=u*price[g]; publicFunds+=v; govInc.exp+=v; }
+    }
+  }
+  if(CONFIG.moneyOn && CONFIG.lvtRate>0){
+    for(let i=0;i<W*H;i++){
+      const ow=owner[i];
+      if(ow<0) continue;
+      if(ow>=ORG_BASE){
+        // org-owned tiles pay LVT too (paid from the org basket)
+        const o=orgById(ow-ORG_BASE);
+        if(!o){ owner[i]=-1; continue; }
+        const charge=tileAssessed(i)*CONFIG.lvtRate/100;
+        const paid=payBasketLVT(o,charge);
+        if(!paid) listTile(i);
+        continue;
+      }
+      const o=findBlobById(ow);
+      if(!o){ owner[i]=-1; continue; }
+      const charge=tileAssessed(i)*CONFIG.lvtRate/100;
+      if(o.money>=charge){ o.money-=charge; publicFunds+=charge; govInc.lvt+=charge; }
+      else listTile(i);
+    }
+  }
+  // wealth tax: a share of total wealth above the threshold, per cycle
+  if(CONFIG.moneyOn && CONFIG.wealthTax>0){
+    const thr=thresholdValue();
+    for(const b of blobs){
+      if(b.dead) continue;
+      const w=wealth(b);
+      if(w<=thr) continue;
+      const charge=(w-thr)*CONFIG.wealthTax/100;
+      if(b.money>=charge){ b.money-=charge; publicFunds+=charge; govInc.wealth+=charge; }
+      else if(charge>0){ // pay in goods
+        const paid=payDuesTo(b,charge,stockpile,p=>{ publicFunds+=p; govInc.wealth+=p; });
+        if(paid>charge*0.5 && b.landTitles.length) listTile(b.landTitles[0]);
+      }
+    }
+  }
+  // enforcement spending: guards and courts, funded from public funds.
+  // Needs money: in a barter economy there is no treasury to spend from.
+  if(CONFIG.moneyOn && CONFIG.enforceSpend>0 && publicFunds>CONFIG.enforceSpend){
+    publicFunds-=CONFIG.enforceSpend;
+  }
+  const r=orgById(ruling);
+  if(CONFIG.moneyOn && r){
+    const centrist=Math.hypot(r.x,r.y)<=0.125;
+    if(centrist){
+      // centrists: buy as many tiles as possible
+      let guard=12;
+      while(publicFunds>CONFIG.investMoney*2 && guard-->0){
+        const i=landList[(rng()*landList.length)|0];
+        if(tiles[i]!==WATER && tiles[i]!==HOUSE && owner[i]===-1){
+          publicFunds-=CONFIG.investMoney; owner[i]=-2; if(level[i]<5) level[i]++;
+        }
+      }
+    } else if(r.x<-0.1){
+      // left wing: minimize poverty, convert public funds into pile food (abstract import)
+      let guard=25;
+      while(publicFunds>avgFoodPrice()*2 && guard-->0){
+        const f=FOODS[(rng()*3)|0];
+        publicFunds-=price[f]; stockpile[f]++;
+      }
+      for(let k=0;k<2;k++){
+        const i=landList[(rng()*landList.length)|0];
+        if(tiles[i]!==WATER && tiles[i]!==HOUSE && owner[i]===-1 && publicFunds>CONFIG.investMoney){
+          publicFunds-=CONFIG.investMoney; owner[i]=-2; if(level[i]<5) level[i]++;
+        }
+      }
+    }
+    // right wing: maximize average wealth by leaving money in private hands, no public spending
+  }
+}
+function payBasketLVT(o,charge){
+  // pay from the org basket in goods, valued at market prices
+  let remaining=charge;
+  for(const g of ALLGOODS){
+    while((o.basket[g]||0)>0 && remaining>=price[g]){ o.basket[g]--; remaining-=price[g]; }
+  }
+  publicFunds+=charge-remaining; govInc.lvt+=charge-remaining;
+  return remaining<=0.01;
+}
+function passiveProduce(){
+  for(let i=0;i<W*H;i++){
+    const t=tiles[i];
+    if(t===WATER||t===HOUSE) continue;
+    const ow=owner[i];
+    const g=tileGood(i);
+    if(ow===-2){ stockpile[g]++; }
+    else if(ow>=ORG_BASE){ const o=orgById(ow-ORG_BASE); if(o) o.basket[g]++; }
+  }
+}
+function autoPhysics(){
+  if(!CONFIG.autoPhysics) return;
+  const ratio=blobs.length/Math.max(1,CONFIG.maxBlobs);
+  // food pressure: how hungry the average blob is right now. High pressure
+  // (society can't feed itself) should push reproduction down and mortality
+  // up; abundance does the opposite. This is the lever that keeps the
+  // population in homeostasis instead of the population cap doing all the work.
+  let sat=0,n=0;
+  for(const b of blobs){ if(b.dead) continue; sat+=b.satiety; n++; }
+  const avgSat=n?sat/n:70;
+  const pressure=clamp((70-avgSat)/70,0,1); // 0 = well fed, 1 = starving
+  const target=0.55+0.35*ratio; // carrying capacity: fuller world = harsher
+  const err=pressure-target;
+  CONFIG.hungerRate=clamp(CONFIG.hungerRate+0.0006*err,0.02,0.2);
+  CONFIG.thirstRate=clamp(CONFIG.thirstRate+0.0012*err,0.04,0.35);
+  CONFIG.reproChance=clamp(CONFIG.reproChance-0.00002*err,0.0005,0.01);
+  if(physBase && Math.abs(err)<0.05){
+    // near equilibrium: drift gently back to the user's baseline
+    CONFIG.hungerRate+=(physBase.hungerRate-CONFIG.hungerRate)*0.01;
+    CONFIG.thirstRate+=(physBase.thirstRate-CONFIG.thirstRate)*0.01;
+    CONFIG.reproChance+=(physBase.reproChance-CONFIG.reproChance)*0.01;
+  }
+  el('vHunger').textContent=CONFIG.hungerRate.toFixed(3);
+  el('vThirst').textContent=CONFIG.thirstRate.toFixed(2);
+  el('vRepro').textContent=CONFIG.reproChance.toFixed(4);
+  el('setHunger').value=CONFIG.hungerRate;
+  el('setThirst').value=CONFIG.thirstRate;
+  el('setRepro').value=CONFIG.reproChance;
+}
+
+// ---------------- Stats ----------------
+function gini(arr){
+  if(arr.length<2) return 0;
+  const s=arr.slice().sort((x,y)=>x-y);
+  let sum=0,tot=0;
+  for(let i=0;i<s.length;i++){ sum+=(i+1)*s[i]; tot+=s[i]; }
+  if(tot<=0) return 0;
+  return (2*sum)/(s.length*tot)-(s.length+1)/s.length;
+}
+function countPoor(ws,med){
+  const thr=0.6*med;
+  let poor=0;
+  for(let i=0;i<blobs.length;i++){
+    const b=blobs[i];
+    if(ws[i]<=thr || b.satiety<25 || b.water<25) poor++;
+  }
+  return poor;
+}
+function sampleStats(){
+  let tot=0,mx=0;
+  const ws=new Array(blobs.length);
+  for(let i=0;i<blobs.length;i++){ ws[i]=wealth(blobs[i]); tot+=ws[i]; if(ws[i]>mx)mx=ws[i]; }
+  const avg=ws.length?tot/ws.length:0;
+  const med=median(ws);
+  WSTATS={avg,med,max:mx,gini:gini(ws),poor:ws.length?countPoor(ws,med)/ws.length:0};
+  hist.pop.push(blobs.length);
+  hist.w.push(avg); hist.med.push(med);
+  hist.g.push(WSTATS.gini);
+  hist.pov.push(WSTATS.poor);
+  for(const g of ALLGOODS) hist.pr[g].push(price[g]);
+  let lv=0; for(let i=0;i<W*H;i++){ if(tiles[i]!==WATER) lv+=tileValue(i); }
+  hist.land.push(lv);
+  let ms=publicFunds; for(const b of blobs) ms+=b.money;
+  hist.money.push(ms);
+  hist.gov.lvt.push(govInc.lvt); hist.gov.income.push(govInc.income); hist.gov.share.push(govInc.share); hist.gov.exp.push(govInc.exp);
+  hist.gov.wealth.push(govInc.wealth); hist.gov.sales.push(govInc.sales);
+  if(tickCount%10===0){
+    let ex=0,sx=0,sy=0;
+    for(const b of blobs){ if(b.dead) continue; ex+=b.econ; sx+=b.econ*b.econ; sy+=b.soc*b.soc; }
+    const n=Math.max(1,blobs.filter(b=>!b.dead).length);
+    hist.pol.econ.push(ex/n);
+    hist.pol.soc.push(sy/n-Math.pow(ex/n,2)>=0?Math.sqrt(Math.max(0,sy/n-(ex/n)*(ex/n))):0);
+    hist.pol.spread.push(cloudD);
+  }
+  if(hist.pop.length>600){
+    for(const k of ['pop','w','med','g','pov','land','money']) hist[k].shift();
+    for(const g of ALLGOODS) hist.pr[g].shift();
+    for(const k of ['lvt','income','share','exp','wealth','sales']) hist.gov[k].shift();
+    for(const k of ['econ','soc','spread']) hist.pol[k].shift();
+  }
+}
+
+// ---------------- Tick ----------------
+function tickBlob(b){
+  b.age++; if(b.cool>0) b.cool--; if(b.craftCool>0) b.craftCool--;
+  if(isPrisoner(b)){ return; } // prisoners are handled by releasePrisoners()
+  const shelter=b.hasHouse?0.7:1;
+  b.satiety-=CONFIG.hungerRate*shelter;
+  b.water-=CONFIG.thirstRate*shelter;
+  if(b.water<=0){ b.water=0; b.satiety-=CONFIG.hungerRate*shelter; }
+  if(b.satiety<=0){ b.dead=true; starved++; return; }
+  if(b.age>CONFIG.maxAge){ b.dead=true; aged++; return; }
+  if(b.satiety<CONFIG.eatBelow && foodCount(b)>0) eatSomething(b);
+  b.upkeepW++; if(b.upkeepW>=CONFIG.upkeepWood){ b.upkeepW=0; if(b.inv.wood>0) b.inv.wood--; }
+  b.upkeepS++; if(b.upkeepS>=CONFIG.upkeepStone){ b.upkeepS=0; if(b.inv.stone>0) b.inv.stone--; }
+  b.upkeepT++; if(b.upkeepT>=CONFIG.toolUpkeep){ b.upkeepT=0; if(b.inv.tools>0) b.inv.tools--; }
+  if(b.satiety>CONFIG.reproSatiety && foodCount(b)>=CONFIG.reproFood && blobs.length<CONFIG.maxBlobs && rng()<CONFIG.reproChance){
+    const cost=Math.min(CONFIG.reproCost, foodCount(b));
+    for(let i=0;i<cost;i++){ const f=mostAbundantFood(b); if(b.inv[f]>0) b.inv[f]--; }
+    const c=spawnBlob(b.x+(rng()*10-5), b.y+(rng()*10-5), b);
+    c.satiety=70;
+    blobs.push(c);
+  }
+  if(CONFIG.moneyOn && b.money<12 && b.landTitles.length>0 && rng()<0.005){
+    const nonHouse=b.landTitles.filter(i=>tiles[i]!==HOUSE);
+    const i=(nonHouse.length?nonHouse:b.landTitles)[0];
+    listTile(i);
+  }
+  b.polT--; if(b.polT<=0){ updateBlobPolitics(b); b.polT=25; }
+  b.memT--; if(b.memT<=0){ updateMembership(b); payDues(b); b.memT=60; }
+  b.retarget--;
+  if(b.retarget<=0){ decide(b); b.retarget=18+((rng()*14)|0); }
+  actState(b);
+}
+function tick(){
+  tickCount++;
+  regrow();
+  const n=blobs.length;
+  for(let i=0;i<n;i++){ const b=blobs[i]; if(!b.dead) tickBlob(b); }
+  if(tickCount%3===0) interactionPass();
+  if(tickCount%10===0){ blobs=blobs.filter(b=>!b.dead); sampleStats(); }
+  if(tickCount%90===0 && CONFIG.moneyOn) adjustPrice();
+  if(tickCount%100===0) politicsPass();
+  if(tickCount%25===0) autoPhysics();
+  if(tickCount%50===0){ regimePass(); releasePrisoners(); }
+  if(tickCount%400===0) passiveProduce();
+  if(tickCount%CONFIG.electionEvery===0){ taxCycle(); if(CONFIG.electionsOn && CONFIG.regime==='democracy') runElection(); }
+}
+
+// ---------------- Render ----------------
+const mapCanvas=document.getElementById('world'), mapCtx=mapCanvas.getContext('2d');
+const TILE_COLORS=['#BBDCEC','#E6EFE3','#D3DFCB','#DDDAD4','#B9B5AF'];
+const RES_COLORS=['#BF8EDA','#EAC26B','#DE9255'];
+function drawLand(){
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const i=y*W+x, t=tiles[i];
+    mapCtx.fillStyle=TILE_COLORS[t];
+    mapCtx.fillRect(x*T,y*T,T,T);
+    if(t!==WATER && t!==HOUSE){
+      const a=amount[i];
+      if(a>0){
+        mapCtx.fillStyle = t===GRASS ? RES_COLORS[crop[i]] : (t===FOREST?'#5C8A4D':'#8F8B84');
+        const s=3+a*1.15;
+        mapCtx.fillRect(x*T+(T-s)/2,y*T+(T-s)/2,s,s);
+      }
+    }
+    if(t===HOUSE){
+      mapCtx.fillStyle='#55524E';
+      mapCtx.fillRect(x*T+4,y*T+4,T-8,T-8);
+    }
+    if(i===workshopTile){
+      mapCtx.fillStyle='#8A6D3B';
+      mapCtx.fillRect(x*T+3,y*T+3,T-6,T-6);
+      mapCtx.fillStyle='#F9F8F7';
+      mapCtx.font='8px Menlo,Consolas,monospace';
+      mapCtx.textAlign='center';
+      mapCtx.fillText('W',x*T+T/2,y*T+T/2+3);
+    }
+    const ow=owner[i];
+    if(ow!==-1){
+      if(ow===-2) mapCtx.strokeStyle='#55524E';
+      else if(ow>=ORG_BASE){ const o=orgById(ow-ORG_BASE); mapCtx.strokeStyle=o?o.color:'#7D7A75'; }
+      else if(CONFIG.regime==='monarchy' && ow===lordId){ mapCtx.strokeStyle='#7D7A75'; }
+      else mapCtx.strokeStyle='rgba(44,44,43,.6)';
+      mapCtx.lineWidth=1.5;
+      if(CONFIG.regime==='monarchy' && ow===lordId){
+        mapCtx.setLineDash([3,2]);
+        mapCtx.strokeRect(x*T+1,y*T+1,T-2,T-2);
+        mapCtx.setLineDash([]);
+      } else {
+        mapCtx.strokeRect(x*T+1,y*T+1,T-2,T-2);
+      }
+    }
+  }
+  if(stockTile>=0){
+    const p=stockXY();
+    mapCtx.fillStyle='#55524E';
+    mapCtx.fillRect(p.x-12,p.y-12,24,24);
+    mapCtx.fillStyle='#FFFFFF';
+    mapCtx.font='9px Menlo,Consolas,monospace';
+    mapCtx.textAlign='center';
+    mapCtx.fillText(String(stockFood()),p.x,p.y+3);
+  }
+  for(const o of orgs){
+    if(!o.taxOn || o.basketTile<0) continue;
+    const p=orgBasketXY(o);
+    mapCtx.fillStyle=o.color;
+    mapCtx.fillRect(p.x-8,p.y-8,16,16);
+    mapCtx.fillStyle='#FFFFFF';
+    mapCtx.font='8px Menlo,Consolas,monospace';
+    mapCtx.textAlign='center';
+    mapCtx.fillText(String(basketFood(o)),p.x,p.y+3);
+  }
+}
+function drawBlobs(){
+  for(const b of blobs){
+    if(b.dead) continue;
+    mapCtx.beginPath();
+    mapCtx.arc(b.x,b.y,4,0,TAU);
+    mapCtx.fillStyle='hsl('+b.hue+',55%,60%)';
+    mapCtx.fill();
+    mapCtx.lineWidth=1;
+    mapCtx.strokeStyle='rgba(44,44,43,.55)';
+    mapCtx.stroke();
+    if(b.orgId>=0){
+      const o=orgById(b.orgId);
+      if(o){ mapCtx.beginPath(); mapCtx.arc(b.x,b.y,2,0,TAU); mapCtx.fillStyle=o.color; mapCtx.fill(); }
+    }
+    if(b.landTitles.length>0){
+      mapCtx.beginPath(); mapCtx.arc(b.x+4,b.y-4,1.5,0,TAU); mapCtx.fillStyle='#2C2C2B'; mapCtx.fill();
+    }
+    if(b.satiety<25){
+      mapCtx.beginPath(); mapCtx.arc(b.x,b.y,6.5,0,TAU);
+      mapCtx.lineWidth=1.5; mapCtx.strokeStyle='#E56458'; mapCtx.stroke();
+    } else if(b.water<25){
+      mapCtx.beginPath(); mapCtx.arc(b.x,b.y,6.5,0,TAU);
+      mapCtx.lineWidth=1.5; mapCtx.strokeStyle='#2783DE'; mapCtx.stroke();
+    }
+    if(isPrisoner(b)){
+      mapCtx.beginPath(); mapCtx.arc(b.x,b.y,7,0,TAU);
+      mapCtx.lineWidth=1.5; mapCtx.strokeStyle='#E56458'; mapCtx.setLineDash([2,2]); mapCtx.stroke(); mapCtx.setLineDash([]);
+    }
+    if(b.inv.tools>0){
+      mapCtx.beginPath(); mapCtx.arc(b.x-4,b.y-4,1.5,0,TAU); mapCtx.fillStyle='#C9A227'; mapCtx.fill();
+    }
+    if(b.inv.bread>0){
+      mapCtx.beginPath(); mapCtx.arc(b.x-4,b.y+4,1.5,0,TAU); mapCtx.fillStyle='#D9A066'; mapCtx.fill();
+    }
+    if(CONFIG.regime==='monarchy' && b.id===lordId){
+      mapCtx.beginPath(); mapCtx.arc(b.x,b.y,9,0,TAU);
+      mapCtx.lineWidth=1.5; mapCtx.strokeStyle='#7D7A75'; mapCtx.setLineDash([4,2]); mapCtx.stroke(); mapCtx.setLineDash([]);
+    }
+    if(b.id===selectedId){
+      mapCtx.beginPath(); mapCtx.arc(b.x,b.y,8,0,TAU);
+      mapCtx.lineWidth=1.5; mapCtx.strokeStyle='#2C2C2B'; mapCtx.stroke();
+    }
+  }
+}
+function draw(){ drawLand(); drawBlobs(); }
+
+const chartCtx=[
+  document.getElementById('chart1').getContext('2d'),
+  document.getElementById('chart2').getContext('2d'),
+  document.getElementById('chart3').getContext('2d'),
+  document.getElementById('chart4').getContext('2d'),
+  document.getElementById('chart5').getContext('2d')
+];
+function drawSeries(c, series){
+  const w=c.canvas.width,h=c.canvas.height;
+  c.fillStyle='#F9F8F7'; c.fillRect(0,0,w,h);
+  if(!series.length || series[0].data.length<2) return;
+  const n=series[0].data.length;
+  for(const s of series){
+    c.beginPath();
+    for(let i=0;i<n;i++){
+      const x=i/(n-1)*(w-6)+3, y=h-4-(s.data[i]/s.max)*(h-10);
+      if(i) c.lineTo(x,y); else c.moveTo(x,y);
+    }
+    c.strokeStyle=s.color; c.lineWidth=1.5; c.stroke();
+  }
+}
+function maxOf(arr,floor){ let m=floor||1; for(let i=0;i<arr.length;i++) if(arr[i]>m)m=arr[i]; return m; }
+function drawCharts(){
+  const maxPop=maxOf(hist.pop,10), maxW=Math.max(maxOf(hist.w,10),maxOf(hist.med,10));
+  drawSeries(chartCtx[0],[
+    {data:hist.pop,max:maxPop,color:'#2783DE'},
+    {data:hist.w,max:maxW,color:'#46A171'},
+    {data:hist.med,max:maxW,color:'#1F6A44'}
+  ]);
+  drawSeries(chartCtx[1],[
+    {data:hist.g,max:1,color:'#E56458'},
+    {data:hist.pov,max:1,color:'#DE9255'}
+  ]);
+  drawSeries(chartCtx[2],[
+    {data:hist.pr.berries,max:15,color:'#BF8EDA'},
+    {data:hist.pr.grain,max:15,color:'#EAC26B'},
+    {data:hist.pr.potatoes,max:15,color:'#DE9255'},
+    {data:hist.pr.wood,max:15,color:'#5C8A4D'},
+    {data:hist.pr.stone,max:15,color:'#8F8B84'},
+    {data:hist.pr.tools,max:30,color:'#C9A227'},
+    {data:hist.pr.bread,max:15,color:'#D9A066'}
+  ]);
+  const maxLand=Math.max(maxOf(hist.land,100),maxOf(hist.money,100));
+  drawSeries(chartCtx[3],[
+    {data:hist.land,max:maxLand,color:'#8F6FC9'},
+    {data:hist.money,max:maxLand,color:'#2783DE'}
+  ]);
+  const maxGov=Math.max(maxOf(hist.gov.lvt,10),maxOf(hist.gov.income,10),maxOf(hist.gov.share,10),maxOf(hist.gov.exp,10),maxOf(hist.gov.wealth,10),maxOf(hist.gov.sales,10));
+  drawSeries(chartCtx[4],[
+    {data:hist.gov.lvt,max:maxGov,color:'#8F6FC9'},
+    {data:hist.gov.income,max:maxGov,color:'#2783DE'},
+    {data:hist.gov.share,max:maxGov,color:'#46A171'},
+    {data:hist.gov.exp,max:maxGov,color:'#DE9255'},
+    {data:hist.gov.wealth,max:maxGov,color:'#C9A227'},
+    {data:hist.gov.sales,max:maxGov,color:'#D9A066'}
+  ]);
+}
+const compassCanvas=document.getElementById('compass'), compassCtx=compassCanvas.getContext('2d');
+function drawCompass(){
+  const w=compassCanvas.width,h=compassCanvas.height;
+  compassCtx.fillStyle='#F9F8F7'; compassCtx.fillRect(0,0,w,h);
+  const px=v=>10+((v+1)/2)*(w-20), py=v=>10+((v+1)/2)*(h-20), pr=v=>v*(w-20)/2;
+  // quadrant labels
+  compassCtx.fillStyle='#B5B2AC'; compassCtx.font='9px system-ui,sans-serif'; compassCtx.textAlign='center';
+  compassCtx.fillText('AUTH', w/2, 16);
+  compassCtx.fillText('LIB', w/2, h-6);
+  compassCtx.textAlign='left';  compassCtx.fillText('LEFT', 14, h/2+3);
+  compassCtx.textAlign='right'; compassCtx.fillText('RIGHT', w-14, h/2+3);
+  // axes
+  compassCtx.strokeStyle='#E6E5E3'; compassCtx.lineWidth=1;
+  compassCtx.beginPath(); compassCtx.moveTo(w/2,10); compassCtx.lineTo(w/2,h-10); compassCtx.moveTo(10,h/2); compassCtx.lineTo(w-10,h/2); compassCtx.stroke();
+  // population cloud (spatial mean ± spread, soft ellipse)
+  const n=Math.max(1,blobs.filter(b=>!b.dead).length);
+  let mx=0,my=0,svx=0,svy=0;
+  for(const b of blobs){ if(b.dead) continue; mx+=b.econ; my+=b.soc; svx+=b.econ*b.econ; svy+=b.soc*b.soc; }
+  mx/=n; my/=n;
+  const sdx=Math.sqrt(Math.max(0,svx/n-mx*mx)), sdy=Math.sqrt(Math.max(0,svy/n-my*my));
+  compassCtx.beginPath(); compassCtx.ellipse(px(mx),py(my),Math.max(4,pr(sdx*2)),Math.max(4,pr(sdy*2)),0,0,TAU);
+  compassCtx.fillStyle='rgba(125,122,117,0.07)'; compassCtx.fill();
+  compassCtx.setLineDash([2,3]); compassCtx.lineWidth=1; compassCtx.strokeStyle='#B5B2AC'; compassCtx.stroke(); compassCtx.setLineDash([]);
+  // ideology drift trail (center of mass, oldest → newest)
+  if(hist.pol.econ.length>=2){
+    const N=hist.pol.econ.length;
+    for(let i=1;i<N;i++){
+      compassCtx.beginPath();
+      compassCtx.moveTo(px(hist.pol.econ[i-1]),py(hist.pol.soc[i-1]));
+      compassCtx.lineTo(px(hist.pol.econ[i]),py(hist.pol.soc[i]));
+      compassCtx.strokeStyle='rgba(39,131,222,'+(0.15+0.55*i/N)+')';
+      compassCtx.lineWidth=1.4; compassCtx.stroke();
+    }
+    // current center of mass marker
+    compassCtx.beginPath(); compassCtx.arc(px(hist.pol.econ[N-1]),py(hist.pol.soc[N-1]),3,0,TAU);
+    compassCtx.fillStyle='#2783DE'; compassCtx.fill();
+  }
+  // blobs: density-shaded dots, org members tinted
+  for(const b of blobs){
+    if(b.dead) continue;
+    const o=b.orgId>=0?orgById(b.orgId):null;
+    compassCtx.fillStyle=o?o.color:'#B5B2AC';
+    compassCtx.fillRect(px(b.econ)-1.5,py(b.soc)-1.5,3,3);
+  }
+  // parties: filled circle + label + ruling ring
+  compassCtx.font='9px system-ui,sans-serif';
+  for(const o of orgs){
+    const r=Math.max(3,pr(o.radius));
+    compassCtx.beginPath(); compassCtx.arc(px(o.x),py(o.y),r,0,TAU);
+    compassCtx.globalAlpha=0.10; compassCtx.fillStyle=o.color; compassCtx.fill(); compassCtx.globalAlpha=1;
+    compassCtx.lineWidth=1.5; compassCtx.strokeStyle=o.color; compassCtx.stroke();
+    if(o.id===ruling){
+      compassCtx.beginPath(); compassCtx.arc(px(o.x),py(o.y),r+3.5,0,TAU);
+      compassCtx.lineWidth=1.5; compassCtx.strokeStyle='#2C2C2B'; compassCtx.stroke();
+    }
+    compassCtx.fillStyle='#7D7A75'; compassCtx.textAlign='center';
+    compassCtx.fillText(o.members, px(o.x), py(o.y)-r-3);
+  }
+  // spread sparkline (how polarised the society is over time)
+  if(hist.pol.spread.length>=2){
+    const N=hist.pol.spread.length, x0=10, x1=w-10, yBase=h-10, yTop=h-26;
+    compassCtx.strokeStyle='#E56458'; compassCtx.lineWidth=1.2;
+    compassCtx.beginPath();
+    const mx2=Math.max(0.2,maxOf(hist.pol.spread,0.2));
+    for(let i=0;i<N;i++){
+      const x=x0+(x1-x0)*i/(N-1), y=yBase-(hist.pol.spread[i]/mx2)*(yBase-yTop);
+      if(i) compassCtx.lineTo(x,y); else compassCtx.moveTo(x,y);
+    }
+    compassCtx.stroke();
+    compassCtx.fillStyle='#E56458'; compassCtx.textAlign='left';
+    compassCtx.fillText('polarisation', 12, yTop-2);
+  }
+  // selected blob ring
+  if(selectedId>=0){
+    const b=findBlobById(selectedId);
+    if(b){
+      compassCtx.setLineDash([3,3]);
+      compassCtx.beginPath(); compassCtx.arc(px(b.econ),py(b.soc),pr(CONFIG.circleR),0,TAU);
+      compassCtx.lineWidth=1.2; compassCtx.strokeStyle='#7D7A75'; compassCtx.stroke();
+      compassCtx.setLineDash([]);
+    }
+  }
+}
+function renderLog(){
+  el('log').innerHTML=logLines.map(s=>'<div>'+s+'</div>').join('');
+}
+function updateInspector(){
+  if(selectedId<0) return;
+  const b=findBlobById(selectedId);
+  if(!b){ selectedId=-1; el('inspector').style.display='none'; return; }
+  const org=b.orgId>=0?orgById(b.orgId):null;
+  let html='<h3>Blob #'+b.id+(CONFIG.regime==='monarchy'&&b.id===lordId?' 👑':'')+(isPrisoner(b)?' (prison)':'')+'</h3>';
+  html+='<div class="irow"><span>Job</span><span>'+JOBS[b.job]+'</span></div>';
+  html+='<div class="irow"><span>Party</span><span>'+(org?'<span style="color:'+org.color+'">'+org.name+'</span> ('+org.kindName+')':'Independent')+'</span></div>';
+  html+='<div class="irow"><span>Wealth</span><span>'+wealth(b).toFixed(0)+'</span></div>';
+  html+='<div class="irow"><span>Money</span><span>'+b.money.toFixed(0)+'</span></div>';
+  html+='<div class="irow"><span>Food / wood / stone</span><span>'+foodCount(b)+' / '+b.inv.wood+' / '+b.inv.stone+'</span></div>';
+  html+='<div class="irow"><span>Tools / bread</span><span>'+b.inv.tools+' / '+b.inv.bread+'</span></div>';
+  html+='<div class="irow"><span>Land</span><span>'+b.landTitles.length+' tile'+(b.landTitles.length===1?'':'s')+(b.hasHouse?', house':'')+'</span></div>';
+  html+='<div class="irow"><span>Satiety / water</span><span>'+b.satiety.toFixed(0)+' / '+b.water.toFixed(0)+'</span></div>';
+  html+='<div class="irow"><span>Compass</span><span>'+b.econ.toFixed(2)+', '+b.soc.toFixed(2)+'</span></div>';
+  for(const k of VALUES){
+    html+='<div class="vbar"><span class="n">'+k+'</span><span class="bar"><i style="width:'+Math.round(b.vals[k]*100)+'%"></i></span></div>';
+  }
+  el('inspector').innerHTML=html;
+}
+function updateStats(){
+  el('sTick').textContent=tickCount;
+  el('sPop').textContent=blobs.length;
+  el('priceRow').style.display=CONFIG.moneyOn?'':'none';
+  if(CONFIG.moneyOn) el('sPrice').textContent=avgFoodPrice().toFixed(2);
+  el('sStock').textContent=stockFood();
+  el('sFunds').textContent=publicFunds.toFixed(0);
+  let orgFood=0, orgFunds=0;
+  for(const o of orgs){ orgFood+=basketFood(o); orgFunds+=basketValue(o); }
+  el('sOrgFood').textContent=orgFood;
+  el('sOrgFunds').textContent=orgFunds.toFixed(0);
+  let pv=0,gv=0,ov=0,cvv=0;
+  for(let i=0;i<W*H;i++){
+    if(tiles[i]===WATER) continue;
+    const v=tileValue(i);
+    const ow=owner[i];
+    if(ow===-1) cvv+=v; else if(ow===-2) gv+=v; else if(ow>=ORG_BASE) ov+=v; else pv+=v;
+  }
+  const tv=pv+gv+ov+cvv||1;
+  el('sLand').textContent=Math.round(pv/tv*100)+'% prv · '+Math.round(gv/tv*100)+'% gov · '+Math.round(ov/tv*100)+'% org';
+  el('sLandVal').textContent=Math.round(tv);
+  el('sTrades').textContent=trades;
+  el('sGifts').textContent=gifts;
+  el('sStarved').textContent=starved;
+  el('sAge').textContent=aged;
+  el('sWealth').textContent=WSTATS.avg.toFixed(0);
+  el('sMedian').textContent=WSTATS.med.toFixed(0);
+  el('sGini').textContent=WSTATS.gini.toFixed(2);
+  el('sPoverty').textContent=Math.round(100*WSTATS.poor)+'%';
+  const im=incomeMix, imTot=(im.work+im.rent+im.gift+im.pile)||1;
+  el('sIncome').textContent='w'+Math.round(im.work/imTot*100)+' r'+Math.round(im.rent/imTot*100)+' g'+Math.round(im.gift/imTot*100)+' p'+Math.round(im.pile/imTot*100);
+  el('sOrgs').textContent=orgs.length;
+  const r=orgById(ruling);
+  el('sRuling').innerHTML=r?'<span style="color:'+r.color+'">'+r.name+'</span>':'–';
+  el('sRegime').textContent=CONFIG.regime+(CONFIG.regime==='monarchy'&&lordId>=0?' (lord #'+lordId+')':'');
+  let tools=0,bread=0;
+  for(const b of blobs){ if(!b.dead){ tools+=b.inv.tools; bread+=b.inv.bread; } }
+  el('sCraft').textContent=tools+' / '+bread;
+  el('sKilled').textContent=killed;
+  el('sThefts').textContent=thefts;
+  el('sPunished').textContent=punished;
+  el('sPrison').textContent=prison.length;
+  el('sLaws').textContent=LAWS.filter(l=>CONFIG[l.key]).length+'/4';
+  renderLog();
+}
+
+// ---------------- Reset / loop / UI ----------------
+function syncPolicyUI(){
+  el('setShare').value=CONFIG.surplusShare; el('vShare').textContent=CONFIG.surplusShare+'%';
+  el('setCharity').value=CONFIG.charityNorm; el('vCharity').textContent=CONFIG.charityNorm.toFixed(2);
+  el('setIncomeTax').value=CONFIG.incomeTax; el('vIncomeTax').textContent=CONFIG.incomeTax+'%';
+  el('setLvt').value=CONFIG.lvtRate; el('vLvt').textContent=CONFIG.lvtRate+'%';
+  el('setWealthTax').value=CONFIG.wealthTax; el('vWealthTax').textContent=CONFIG.wealthTax+'%';
+  el('setSalesTax').value=CONFIG.salesTax; el('vSalesTax').textContent=CONFIG.salesTax+'%';
+  el('setExport').value=CONFIG.exportFrac; el('vExport').textContent=CONFIG.exportFrac+'%';
+  el('setThreshold').value=CONFIG.thresholdBasis;
+  el('fracRow').style.display=CONFIG.thresholdBasis==='maxfrac'?'':'none';
+}
+function syncLawUI(){
+  for(const l of LAWS) el(l.key).checked=CONFIG[l.key];
+  el('setDetect').value=CONFIG.detectChance; el('vDetect').textContent=CONFIG.detectChance.toFixed(2);
+  el('setSeverity').value=CONFIG.severity; el('vSeverity').textContent=CONFIG.severity.toFixed(2);
+  el('setEnforce').value=CONFIG.enforceSpend; el('vEnforce').textContent=CONFIG.enforceSpend;
+  el('setRegime').value=CONFIG.regime;
+  el('craftOn').checked=CONFIG.craftOn;
+  el('autoPhysics').checked=CONFIG.autoPhysics;
+}
+// ---------------- Scenarios ----------------
+// Preset starting points. applyScenario runs after reset() and only touches
+// CONFIG + a few world facts, so it works the same on a fresh seed.
+const SCENARIOS = {
+  founding: {
+    label:'Founding (default)',
+    // policyLock: elections never overwrite these sliders
+    apply(){ CONFIG.policyLock=false; syncPolicyUI(); syncLawUI(); }
+  },
+  modern: {
+    label:'Modern society (unequal)',
+    apply(){
+      // concentrate wealth and land: a few blobs own most tiles and money
+      const sorted=blobs.slice().sort((a,b)=>b.money-a.money);
+      const rich=Math.max(3,Math.floor(blobs.length*0.1));
+      for(let k=0;k<rich;k++){
+        const b=sorted[k];
+        b.money=400; b.inv.wood=20; b.inv.stone=12; b.inv.tools=2;
+        for(let t=0;t<6;t++){
+          const i=landList[(rng()*landList.length)|0];
+          if(tiles[i]!==WATER && tiles[i]!==HOUSE && owner[i]===-1){
+            owner[i]=b.id; b.landTitles.push(i);
+          }
+        }
+      }
+      for(let k=rich;k<sorted.length;k++){ sorted[k].money=2; }
+      CONFIG.incomeTax=15; CONFIG.lvtRate=8; CONFIG.surplusShare=10;
+      CONFIG.wealthTax=1; CONFIG.salesTax=5;
+      CONFIG.policyLock=false;
+      syncPolicyUI();
+    }
+  },
+  GeorgismLocked: {
+    label:'Georgism (locked: elections cannot change policy)',
+    apply(){
+      CONFIG.lvtRate=20; CONFIG.incomeTax=0; CONFIG.wealthTax=0; CONFIG.salesTax=0;
+      CONFIG.surplusShare=10; CONFIG.thresholdBasis='none';
+      CONFIG.policyLock=true;
+      syncPolicyUI();
+    }
+  },
+  anarchy: {
+    label:'Anarchy (no taxes, no pile)',
+    apply(){ CONFIG.regime='anarchy'; syncLawUI(); }
+  },
+  Georgism: {
+    label:'Georgism (high LVT, no income tax)',
+    apply(){
+      CONFIG.lvtRate=20; CONFIG.incomeTax=0; CONFIG.wealthTax=0; CONFIG.salesTax=0;
+      CONFIG.surplusShare=10; CONFIG.thresholdBasis='none';
+      CONFIG.policyLock=false;
+      syncPolicyUI();
+    }
+  },
+  socialist: {
+    label:'Socialist (high taxes, redistribution)',
+    apply(){
+      CONFIG.incomeTax=35; CONFIG.wealthTax=3; CONFIG.lvtRate=10; CONFIG.salesTax=10;
+      CONFIG.surplusShare=70; CONFIG.thresholdBasis='median'; CONFIG.charityNorm=0.8;
+      CONFIG.lawCharity=true; CONFIG.lawDuty=true; CONFIG.lawNoTheft=true; CONFIG.lawNoKill=true;
+      CONFIG.enforceSpend=100; CONFIG.detectChance=0.8; CONFIG.severity=0.7;
+      CONFIG.policyLock=false;
+      syncPolicyUI(); syncLawUI();
+    }
+  },
+  SocialistLocked: {
+    label:'Socialist (locked: elections cannot change policy)',
+    apply(){
+      CONFIG.incomeTax=35; CONFIG.wealthTax=3; CONFIG.lvtRate=10; CONFIG.salesTax=10;
+      CONFIG.surplusShare=70; CONFIG.thresholdBasis='median'; CONFIG.charityNorm=0.8;
+      CONFIG.lawCharity=true; CONFIG.lawDuty=true; CONFIG.lawNoTheft=true; CONFIG.lawNoKill=true;
+      CONFIG.enforceSpend=100; CONFIG.detectChance=0.8; CONFIG.severity=0.7;
+      CONFIG.policyLock=true;
+      syncPolicyUI(); syncLawUI();
+    }
+  }
+};
+function applyScenario(name){
+  const sc=SCENARIOS[name]||SCENARIOS.founding;
+  if(sc.apply) sc.apply();
+}
+
+// ---------------- CSV export ----------------
+function exportCSV(){
+  const rows=[['tick','population','avgWealth','medianWealth','gini','povertyShare',
+    'priceBerries','priceGrain','pricePotatoes','priceWood','priceStone','priceTools','priceBread',
+    'landValue','moneySupply','govLVT','govIncome','govSurplusShare','govExports','govWealthTax','govSalesTax']];
+  const n=hist.pop.length;
+  for(let i=0;i<n;i++){
+    rows.push([i*10, hist.pop[i], round2(hist.w[i]), round2(hist.med[i]), round3(hist.g[i]), round3(hist.pov[i]),
+      round2(hist.pr.berries[i]), round2(hist.pr.grain[i]), round2(hist.pr.potatoes[i]),
+      round2(hist.pr.wood[i]), round2(hist.pr.stone[i]), round2(hist.pr.tools[i]), round2(hist.pr.bread[i]),
+      Math.round(hist.land[i]), Math.round(hist.money[i]),
+      round2(hist.gov.lvt[i]), round2(hist.gov.income[i]), round2(hist.gov.share[i]), round2(hist.gov.exp[i]),
+      round2(hist.gov.wealth[i]), round2(hist.gov.sales[i])]);
+  }
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='simulator-seed'+CONFIG.seed+'-tick'+tickCount+'.csv';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function round2(v){ return Math.round(v*100)/100; }
+function round3(v){ return Math.round(v*1000)/1000; }
+
+function reset(newSeed){
+  // restore policy/world defaults so scenarios always start from baseline
+  for(const k of Object.keys(DEFAULTS)) CONFIG[k]=DEFAULTS[k];
+  CONFIG.initialBlobs=parseInt(el('setInit').value,10)||80;
+  CONFIG.seed=parseInt(el('setSeed').value,10)||0;
+  if(newSeed){ CONFIG.seed=(Math.random()*1e9)|0; el('setSeed').value=CONFIG.seed; }
+  rng=mulberry32(CONFIG.seed);
+  nextBlobId=1;
+  genWorld(); initBlobs();
+  stockpile=zeroGoods();
+  publicFunds=0;
+  tickCount=0; price={berries:3,grain:3,potatoes:3,wood:5,stone:8,tools:14,bread:6}; trades=0; gifts=0; starved=0; aged=0; killed=0; thefts=0; punished=0;
+  buyWants=zeroGoods(); buysDone=zeroGoods();
+  hist=emptyHist();
+  orgs=[]; ruling=-1; nextOrgId=0; logLines=[];
+  lordId=-1; prison=[]; anarchyAnnounced=false;
+  govInc={lvt:0,income:0,share:0,exp:0,wealth:0,sales:0,enforce:0};
+  incomeMix={work:0,rent:0,gift:0,pile:0};
+  WSTATS={avg:50,med:50,max:50,gini:0,poor:0}; cloudD=0.5;
+  selectedId=-1; el('inspector').style.display='none';
+  physBase={hungerRate:CONFIG.hungerRate,thirstRate:CONFIG.thirstRate,reproChance:CONFIG.reproChance};
+}
+reset(false);
+applyScenario(el('scenarioSel').value);
+syncLawUI();
+el('autoPhysics').checked=CONFIG.autoPhysics;
+for(let i=0;i<WARMUP;i++) tick();
+
+let last=0, acc=0;
+function frame(ts){
+  requestAnimationFrame(frame);
+  if(!last) last=ts;
+  const dt=Math.min(100,ts-last); last=ts;
+  if(running){
+    acc+=dt*speedMul;
+    const step=1000/CONFIG.ticksPerSecond;
+    let guard=0;
+    while(acc>=step && guard<160){ tick(); acc-=step; guard++; }
+  }
+  draw(); drawCharts(); drawCompass(); updateStats(); updateInspector();
+}
+requestAnimationFrame(frame);
+
+mapCanvas.addEventListener('click',e=>{
+  const rect=mapCanvas.getBoundingClientRect();
+  const mx=(e.clientX-rect.left)*(mapCanvas.width/rect.width), my=(e.clientY-rect.top)*(mapCanvas.height/rect.height);
+  let best=null,bd=CLICK_R2;
+  for(const b of blobs){ if(b.dead)continue; const d=dist2(b.x,b.y,mx,my); if(d<bd){bd=d;best=b;} }
+  selectedId=best?best.id:-1;
+  el('inspector').style.display=best?'block':'none';
+});
+el('pauseBtn').onclick=()=>{ running=!running; el('pauseBtn').textContent=running?'Pause':'Play'; };
+document.querySelectorAll('.spd').forEach(btn=>{ btn.onclick=()=>{
+  document.querySelectorAll('.spd').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  speedMul=parseFloat(btn.dataset.s);
+};});
+el('resetBtn').onclick=()=>{ reset(false); applyScenario(el('scenarioSel').value); };
+el('seedBtn').onclick=()=>{ reset(true); applyScenario(el('scenarioSel').value); };
+el('scenarioSel').onchange=e=>{ reset(false); applyScenario(e.target.value); };
+el('exportBtn').onclick=()=>exportCSV();
+el('setRegime').onchange=e=>{
+  CONFIG.regime=e.target.value;
+  if(CONFIG.regime==='anarchy') applyRegime();
+  if(CONFIG.regime==='monarchy') applyRegime();
+};
+el('craftOn').onchange=e=>{ CONFIG.craftOn=e.target.checked; };
+for(const l of LAWS) el(l.key).onchange=e=>{ CONFIG[l.key]=e.target.checked; };
+el('moneyOn').onchange=e=>{
+  CONFIG.moneyOn=e.target.checked;
+  if(CONFIG.moneyOn){ for(const b of blobs){ if(!b.dead) b.money=CONFIG.startMoney; } }
+  else { listings=[]; }
+};
+el('electionsOn').onchange=e=>{ CONFIG.electionsOn=e.target.checked; };
+el('circleOn').onchange=e=>{ CONFIG.circleOn=e.target.checked; };
+el('marketWealth').onchange=e=>{ CONFIG.marketWealth=e.target.checked; };
+el('autoPhysics').onchange=e=>{
+  CONFIG.autoPhysics=e.target.checked;
+  if(CONFIG.autoPhysics) physBase={hungerRate:CONFIG.hungerRate,thirstRate:CONFIG.thirstRate,reproChance:CONFIG.reproChance};
+};
+el('setThreshold').onchange=e=>{
+  CONFIG.thresholdBasis=e.target.value;
+  el('fracRow').style.display=CONFIG.thresholdBasis==='maxfrac'?'':'none';
+};
+function bindRange(id,key,label,fmt){
+  const inp=el(id);
+  inp.addEventListener('input',()=>{
+    CONFIG[key]=parseFloat(inp.value);
+    el(label).textContent=fmt?fmt(inp.value):inp.value;
+  });
+}
+bindRange('setShare','surplusShare','vShare',v=>v+'%');
+bindRange('setCharity','charityNorm','vCharity',v=>parseFloat(v).toFixed(2));
+bindRange('setIncomeTax','incomeTax','vIncomeTax',v=>v+'%');
+bindRange('setLvt','lvtRate','vLvt',v=>v+'%');
+bindRange('setWealthTax','wealthTax','vWealthTax',v=>v+'%');
+bindRange('setSalesTax','salesTax','vSalesTax',v=>v+'%');
+bindRange('setExport','exportFrac','vExport',v=>v+'%');
+bindRange('setDetect','detectChance','vDetect',v=>parseFloat(v).toFixed(2));
+bindRange('setSeverity','severity','vSeverity',v=>parseFloat(v).toFixed(2));
+bindRange('setEnforce','enforceSpend','vEnforce');
+bindRange('setFrac','thresholdFrac','vFrac');
+bindRange('setMax','maxBlobs','vMax');
+bindRange('setHunger','hungerRate','vHunger');
+bindRange('setThirst','thirstRate','vThirst');
+bindRange('setRegrow','regrowChance','vRegrow');
+bindRange('setRepro','reproChance','vRepro');
+bindRange('setGather','gatherTicks','vGather');
+</script>
+</body>
+</html>

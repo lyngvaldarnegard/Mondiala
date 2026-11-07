@@ -1,8 +1,16 @@
 # Mondiala
 
-Worldbuilding project for **Mondiala**, the new world capital — centred on the interactive city map.
+Three things under one roof: a **personal manifesto** for a rule-driven welfare state, the interactive hex-grid map of **Mondiala**, the new world capital — and a **society simulator** to test the ideas from the bottom up.
 
-**Try it live: <https://lyngvaldarnegard.github.io/Mondiala/>** — served by GitHub Pages, updated with every push to `main`.
+**Try it live: <https://lyngvaldarnegard.github.io/Mondiala/>** — served by GitHub Pages, updated with every push to `main`. The front page links all three.
+
+## The manifesto — Autopilot
+
+[`policy/`](policy/) is the readable one: an illustrated, interactive manifesto for a country that runs on rules instead of yearly budget fights. The core is the two income-tax plans — Plan A, the staircase (marginal 0/10/20/30/40/50 % per 1 G bracket) and Plan B, the flat template (half of everything above 3 G, with the welfare floor sitting exactly under the tax line) — each with an interactive illustration, plus a five-lives comparison against today's system. The deeper models (pension queue, food card, budget Sankey, municipal grants, electoral system, constitution builder) are one click away as workbench pages, all reading the same visible data layer (SSB statistics with offline fallback).
+
+## The society simulator
+
+[`simulator/`](simulator/) is a Primer-style sandbox: blobs gather, trade, organise and vote under different economic and political systems. Turn the tax sliders up and watch inequality and poverty respond — the manifesto's rules, tested from the bottom up. One self-contained HTML file, no build step. Version history lives in the [politics-economics-sim repository](https://github.com/lyngvaldarnegard/politics-economics-sim).
 
 ## The city map
 

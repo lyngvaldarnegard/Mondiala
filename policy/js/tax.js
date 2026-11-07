@@ -55,7 +55,9 @@ export function decile1Threshold() {
 }
 
 // ---- Today's system (comparison only) ------------------------------
-export function taxToday(gross) {
+// Breakdown into its three layers, so the manifesto page can illustrate what
+// today's system piles on top of an income. Estimates, not legal precision.
+export function taxTodayBreakdown(gross) {
   const G = get('G');
   const socialSecurity = 0.077 * Math.max(0, gross);
   const alminnelig = Math.max(0, gross - 0.46 * G); // minimum + personal deduction, illustrative
@@ -67,7 +69,11 @@ export function taxToday(gross) {
     const w = Math.min(Math.max(0, gross - lo), hi - lo);
     bracketTax += w * steps[i][1];
   }
-  return socialSecurity + 0.22 * alminnelig + bracketTax;
+  const incomeTax = 0.22 * alminnelig;
+  return { socialSecurity, incomeTax, bracketTax, total: socialSecurity + incomeTax + bracketTax };
+}
+export function taxToday(gross) {
+  return taxTodayBreakdown(gross).total;
 }
 
 // Aggregate revenue per decile from SSB income distribution data (V1: decile means).
